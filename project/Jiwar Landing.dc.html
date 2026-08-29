@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F4EE;}
+*{box-sizing:border-box;}
+a{color:#1F3B57;text-decoration:none;}
+a:hover{color:#C79A3C;}
+button{font-family:'Cairo',sans-serif;}
+::selection{background:rgba(199,154,60,0.3);}
+@keyframes floatUp{from{opacity:0;transform:translateY(18px);}to{opacity:1;transform:translateY(0);}}
+@keyframes pulseDot{0%,100%{opacity:1;}50%{opacity:0.35;}}
+</style>
+</helmet>
+
+<div dir="rtl" style="font-family:'Cairo',sans-serif;background:#F7F4EE;overflow-x:hidden">
+
+  <!-- ============ NAV ============ -->
+  <div style="position:sticky;top:0;z-index:50;background:rgba(247,244,238,0.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(31,59,87,0.07)">
+    <div style="max-width:1240px;margin:0 auto;padding:16px 32px;display:flex;align-items:center;gap:14px">
+      <svg width="32" height="32" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#C79A3C" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#1F3B57" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+      <div style="display:flex;flex-direction:column">
+        <span style="font-size:20px;font-weight:900;color:#1F3B57;line-height:1.1">رفادة</span>
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:9.5px;font-weight:600;color:#C79A3C;letter-spacing:3px">JIWAR</span>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;gap:26px;align-items:center">
+        <a href="#platform" style="font-size:14px;font-weight:700;color:#4B5563">المنصة</a>
+        <a href="#features" style="font-size:14px;font-weight:700;color:#4B5563">القدرات</a>
+        <a href="#roi" style="font-size:14px;font-weight:700;color:#4B5563">دخل الإدارة</a>
+        <a href="#pricing" style="font-size:14px;font-weight:700;color:#4B5563">الأسعار</a>
+      </div>
+      <div style="width:26px"></div>
+      <a href="#demo" style="background:#1F3B57;color:#fff;border-radius:999px;padding:12px 26px;font-size:14px;font-weight:800;white-space:nowrap">اطلب عرضًا توضيحيًا</a>
+    </div>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <div style="position:relative;background:linear-gradient(165deg,#1F3B57 0%,#152A3F 55%,#20344A 100%);overflow:hidden">
+    <div style="position:absolute;top:-160px;left:-140px;width:620px;height:620px;border-radius:999px;background:radial-gradient(circle,rgba(199,154,60,0.22),transparent 66%)"></div>
+    <div style="position:absolute;bottom:-220px;right:-120px;width:560px;height:560px;border-radius:999px;background:radial-gradient(circle,rgba(63,166,107,0.16),transparent 66%)"></div>
+    <div style="position:relative;max-width:1240px;margin:0 auto;padding:88px 32px 96px;display:grid;grid-template-columns:1.15fr 0.85fr;gap:56px;align-items:center">
+      <div style="animation:floatUp .7s ease both">
+        <div style="display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);border-radius:999px;padding:9px 20px">
+          <span style="width:8px;height:8px;border-radius:999px;background:#3FA66B;animation:pulseDot 2s infinite"></span>
+          <span style="font-size:13px;font-weight:800;color:#fff">منصة تشغيل الكمبوندات — تبدأ من مصر</span>
+        </div>
+        <h1 style="font-size:60px;font-weight:900;color:#fff;line-height:1.25;margin:26px 0 0;text-wrap:pretty">نمنح الساكن كل ما يحتاجه،<br><span style="color:#E8C989">ونمنح الإدارة طريقة أفضل لتشغيله</span></h1>
+        <p style="font-size:20px;color:rgba(255,255,255,0.68);line-height:1.85;margin:22px 0 0;max-width:620px">3 آلاف كمبوند في مصر تُدار اليوم بمجموعات واتساب ودفاتر ورقية. رفادة يجمع الدفع والصيانة والخدمات والمجتمع في تطبيق واحد — ويعطي الإدارة لوحة قيادة تُحصِّل وتقيس وتُربِح.</p>
+        <div style="display:flex;gap:14px;margin-top:34px;flex-wrap:wrap">
+          <a href="#demo" style="background:#C79A3C;color:#fff;border-radius:999px;padding:17px 38px;font-size:16.5px;font-weight:800;box-shadow:0 10px 30px rgba(199,154,60,0.38)">احجز عرضًا لكمبوندك</a>
+          <a href="#platform" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:999px;padding:17px 34px;font-size:16.5px;font-weight:800">شاهد المنصة →</a>
+        </div>
+        <div style="display:flex;gap:44px;margin-top:44px;flex-wrap:wrap">
+          <sc-for list="{{ heroStats }}" as="hs" hint-placeholder-count="3">
+            <div style="display:flex;flex-direction:column;gap:4px">
+              <span style="font-family:'IBM Plex Sans',sans-serif;font-size:34px;font-weight:700;color:#fff;font-variant-numeric:tabular-nums">{{ hs.n }}</span>
+              <span style="font-size:13px;color:rgba(255,255,255,0.52);line-height:1.5">{{ hs.l }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center;align-items:center;position:relative;animation:floatUp .9s ease both">
+        <div style="position:absolute;width:330px;height:330px;border-radius:999px;background:radial-gradient(circle,rgba(199,154,60,0.28),transparent 70%)"></div>
+        <div style="position:relative;width:330px;height:697px;overflow:visible;filter:drop-shadow(0 34px 60px rgba(0,0,0,0.42))">
+          <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="home" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="position:relative;background:rgba(0,0,0,0.18);border-top:1px solid rgba(255,255,255,0.08);padding:20px 32px">
+      <div style="max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:28px;flex-wrap:wrap">
+        <span style="font-size:13px;font-weight:800;color:rgba(255,255,255,0.4);white-space:nowrap">مبني ليعمل مع:</span>
+        <sc-for list="{{ logos }}" as="lg" hint-placeholder-count="6">
+          <span style="font-family:'IBM Plex Sans',sans-serif;font-size:16px;font-weight:600;color:rgba(255,255,255,0.55);white-space:nowrap">{{ lg }}</span>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PROBLEM ============ -->
+  <div style="max-width:1240px;margin:0 auto;padding:96px 32px 0">
+    <div style="text-align:center">
+      <div style="font-size:14px;font-weight:800;color:#C79A3C;letter-spacing:3px">المشكلة</div>
+      <h2 style="font-size:44px;font-weight:900;color:#1F3B57;margin:14px 0 0;line-height:1.35">الساكن يطارد ست جهات مختلفة.<br>والإدارة تطارد الجميع.</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px">
+      <sc-for list="{{ problems }}" as="p" hint-placeholder-count="6">
+        <div style="background:#fff;border-radius:20px;padding:28px;box-shadow:0 2px 14px rgba(0,0,0,0.05);border-top:4px solid #E4675A">
+          <div style="width:46px;height:46px;border-radius:14px;background:rgba(228,103,90,0.1);display:flex;align-items:center;justify-content:center">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="{{ p.icon }}" stroke="#E4675A" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+          </div>
+          <div style="font-size:19px;font-weight:900;color:#1F3B57;margin-top:16px">{{ p.t }}</div>
+          <div style="font-size:15px;color:#6B7280;margin-top:8px;line-height:1.8">{{ p.d }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ THREE-SIDED PLATFORM ============ -->
+  <div id="platform" style="max-width:1240px;margin:0 auto;padding:100px 32px 0">
+    <div style="text-align:center">
+      <div style="font-size:14px;font-weight:800;color:#C79A3C;letter-spacing:3px">المنصة</div>
+      <h2 style="font-size:44px;font-weight:900;color:#1F3B57;margin:14px 0 0;line-height:1.35">ثلاثة أطراف، حلقة واحدة مغلقة</h2>
+      <p style="font-size:18px;color:#6B7280;margin:16px auto 0;max-width:760px;line-height:1.85">قاعدتنا في كل قرار منتج: إن لم تخدم القدرة الأطراف الثلاثة معًا، لا نبنيها.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px">
+      <sc-for list="{{ sides }}" as="sd" hint-placeholder-count="3">
+        <div style="background:{{ sd.bg }};border-radius:24px;padding:34px;border-top:7px solid {{ sd.accent }};display:flex;flex-direction:column">
+          <div style="width:56px;height:56px;border-radius:17px;background:{{ sd.iconBg }};display:flex;align-items:center;justify-content:center">
+            <svg width="27" height="27" viewBox="0 0 24 24" fill="none"><path d="{{ sd.icon }}" stroke="{{ sd.accent }}" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+          </div>
+          <div style="font-size:14px;font-weight:800;color:{{ sd.accent }};margin-top:18px">{{ sd.kicker }}</div>
+          <div style="font-size:29px;font-weight:900;color:{{ sd.titleC }};margin-top:4px">{{ sd.t }}</div>
+          <div style="font-size:16px;color:{{ sd.bodyC }};margin-top:12px;line-height:1.85">{{ sd.d }}</div>
+          <div style="flex:1;min-height:16px"></div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <sc-for list="{{ sd.chips }}" as="ch" hint-placeholder-count="3">
+              <span style="background:{{ sd.chipBg }};color:{{ sd.chipC }};border-radius:999px;padding:8px 16px;font-size:13.5px;font-weight:800">{{ ch }}</span>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:22px;padding:28px 36px;margin-top:20px;display:flex;align-items:center;gap:22px;flex-wrap:wrap">
+      <span style="font-size:17px;font-weight:900;color:#C79A3C;white-space:nowrap">الحلقة</span>
+      <span style="width:1px;height:44px;background:rgba(255,255,255,0.18)"></span>
+      <sc-for list="{{ loop }}" as="lp" hint-placeholder-count="3">
+        <span style="background:{{ lp.bg }};color:{{ lp.c }};border-radius:999px;padding:10px 20px;font-size:14.5px;font-weight:800;white-space:nowrap">{{ lp.t }}</span>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="display:{{ lp.arrow }};flex:none"><path d="M15 5l-7 7 7 7" stroke="#C79A3C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ FEATURES ============ -->
+  <div id="features" style="max-width:1240px;margin:0 auto;padding:100px 32px 0">
+    <div style="text-align:center">
+      <div style="font-size:14px;font-weight:800;color:#C79A3C;letter-spacing:3px">القدرات</div>
+      <h2 style="font-size:44px;font-weight:900;color:#1F3B57;margin:14px 0 0;line-height:1.35">اثنتا عشرة ركيزة — كلها مبنية وتعمل</h2>
+      <p style="font-size:18px;color:#6B7280;margin:16px auto 0;max-width:700px;line-height:1.85">ليست خططًا على ورق: 99 شاشة حيّة قابلة للتجربة اليوم.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px">
+      <sc-for list="{{ features }}" as="f" hint-placeholder-count="12">
+        <div style="background:#fff;border-radius:20px;padding:26px 24px;box-shadow:0 2px 14px rgba(0,0,0,0.05)" style-hover="box-shadow:0 8px 26px rgba(31,59,87,0.13)">
+          <div style="width:44px;height:44px;border-radius:13px;background:#F1EDE4;display:flex;align-items:center;justify-content:center">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><path d="{{ f.icon }}" stroke="#1F3B57" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+          </div>
+          <div style="font-size:17.5px;font-weight:900;color:#1F3B57;margin-top:15px">{{ f.t }}</div>
+          <div style="font-size:14.5px;color:#6B7280;margin-top:7px;line-height:1.8">{{ f.d }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ LIVE SCREENS ============ -->
+  <div style="background:#EFEBE2;margin-top:100px;padding:88px 32px">
+    <div style="max-width:1240px;margin:0 auto">
+      <div style="display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap">
+        <div>
+          <div style="font-size:14px;font-weight:800;color:#C79A3C;letter-spacing:3px">من داخل التطبيق</div>
+          <h2 style="font-size:42px;font-weight:900;color:#1F3B57;margin:14px 0 0;line-height:1.35">شاشات حقيقية — لا صور تصويرية</h2>
+        </div>
+        <div style="flex:1"></div>
+        <div style="display:flex;background:#fff;border-radius:999px;padding:5px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+          <sc-for list="{{ tabs }}" as="tb" hint-placeholder-count="3">
+            <button onClick="{{ tb.pick }}" style="border:none;cursor:pointer;border-radius:999px;padding:11px 24px;font-size:14px;font-weight:800;white-space:nowrap;background:{{ tb.bg }};color:{{ tb.c }}">{{ tb.label }}</button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;gap:34px;margin-top:44px;justify-content:center;align-items:flex-start;flex-wrap:wrap">
+        <sc-for list="{{ showcase }}" as="sc" hint-placeholder-count="3">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
+            <div style="width:276px;height:601px;overflow:visible;filter:drop-shadow(0 20px 40px rgba(31,59,87,0.22))">
+              <div style="width:480px;height:1014px;transform:scale(0.575);transform-origin:top right;pointer-events:none">
+                <dc-import name="Jiwar Phone" fixed-screen="{{ sc.key }}" hint-size="480px,1014px"></dc-import>
+              </div>
+            </div>
+            <div style="text-align:center;max-width:280px">
+              <div style="font-size:19px;font-weight:900;color:#1F3B57">{{ sc.t }}</div>
+              <div style="font-size:14.5px;color:#6B7280;margin-top:6px;line-height:1.7">{{ sc.d }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TRUST / ESCROW ============ -->
+  <div style="max-width:1240px;margin:0 auto;padding:96px 32px 0">
+    <div style="background:linear-gradient(150deg,#1F3B57,#152A3F);border-radius:30px;padding:56px;display:grid;grid-template-columns:1fr 0.8fr;gap:48px;align-items:center;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-120px;left:-100px;width:420px;height:420px;border-radius:999px;background:radial-gradient(circle,rgba(63,166,107,0.2),transparent 68%)"></div>
+      <div style="position:relative">
+        <div style="display:inline-flex;align-items:center;gap:9px;background:rgba(63,166,107,0.2);border-radius:999px;padding:9px 20px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z" stroke="#7BD8A5" strokeWidth="1.8" strokeLinejoin="round"></path></svg>
+          <span style="font-size:13.5px;font-weight:800;color:#7BD8A5">ضمان رفادة</span>
+        </div>
+        <h2 style="font-size:42px;font-weight:900;color:#fff;margin:22px 0 0;line-height:1.35">لا يُحوَّل مبلغ لمقدم خدمة قبل رضا الساكن</h2>
+        <p style="font-size:18px;color:rgba(255,255,255,0.66);margin:18px 0 0;line-height:1.9">كل مهمة وكل طلب متجر يُحجز مبلغه في الإسكرو. الساكن يؤكد الاكتمال، فيُحرَّر المبلغ ناقصًا العمولة. وإن حدث خلاف، يُجمَّد المبلغ ويحكم مكتب الإدارة من مركز فض النزاعات.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:28px">
+          <sc-for list="{{ trustRows }}" as="tr" hint-placeholder-count="4">
+            <div style="display:flex;align-items:center;gap:13px">
+              <span style="width:24px;height:24px;border-radius:8px;background:rgba(63,166,107,0.25);display:flex;align-items:center;justify-content:center;flex:none">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#7BD8A5" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              </span>
+              <span style="font-size:16px;color:rgba(255,255,255,0.82);line-height:1.7">{{ tr }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="position:relative;display:flex;justify-content:center">
+        <div style="width:262px;height:571px;overflow:visible;filter:drop-shadow(0 24px 44px rgba(0,0,0,0.4))">
+          <div style="width:480px;height:1014px;transform:scale(0.5458);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="escrow" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ROI ============ -->
+  <div id="roi" style="max-width:1240px;margin:0 auto;padding:96px 32px 0">
+    <div style="text-align:center">
+      <div style="font-size:14px;font-weight:800;color:#C79A3C;letter-spacing:3px">دخل الإدارة</div>
+      <h2 style="font-size:44px;font-weight:900;color:#1F3B57;margin:14px 0 0;line-height:1.35">رفادة ليس بندًا في المصروفات — بل مركز ربح</h2>
+      <p style="font-size:18px;color:#6B7280;margin:16px auto 0;max-width:700px;line-height:1.85">الأرقام أدناه لكمبوند 500 وحدة، بنموذجَي دخل يعملان معًا.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:44px">
+      <sc-for list="{{ roiCards }}" as="rc" hint-placeholder-count="2">
+        <div style="background:{{ rc.bg }};border-radius:24px;padding:34px;box-shadow:{{ rc.shadow }};border-top:7px solid {{ rc.accent }}">
+          <div style="font-size:14px;font-weight:800;color:{{ rc.accent }}">{{ rc.kicker }}</div>
+          <div style="font-size:30px;font-weight:900;color:{{ rc.titleC }};margin-top:6px">{{ rc.t }}</div>
+          <div style="font-size:16px;color:{{ rc.bodyC }};margin-top:12px;line-height:1.85">{{ rc.d }}</div>
+          <div style="display:flex;align-items:center;gap:16px;background:{{ rc.boxBg }};border-radius:18px;padding:22px 24px;margin-top:22px">
+            <span style="flex:1"><span style="font-size:15.5px;color:{{ rc.bodyC }};display:block">{{ rc.calc }}</span><span style="font-size:14px;color:{{ rc.mutedC }};display:block;margin-top:4px">{{ rc.note }}</span></span>
+            <span style="font-family:'IBM Plex Sans',sans-serif;font-size:34px;font-weight:700;color:{{ rc.numC }};white-space:nowrap">{{ rc.n }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+    <div style="background:#fff;border-radius:24px;padding:30px 38px;margin-top:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06);display:flex;align-items:center;gap:28px;flex-wrap:wrap">
+      <span style="font-size:21px;font-weight:900;color:#1F3B57;white-space:nowrap">إجمالي دخل الإدارة</span>
+      <span style="width:1px;height:48px;background:rgba(0,0,0,0.08)"></span>
+      <span style="flex:1;font-size:16.5px;color:#4B5563;line-height:1.7;min-width:280px">153 ألف جنيه سنويًا من كمبوند واحد — تغطي تكلفة الاشتراك عدة مرات، قبل حساب الوفر في التحصيل المتأخر وساعات العمل المؤتمتة.</span>
+      <span style="display:flex;flex-direction:column;align-items:flex-end">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:42px;font-weight:700;color:#A87F2C;white-space:nowrap">153,000</span>
+        <span style="font-size:14px;color:#6B7280">جنيه / سنة</span>
+      </span>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px">
+      <sc-for list="{{ proofStats }}" as="ps" hint-placeholder-count="4">
+        <div style="background:#fff;border-radius:18px;padding:24px;box-shadow:0 2px 14px rgba(0,0,0,0.05);text-align:center">
+          <div style="font-family:'IBM Plex Sans',sans-serif;font-size:32px;font-weight:700;color:#1F3B57">{{ ps.n }}</div>
+          <div style="font-size:14px;color:#6B7280;margin-top:6px;line-height:1.6">{{ ps.l }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ ADMIN CONSOLE ============ -->
+  <div style="max-width:1240px;margin:0 auto;padding:96px 32px 0">
+    <div style="display:grid;grid-template-columns:0.9fr 1.1fr;gap:44px;align-items:center">
+      <div>
+        <div style="font-size:14px;font-weight:800;color:#C79A3C;letter-spacing:3px">لوحة الإدارة</div>
+        <h2 style="font-size:42px;font-weight:900;color:#1F3B57;margin:14px 0 0;line-height:1.35">مركز قيادة يحسم القرار بضغطة</h2>
+        <p style="font-size:17.5px;color:#6B7280;margin:18px 0 0;line-height:1.9">صندوق «تحتاج قرارك الآن» يجمع كل ما ينتظر البتّ عبر الأقسام — روشتة صيدلية، إعلان عقاري، نزاع إسكرو، فعالية ساكن، مقدم خدمة جديد — بزرَّي حسم مباشرين.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:26px">
+          <sc-for list="{{ adminRows }}" as="ar" hint-placeholder-count="4">
+            <div style="background:#fff;border-radius:16px;padding:18px 22px;box-shadow:0 2px 12px rgba(0,0,0,0.05);display:flex;align-items:center;gap:14px">
+              <span style="width:38px;height:38px;border-radius:12px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="{{ ar.icon }}" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              </span>
+              <span style="flex:1;display:flex;flex-direction:column;gap:2px">
+                <span style="font-size:16px;font-weight:800;color:#1F3B57">{{ ar.t }}</span>
+                <span style="font-size:14px;color:#6B7280;line-height:1.6">{{ ar.d }}</span>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:center">
+        <div style="width:100%;max-width:640px;border-radius:16px;overflow:hidden;background:#E9E4D9;border:8px solid #10202F;box-shadow:0 26px 52px rgba(16,32,47,0.34)">
+          <div style="width:640px;height:527px;overflow:hidden">
+            <div style="width:1180px;height:972px;transform:scale(0.5424);transform-origin:top right;pointer-events:none">
+              <dc-import name="Jiwar Admin" preview-section="home" hint-size="1180px,972px"></dc-import>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PRICING ============ -->
+  <div id="pricing" style="max-width:1240px;margin:0 auto;padding:100px 32px 0">
+    <div style="text-align:center">
+      <div style="font-size:14px;font-weight:800;color:#C79A3C;letter-spacing:3px">الأسعار</div>
+      <h2 style="font-size:44px;font-weight:900;color:#1F3B57;margin:14px 0 0;line-height:1.35">ابدأ بمنطقة واحدة — وتوسّع بالأرقام</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:44px;align-items:stretch">
+      <sc-for list="{{ plans }}" as="pl" hint-placeholder-count="3">
+        <div style="background:{{ pl.bg }};border-radius:26px;padding:36px;box-shadow:{{ pl.shadow }};border:{{ pl.border }};display:flex;flex-direction:column;position:relative">
+          <sc-if value="{{ pl.featured }}" hint-placeholder-val="{{ false }}">
+            <span style="position:absolute;top:-14px;right:36px;background:#C79A3C;color:#fff;border-radius:999px;padding:7px 20px;font-size:13px;font-weight:800">الأكثر اختيارًا</span>
+          </sc-if>
+          <div style="font-size:15px;font-weight:800;color:{{ pl.kickerC }}">{{ pl.kicker }}</div>
+          <div style="font-size:30px;font-weight:900;color:{{ pl.titleC }};margin-top:6px">{{ pl.t }}</div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-top:18px">
+            <span style="font-family:'IBM Plex Sans',sans-serif;font-size:40px;font-weight:700;color:{{ pl.numC }}">{{ pl.price }}</span>
+            <span style="font-size:15px;color:{{ pl.mutedC }}">{{ pl.unit }}</span>
+          </div>
+          <div style="font-size:15px;color:{{ pl.bodyC }};margin-top:10px;line-height:1.8">{{ pl.d }}</div>
+          <div style="display:flex;flex-direction:column;gap:11px;margin-top:24px">
+            <sc-for list="{{ pl.rows }}" as="pr" hint-placeholder-count="4">
+              <div style="display:flex;align-items:center;gap:11px">
+                <span style="width:20px;height:20px;border-radius:7px;background:{{ pl.tickBg }};display:flex;align-items:center;justify-content:center;flex:none">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="{{ pl.tickC }}" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                </span>
+                <span style="font-size:15px;color:{{ pl.bodyC }};line-height:1.6">{{ pr }}</span>
+              </div>
+            </sc-for>
+          </div>
+          <div style="flex:1;min-height:22px"></div>
+          <a href="#demo" style="display:block;text-align:center;background:{{ pl.btnBg }};color:{{ pl.btnC }};border:{{ pl.btnBorder }};border-radius:999px;padding:15px;font-size:16px;font-weight:800">{{ pl.cta }}</a>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ FINAL CTA ============ -->
+  <div id="demo" style="max-width:1240px;margin:0 auto;padding:100px 32px 0">
+    <div style="background:linear-gradient(150deg,#1F3B57,#152A3F);border-radius:30px;padding:64px 56px;text-align:center;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-140px;right:-100px;width:460px;height:460px;border-radius:999px;background:radial-gradient(circle,rgba(199,154,60,0.24),transparent 68%)"></div>
+      <div style="position:relative">
+        <h2 style="font-size:46px;font-weight:900;color:#fff;margin:0;line-height:1.3">ابدأ بمنطقة واحدة في كمبوندك</h2>
+        <p style="font-size:19px;color:rgba(255,255,255,0.66);margin:18px auto 0;max-width:680px;line-height:1.85">نُطلق التشغيل في 14 يومًا: توزيع أكواد الدعوة، ربط الحسابات، تدريب فريقك — ثم أول تقرير تحصيل بعد شهر.</p>
+        <div style="display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap">
+          <a href="#demo" style="background:#C79A3C;color:#fff;border-radius:999px;padding:18px 42px;font-size:17px;font-weight:800;box-shadow:0 10px 30px rgba(199,154,60,0.38)">احجز عرضًا توضيحيًا</a>
+          <a href="#platform" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:999px;padding:18px 38px;font-size:17px;font-weight:800">جرّب البروتوتايب</a>
+        </div>
+        <div style="display:flex;gap:32px;justify-content:center;margin-top:34px;flex-wrap:wrap">
+          <sc-for list="{{ ctaNotes }}" as="cn" hint-placeholder-count="3">
+            <span style="display:flex;align-items:center;gap:9px;font-size:14.5px;color:rgba(255,255,255,0.55)">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#7BD8A5" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              {{ cn }}
+            </span>
+          </sc-for>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div style="max-width:1240px;margin:0 auto;padding:64px 32px 48px">
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid rgba(31,59,87,0.1);padding-top:32px">
+      <svg width="26" height="26" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#C79A3C" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#1F3B57" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+      <span style="font-size:16px;font-weight:900;color:#1F3B57">رفادة</span>
+      <span style="font-size:14px;color:#9AA1AC">— منصة تشغيل الكمبوندات</span>
+      <span style="flex:1"></span>
+      <span style="font-size:13.5px;color:#9AA1AC">القاهرة الجديدة · مصر</span>
+      <span style="font-size:13.5px;color:#9AA1AC">hello@jiwar.app</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1400, &quot;height&quot;: 1000}}">
+class Component extends DCLogic {
+  state = { tab: 'money' };
+
+  renderVals() {
+    const st = this.state;
+    const NAVY = '#1F3B57', GOLD = '#C79A3C', GREEN = '#3FA66B';
+
+    const heroStats = [
+      { n: '99', l: 'شاشة مبنية وتعمل اليوم' },
+      { n: '3', l: 'تطبيقات: ساكن · مقدم خدمة · إدارة' },
+      { n: '153k', l: 'جنيه دخل سنوي لكمبوند 500 وحدة' },
+    ];
+    const logos = ['Paymob', 'Fawry', 'Geidea', 'InstaPay', 'WE', 'Vodafone Cash'];
+
+    const problems = [
+      { t: 'التحصيل بالمطاردة', d: 'كشوف إكسل ورسائل واتساب فردية — والمتأخرات تُكتشف بعد شهور.', icon: 'M3 7h18v12H3zM3 11h18M6 15h4' },
+      { t: 'الشكاوى تضيع', d: 'بلاغ في مجموعة واتساب بلا رقم ولا حالة ولا زمن حل يُقاس.', icon: 'M12 9v4M12 17h.01M10.3 3.9L2.6 18a1.5 1.5 0 0 0 1.3 2.2h16.2a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z' },
+      { t: 'الخدمة من الخارج', d: 'الساكن يستدعي فنيًا مجهولًا من الشارع — والكمبوند لا يعرف ولا يربح.', icon: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-2.6z' },
+      { t: 'التسليم بلا دليل', d: 'عيوب الوحدة على ورق يُفقد — فتتحول للنزاع بعد سنوات.', icon: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z' },
+      { t: 'البوابة دفتر', d: 'تصاريح الزوار والمركبات مكتوبة بالقلم — بلا سجل يمكن مراجعته.', icon: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM20 17v3h-3' },
+      { t: 'قرار بلا رقم', d: 'الإدارة لا تعرف رضا السكان ولا زمن الحل ولا أين تنزف التكلفة.', icon: 'M3 3v18h18M7 15l4-5 3 3 5-7' },
+    ];
+
+    const sides = [
+      { kicker: 'الشق الأول', t: 'الساكن', d: 'بوابة واحدة بدل ست جهات: يدفع، يبلّغ، يطلب فنيًا، يتسوق، يحجز، ويستأذن لضيوفه.',
+        accent: GOLD, bg: '#fff', titleC: NAVY, bodyC: '#4B5563', iconBg: '#F1EDE4', chipBg: '#F7F4EE', chipC: NAVY,
+        shadowless: true, chips: ['دفع بلا متابعة', 'خدمة في دقائق', 'كل شيء موثّق'],
+        icon: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z' },
+      { kicker: 'الشق الثاني', t: 'الإدارة', d: 'لوحة تشغيل واحدة تُحصِّل تلقائيًا، تقيس زمن الحل والرضا، وتحوّل كل خدمة إلى إيراد.',
+        accent: GOLD, bg: 'linear-gradient(160deg,#27496F,#1F3B57)', titleC: '#fff', bodyC: 'rgba(255,255,255,0.68)',
+        iconBg: 'rgba(199,154,60,0.22)', chipBg: 'rgba(255,255,255,0.1)', chipC: '#fff',
+        chips: ['تحصيل مؤتمت', 'قياس بالأرقام', 'إيراد جديد'],
+        icon: 'M3 21h18M5 21V4h9v17M14 9h5v12M8 8h3M8 12h3M8 16h3' },
+      { kicker: 'الشق الثالث', t: 'مقدم الخدمة', d: 'فني أو متجر معتمد بتطبيق تشغيل خاص: يستلم الطلب، يثبت الإنجاز، ويستلم أرباحه بلا مطاردة.',
+        accent: GREEN, bg: '#fff', titleC: NAVY, bodyC: '#4B5563', iconBg: 'rgba(63,166,107,0.12)',
+        chipBg: 'rgba(63,166,107,0.1)', chipC: '#2E7D51', chips: ['عمل مضمون', 'دفع مضمون'],
+        icon: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-2.6z' },
+    ];
+
+    const loopDefs = [
+      ['الساكن يطلب ويدفع للمنصة', 'rgba(255,255,255,0.1)', '#fff'],
+      ['الإدارة تعتمد وتراقب الجودة', 'rgba(255,255,255,0.1)', '#fff'],
+      ['مقدم الخدمة ينفّذ ويُحوَّل له المبلغ', 'rgba(63,166,107,0.22)', '#7BD8A5'],
+    ];
+    const loop = loopDefs.map(([t, bg, c], i) => ({ t, bg, c, arrow: i === loopDefs.length - 1 ? 'none' : 'block' }));
+
+    const features = [
+      { t: 'الخدمات', d: 'شكوى للإدارة تُتابع بالحالة، أو مقدم خدمة فوري يصل في دقائق.', icon: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-2.6z' },
+      { t: 'المدفوعات', d: 'إيجار شهري أو أقساط تمليك متعددة السنوات — خصم تلقائي وإيصال فوري.', icon: 'M3 7h18v12H3zM3 11h18M6 15h4' },
+      { t: 'فواتيري', d: 'كهرباء وغاز ومياه وإنترنت من نفس التطبيق — بلا طوابير.', icon: 'M14 2H6v20h12V8zM14 2v6h6M13 11l-3 4h4l-3 4' },
+      { t: 'المتجر', d: 'مطاعم وصيدليات وبقالة ومغسلة — طلب وتتبع ودفع بضمان رفادة.', icon: 'M6 6h15l-1.5 9h-12zM6 6L5 3H2M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z' },
+      { t: 'المركبات والزوار', d: 'لوحات مسجّلة وتصاريح QR تنتهي تلقائيًا — بسجل مراجعة كامل.', icon: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM20 17v3h-3' },
+      { t: 'سوق العقارات', d: 'بيع وإيجار بين جيران موثّقين بوحداتهم — اكتشاف وتواصل بلا وسيط.', icon: 'M3 21h18M5 21V9l7-5 7 5v12M9 14h6M9 17h6' },
+      { t: 'رفادتنا', d: 'تشارك المساحات والمعدات بين الجيران بالوقت وبالسعر الذي يحدده صاحبها.', icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87' },
+      { t: 'الفعاليات والمجتمع', d: 'تذاكر QR للفعاليات، ومجموعات اهتمام دائمة ينشئها السكان بأنفسهم.', icon: 'M8 2v4M16 2v4M3 10h18M5 6h14v15H5z' },
+      { t: 'الشات مع الإدارة', d: 'قناة رسمية بديلة للواتساب — بسجل يُراجع وإسناد للموظف المختص.', icon: 'M21 12a8 8 0 0 1-8 8H4l2-3.2A8 8 0 1 1 21 12z' },
+      { t: 'حسابات العائلة', d: 'مالك الوحدة يدعو أفراد عائلته ويحدد صلاحية كل واحد بدقة.', icon: 'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2M18 8v6M21 11h-6' },
+      { t: 'الاستلام والتسليم', d: 'فحص غرفة بغرفة بصور مؤرّخة — دليل يحمي الساكن والمطوّر معًا.', icon: 'M9 11l3 3 8-8M20 12v7a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9' },
+      { t: 'المفقودات', d: 'مفتاح أو حقيبة وُجدت عند البوابة تصل صاحبها في ساعات لا أسابيع.', icon: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM15.5 8.5l-2 5-5 2 2-5z' },
+    ];
+
+    const tabDefs = [
+      ['money', 'محرّك الإيراد'],
+      ['community', 'المجتمع والثقة'],
+      ['ops', 'التشغيل اليومي'],
+    ];
+    const tabs = tabDefs.map(([key, label]) => ({
+      label, pick: () => this.setState({ tab: key }),
+      bg: st.tab === key ? NAVY : 'transparent',
+      c: st.tab === key ? '#fff' : '#6B7280',
+    }));
+
+    const showcaseSets = {
+      money: [
+        { key: 'pay', t: 'المدفوعات', d: 'إيجار أو أقساط تمليك — والرصيد واضح قبل موعده.' },
+        { key: 'food', t: 'المتجر', d: 'كل متاجر الكمبوند في مكان واحد مع توصيل للباب.' },
+        { key: 'bills', t: 'فواتيري', d: 'فواتير الكهرباء والإنترنت تُسدَّد من نفس المحفظة.' },
+      ],
+      community: [
+        { key: 'feed', t: 'الفعاليات', d: 'حجز بمكان محدود وتذكرة QR وتقييم بعد الحضور.' },
+        { key: 'reBrowse', t: 'سوق العقارات', d: 'إعلانات من جيران موثّقين بوحداتهم فعليًا.' },
+        { key: 'family', t: 'حسابات العائلة', d: 'دعوة الأفراد وتحديد صلاحية كل واحد منهم.' },
+      ],
+      ops: [
+        { key: 'svcHub', t: 'الخدمات', d: 'مسار الشكوى الرسمي أو المطابقة الفورية.' },
+        { key: 'matching', t: 'مقدمو الخدمة', d: 'مرتّبون بالتقييم والوقت والسعر — تختار بنفسك.' },
+        { key: 'gate', t: 'المركبات والزوار', d: 'تصريح QR للزائر ينتهي تلقائيًا بعد موعده.' },
+      ],
+    };
+    const showcase = showcaseSets[st.tab] || showcaseSets.money;
+
+    const trustRows = [
+      'المبلغ محجوز لحظة الطلب — لا يصل مقدم الخدمة قبل تأكيدك',
+      'إثبات إنجاز بالصور من داخل تطبيق مقدم الخدمة',
+      'مركز فض نزاعات: استرداد كامل أو جزئي أو تحرير للمقدم',
+      'كل عملية مسجّلة في سجل تدقيق لا يُحذف',
+    ];
+
+    const roiCards = [
+      { kicker: 'المصدر الأول', t: 'اشتراك سنوي لكل ساكن', d: 'مبلغ رمزي يُضاف لرسوم الصيانة ويُحصَّل تلقائيًا مع أول قسط — بلا مجهود تحصيل إضافي.',
+        calc: '240 ج.م / وحدة سنويًا × 500 وحدة', note: 'أي 20 ج.م شهريًا فقط لكل ساكن', n: '120,000',
+        accent: GOLD, bg: '#fff', shadow: '0 2px 14px rgba(0,0,0,0.06)', titleC: NAVY, bodyC: '#4B5563',
+        mutedC: '#9AA1AC', boxBg: '#F7F4EE', numC: NAVY },
+      { kicker: 'المصدر الثاني', t: 'نسبة من كل خدمة تُقدَّم', d: 'كل مهمة فني وكل طلب متجر وكل حجز مرفق يمرّ بالمنصة يعطي الإدارة حصة من العمولة.',
+        calc: 'حصة الإدارة — 2,763 ج.م شهريًا', note: 'من 312 مهمة وطلب في شهر واحد', n: '33,000',
+        accent: GREEN, bg: 'linear-gradient(160deg,#27496F,#1F3B57)', shadow: 'none', titleC: '#fff',
+        bodyC: 'rgba(255,255,255,0.68)', mutedC: 'rgba(255,255,255,0.45)', boxBg: 'rgba(255,255,255,0.08)', numC: '#7BD8A5' },
+    ];
+
+    const proofStats = [
+      { n: '87%', l: 'معدل التحصيل بعد التشغيل' },
+      { n: '18 س', l: 'متوسط زمن حل الشكوى' },
+      { n: '62 س', l: 'ساعة عمل مؤتمتة شهريًا' },
+      { n: '4.2/5', l: 'رضا السكان المُقاس' },
+    ];
+
+    const adminRows = [
+      { t: 'إجراءات جماعية', d: 'تذكير 14 حسابًا متأخرًا أو إغلاق 8 تذاكر بضغطة واحدة.', icon: 'M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11' },
+      { t: 'ملف الوحدة الشامل', d: 'سجل سداد وتذاكر وعائلة ومركبات واستخدام — في شاشة واحدة.', icon: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z' },
+      { t: 'قواعد أتمتة', d: '«إذا تأخّر السداد 3 أيام فأرسل تذكيرًا» — 1,284 إجراء مؤتمت شهريًا.', icon: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19 12c0-.4 0-.8-.1-1.2l2-1.5-2-3.5-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.5 2 1.5a7 7 0 0 0 0 2.4l-2 1.5 2 3.5 2.4-1a7 7 0 0 0 2 1.2L10 21h4l.5-2.6a7 7 0 0 0 2-1.2l2.4 1 2-3.5-2-1.5c.1-.4.1-.8.1-1.2z' },
+      { t: 'تقارير جاهزة', d: 'تقرير مجلس الملاك بضغطة — PDF أو Excel أو جدولة شهرية.', icon: 'M14 2H6v20h12V8zM14 2v6h6M9 13h6M9 17h4' },
+    ];
+
+    const plans = [
+      { kicker: 'للبدء', t: 'منطقة واحدة', price: '4,900', unit: 'ج.م / شهر', d: 'حتى 150 وحدة — الدورة الأساسية كاملة.',
+        rows: ['تطبيق الساكن كاملًا', 'لوحة الإدارة والتذاكر', 'تحصيل وإيصالات تلقائية', 'دعم عبر واتساب'],
+        cta: 'ابدأ بمنطقة', featured: false,
+        bg: '#fff', shadow: '0 2px 14px rgba(0,0,0,0.06)', border: 'none', kickerC: '#6B7280', titleC: NAVY,
+        numC: NAVY, mutedC: '#9AA1AC', bodyC: '#4B5563', tickBg: 'rgba(63,166,107,0.13)', tickC: '#2E7D51',
+        btnBg: 'transparent', btnC: NAVY, btnBorder: '1.5px solid rgba(31,59,87,0.25)' },
+      { kicker: 'الأكثر ملاءمة', t: 'كمبوند كامل', price: '12,900', unit: 'ج.م / شهر', d: 'حتى 600 وحدة — مع سوق الخدمات والمتجر.',
+        rows: ['كل ما في «منطقة واحدة»', 'سوق مقدمي الخدمة والإسكرو', 'المتجر وفواتيري', 'حصة الإدارة من كل عمولة', 'مدير حساب مخصّص'],
+        cta: 'احجز عرضًا', featured: true,
+        bg: 'linear-gradient(160deg,#27496F,#1F3B57)', shadow: '0 22px 48px rgba(31,59,87,0.3)', border: 'none',
+        kickerC: '#E8C989', titleC: '#fff', numC: '#fff', mutedC: 'rgba(255,255,255,0.5)', bodyC: 'rgba(255,255,255,0.72)',
+        tickBg: 'rgba(63,166,107,0.25)', tickC: '#7BD8A5', btnBg: '#C79A3C', btnC: '#fff', btnBorder: 'none' },
+      { kicker: 'للمطوّرين', t: 'محفظة عقارية', price: 'حسب الحجم', unit: '', d: 'عدة كمبوندات تحت شركة إدارة واحدة.',
+        rows: ['لوحة محفظة موحّدة', 'ملف تسليم موثّق لكل وحدة', 'تقارير مقارنة بين المشروعات', 'تكامل مع أنظمتك الحالية'],
+        cta: 'تحدّث مع فريقنا', featured: false,
+        bg: '#fff', shadow: '0 2px 14px rgba(0,0,0,0.06)', border: 'none', kickerC: '#6B7280', titleC: NAVY,
+        numC: NAVY, mutedC: '#9AA1AC', bodyC: '#4B5563', tickBg: 'rgba(63,166,107,0.13)', tickC: '#2E7D51',
+        btnBg: 'transparent', btnC: NAVY, btnBorder: '1.5px solid rgba(31,59,87,0.25)' },
+    ];
+
+    const ctaNotes = ['تشغيل في 14 يومًا', 'بلا أجهزة جديدة', 'عربي أولًا — ويدعم الإنجليزية'];
+
+    return { heroStats, logos, problems, sides, loop, features, tabs, showcase, trustRows, roiCards, proofStats, adminRows, plans, ctaNotes };
+  }
+}
+</script>
+</body>
+</html>

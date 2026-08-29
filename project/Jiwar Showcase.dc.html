@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=70&auto=format&fit=crop" data-resource-id="rephoto0" />
+<meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=70&auto=format&fit=crop" data-resource-id="rephoto1" />
+<meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=70&auto=format&fit=crop" data-resource-id="rephoto2" />
+<meta name="ext-resource-dependency" content="https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=70&auto=format&fit=crop" data-resource-id="rephoto3" />
+<script src="./support.js"></script>
+</head>
+<body>
+<template id="__bundler_thumbnail" data-bg-color="#1F3B57">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#1F3B57"/>
+    <path d="M330 430L520 250l190 180" stroke="#3FA66B" stroke-width="46" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M490 560L680 380l190 180" stroke="#F7F4EE" stroke-width="46" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <rect x="470" y="620" width="260" height="26" rx="13" fill="#C79A3C"/>
+  </svg>
+</template>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9E4D9;}
+a{color:#1F3B57;}a:hover{color:#C79A3C;}
+button{font-family:'Cairo',sans-serif;}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;font-family:'Cairo',sans-serif;background:radial-gradient(1200px 600px at 50% -10%, #F3EFE6 0%, #E9E4D9 60%)">
+
+  <div dir="rtl" style="width:100%;max-width:1560px;box-sizing:border-box;display:flex;align-items:center;gap:14px;padding:22px 30px 14px">
+    <svg width="32" height="32" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#C79A3C" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#1F3B57" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+    <div style="display:flex;flex-direction:column">
+      <div style="font-size:18px;font-weight:900;color:#1F3B57;line-height:1.2">رفادة <span style="font-family:'IBM Plex Sans',sans-serif;font-size:11px;font-weight:600;color:#C79A3C;letter-spacing:2px">JIWAR</span></div>
+      <div style="font-size:11.5px;color:#6B7280">معرض المنتج الكامل — الساكن · مقدم الخدمة · لوحة الإدارة</div>
+    </div>
+    <div style="flex:1"></div>
+    <div style="display:flex;background:#fff;border-radius:999px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+      <button onClick="{{ setResident }}" style="border:none;cursor:pointer;border-radius:999px;padding:9px 22px;font-size:12.5px;font-weight:800;white-space:nowrap;background:{{ tbRBg }};color:{{ tbRC }}">🟦 تطبيق الساكن</button>
+      <button onClick="{{ setProvider }}" style="border:none;cursor:pointer;border-radius:999px;padding:9px 22px;font-size:12.5px;font-weight:800;white-space:nowrap;background:{{ tbPBg }};color:{{ tbPC }}">🟩 مقدم الخدمة</button>
+      <button onClick="{{ setAdmin }}" style="border:none;cursor:pointer;border-radius:999px;padding:9px 22px;font-size:12.5px;font-weight:800;white-space:nowrap;background:{{ tbABg }};color:{{ tbAC }}">🟨 لوحة الإدارة</button>
+    </div>
+  </div>
+
+  <div dir="rtl" style="width:100%;max-width:1560px;box-sizing:border-box;padding:0 30px 8px;display:flex;align-items:center;gap:14px">
+    <div style="background:#fff;border-radius:16px;padding:12px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);display:flex;align-items:center;gap:16px;flex:1">
+      <span style="font-size:13px;font-weight:800;color:#1F3B57;white-space:nowrap">{{ appTitle }}</span>
+      <span style="width:1px;height:24px;background:rgba(0,0,0,0.08)"></span>
+      <span style="font-size:12px;color:#6B7280;line-height:1.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ appSub }}</span>
+      <span style="flex:1"></span>
+      <span style="background:rgba(199,154,60,0.14);color:#A87F2C;border-radius:999px;padding:5px 15px;font-size:11.5px;font-weight:800;white-space:nowrap">{{ screenCount }} شاشة</span>
+    </div>
+    <div style="display:flex;background:#fff;border-radius:999px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+      <button onClick="{{ setGallery }}" style="border:none;cursor:pointer;border-radius:999px;padding:8px 18px;font-size:12px;font-weight:800;background:{{ vgBg }};color:{{ vgC }}">معرض الشاشات</button>
+      <button onClick="{{ setLive }}" style="border:none;cursor:pointer;border-radius:999px;padding:8px 18px;font-size:12px;font-weight:800;background:{{ vlBg }};color:{{ vlC }}">تجربة تفاعلية</button>
+    </div>
+  </div>
+
+  <!-- ===== LIVE: resident ===== -->
+  <sc-if value="{{ liveResident }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:10px 0 60px;width:470px">
+      <dc-import name="Jiwar Phone" embed-phone="{{ true }}" initial-screen="{{ liveScreen }}" hint-size="470px,920px"></dc-import>
+    </div>
+  </sc-if>
+
+  <!-- ===== LIVE: provider ===== -->
+  <sc-if value="{{ liveProvider }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:10px 0 60px">
+      <dc-import name="Jiwar Provider" hint-size="440px,900px"></dc-import>
+    </div>
+  </sc-if>
+
+  <!-- ===== LIVE: admin ===== -->
+  <sc-if value="{{ liveAdmin }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:10px 30px 60px;width:100%;max-width:1560px;box-sizing:border-box">
+      <div style="border-radius:16px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.16);border:7px solid #10202F;background:#E9E4D9">
+        <dc-import name="Jiwar Admin" hint-size="100%,900px"></dc-import>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== GALLERY: resident ===== -->
+  <sc-if value="{{ galResident }}" hint-placeholder-val="{{ true }}">
+    <div dir="rtl" style="width:100%;max-width:1560px;box-sizing:border-box;padding:6px 30px 70px">
+      <sc-for list="{{ resGroups }}" as="g" hint-placeholder-count="4">
+        <div style="margin-top:30px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:#1F3B57"><span style="width:8px;height:8px;border-radius:99px;background:#C79A3C"></span>{{ g.name }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:12px">
+            <sc-for list="{{ g.screens }}" as="s" hint-placeholder-count="4">
+              <div style="width:236px;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:8px;padding:0 2px">
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:10.5px;font-weight:700;color:#C79A3C;letter-spacing:1px;flex:none">{{ s.id }}</span>
+                  <span style="font-size:12.5px;font-weight:800;color:#1F3B57;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.t }}</span>
+                </div>
+                <div style="position:relative;width:236px;height:497px;border-radius:22px;overflow:hidden;background:#EDE9DF;box-shadow:0 2px 12px rgba(0,0,0,0.09)">
+                  <div style="width:480px;height:1014px;transform:scale(0.49);transform-origin:top right;pointer-events:none">
+                    <dc-import name="Jiwar Phone" fixed-screen="{{ s.key }}" hint-size="480px,1014px"></dc-import>
+                  </div>
+                  <button onClick="{{ s.go }}" title="افتحها تفاعليًا" style="position:absolute;inset:0;background:transparent;border:none;cursor:pointer;padding:0"></button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <!-- ===== GALLERY: provider ===== -->
+  <sc-if value="{{ galProvider }}" hint-placeholder-val="{{ false }}">
+    <div dir="rtl" style="width:100%;max-width:1560px;box-sizing:border-box;padding:6px 30px 70px">
+      <sc-for list="{{ provGroups }}" as="g" hint-placeholder-count="2">
+        <div style="margin-top:30px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:800;color:#1F3B57"><span style="width:8px;height:8px;border-radius:99px;background:#3FA66B"></span>{{ g.name }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:12px">
+            <sc-for list="{{ g.screens }}" as="s" hint-placeholder-count="4">
+              <div style="width:236px;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:8px;padding:0 2px">
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:10.5px;font-weight:700;color:#2E7D51;letter-spacing:1px;flex:none">{{ s.id }}</span>
+                  <span style="font-size:12.5px;font-weight:800;color:#1F3B57;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.t }}</span>
+                </div>
+                <div style="position:relative;width:236px;height:497px;border-radius:22px;overflow:hidden;background:#EDE9DF;box-shadow:0 2px 12px rgba(0,0,0,0.09)">
+                  <div style="width:470px;height:1080px;transform:scale(0.502);transform-origin:top right;pointer-events:none;position:relative;top:-45px">
+                    <dc-import name="Jiwar Provider" preview-screen="{{ s.key }}" hint-size="470px,1080px"></dc-import>
+                  </div>
+                  <button onClick="{{ setLive }}" title="افتحه تفاعليًا" style="position:absolute;inset:0;background:transparent;border:none;cursor:pointer;padding:0"></button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+
+  <!-- ===== GALLERY: admin ===== -->
+  <sc-if value="{{ galAdmin }}" hint-placeholder-val="{{ false }}">
+    <div dir="rtl" style="width:100%;max-width:1560px;box-sizing:border-box;padding:6px 30px 70px">
+      <sc-for list="{{ adminGroups }}" as="g" hint-placeholder-count="4">
+        <div style="margin-top:14px">
+          <button onClick="{{ g.toggle }}" style="width:100%;border:none;cursor:pointer;background:#fff;border-radius:14px;padding:14px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);display:flex;align-items:center;gap:10px;text-align:right;font-family:'Cairo',sans-serif">
+            <span style="width:8px;height:8px;border-radius:99px;background:#C79A3C;flex:none"></span>
+            <span style="font-size:15px;font-weight:800;color:#1F3B57">{{ g.name }}</span>
+            <span style="background:rgba(31,59,87,0.07);color:#1F3B57;border-radius:999px;padding:2px 11px;font-size:10.5px;font-weight:800;flex:none">{{ g.count }}</span>
+            <span style="flex:1"></span>
+            <span style="font-size:11.5px;font-weight:800;color:#A87F2C;white-space:nowrap">{{ g.hint }}</span>
+          </button>
+          <div style="display:flex;flex-wrap:wrap;gap:20px;margin-top:12px">
+            <sc-for list="{{ g.shown }}" as="s" hint-placeholder-count="3">
+              <div style="width:470px;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:8px;padding:0 2px">
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:10.5px;font-weight:700;color:#C79A3C;letter-spacing:1px;flex:none">{{ s.id }}</span>
+                  <span style="font-size:12.5px;font-weight:800;color:#1F3B57;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.t }}</span>
+                </div>
+                <div style="position:relative;width:470px;height:430px;border-radius:12px;overflow:hidden;background:#E9E4D9;box-shadow:0 4px 18px rgba(0,0,0,0.14);border:5px solid #10202F">
+                  <div style="width:1180px;height:1080px;transform:scale(0.3983);transform-origin:top right;pointer-events:none">
+                    <dc-import name="Jiwar Admin" preview-section="{{ s.key }}" hint-size="1180px,1080px"></dc-import>
+                  </div>
+                  <button onClick="{{ setLive }}" title="افتحها تفاعليًا" style="position:absolute;inset:0;background:transparent;border:none;cursor:pointer;padding:0"></button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1560, &quot;height&quot;: 1000}}">
+class Component extends DCLogic {
+  state = { app: 'resident', view: 'gallery', liveScreen: 'home', openAdminGroup: 0 };
+
+  renderVals() {
+    const st = this.state;
+    const NAVY = '#1F3B57', SLATE = '#6B7280';
+    const seg = on => (on ? NAVY : 'transparent');
+    const segC = on => (on ? '#fff' : SLATE);
+
+    const resDefs = [
+      ['الدخول والتفعيل', [['R1','splash','شاشة البداية وكود الدعوة'],['R2','otp','التحقق برسالة OTP'],['R3','setup','إنشاء الحساب']]],
+      ['الرئيسية والتنقّل', [['R4','home','الشاشة الرئيسية'],['R4b','services','مركز الخدمات'],['R14','profile','الملف الشخصي'],['R22','notifs','الإشعارات']]],
+      ['الخدمات', [['HUB','svcHub','الخدمات — اختيار المسار'],['R5','maintNew','شكوى جديدة'],['R6','maintList','قائمة الشكاوى'],['R7','maintDetail','تفاصيل الشكوى والتقييم'],['R28','survey','استبيان الرضا']]],
+      ['سوق مقدمي الخدمة — مطابقة فورية', [['R33','reqService','اطلب خدمة فورية'],['R34','matching','مقدمو الخدمة المتاحون'],['R37','escrow','حجز المبلغ (Escrow)'],['R35','liveJob','حالة الطلب المباشرة'],['R36','rateProvider','تقييم مقدم الخدمة'],['R38','dispute','الإبلاغ عن مشكلة']]],
+      ['المدفوعات — إيجار وتقسيط', [['R10','pay','كشف الحساب'],['R11','payNow','إتمام الدفع'],['R11b','paySuccess','نجاح الدفع والإيصال'],['R16','payHistory','سجل المدفوعات'],['R50b','autopay','الدفع التلقائي'],['R27','fin','الخدمات المالية']]],
+      ['فواتيري — فواتير خارجية', [['R51','bills','فواتيري — الرئيسية'],['R52','billLink','ربط فاتورة جديدة'],['R53','billDetail','تفاصيل الفاتورة والدفع'],['R54','billHistory','سجل سداد الفواتير'],['R55','billAutopay','الدفع التلقائي للفواتير']]],
+      ['المتجر — قسم موحد', [['R46','food','المتجر — التصفح'],['R47','foodMenu','المنيو والسلة'],['R48','foodCart','السلة والدفع'],['R49','foodTrack','تتبع الطلب'],['R50','foodHistory','طلباتي السابقة']]],
+      ['الفعاليات والمجتمع', [['R13','feed','الفعاليات والمجتمع'],['R71','eventDetail','تفاصيل الفعالية والحجز'],['R72','eventCreate','اقترح فعالية'],['R73','groupDetail','مجموعة اهتمام'],['R74','groupCreate','أنشئ مجموعة']]],
+      ['سوق العقارات — بين الجيران', [['R39','reBrowse','تصفح الإعلانات'],['R40','reCreate','أعلن عن وحدتك'],['R41','reDetail','تفاصيل الإعلان'],['R42','reMine','إعلاناتي']]],
+      ['رفادتنا — مشاركة بين الجيران', [['R67','share','رفادتنا — معروض للمشاركة'],['R68','shareCreate','اعرض شيئًا لديك'],['R69','shareDetail','تفاصيل المشاركة والحجز']]],
+      ['المرافق والانتقال', [['R8','amen','حجز المرافق'],['R9','amenConfirm','تأكيد الحجز'],['R9b','amenDone','نجاح الحجز + QR'],['R12','movein','قائمة الاستلام والتسليم']]],
+      ['المجتمع والخدمات', [['R17','gate','المركبات وتصاريح الزوار'],['R18','lost','المفقودات — تصفح'],['R19','lostReport','المفقودات — إبلاغ'],['R23','chat','الرسائل مع الإدارة']]],
+      ['حسابات العائلة', [['R43','family','أفراد العائلة'],['R44','famPerms','صلاحيات الفرد']]],
+      ['المكافآت والثقة', [['R24','rewards','المكافآت'],['R25','rewards','نافذة الاستبدال'],['R26','score','نقاط الثقة']]],
+      ['أخرى', [['R29','consent','موافقة مشاركة البيانات'],['R30','pets','الحيوانات الأليفة'],['R32','renew','تجديد عقد الخدمات'],['D1','docs','المستندات'],['D2','contacts','جهات الاتصال'],['D3','links','روابط مهمة']]],
+    ];
+
+    const provDefs = [
+      ['الفني — الدورة اليومية', [['P2','home','الرئيسية والتوفر'],['P4','job','تفاصيل المهمة والتنفيذ'],['P5','history','المحفظة والأرباح والسحب البنكي']]],
+      ['المتجر — استقبال وتشغيل الطلبات', [['P9','storeHome','واجهة المتجر والمنيو'],['P10','storeOrders','طابور الطلبات وخروج الأوردر'],['P11','storePayout','أرباح المتجر بعد العمولة']]],
+    ];
+
+    const adminDefs = [
+      ['التشغيل اليومي', [['A2','home','مركز القيادة'],['A3','tickets','طابور التذاكر'],['A5','residents','دليل السكان'],['A36','unit360','ملف الوحدة الشامل'],['A6','broadcast','بث الإعلانات'],['A8','amen','إدارة المرافق']]],
+      ['المالية والأداء', [['A9','collection','التحصيل والإجراءات الجماعية'],['A10','sla','متابعة SLA'],['A14','sentiment','مشاعر السكان'],['A15','scoring','نقاط الثقة']]],
+      ['سوق مقدمي الخدمة', [['A21','vendors','الموردون ومقدمو الخدمة'],['A20','onboard','تعيين مقدم خدمة'],['A25','revenue','عمولة السوق والإيرادات'],['A24','verify','اعتماد مقدمي الخدمة'],['A26','disputes','مركز فض النزاعات'],['A27','sourcing','إعدادات مصادر الخدمة']]],
+      ['السوق العقاري والمتاجر', [['A28','reMod','مراجعة إعلانات العقارات'],['A29','storesDir','متاجر «المتجر»'],['A31','billAgg','مزودو الفواتير']]],
+      ['الإنتاجية والحكم', [['A37','automation','قواعد الأتمتة'],['A38','team','الفريق والصلاحيات والتدقيق'],['A39','reports','التقارير والتصدير']]],
+      ['المجتمع والتوسع', [['A16','inbox','رسائل السكان'],['A11','lostmod','مراجعة المفقودات'],['A13','gatelog','سجل الزوار'],['A17','portfolio','المحفظة العقارية'],['A18','predict','الصيانة التنبؤية'],['A19','iot','العدادات الذكية']]],
+    ];
+
+    const mk = (defs, jumpFn) => defs.map(d => ({
+      name: d[0],
+      screens: d[1].map(s => ({ id: s[0], key: s[1], t: s[2], go: jumpFn ? jumpFn(s[1]) : (() => this.setState({ view: 'live' })) })),
+    }));
+    const resGroups = mk(resDefs, key => () => this.setState({ view: 'live', liveScreen: key }));
+    const provGroups = mk(provDefs);
+    const adminGroups = mk(adminDefs).map((g, i) => {
+      const open = st.openAdminGroup === i;
+      return { ...g, shown: open ? g.screens : [],
+        count: String(g.screens.length),
+        hint: open ? 'إخفاء ▲' : 'اعرض الشاشات ▼',
+        toggle: () => this.setState({ openAdminGroup: open ? -1 : i }) };
+    });
+
+    const count = defs => defs.reduce((a, d) => a + d[1].length, 0);
+    const meta = {
+      resident: { title: '🟦 تطبيق الساكن', sub: 'RTL عربي — الخدمات، المدفوعات، المتجر، الفعاليات، العقارات، العائلة', n: count(resDefs) },
+      provider: { title: '🟩 تطبيق مقدم الخدمة', sub: 'الفني والمتجر — استقبال الطلبات، إثبات الإنجاز، وسحب الأرباح', n: count(provDefs) },
+      admin: { title: '🟨 لوحة الإدارة', sub: 'مركز قيادة — قرارات بضغطة، إجراءات جماعية، أتمتة، تقارير', n: count(adminDefs) },
+    }[st.app];
+
+    return {
+      setResident: () => this.setState({ app: 'resident', view: 'gallery' }),
+      setProvider: () => this.setState({ app: 'provider', view: 'gallery' }),
+      setAdmin: () => this.setState({ app: 'admin', view: 'gallery' }),
+      tbRBg: seg(st.app === 'resident'), tbRC: segC(st.app === 'resident'),
+      tbPBg: seg(st.app === 'provider'), tbPC: segC(st.app === 'provider'),
+      tbABg: seg(st.app === 'admin'), tbAC: segC(st.app === 'admin'),
+      setGallery: () => this.setState({ view: 'gallery' }),
+      setLive: () => this.setState({ view: 'live' }),
+      vgBg: seg(st.view === 'gallery'), vgC: segC(st.view === 'gallery'),
+      vlBg: seg(st.view === 'live'), vlC: segC(st.view === 'live'),
+      appTitle: meta.title, appSub: meta.sub, screenCount: String(meta.n),
+      galResident: st.view === 'gallery' && st.app === 'resident',
+      galProvider: st.view === 'gallery' && st.app === 'provider',
+      galAdmin: st.view === 'gallery' && st.app === 'admin',
+      liveResident: st.view === 'live' && st.app === 'resident',
+      liveProvider: st.view === 'live' && st.app === 'provider',
+      liveAdmin: st.view === 'live' && st.app === 'admin',
+      liveScreen: st.liveScreen,
+      resGroups, provGroups, adminGroups,
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#1F3B57;}
+a{color:#C79A3C;}a:hover{color:#A87F2C;}
+</style>
+</helmet>
+
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+  <section data-label="الغلاف" data-screen-label="01" data-speaker-notes="رفادة: منصة تشغيل الكمبوندات في مصر. ابدأ بالجملة الواحدة: نمنح الساكن كل ما يحتاجه، ونمنح الإدارة طريقة أفضل لتشغيله — والشاشات على اليسار حيّة من المنتج نفسه." style="background:linear-gradient(150deg,#27496F 0%,#1F3B57 55%,#152A3F 100%);display:flex;align-items:center;gap:70px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl;overflow:hidden">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:22px">
+        <svg width="72" height="72" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#C79A3C" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#F7F4EE" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+        <div style="font-size:76px;font-weight:900;color:#fff;letter-spacing:-1px">رفادة</div>
+      </div>
+      <div style="font-size:56px;font-weight:800;color:#fff;margin-top:44px;line-height:1.35;text-wrap:pretty">نمنح الساكن كل ما يحتاجه، ونمنح الإدارة طريقة أفضل لتشغيله</div>
+      <div style="font-size:30px;color:rgba(255,255,255,0.62);margin-top:30px;line-height:1.7">منصة تشغيل الكمبوندات — تبدأ من مصر، حيث 3 آلاف كمبوند تُدار اليوم بالواتساب والدفاتر الورقية.</div>
+      <div style="display:flex;gap:14px;margin-top:44px;flex-wrap:wrap">
+        <span style="background:rgba(199,154,60,0.18);color:#E8C989;border-radius:999px;padding:12px 30px;font-size:26px;font-weight:800">عرض المنتج — أغسطس 2026</span>
+        <span style="background:rgba(255,255,255,0.08);color:#fff;border-radius:999px;padding:12px 30px;font-size:26px;font-weight:800">بروتوتايب حيّ قابل للتجربة</span>
+      </div>
+    </div>
+
+    <div style="width:640px;height:840px;position:relative;flex:none">
+      <div style="position:absolute;top:0;right:250px;width:288px;height:560px;overflow:hidden;border-radius:22px;transform:rotate(-5deg);box-shadow:0 30px 70px rgba(0,0,0,0.4)">
+        <div style="width:480px;height:1014px;transform:scale(0.6);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="pay" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+      <div style="position:absolute;bottom:60px;right:330px;width:288px;height:520px;overflow:hidden;border-radius:22px;transform:rotate(4deg);box-shadow:0 30px 70px rgba(0,0,0,0.4)">
+        <div style="width:480px;height:1014px;transform:scale(0.6);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="food" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+      <div style="position:absolute;top:120px;right:0;width:336px;height:710px;overflow:hidden;border-radius:26px;box-shadow:0 40px 90px rgba(0,0,0,0.5)">
+        <div style="width:480px;height:1014px;transform:scale(0.7);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="home" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="الرؤية" data-screen-label="02" data-speaker-notes="الرؤية شقّان لا ينفصلان: تجربة الساكن هي المنتج، وأدوات الإدارة هي ما يُدفع مقابله. كل قدرة نبنيها يجب أن تخدم الشقين معًا — وإلا لا نبنيها." style="background:#F7F4EE;display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">الرؤية</div>
+    <div style="font-size:62px;font-weight:900;color:#1F3B57;margin-top:16px;max-width:1450px;line-height:1.3;text-wrap:pretty">نمنح الساكن كل ما يحتاجه، ونمنح الإدارة طريقة أفضل لتشغيله</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:22px;margin-top:44px">
+      <div style="background:#fff;border-radius:24px;padding:32px;box-shadow:0 2px 16px rgba(0,0,0,0.07);border-top:7px solid #C79A3C">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="width:58px;height:58px;border-radius:17px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none"><svg width="27" height="27" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+          <div>
+            <div style="font-size:25px;color:#C79A3C;font-weight:800">الشق الأول</div>
+            <div style="font-size:33px;font-weight:900;color:#1F3B57;margin-top:3px">الساكن</div>
+          </div>
+        </div>
+        <div style="font-size:25px;color:#4B5563;margin-top:20px;line-height:1.7">بوابة واحدة بدل ست جهات: يدفع، يبلّغ، يطلب فنيًا، يتسوق، ويستأذن لضيوفه — من نفس التطبيق.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:22px">
+          <span style="background:#F7F4EE;color:#1F3B57;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800">دفع بلا متابعة</span>
+          <span style="background:#F7F4EE;color:#1F3B57;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800">خدمة في دقائق</span>
+        </div>
+      </div>
+
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:24px;padding:32px;border-top:7px solid #C79A3C">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="width:58px;height:58px;border-radius:17px;background:rgba(199,154,60,0.22);display:flex;align-items:center;justify-content:center;flex:none"><svg width="27" height="27" viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V4h9v17M14 9h5v12M8 8h3M8 12h3M8 16h3" stroke="#C79A3C" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+          <div>
+            <div style="font-size:25px;color:#C79A3C;font-weight:800">الشق الثاني</div>
+            <div style="font-size:33px;font-weight:900;color:#fff;margin-top:3px">الإدارة</div>
+          </div>
+        </div>
+        <div style="font-size:25px;color:rgba(255,255,255,0.66);margin-top:20px;line-height:1.7">لوحة تشغيل واحدة تُحصِّل تلقائيًا، تقيس زمن الحل والرضا، وتحوّل كل خدمة تخرج من الكمبوند إلى إيراد داخله.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:22px">
+          <span style="background:rgba(255,255,255,0.1);color:#fff;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800">تحصيل مؤتمت</span>
+          <span style="background:rgba(255,255,255,0.1);color:#fff;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800">قياس بالأرقام</span>
+        </div>
+      </div>
+
+      <div style="background:#fff;border-radius:24px;padding:32px;box-shadow:0 2px 16px rgba(0,0,0,0.07);border-top:7px solid #3FA66B">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="width:58px;height:58px;border-radius:17px;background:rgba(63,166,107,0.12);display:flex;align-items:center;justify-content:center;flex:none"><svg width="27" height="27" viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-2.6z" stroke="#2E7D51" strokeWidth="1.7" strokeLinejoin="round"></path></svg></span>
+          <div>
+            <div style="font-size:25px;color:#2E7D51;font-weight:800">الشق الثالث</div>
+            <div style="font-size:33px;font-weight:900;color:#1F3B57;margin-top:3px">مقدم الخدمة</div>
+          </div>
+        </div>
+        <div style="font-size:25px;color:#4B5563;margin-top:20px;line-height:1.7">فني أو متجر معتمد بتطبيق تشغيل خاص: يستلم الطلب، يثبت الإنجاز، ويستلم أرباحه بلا مطاردة تحصيل.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:9px;margin-top:22px">
+          <span style="background:rgba(63,166,107,0.1);color:#2E7D51;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800">عمل مضمون</span>
+          <span style="background:rgba(63,166,107,0.1);color:#2E7D51;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800">دفع مضمون</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:22px;padding:28px 38px;margin-top:22px;display:flex;align-items:center;gap:26px">
+      <span style="font-size:26px;font-weight:900;color:#C79A3C;white-space:nowrap">الترابط</span>
+      <span style="width:1px;height:52px;background:rgba(255,255,255,0.18)"></span>
+      <div style="flex:1;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <span style="background:rgba(255,255,255,0.1);color:#fff;border-radius:999px;padding:9px 20px;font-size:24px;font-weight:800">الساكن يطلب ويدفع للمنصة</span>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M15 5l-7 7 7 7" stroke="#C79A3C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+        <span style="background:rgba(255,255,255,0.1);color:#fff;border-radius:999px;padding:9px 20px;font-size:24px;font-weight:800">الإدارة تعتمد وتراقب الجودة</span>
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M15 5l-7 7 7 7" stroke="#C79A3C" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+        <span style="background:rgba(63,166,107,0.2);color:#7BD8A5;border-radius:999px;padding:9px 20px;font-size:24px;font-weight:800">مقدم الخدمة ينفّذ ويُحوَّل له المبلغ</span>
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:22px;padding:26px 38px;margin-top:18px;box-shadow:0 2px 16px rgba(0,0,0,0.07);font-size:27px;color:#4B5563;line-height:1.6">قاعدتنا في كل قرار منتج: <b style="color:#1F3B57">إن لم تخدم القدرة الأطراف الثلاثة معًا، لا نبنيها.</b></div>
+  </section>
+
+  <section data-label="المشكلة" data-screen-label="03" data-speaker-notes="ثلاث نقاط ألم موثقة من الميدان. الرقم المهم: نسبة التحصيل في الكمبوندات المدارة يدويًا نادرًا ما تتجاوز 70%." style="background:#F7F4EE;display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">المشكلة</div>
+    <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:16px;max-width:1300px;line-height:1.3">إدارة الكمبوند اليوم = مجموعة واتساب، دفتر شيكات، ومكالمات لا تنتهي</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:60px">
+      <div style="background:#fff;border-radius:22px;padding:38px;box-shadow:0 2px 16px rgba(0,0,0,0.07)">
+        <div style="width:66px;height:66px;border-radius:19px;background:rgba(228,103,90,0.12);display:flex;align-items:center;justify-content:center">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.3 3.9L2.6 18a1.5 1.5 0 0 0 1.3 2.2h16.2a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z" stroke="#E4675A" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+        </div>
+        <div style="font-size:34px;font-weight:900;color:#1F3B57;margin-top:26px">تحصيل ضعيف</div>
+        <div style="font-size:25px;color:#6B7280;margin-top:14px;line-height:1.8">رسوم الصيانة تُجمع يدويًا — نسب تحصيل تحت 70% وتأخير شهور بلا أي أثر رقمي.</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:38px;box-shadow:0 2px 16px rgba(0,0,0,0.07)">
+        <div style="width:66px;height:66px;border-radius:19px;background:rgba(199,154,60,0.14);display:flex;align-items:center;justify-content:center">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#C79A3C" strokeWidth="1.7"></circle><path d="M12 7v5l3 2" stroke="#C79A3C" strokeWidth="1.7" strokeLinecap="round"></path></svg>
+        </div>
+        <div style="font-size:34px;font-weight:900;color:#1F3B57;margin-top:26px">شكاوى بلا مسار</div>
+        <div style="font-size:25px;color:#6B7280;margin-top:14px;line-height:1.8">بلاغ الصيانة يعيش في محادثة واتساب — لا وقت استجابة، لا مسؤول، لا تقييم.</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:38px;box-shadow:0 2px 16px rgba(0,0,0,0.07)">
+        <div style="width:66px;height:66px;border-radius:19px;background:rgba(31,59,87,0.08);display:flex;align-items:center;justify-content:center">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V4h9v17M14 9h5v12M8 8h3M8 12h3M8 16h3" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+        </div>
+        <div style="font-size:34px;font-weight:900;color:#1F3B57;margin-top:26px">قيمة مهدرة</div>
+        <div style="font-size:25px;color:#6B7280;margin-top:14px;line-height:1.8">كل خدمة يطلبها الساكن (فني، طلبات، مغسلة) تخرج خارج المنظومة بلا عائد للإدارة.</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="الحل" data-screen-label="04" data-speaker-notes="الشاشة على اليسار حيّة — اضغط عليها في وضع العرض إن أردت. الرسالة: بوابة واحدة للساكن تجمع الدفع والخدمات والمجتمع." style="background:#F7F4EE;display:flex;align-items:center;gap:90px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">الحل</div>
+      <div style="font-size:58px;font-weight:900;color:#1F3B57;margin-top:16px;line-height:1.3">تطبيق واحد للساكن — يدفع، يطلب، ويتابع كل شيء</div>
+      <div style="display:flex;flex-direction:column;gap:22px;margin-top:46px">
+        <div style="background:#fff;border-radius:18px;padding:20px 30px;box-shadow:0 2px 14px rgba(0,0,0,0.06);display:flex;align-items:center;gap:20px">
+          <span style="width:56px;height:56px;border-radius:16px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 7h18v10H3zM3 10h18" stroke="#1F3B57" strokeWidth="1.7" strokeLinejoin="round"></path></svg></span>
+          <div><div style="font-size:31px;font-weight:900;color:#1F3B57">مدفوعات مؤتمتة</div><div style="font-size:25px;color:#6B7280;margin-top:6px">إيجار شهري أو تقسيط تمليك — خصم تلقائي وإيصال فوري</div></div>
+        </div>
+        <div style="background:#fff;border-radius:18px;padding:20px 30px;box-shadow:0 2px 14px rgba(0,0,0,0.06);display:flex;align-items:center;gap:20px">
+          <span style="width:56px;height:56px;border-radius:16px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-2.6z" stroke="#1F3B57" strokeWidth="1.7" strokeLinejoin="round"></path></svg></span>
+          <div><div style="font-size:31px;font-weight:900;color:#1F3B57">خدمات ومطابقة فورية</div><div style="font-size:25px;color:#6B7280;margin-top:6px">شكوى للإدارة أو مقدم خدمة يصلك في دقائق بسعر معلن</div></div>
+        </div>
+        <div style="background:#fff;border-radius:18px;padding:20px 30px;box-shadow:0 2px 14px rgba(0,0,0,0.06);display:flex;align-items:center;gap:20px">
+          <span style="width:56px;height:56px;border-radius:16px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6 6h15l-1.5 9h-12zM6 6L5 3H2M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" stroke="#1F3B57" strokeWidth="1.7" strokeLinejoin="round"></path></svg></span>
+          <div><div style="font-size:31px;font-weight:900;color:#1F3B57">متجر وسوق داخلي</div><div style="font-size:25px;color:#6B7280;margin-top:6px">مطاعم، صيدليات، بقالة، عقارات بين الجيران — كلها داخل المنصة</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="width:276px;height:601px;overflow:visible;flex:none">
+      <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+        <dc-import name="Jiwar Phone" fixed-screen="home" hint-size="480px,1014px"></dc-import>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="دخول الساكن" data-screen-label="05" data-speaker-notes="نقطة الاحتكاك الأولى: لا تسجيل عام ولا بحث عن كمبوند. الساكن يدخل بكود دعوة يصدره مكتب الإدارة لوحدته، فيكون كل مستخدم موثّقًا بوحدته من اللحظة الأولى — وهذا ما يجعل كل شيء بعده (الدفع، سوق العقارات، تشارك الجيران، الشات) قابلًا للثقة. ثلاث شاشات فقط من الكود إلى لوحة التحكم." style="background:#F7F4EE;display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="display:flex;align-items:flex-end;gap:24px">
+      <div>
+        <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">دخول الساكن</div>
+        <div style="font-size:54px;font-weight:900;color:#1F3B57;margin-top:12px">كل مستخدم موثّق بوحدته من اللحظة الأولى</div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="background:rgba(63,166,107,0.13);color:#2E7D51;border-radius:999px;padding:11px 26px;font-size:24px;font-weight:800">ثلاث شاشات — لا تسجيل عام</div>
+    </div>
+    <div style="display:flex;gap:56px;margin-top:34px;justify-content:center;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
+        <div style="width:276px;height:601px;overflow:visible">
+          <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="splash" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">كود دعوة الوحدة</div>
+          <div style="font-size:24px;color:#6B7280;margin-top:6px;line-height:1.5;max-width:330px">يصدره مكتب الإدارة — لا يدخل التطبيق إلا ساكن حقيقي</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
+        <div style="width:276px;height:601px;overflow:visible">
+          <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="otp" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">تحقق برقم الهاتف</div>
+          <div style="font-size:24px;color:#6B7280;margin-top:6px;line-height:1.5;max-width:330px">كود SMS يربط الحساب بصاحب الوحدة</div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
+        <div style="width:276px;height:601px;overflow:visible">
+          <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="setup" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+        <div style="text-align:center">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">الوحدة مُعبّأة تلقائيًا</div>
+          <div style="font-size:24px;color:#6B7280;margin-top:6px;line-height:1.5;max-width:330px">فيلا 214 — حي الياسمين، بلا إدخال يدوي ولا أخطاء</div>
+        </div>
+      </div>
+
+      <div style="flex:1;display:flex;flex-direction:column;gap:16px;max-width:520px;padding-top:20px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">الهوية مضمونة بالتصميم</div>
+          <div style="font-size:24px;color:#6B7280;margin-top:8px;line-height:1.6">لأن الدخول بكود الوحدة، فكل إعلان عقاري وكل مشاركة وكل رسالة مرتبطة بوحدة معروفة.</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">تبنٍّ من أعلى لأسفل</div>
+          <div style="font-size:24px;color:#6B7280;margin-top:8px;line-height:1.6">الإدارة توزّع الأكواد على وحداتها — فيدخل الكمبوند كله دفعة واحدة بلا تكلفة تسويق.</div>
+        </div>
+        <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 28px;display:flex;align-items:center;gap:20px">
+          <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+          <span style="flex:1"><span style="font-size:29px;font-weight:900;color:#fff">تكلفة استحواذ للساكن ≈ صفر</span><span style="font-size:24px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">العقد مع الإدارة هو قناة التوزيع</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="دورة حياة الوحدة" data-screen-label="06" data-speaker-notes="هذه الشريحة تُقنع المطوّر لا الساكن. لحظة تسليم الوحدة أكبر نقطة نزاع في السوق المصري: عيوب بلا دليل، ومطالبات بعد سنوات بلا مستند. الشاشة الكبيرة هي لحظة الاستلام نفسها — فحص غرفة بغرفة بصور مؤرّخة — والمصغّرات على يمين كل مرحلة هي الشاشة الحقيقية لتلك المرحلة، ولاحظ أن التسليم مقفل حتى موعده. النتيجة: سجل موثّق يقلّل نزاعات الضمان ويقصّر زمن التسليم." style="background:#F7F4EE;display:flex;align-items:center;gap:70px;padding:0 120px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1;min-width:0">
+      <div style="display:flex;align-items:center;gap:20px">
+        <div>
+          <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">دورة حياة الوحدة</div>
+          <div style="font-size:48px;font-weight:900;color:#1F3B57;margin-top:8px;max-width:900px;line-height:1.25;text-wrap:pretty">سجل واحد موثّق — من قبل الاستلام إلى ما بعد الخروج</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:22px;margin-top:26px">
+        <div style="display:flex;align-items:stretch;gap:20px">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:none;width:44px">
+            <span style="width:44px;height:44px;border-radius:99px;background:#C79A3C;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans',sans-serif;font-size:25px;font-weight:700;flex:none">١</span>
+            <span style="width:3px;flex:1;background:rgba(31,59,87,0.14);margin-top:8px"></span>
+          </div>
+          <div style="width:186px;flex:none;background:#111;border-radius:22px;padding:7px;box-shadow:0 8px 26px rgba(31,59,87,0.2);height:236px;box-sizing:border-box">
+            <div style="width:172px;height:222px;border-radius:16px;overflow:hidden;background:#F7F4EE">
+              <div style="width:480px;height:1014px;transform:scale(0.358);transform-origin:top right;pointer-events:none">
+                <dc-import name="Jiwar Phone" fixed-screen="movein" move-stage="before" hint-size="480px,1014px"></dc-import>
+              </div>
+            </div>
+          </div>
+          <div style="flex:1;min-width:0;padding-bottom:0">
+            <div style="font-size:33px;font-weight:900;color:#1F3B57;line-height:1.2">قبل الاستلام</div>
+            <div style="font-size:24px;color:#6B7280;margin-top:7px;line-height:1.5;text-wrap:pretty">الساكن مستعد قبل أن يطأ الوحدة — عدّاد ودليل ترحيب.</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
+              <span style="background:rgba(199,154,60,0.12);color:#C79A3C;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800;white-space:nowrap">عدّاد «متبقي 3 أيام»</span>
+              <span style="background:rgba(199,154,60,0.12);color:#C79A3C;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800;white-space:nowrap">دليل الترحيب والفيديو</span>
+              <span style="background:rgba(199,154,60,0.12);color:#C79A3C;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800;white-space:nowrap">شريط تقدّم المتطلبات</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:stretch;gap:20px">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:none;width:44px">
+            <span style="width:44px;height:44px;border-radius:99px;background:#3FA66B;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans',sans-serif;font-size:25px;font-weight:700;flex:none">٢</span>
+            <span style="width:3px;flex:1;background:rgba(31,59,87,0.14);margin-top:8px"></span>
+          </div>
+          <div style="width:186px;flex:none;background:#111;border-radius:22px;padding:7px;box-shadow:0 8px 26px rgba(31,59,87,0.2);height:236px;box-sizing:border-box">
+            <div style="width:172px;height:222px;border-radius:16px;overflow:hidden;background:#F7F4EE">
+              <div style="width:480px;height:1014px;transform:scale(0.358);transform-origin:top right;pointer-events:none">
+                <dc-import name="Jiwar Phone" fixed-screen="movein" move-stage="receive" hint-size="480px,1014px"></dc-import>
+              </div>
+            </div>
+          </div>
+          <div style="flex:1;min-width:0;padding-bottom:0">
+            <div style="font-size:33px;font-weight:900;color:#1F3B57;line-height:1.2">لحظة الاستلام</div>
+            <div style="font-size:24px;color:#6B7280;margin-top:7px;line-height:1.5;text-wrap:pretty">فحص غرفة بغرفة بصور مؤرّخة — بديل كشف الورق الذي يُفقد.</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
+              <span style="background:rgba(63,166,107,0.12);color:#3FA66B;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800;white-space:nowrap">قائمة فحص لكل غرفة</span>
+              <span style="background:rgba(63,166,107,0.12);color:#3FA66B;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800;white-space:nowrap">صورة لكل عيب مُسجَّل</span>
+              <span style="background:rgba(63,166,107,0.12);color:#3FA66B;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800;white-space:nowrap">توقيع رقمي للطرفين</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:stretch;gap:20px">
+          <div style="display:flex;flex-direction:column;align-items:center;flex:none;width:44px">
+            <span style="width:44px;height:44px;border-radius:99px;background:#1F3B57;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Sans',sans-serif;font-size:25px;font-weight:700;flex:none">٣</span>
+            
+          </div>
+          <div style="width:186px;flex:none;background:#111;border-radius:22px;padding:7px;box-shadow:0 8px 26px rgba(31,59,87,0.2);height:236px;box-sizing:border-box">
+            <div style="width:172px;height:222px;border-radius:16px;overflow:hidden;background:#F7F4EE">
+              <div style="width:480px;height:1014px;transform:scale(0.358);transform-origin:top right;pointer-events:none">
+                <dc-import name="Jiwar Phone" fixed-screen="movein" move-stage="handover" hint-size="480px,1014px"></dc-import>
+              </div>
+            </div>
+          </div>
+          <div style="flex:1;min-width:0;padding-bottom:0">
+            <div style="font-size:33px;font-weight:900;color:#1F3B57;line-height:1.2">التسليم والخروج</div>
+            <div style="font-size:24px;color:#6B7280;margin-top:7px;line-height:1.5;text-wrap:pretty">مقفلة حتى موعدها — ثم مقارنة بحالة الاستلام وتصفية مالية.</div>
+            <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:12px">
+              <span style="background:rgba(31,59,87,0.08);color:#1F3B57;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800;white-space:nowrap">مقارنة قبل/بعد</span>
+              <span style="background:rgba(31,59,87,0.08);color:#1F3B57;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800;white-space:nowrap">تسوية الرصيد والتأمين</span>
+              <span style="background:rgba(31,59,87,0.08);color:#1F3B57;border-radius:999px;padding:8px 18px;font-size:24px;font-weight:800;white-space:nowrap">نقل السجل للمالك التالي</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div style="width:276px;height:601px;overflow:visible;flex:none">
+      <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+        <dc-import name="Jiwar Phone" fixed-screen="movein" move-stage="receive" hint-size="480px,1014px"></dc-import>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="ركائز القيمة" data-screen-label="07" data-speaker-notes="هذه هي الشريحة المحورية: عشر قدرات كل واحدة منها منتج قائم بذاته في السوق — مجتمعة تصنع منصة لا يمكن استبدالها بمجموعة واتساب. الأربع الأولى هي محرك الإيراد." style="background:#F7F4EE;display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="display:flex;align-items:flex-end;gap:24px">
+      <div>
+        <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركائز القيمة</div>
+        <div style="font-size:54px;font-weight:900;color:#1F3B57;margin-top:14px">اثنتا عشرة قدرة — كل واحدة منها منتج قائم بذاته</div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="background:rgba(199,154,60,0.15);color:#A87F2C;border-radius:999px;padding:12px 28px;font-size:24px;font-weight:800">الأربع المُظللة = محرك الإيراد</div>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px;margin-top:36px">
+
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:20px">
+        <span style="width:46px;height:46px;border-radius:13px;background:rgba(199,154,60,0.22);display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-2.6z" stroke="#C79A3C" strokeWidth="1.7" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#fff;margin-top:14px">الخدمات</div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.62);margin-top:8px;line-height:1.5">مسار شكوى للإدارة بـSLA، أو مقدم خدمة فوري — من نفس الشاشة.</div>
+      </div>
+
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:20px">
+        <span style="width:46px;height:46px;border-radius:13px;background:rgba(199,154,60,0.22);display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M14 2H6v20h12V8zM14 2v6h6M13 11l-3 4h4l-3 4" stroke="#C79A3C" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#fff;margin-top:14px">الفواتير</div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.62);margin-top:8px;line-height:1.5">كهرباء وغاز ومياه وإنترنت مربوطة — دفعة واحدة لكل التزامات الوحدة.</div>
+      </div>
+
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:20px">
+        <span style="width:46px;height:46px;border-radius:13px;background:rgba(199,154,60,0.22);display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6 6h15l-1.5 9h-12zM6 6L5 3H2M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" stroke="#C79A3C" strokeWidth="1.7" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#fff;margin-top:14px">المتجر</div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.62);margin-top:8px;line-height:1.5">مطاعم وصيدليات وبقالة — 8 فئات بعمولة 12% على كل طلب.</div>
+      </div>
+
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:20px">
+        <span style="width:46px;height:46px;border-radius:13px;background:rgba(199,154,60,0.22);display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6z" stroke="#C79A3C" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#fff;margin-top:14px">سوق الخدمات</div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.62);margin-top:8px;line-height:1.5">مطابقة فورية بسعر معلن وضمان إسكرو — عمولة 15%.</div>
+      </div>
+
+      <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+        <span style="width:46px;height:46px;border-radius:13px;background:#F1EDE4;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM19 8v6M22 11h-6" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#1F3B57;margin-top:14px">مقدمو الخدمات</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:8px;line-height:1.5">تطبيق تشغيل كامل: توفر، طلبات، إثبات إنجاز، محفظة وسحب بنكي.</div>
+      </div>
+
+      <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+        <span style="width:46px;height:46px;border-radius:13px;background:#F1EDE4;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 13l2-5h14l2 5M3 13v5h2M21 13v5h-2M6 18a1.5 1.5 0 1 0 0-3M18 18a1.5 1.5 0 1 0 0-3M7 8V6h10v2" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#1F3B57;margin-top:14px">المركبات والزوار</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:8px;line-height:1.5">تسجيل لوحات وتصاريح QR للزوار — سجل دخول رقمي للبوابة.</div>
+      </div>
+
+      <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+        <span style="width:46px;height:46px;border-radius:13px;background:#F1EDE4;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 14h6M9 17h6" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#1F3B57;margin-top:14px">سوق العقارات</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:8px;line-height:1.5">بيع وإيجار بين الجيران بوحدة موثّقة تلقائيًا — اكتشاف وتواصل.</div>
+      </div>
+
+      <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+        <span style="width:46px;height:46px;border-radius:13px;background:#F1EDE4;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M11 21a8 8 0 1 0-8-8c0 1.6.5 3.1 1.3 4.3L3 21zM8 12h.01M12 12h.01M16 12h.01" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#1F3B57;margin-top:14px">الشات مع الإدارة</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:8px;line-height:1.5">بديل الواتساب: خيط واحد لكل وحدة، قابل للإسناد والقياس.</div>
+      </div>
+
+      <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+        <span style="width:46px;height:46px;border-radius:13px;background:#F1EDE4;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M8 3v4M16 3v4M3 9h18M4 5h16v16H4z" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#1F3B57;margin-top:14px">الفعاليات والمجتمع</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:8px;line-height:1.5">فعاليات بتذاكر QR ومجموعات اهتمام دائمة ينشئها السكان أنفسهم.</div>
+      </div>
+
+      <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+        <span style="width:46px;height:46px;border-radius:13px;background:#F1EDE4;display:flex;align-items:center;justify-content:center"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M11 21a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM11 9v4l3 2M20 20l-3-3" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#1F3B57;margin-top:14px">المفقودات</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:8px;line-height:1.5">لوحة مفقودات موثّقة بالوحدة — أعلى الميزات تفاعلًا في المجتمعات.</div>
+      </div>
+
+      <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+        <span style="width:46px;height:46px;border-radius:13px;background:#F1EDE4;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5M3 17l9 4 9-4" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#1F3B57;margin-top:14px">تشارك الجيران</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:8px;line-height:1.5">قاعات وملاعب ومعدات ومواقف تُعرض بالساعة بين السكان — بضمان الإسكرو.</div>
+      </div>
+
+      <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+        <span style="width:46px;height:46px;border-radius:13px;background:#F1EDE4;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M15 3.13A4 4 0 0 1 15 11" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+        <div style="font-size:25px;font-weight:900;color:#1F3B57;margin-top:14px">حسابات العائلة</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:8px;line-height:1.5">مالك الوحدة يدعو أفراد أسرته ويمنح كل فرد صلاحياته — المحظور يظهر بقفل.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section data-label="الخدمات" data-screen-label="08" data-speaker-notes="ركيزة الخدمات: مسارَان لا يتقاطعان: شكوى للإدارة، أو مقدم خدمة فوري — من نفس الشاشة." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">٠١</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">الخدمات</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">مسارَان لا يتقاطعان: شكوى للإدارة، أو مقدم خدمة فوري — من نفس الشاشة.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">بلاغ بمسار واضح</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">فئة، صور، أولوية، ورقم شكوى — لا رسالة تضيع في مجموعة</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">إسناد تلقائي</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">مفتاح واحد يحوّل البلاغ لأقرب فني متاح بدل طابور المكتب</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">تقييم بعد الحل</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">5 نجوم وتعليق يغذّيان مؤشر الرضا في لوحة الإدارة</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">متوسط زمن الحل 18 ساعة</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">مع تتبع SLA لكل تذكرة</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="svcHub" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="الفواتير" data-screen-label="09" data-speaker-notes="ركيزة الفواتير: كل التزامات الوحدة — رسوم الصيانة والكهرباء والغاز والإنترنت — في مكان واحد." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">٠٢</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">الفواتير</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">كل التزامات الوحدة — رسوم الصيانة والكهرباء والغاز والإنترنت — في مكان واحد.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">ربط مزوّد حقيقي</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">كهرباء مصر، الغاز، WE وأورنج وفودافون — بحساب المشترك</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">خصم تلقائي وإيصال فوري</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">تذكير قبل الاستحقاق ثم سداد بلا متابعة يدوية</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">سجل مدفوعات كامل</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">كل فاتورة وإيصال قابل للتحميل في أي وقت</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">سبب لفتح التطبيق شهريًا</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">أقوى عامل احتفاظ بعد الرسوم</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="bills" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="المتجر" data-screen-label="10" data-speaker-notes="ركيزة المتجر: ثمانية فئات متاجر داخل الكمبوند وحوله — مطاعم، صيدليات، بقالة، مغسلة وأكثر." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">٠٣</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">المتجر</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">ثمانية فئات متاجر داخل الكمبوند وحوله — مطاعم، صيدليات، بقالة، مغسلة وأكثر.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">متاجر معتمدة</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">14 متجرًا لكل منها واجهة تشغيل: استلام، تحضير، خروج المندوب</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">سلة وتتبع حتى الباب</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">نفس تجربة تطبيقات الطلبات لكن داخل منظومة الكمبوند</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">فئات تُضاف بلا برمجة</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">الإدارة تُنشئ فئة جديدة من اللوحة مباشرة</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">عمولة 12% على كل طلب</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">أعلى تكرار استخدام في المنصة</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="food" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="سوق الخدمات" data-screen-label="11" data-speaker-notes="ركيزة سوق الخدمات: مطابقة فورية على طريقة أوبر — بسعر معلن قبل القبول، وبضمان مالي." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">٠٤</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">سوق الخدمات</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">مطابقة فورية على طريقة أوبر من داخل «الخدمات» — بسعر معلن قبل القبول وبضمان مالي.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">أقرب مقدم متاح</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">مرتّب حسب المسافة والتقييم والسعر — قبول بنقرة</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">السعر قبل الموافقة</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">لا مفاوضة على الباب ولا مفاجآت في الفاتورة</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">إسكرو حتى الرضا</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">المبلغ محجوز ولا يُحوَّل قبل تأكيد الساكن</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">عمولة 15% على كل مهمة</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">منها حصة تُردّ لإدارة الكمبوند</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="matching" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="مقدمو الخدمات" data-screen-label="12" data-speaker-notes="ركيزة مقدمو الخدمات: الجانب الآخر من السوق مبني بالكامل — لا وعود، تطبيق تشغيل حقيقي." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#3FA66B;letter-spacing:2px">٠٥</span>
+        <span style="font-size:26px;font-weight:800;color:#3FA66B;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">مقدمو الخدمات</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">الجانب الآخر من السوق مبني بالكامل — لا وعود، تطبيق تشغيل حقيقي.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">تطبيق خاص لكل مقدم</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">مفتاح توفر، طلب وارد بعدّاد رد، تنفيذ خطوة بخطوة</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">إثبات إنجاز بالصور</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">يحمي الطرفين ويغذّي سجل الجودة والتقييم</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">محفظة وسحب بنكي</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">صافي بعد العمولة تلقائيًا — تحويل أسبوعي أو سحب يدوي</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#3FA66B;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">ثلاث واجهات تشغيل حقيقية</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">ساكن · مقدم خدمة · إدارة</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="liveJob" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="المركبات والزوار" data-screen-label="13" data-speaker-notes="ركيزة المركبات والزوار: سجل دخول رقمي للبوابة — يعمل بالماسح الموجود دون أي أجهزة جديدة." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">٠٦</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">المركبات والزوار</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">سجل دخول رقمي للبوابة — يعمل بالماسح الموجود دون أي أجهزة جديدة.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">تسجيل لوحات المركبات</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">ربط كل سيارة بوحدتها ومالكها</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">تصريح QR للزائر المتوقع</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">يُصدر من التطبيق ويُشارك عبر واتساب</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">أثر لكل دخول</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">من دخل، لأي وحدة، ومتى — قابل للتدقيق</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">أمان قابل للتدقيق</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">بدل كشكول الأمن الورقي</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="gate" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="سوق العقارات" data-screen-label="14" data-speaker-notes="ركيزة سوق العقارات: بيع وإيجار بين الجيران — بوحدة موثّقة تلقائيًا وبلا وسيط." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">٠٧</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">سوق العقارات</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">بيع وإيجار بين الجيران — بوحدة موثّقة تلقائيًا وبلا وسيط.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">المُعلن ساكن مُتحقق</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">المنصة تعرف وحدته — فلا إعلانات وهمية</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">اعتماد الإدارة قبل النشر</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">مراجعة محتوى تحفظ سمعة الكمبوند</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">تواصل مباشر</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">«أنا مهتم» يفتح خيط محادثة — بلا معاملة دفع داخل التطبيق</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">اكتشاف وتواصل موثّق</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">قيمة عالية بمخاطر تنظيمية صفر</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="reBrowse" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="الشات مع الإدارة" data-screen-label="15" data-speaker-notes="ركيزة الشات مع الإدارة: بديل حقيقي لمجموعة الواتساب — خيط واحد لكل وحدة، قابل للقياس." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">٠٨</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">الشات مع الإدارة</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">بديل حقيقي لمجموعة الواتساب — خيط واحد لكل وحدة، قابل للقياس.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">محادثة لكل وحدة</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">لا فقدان رسائل ولا 300 ساكن في مجموعة واحدة</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">إسناد لموظف وردود جاهزة</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">مكتب الإدارة يدير كل الخيوط من لوحة واحدة</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">كل وعد موثّق</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">مرجع مكتوب للاتفاقات والمواعيد</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">صفر رسائل ضائعة</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">وأساس مؤشر رضا السكان</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="chat" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="الفعاليات والمجتمع" data-screen-label="16" data-speaker-notes="ركيزة الفعاليات والمجتمع: هذه هي طبقة الاستخدام المتكرر بلا تكلفة. الفعالية حدث لمرة، والمجموعة مجتمع مستمر يولّد فعاليات. المحتوى يصنعه السكان أنفسهم — جيم ومسبح ونادٍ ومنطقة أطفال." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">٠٩</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">الفعاليات والمجتمع</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">الفعالية تجيب الناس مرة — والمجموعة تخليهم يرجعوا كل أسبوع.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">فعاليات بأماكن محدودة وتذكرة QR</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">شريط امتلاء حقيقي، تصريح دخول رقمي، وتقييم وألبوم بعدها</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">مجموعات اهتمام دائمة</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">نادي جري، نادي كتاب، أمهات الحضانة — لكل مجموعة لوحتها ولقاؤها الدوري</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">الساكن هو المنظّم</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">ينشئ مجموعته، يعلن لقاءها، ويحوّلها لفعالية رسمية باعتماد الإدارة</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">تفاعل أسبوعي بتكلفة استحواذ صفر</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">المحتوى يصنعه السكان — والإدارة تعتمد فقط</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="feed" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="المفقودات" data-screen-label="17" data-speaker-notes="ركيزة المفقودات: أعلى الميزات تفاعلًا في أي مجتمع سكني — وأقلها تكلفة بناء." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">١٠</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">المفقودات</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">أعلى الميزات تفاعلًا في أي مجتمع سكني — وأقلها تكلفة بناء.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">بلاغ بصورة ومكان</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">مفتاح، محفظة، حيوان أليف — بدقائق</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">موثّق بالوحدة</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">كل بلاغ مرتبط بساكن حقيقي فلا عبث</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">مراجعة من الإدارة</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">اعتماد وإزالة وربط المفقود بصاحبه</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">تفاعل مجتمعي يومي</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">محرك عادة استخدام بلا تكلفة</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="lost" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="تشارك الجيران" data-screen-label="18" data-speaker-notes="ركيزة تشارك الجيران: هذه أرخص طبقة عرض في المنصة — لا نشتري أصلًا ولا نستأجر مساحة. الساكن يعرض قاعته أو ملعبه أو شنطة عدده، والمنصة تأخذ عمولة على الحجز بنفس ضمان الإسكرو." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">١١</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">تشارك الجيران</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">ما لدى السكان من مساحات ومعدات يُعرض بالساعة — عرض جديد بلا أي أصل تشتريه.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">قاعات وملاعب ومعدات ومواقف</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">كل ما يملكه ساكن ولا يستخدمه طوال الوقت</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">حجز بالوقت لا بالمنتج</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">مواعيد محددة، وسعر بالساعة أو مجانًا لو أراد</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">بضمان رفادة نفسه</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">المبلغ محجوز ولا يصل المُعير قبل انتهاء الموعد</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">عرض ينمو بلا رأس مال</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">المخزون يملكه السكان — والمنصة تأخذ عمولتها فقط</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="share" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="حسابات العائلة" data-screen-label="19" data-speaker-notes="ركيزة حسابات العائلة: هذه تضاعف المستخدمين النشطين لكل وحدة مدفوعة. تفصيلة مهمة: الميزة الممنوعة تظهر رمادية بقفل ولا تختفي — الفرد يرى ما يفوته فيطلب الإذن، وهذا يزيد الاستخدام لا يقلله." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="flex:1">
+      <div style="display:flex;align-items:center;gap:16px">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#C79A3C;letter-spacing:2px">١٢</span>
+        <span style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">ركيزة قيمة</span>
+      </div>
+      <div style="font-size:60px;font-weight:900;color:#1F3B57;margin-top:12px">حسابات العائلة</div>
+      <div style="font-size:30px;color:#4B5563;margin-top:16px;line-height:1.6;max-width:840px;text-wrap:pretty">وحدة واحدة، عدة مستخدمين — والمالك هو من يمنح الصلاحيات.</div>
+      <div style="display:flex;flex-direction:column;gap:16px;margin-top:34px;max-width:880px">
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">المالك يدعو أفراد أسرته</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">كود دعوة للوحدة، وحساب مستقل لكل فرد</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">صلاحيات لكل فرد على حدة</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">من يدفع؟ من يطلب خدمة؟ من يدعو ضيفًا؟ — يقررها المالك</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:24px 28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:29px;font-weight:900;color:#1F3B57">الممنوع يظهر بقفل لا يختفي</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:8px;line-height:1.6">الفرد يرى القيمة كلها ويطلب الإذن — فينمو الاستخدام</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:24px 30px;margin-top:22px;max-width:880px;display:flex;align-items:center;gap:22px">
+        <span style="width:12px;height:12px;border-radius:99px;background:#C79A3C;flex:none"></span>
+        <span style="flex:1"><span style="font-size:30px;font-weight:900;color:#fff">مستخدمون نشطون أكثر لكل وحدة</span><span style="font-size:25px;color:rgba(255,255,255,0.6);display:block;margin-top:4px">الزوجة والأبناء والوالدان — لا حساب واحد للعائلة كلها</span></span>
+      </div>
+    </div>
+      <div style="width:276px;height:601px;overflow:visible;flex:none">
+        <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+          <dc-import name="Jiwar Phone" fixed-screen="family" hint-size="480px,1014px"></dc-import>
+        </div>
+      </div>
+  </section>
+
+  <section data-label="حلقة الخدمات" data-screen-label="20" data-speaker-notes="هذه هي الحلقة اليومية التي تصنع الاستخدام المتكرر: مسارين واضحين ثم مطابقة فورية بضمان مالي." style="background:#F7F4EE;display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="display:flex;align-items:flex-end;gap:24px">
+      <div>
+        <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">حلقة الاستخدام اليومي</div>
+        <div style="font-size:54px;font-weight:900;color:#1F3B57;margin-top:14px">من الطلب للتنفيذ — في دقائق، وبضمان مالي</div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="background:rgba(63,166,107,0.13);color:#2E7D51;border-radius:999px;padding:12px 28px;font-size:24px;font-weight:800">المبلغ محجوز حتى رضا الساكن</div>
+    </div>
+    <div style="display:flex;gap:40px;margin-top:46px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:18px">
+        <div style="width:224px;height:488px;overflow:visible">
+          <div style="width:480px;height:1014px;transform:scale(0.558);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="svcHub" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+        <div style="font-size:25px;font-weight:800;color:#1F3B57">مسارين واضحين</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:18px">
+        <div style="width:224px;height:488px;overflow:visible">
+          <div style="width:480px;height:1014px;transform:scale(0.558);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="matching" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+        <div style="font-size:25px;font-weight:800;color:#1F3B57">مطابقة فورية بالسعر</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:18px">
+        <div style="width:224px;height:488px;overflow:visible">
+          <div style="width:480px;height:1014px;transform:scale(0.558);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="liveJob" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+        <div style="font-size:25px;font-weight:800;color:#1F3B57">تتبع حيّ للتنفيذ</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:20px;padding-top:10px">
+        <div style="background:#fff;border-radius:20px;padding:28px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:30px;font-weight:900;color:#1F3B57">لماذا يعمل؟</div>
+          <div style="font-size:24px;color:#6B7280;margin-top:12px;line-height:1.85">الساكن يدفع مقدمًا لكن المبلغ لا يُحوَّل قبل تأكيده — فيثق الطرفان، ويصبح لكل معاملة أثر رقمي وعمولة.</div>
+        </div>
+        <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:28px">
+          <div style="font-size:24px;color:rgba(255,255,255,0.65)">عمولة رفادة على كل مهمة</div>
+          <div style="font-family:'IBM Plex Sans',sans-serif;font-size:52px;font-weight:700;color:#fff;margin-top:8px">15%</div>
+          <div style="font-size:24px;color:rgba(255,255,255,0.55);margin-top:6px">منها 15% تُردّ لإدارة الكمبوند كإيراد جديد</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="المدفوعات" data-screen-label="21" data-speaker-notes="نقطة التوطين الأقوى: السوق فيه مستأجرون بإيجار شهري ومالكون بالتقسيط. النظام يدعم النموذجين على مستوى الوحدة." style="background:#F7F4EE;display:flex;align-items:center;gap:80px;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="width:276px;height:601px;overflow:visible;flex:none">
+      <div style="width:480px;height:1014px;transform:scale(0.6875);transform-origin:top right;pointer-events:none">
+        <dc-import name="Jiwar Phone" fixed-screen="pay" hint-size="480px,1014px"></dc-import>
+      </div>
+    </div>
+    <div style="flex:1">
+      <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">المدفوعات — نقطة التوطين</div>
+      <div style="font-size:56px;font-weight:900;color:#1F3B57;margin-top:14px;line-height:1.3">نموذجان في منصة واحدة: إيجار شهري وتقسيط تمليك</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:44px">
+        <div style="background:#fff;border-radius:20px;padding:30px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:30px;font-weight:900;color:#1F3B57">إيجار شهري</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:12px;line-height:1.75">استحقاق متكرر، تذكير يوم 22، خصم تلقائي يوم 25، فترة سماح 5 أيام.</div>
+        </div>
+        <div style="background:#fff;border-radius:20px;padding:30px;box-shadow:0 2px 14px rgba(0,0,0,0.06)">
+          <div style="font-size:30px;font-weight:900;color:#1F3B57">تقسيط تمليك</div>
+          <div style="font-size:25px;color:#6B7280;margin-top:12px;line-height:1.75">جدول أقساط المطور: «سنة 3 من 8»، عدد الأقساط المتبقية وتاريخ الاستحقاق.</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:30px;margin-top:22px;display:flex;align-items:center;gap:36px">
+        <div style="flex:1"><div style="font-size:24px;color:rgba(255,255,255,0.65)">أثر متوقع على التحصيل</div><div style="font-size:32px;font-weight:900;color:#fff;margin-top:8px">من أقل من 70% إلى 87%+ بالخصم التلقائي والتذكير الآلي</div></div>
+        <div style="font-family:'IBM Plex Sans',sans-serif;font-size:64px;font-weight:700;color:#C79A3C">87%</div>
+      </div>
+      <div style="font-size:24px;color:#6B7280;margin-top:18px">بوابات محلية: Paymob وFawry في مصر، وGeidea/Mada للتوسع الخليجي — بالإضافة لتجميع فواتير الكهرباء والغاز والإنترنت داخل «فواتيري».</div>
+    </div>
+  </section>
+
+  <section data-label="المتجر" data-screen-label="22" data-speaker-notes="هذه هي طبقة الإيراد المتكرر: بدل زيارة شهرية للدفع، الساكن يفتح التطبيق عدة مرات أسبوعيًا." style="background:#F7F4EE;display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="display:flex;align-items:flex-end;gap:24px">
+      <div>
+        <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">المتجر والسوق الداخلي</div>
+        <div style="font-size:54px;font-weight:900;color:#1F3B57;margin-top:14px">من دفعة شهرية إلى استخدام أسبوعي</div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="background:rgba(199,154,60,0.15);color:#A87F2C;border-radius:999px;padding:12px 28px;font-size:24px;font-weight:800">عمولة 12% على كل طلب متجر</div>
+    </div>
+    <div style="display:flex;gap:44px;margin-top:46px;align-items:flex-start">
+      <div style="display:flex;flex-direction:column;align-items:center;gap:18px">
+        <div style="width:224px;height:488px;overflow:visible">
+          <div style="width:480px;height:1014px;transform:scale(0.558);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="food" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+        <div style="font-size:25px;font-weight:800;color:#1F3B57">8 فئات متاجر</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:18px">
+        <div style="width:224px;height:488px;overflow:visible">
+          <div style="width:480px;height:1014px;transform:scale(0.558);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="foodTrack" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+        <div style="font-size:25px;font-weight:800;color:#1F3B57">تتبع الطلب حتى الباب</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:18px">
+        <div style="width:224px;height:488px;overflow:visible">
+          <div style="width:480px;height:1014px;transform:scale(0.558);transform-origin:top right;pointer-events:none">
+            <dc-import name="Jiwar Phone" fixed-screen="reBrowse" hint-size="480px,1014px"></dc-import>
+          </div>
+        </div>
+        <div style="font-size:25px;font-weight:800;color:#1F3B57">عقارات بين الجيران</div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:18px;padding-top:10px">
+        <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)"><div style="font-size:28px;font-weight:900;color:#1F3B57">مطاعم · صيدليات · بقالة</div><div style="font-size:25px;color:#6B7280;margin-top:10px;line-height:1.7">14 متجرًا معتمدًا بواجهة تشغيل خاصة لكل متجر — استلام الطلب، التحضير، خروج المندوب.</div></div>
+        <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)"><div style="font-size:28px;font-weight:900;color:#1F3B57">مغسلة · مياه وغاز · ورد</div><div style="font-size:25px;color:#6B7280;margin-top:10px;line-height:1.7">فئات جديدة تُضاف من لوحة الإدارة دون أي تعديل برمجي.</div></div>
+        <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 14px rgba(0,0,0,0.06)"><div style="font-size:28px;font-weight:900;color:#1F3B57">سوق عقاري للسكان</div><div style="font-size:25px;color:#6B7280;margin-top:10px;line-height:1.7">اكتشاف وتواصل موثّق (الوحدة مثبتة تلقائيًا) — بلا معاملة دفع داخل التطبيق.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="سوق ذو جانبين" data-screen-label="23" data-speaker-notes="أهم سؤال للمستثمر: هل الجانب الآخر مبني فعلًا؟ نعم — تطبيق مقدم الخدمة كامل بدورة أرباح وسحب بنكي." style="background:linear-gradient(150deg,#27496F 0%,#1F3B57 60%,#152A3F 100%);display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">سوق ذو جانبين — مبني بالكامل</div>
+    <div style="font-size:56px;font-weight:900;color:#fff;margin-top:14px;max-width:1350px;line-height:1.3">ثلاث واجهات تشغيل حقيقية: الساكن، مقدم الخدمة، ومكتب الإدارة</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:34px">
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:22px;padding:24px;display:flex;flex-direction:column;align-items:center">
+        <div style="font-size:31px;font-weight:900;color:#fff">🟦 تطبيق الساكن</div>
+        <div style="height:460px;margin-top:18px;display:flex;align-items:center;justify-content:center">
+          <div style="width:240px;height:440px;overflow:hidden">
+            <div style="width:480px;height:1014px;transform:scale(0.5);transform-origin:top right;pointer-events:none">
+              <dc-import name="Jiwar Phone" fixed-screen="home" hint-size="480px,1014px"></dc-import>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.62);margin-top:18px;line-height:1.6;text-align:center">مدفوعات · خدمات · متجر · عقارات · فواتير · حسابات عائلة</div>
+        <div style="background:rgba(199,154,60,0.2);color:#E8C989;border-radius:999px;padding:8px 20px;font-size:24px;font-weight:800;margin-top:14px">70+ شاشة حيّة</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(63,166,107,0.35);border-radius:22px;padding:24px;display:flex;flex-direction:column;align-items:center">
+        <div style="font-size:31px;font-weight:900;color:#fff">🟩 تطبيق مقدم الخدمة</div>
+        <div style="height:460px;margin-top:18px;display:flex;align-items:center;justify-content:center">
+          <div style="width:231px;height:440px;overflow:hidden">
+            <div style="width:462px;height:1080px;transform:scale(0.5);transform-origin:top right;pointer-events:none;position:relative;top:-42px">
+              <dc-import name="Jiwar Provider" preview-screen="home" hint-size="462px,1080px"></dc-import>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.62);margin-top:18px;line-height:1.6;text-align:center">توفر · طلب وارد بعدّاد · إثبات إنجاز · محفظة وسحب بنكي</div>
+        <div style="background:rgba(63,166,107,0.22);color:#7BD8A5;border-radius:999px;padding:8px 20px;font-size:24px;font-weight:800;margin-top:14px">صافي بعد العمولة تلقائيًا</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:22px;padding:24px;display:flex;flex-direction:column;align-items:center">
+        <div style="font-size:31px;font-weight:900;color:#fff">🟨 لوحة الإدارة</div>
+        <div style="height:460px;margin-top:18px;display:flex;align-items:center;justify-content:center">
+          <div style="width:512px;height:300px;overflow:hidden;border-radius:10px;background:#E9E4D9;box-shadow:0 12px 32px rgba(0,0,0,0.3);border:7px solid #10202F">
+            <div style="width:1100px;height:1080px;transform:scale(0.4655);transform-origin:top right;pointer-events:none">
+              <dc-import name="Jiwar Admin" preview-section="home" hint-size="1100px,1080px"></dc-import>
+            </div>
+          </div>
+        </div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.62);margin-top:18px;line-height:1.6;text-align:center">تذاكر وSLA · تحصيل · رضا السكان · فض النزاعات · إيرادات</div>
+        <div style="background:rgba(255,255,255,0.1);color:#fff;border-radius:999px;padding:8px 20px;font-size:24px;font-weight:800;margin-top:14px">تحكم كامل بالمنصة</div>
+      </div>
+    </div>
+    <div style="font-size:26px;color:rgba(255,255,255,0.5);margin-top:24px">الأثر: كل معاملة كانت تحدث نقدًا خارج المنظومة أصبحت داخلها — أثر رقمي، ضمان، وعمولة.</div>
+  </section>
+
+  <section data-label="إثبات القيمة للإدارة" data-screen-label="24" data-speaker-notes="هذه الأرقام هي ما يجدد العقد: تحصيل أعلى، زمن حل أقل، ورضا قابل للقياس." style="background:#F7F4EE;display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">إثبات القيمة لمكتب الإدارة</div>
+    <div style="font-size:56px;font-weight:900;color:#1F3B57;margin-top:14px">أرقام تُجدِّد العقد كل سنة</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:56px">
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:22px;padding:30px 32px">
+        <div style="font-size:25px;color:rgba(255,255,255,0.65)">معدل التحصيل</div>
+        <div style="font-family:'IBM Plex Sans',sans-serif;font-size:64px;font-weight:700;color:#fff;margin-top:10px">87%</div>
+        <div style="font-size:24px;color:#7BD8A5;font-weight:800;margin-top:8px">↑ 19 نقطة عن اليدوي</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:30px 32px;box-shadow:0 2px 16px rgba(0,0,0,0.07)">
+        <div style="font-size:25px;color:#6B7280">متوسط زمن الحل</div>
+        <div style="font-family:'IBM Plex Sans',sans-serif;font-size:64px;font-weight:700;color:#1F3B57;margin-top:10px">18<span style="font-size:26px;color:#6B7280"> ساعة</span></div>
+        <div style="font-size:24px;color:#2E7D51;font-weight:800;margin-top:8px">مع تتبع SLA لكل تذكرة</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:30px 32px;box-shadow:0 2px 16px rgba(0,0,0,0.07)">
+        <div style="font-size:25px;color:#6B7280">رضا السكان</div>
+        <div style="font-family:'IBM Plex Sans',sans-serif;font-size:64px;font-weight:700;color:#1F3B57;margin-top:10px">4.2<span style="font-size:26px;color:#6B7280"> / 5</span></div>
+        <div style="font-size:24px;color:#2E7D51;font-weight:800;margin-top:8px">↑ 0.3 عن الشهر السابق</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:30px 32px;box-shadow:0 2px 16px rgba(0,0,0,0.07)">
+        <div style="font-size:25px;color:#6B7280">إيراد عمولة جديد للإدارة</div>
+        <div style="font-family:'IBM Plex Sans',sans-serif;font-size:64px;font-weight:700;color:#A87F2C;margin-top:10px">2,763</div>
+        <div style="font-size:24px;color:#6B7280;font-weight:800;margin-top:8px">ريال شهريًا من كمبوند واحد</div>
+      </div>
+    </div>
+    <div style="background:#fff;border-radius:22px;padding:34px 38px;margin-top:26px;box-shadow:0 2px 16px rgba(0,0,0,0.07);display:flex;align-items:center;gap:34px">
+      <div style="flex:1;font-size:28px;color:#4B5563;line-height:1.8">لوحة رضا السكان تُظهر التحليل حسب الفئة (الصيانة، التواصل، الأمن) — فيعرف المدير أين المشكلة قبل أن تصبح شكوى جماعية.</div>
+      <div style="display:flex;gap:12px;flex:none">
+        <span style="background:rgba(63,166,107,0.13);color:#2E7D51;border-radius:999px;padding:10px 24px;font-size:24px;font-weight:800">الصيانة — إيجابي</span>
+        <span style="background:rgba(228,103,90,0.13);color:#B24439;border-radius:999px;padding:10px 24px;font-size:24px;font-weight:800">التواصل — سلبي</span>
+      </div>
+    </div>
+  </section>
+
+  <section data-label="نموذج الإيراد" data-screen-label="25" data-speaker-notes="خمسة مصادر: اشتراك ثابت متكرر + أربع طبقات معاملات تكبر مع الاستخدام — آخرها لا يحتاج أي مخزون نملكه." style="background:#F7F4EE;display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">نموذج الإيراد</div>
+    <div style="font-size:56px;font-weight:900;color:#1F3B57;margin-top:14px">اشتراك ثابت + أربع طبقات معاملات</div>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-top:48px">
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:22px;padding:28px">
+        <div style="font-size:24px;color:rgba(255,255,255,0.6)">١ · SaaS</div>
+        <div style="font-size:31px;font-weight:900;color:#fff;margin-top:12px">اشتراك لكل وحدة</div>
+        <div style="font-size:25px;color:rgba(255,255,255,0.6);margin-top:14px;line-height:1.75">عقد سنوي مع شركة الإدارة أو المطور — إيراد متكرر ثابت.</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:28px;box-shadow:0 2px 16px rgba(0,0,0,0.07)">
+        <div style="font-size:24px;color:#C79A3C">٢ · مدفوعات</div>
+        <div style="font-size:31px;font-weight:900;color:#1F3B57;margin-top:12px">نسبة على التحصيل</div>
+        <div style="font-size:25px;color:#6B7280;margin-top:14px;line-height:1.75">رسوم صغيرة على كل عملية دفع رسوم أو قسط تمر بالمنصة.</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:28px;box-shadow:0 2px 16px rgba(0,0,0,0.07)">
+        <div style="font-size:24px;color:#C79A3C">٣ · خدمات</div>
+        <div style="font-size:31px;font-weight:900;color:#1F3B57;margin-top:12px">عمولة 15%</div>
+        <div style="font-size:25px;color:#6B7280;margin-top:14px;line-height:1.75">على كل مهمة مقدم خدمة — الأعلى نموًا مع تكرار الاستخدام.</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:28px;box-shadow:0 2px 16px rgba(0,0,0,0.07)">
+        <div style="font-size:24px;color:#C79A3C">٤ · متجر</div>
+        <div style="font-size:31px;font-weight:900;color:#1F3B57;margin-top:12px">عمولة 12%</div>
+        <div style="font-size:25px;color:#6B7280;margin-top:14px;line-height:1.75">على طلبات المطاعم والصيدليات والبقالة، وإدراج مميز للشركاء.</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:28px;box-shadow:0 2px 16px rgba(0,0,0,0.07)">
+        <div style="font-size:24px;color:#C79A3C">٥ · المجتمع</div>
+        <div style="font-size:31px;font-weight:900;color:#1F3B57;margin-top:12px">تشارك وفعاليات</div>
+        <div style="font-size:25px;color:#6B7280;margin-top:14px;line-height:1.75">عمولة على حجوزات مساحات الجيران وتذاكر الفعاليات المدفوعة — عرض بلا رأس مال.</div>
+      </div>
+    </div>
+    <div style="font-size:26px;color:#6B7280;margin-top:44px;line-height:1.8">الميزة: الاشتراك يشتري الثقة والبيانات، وطبقات المعاملات تجعل قيمة العميل تنمو بلا تكلفة استحواذ جديدة.</div>
+  </section>
+
+  <section data-label="دخل الإدارة" data-screen-label="26" data-speaker-notes="هذه شريحة الإقناع مع شركات الإدارة والمطورين: المنصة ليست بندًا في المصروفات، بل مركز ربح. اشتراك سنوي بسيط لكل ساكن + نسبة من كل خدمة تُقدَّم داخل الكمبوند. الأرقام لكمبوند 500 وحدة." style="background:#F7F4EE;display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="display:flex;align-items:flex-end;gap:24px">
+      <div>
+        <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">دخل إدارة الكمبوند</div>
+        <div style="font-size:54px;font-weight:900;color:#1F3B57;margin-top:12px">المنصة ليست مصروفًا — بل مركز ربح للإدارة</div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="background:rgba(63,166,107,0.13);color:#2E7D51;border-radius:999px;padding:11px 26px;font-size:24px;font-weight:800">مثال: كمبوند 500 وحدة</div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:40px">
+      <div style="background:#fff;border-radius:24px;padding:34px;box-shadow:0 2px 16px rgba(0,0,0,0.07);border-top:7px solid #C79A3C">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="width:56px;height:56px;border-radius:16px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM19 8v6M22 11h-6" stroke="#1F3B57" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+          <div>
+            <div style="font-size:25px;color:#C79A3C;font-weight:800">المصدر الأول</div>
+            <div style="font-size:35px;font-weight:900;color:#1F3B57;margin-top:3px">اشتراك سنوي لكل ساكن</div>
+          </div>
+        </div>
+        <div style="font-size:25px;color:#4B5563;margin-top:20px;line-height:1.7">مبلغ رمزي يُضاف لرسوم الصيانة السنوية مقابل استخدام التطبيق — يُحصَّل تلقائيًا مع أول قسط، فلا مجهود تحصيل إضافي.</div>
+        <div style="display:flex;align-items:center;gap:18px;background:#F7F4EE;border-radius:18px;padding:22px 26px;margin-top:22px">
+          <span style="flex:1"><span style="font-size:25px;color:#6B7280">240 ر.س / وحدة سنويًا × 500 وحدة</span><span style="font-size:25px;color:#9AA1AC;display:block;margin-top:4px">أي 20 ر.س شهريًا فقط لكل ساكن</span></span>
+          <span style="font-family:'IBM Plex Sans',sans-serif;font-size:44px;font-weight:700;color:#1F3B57;white-space:nowrap">120,000</span>
+        </div>
+      </div>
+
+      <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:24px;padding:34px;border-top:7px solid #3FA66B">
+        <div style="display:flex;align-items:center;gap:16px">
+          <span style="width:56px;height:56px;border-radius:16px;background:rgba(63,166,107,0.2);display:flex;align-items:center;justify-content:center;flex:none"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 3v18h18M7 15l4-5 3 3 5-7" stroke="#7BD8A5" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"></path></svg></span>
+          <div>
+            <div style="font-size:25px;color:#7BD8A5;font-weight:800">المصدر الثاني</div>
+            <div style="font-size:35px;font-weight:900;color:#fff;margin-top:3px">نسبة من كل خدمة تُقدَّم</div>
+          </div>
+        </div>
+        <div style="font-size:25px;color:rgba(255,255,255,0.66);margin-top:20px;line-height:1.7">كل مهمة فني، وكل طلب متجر، وكل حجز مرفق يمرّ بالمنصة يعطي الإدارة حصة من العمولة — إيراد يكبر مع الاستخدام بلا أي تكلفة إضافية.</div>
+        <div style="display:flex;align-items:center;gap:18px;background:rgba(255,255,255,0.08);border-radius:18px;padding:22px 26px;margin-top:22px">
+          <span style="flex:1"><span style="font-size:25px;color:rgba(255,255,255,0.7)">حصة الإدارة من العمولة — 2,763 ر.س شهريًا</span><span style="font-size:25px;color:rgba(255,255,255,0.45);display:block;margin-top:4px">من 312 مهمة وطلب في شهر واحد</span></span>
+          <span style="font-family:'IBM Plex Sans',sans-serif;font-size:44px;font-weight:700;color:#7BD8A5;white-space:nowrap">33,000</span>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:#fff;border-radius:24px;padding:30px 38px;margin-top:24px;box-shadow:0 2px 16px rgba(0,0,0,0.07);display:flex;align-items:center;gap:30px">
+      <span style="font-size:28px;font-weight:900;color:#1F3B57;white-space:nowrap">إجمالي دخل الإدارة</span>
+      <span style="width:1px;height:56px;background:rgba(0,0,0,0.08)"></span>
+      <span style="flex:1;font-size:26px;color:#4B5563;line-height:1.6">‏153 ألف ريال سنويًا من كمبوند واحد — تغطي تكلفة الاشتراك بالمنصة عدة مرات، قبل حساب الوفر في التحصيل المتأخر.</span>
+      <span style="display:flex;flex-direction:column;align-items:flex-end;flex:none">
+        <span style="font-family:'IBM Plex Sans',sans-serif;font-size:52px;font-weight:700;color:#A87F2C;white-space:nowrap">153,000</span>
+        <span style="font-size:24px;color:#6B7280">ريال / سنة</span>
+      </span>
+    </div>
+  </section>
+
+  <section data-label="خريطة المنتج" data-screen-label="27" data-speaker-notes="وضّح ما هو مبني الآن: الدورتان الأولى والثانية بالكامل — بما فيها سوق العقارات وتشارك الجيران وفواتيري — ومعظم الثالثة بما فيها الفعاليات والمجتمع والشات وحسابات العائلة. الرابعة وحدها مؤجّلة لمؤشرات الاستخدام." style="background:#F7F4EE;display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="font-size:26px;font-weight:800;color:#C79A3C;letter-spacing:2px">خريطة الطريق</div>
+    <div style="font-size:56px;font-weight:900;color:#1F3B57;margin-top:14px">أربع دورات — مبنية بترتيب المخاطر لا الرغبات</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:52px">
+      <div style="background:#fff;border-radius:22px;padding:30px 30px 32px;box-shadow:0 2px 16px rgba(0,0,0,0.07);border-top:6px solid #3FA66B">
+        <div style="background:rgba(63,166,107,0.13);color:#2E7D51;border-radius:999px;padding:7px 20px;font-size:24px;font-weight:800;display:inline-block">مبنية ✓</div>
+        <div style="font-size:32px;font-weight:900;color:#1F3B57;margin-top:16px">الدورة ١ — الحلقة الأساسية</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:12px;line-height:1.7">الرئيسية، الخدمات بمسارَيها، المدفوعات بالنموذجين، فواتيري الخارجية، الاستلام والتسليم، حجز المرافق، لوحة الإدارة.</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:30px 30px 32px;box-shadow:0 2px 16px rgba(0,0,0,0.07);border-top:6px solid #3FA66B">
+        <div style="background:rgba(63,166,107,0.13);color:#2E7D51;border-radius:999px;padding:7px 20px;font-size:24px;font-weight:800;display:inline-block">مبنية ✓</div>
+        <div style="font-size:32px;font-weight:900;color:#1F3B57;margin-top:16px">الدورة ٢ — الدفع والسوق</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:12px;line-height:1.7">بوابات حقيقية، المطابقة الفورية بالإسكرو، تطبيق مقدم الخدمة والمتجر، تصاريح الزوار، المفقودات، سوق العقارات، تشارك الجيران.</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:30px 30px 32px;box-shadow:0 2px 16px rgba(0,0,0,0.07);border-top:6px solid #3FA66B">
+        <div style="background:rgba(63,166,107,0.13);color:#2E7D51;border-radius:999px;padding:7px 20px;font-size:24px;font-weight:800;display:inline-block">مبنية ✓</div>
+        <div style="font-size:32px;font-weight:900;color:#1F3B57;margin-top:16px">الدورة ٣ — المجتمع والثقة</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:12px;line-height:1.7">الفعاليات والمجتمع بتذاكر QR ومجموعات ينشئها السكان، الشات مع الإدارة، حسابات العائلة بالصلاحيات، المكافآت ونقاط الثقة، رضا السكان.</div>
+      </div>
+      <div style="background:#fff;border-radius:22px;padding:30px 30px 32px;box-shadow:0 2px 16px rgba(0,0,0,0.07);border-top:6px solid #6B7280">
+        <div style="background:rgba(107,114,128,0.13);color:#6B7280;border-radius:999px;padding:7px 20px;font-size:24px;font-weight:800;display:inline-block">قادم</div>
+        <div style="font-size:32px;font-weight:900;color:#1F3B57;margin-top:18px">الدورة ٤ — التوسع والبيانات</div>
+        <div style="font-size:24px;color:#6B7280;margin-top:12px;line-height:1.7">محفظة عقارية متعددة، صيانة تنبؤية، عدادات ذكية، ثم دخول الخليج.</div>
+      </div>
+    </div>
+    <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:22px;padding:32px 38px;margin-top:26px;font-size:27px;color:#fff;line-height:1.7">البوابة الفاصلة: لا توسع خليجي قبل كمبوندين مرجعيين مربحين في مصر.</div>
+  </section>
+
+  <section data-label="الخطوة التالية" data-screen-label="28" data-speaker-notes="اختم بطلب واضح: كمبوند تجريبي واحد + التمويل التأسيسي. اعرض الديمو الحيّ بعد هذه الشريحة." style="background:linear-gradient(150deg,#27496F 0%,#1F3B57 60%,#152A3F 100%);display:flex;flex-direction:column;justify-content:center;padding:0 130px;font-family:'Cairo',sans-serif;direction:rtl">
+    <div style="display:flex;align-items:center;gap:20px">
+      <svg width="54" height="54" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#C79A3C" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#F7F4EE" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+      <div style="font-size:44px;font-weight:900;color:#fff">رفادة</div>
+    </div>
+    <div style="font-size:62px;font-weight:900;color:#fff;margin-top:44px;max-width:1350px;line-height:1.3">المنتج جاهز للتجربة اليوم — نبحث عن أول كمبوند شريك</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px">
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:22px;padding:34px">
+        <div style="font-size:30px;font-weight:900;color:#C79A3C">١ · كمبوند تجريبي</div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.62);margin-top:14px;line-height:1.85">300–600 وحدة، تشغيل كامل لمدة 90 يومًا بلا رسوم اشتراك.</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:22px;padding:34px">
+        <div style="font-size:30px;font-weight:900;color:#C79A3C">٢ · مؤشرات النجاح</div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.62);margin-top:14px;line-height:1.85">تحصيل 85%+، استخدام شهري 40%+، رضا 4+ من 5.</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.14);border-radius:22px;padding:34px">
+        <div style="font-size:30px;font-weight:900;color:#C79A3C">٣ · التمويل</div>
+        <div style="font-size:24px;color:rgba(255,255,255,0.62);margin-top:14px;line-height:1.85">جولة تأسيسية لبناء فريق التشغيل والتكامل مع بوابات الدفع.</div>
+      </div>
+    </div>
+    <div style="font-size:30px;color:rgba(255,255,255,0.55);margin-top:56px">الديمو الحيّ متاح كملف واحد يعمل بدون إنترنت — جاهز للتجربة على الهاتف أمامك.</div>
+  </section>
+
+</x-import>
+</x-dc>
+</body>
+</html>

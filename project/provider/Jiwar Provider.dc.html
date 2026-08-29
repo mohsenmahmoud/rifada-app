@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9E4D9;}
+button{font-family:'Cairo',sans-serif;}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,-8px);}to{opacity:1;transform:translate(-50%,0);}}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</helmet>
+
+<div dir="rtl" style="min-height:100vh;display:flex;flex-direction:column;align-items:center;font-family:'Cairo',sans-serif;background:radial-gradient(1200px 600px at 50% -10%, #F3EFE6 0%, #E9E4D9 60%)">
+
+  <div style="width:100%;max-width:1240px;box-sizing:border-box;display:flex;align-items:center;gap:14px;padding:20px 28px 14px">
+    <svg width="28" height="28" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#3FA66B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#1F3B57" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+    <div style="display:flex;flex-direction:column">
+      <div style="font-size:16px;font-weight:900;color:#1F3B57;line-height:1.2">رفادة — تطبيق مقدم الخدمة</div>
+      <div style="font-size:11px;color:#6B7280">🟩 Provider App · P1–P4</div>
+    </div>
+    <div style="flex:1"></div>
+    <a href="Jiwar App.dc.html" style="font-size:12px;font-weight:800;color:#1F3B57;text-decoration:none">تطبيق الساكن</a>
+    <a href="Jiwar Admin.dc.html" style="font-size:12px;font-weight:800;color:#1F3B57;text-decoration:none">لوحة الإدارة</a>
+  </div>
+
+  <div style="padding:6px 0 60px">
+    <div style="position:relative;width:390px;height:844px;border-radius:46px;background:#111;box-shadow:0 24px 60px rgba(0,0,0,0.28);padding:12px">
+      <div style="position:relative;width:100%;height:100%;border-radius:36px;overflow:hidden;background:#F7F4EE">
+
+        <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;top:60px;left:50%;transform:translateX(-50%);z-index:60;background:#1F3B57;color:#fff;border-radius:999px;padding:9px 20px;font-size:12.5px;font-weight:700;box-shadow:0 8px 24px rgba(31,59,87,0.35);white-space:nowrap;animation:toastIn .25s ease">{{ toast }}</div>
+        </sc-if>
+
+        <!-- ===== P1 Login ===== -->
+        <sc-if value="{{ sLogin }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:linear-gradient(170deg,#1F3B57 0%,#152A3F 100%);display:flex;flex-direction:column;align-items:center;padding:130px 26px 46px;box-sizing:border-box">
+            <svg width="60" height="60" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#3FA66B" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+            <div style="font-size:15px;font-weight:800;color:#fff;margin-top:14px">تطبيق مقدمي الخدمة</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:4px">بيانات الدخول من مكتب إدارة الكمبوند</div>
+            <div style="flex:1"></div>
+            <div style="width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.16);border-radius:20px;padding:18px;box-sizing:border-box">
+              <div style="font-size:12px;font-weight:700;color:#fff;margin-bottom:6px">رقم الهاتف</div>
+              <input dir="ltr" defaultValue="0111 208 5540" style="width:100%;background:#fff;border:none;border-radius:14px;padding:12px 14px;font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:600;color:#1F3B57;box-sizing:border-box">
+              <div style="font-size:12px;font-weight:700;color:#fff;margin:12px 0 6px">رمز PIN</div>
+              <input type="password" defaultValue="4821" style="width:100%;background:#fff;border:none;border-radius:14px;padding:12px 14px;font-size:15px;letter-spacing:6px;color:#1F3B57;box-sizing:border-box">
+              <button onClick="{{ doLogin }}" style="width:100%;margin-top:14px;border:none;cursor:pointer;background:#3FA66B;color:#fff;border-radius:999px;padding:13px;font-size:15px;font-weight:800">تسجيل الدخول</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== P2 Home ===== -->
+        <sc-if value="{{ sHome }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#F7F4EE;display:flex;flex-direction:column">
+            <div style="padding:60px 20px 10px;display:flex;align-items:center;gap:12px">
+              <span style="width:42px;height:42px;border-radius:99px;background:linear-gradient(160deg,#27496F,#1F3B57);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800">ع ز</span>
+              <div style="display:flex;flex-direction:column">
+                <span style="font-size:14.5px;font-weight:800;color:#1F3B57">عبدالعزيز الزهراني — فني سباكة</span>
+                <span style="font-size:11px;color:#6B7280">أكوا فيكس · حدائق الأندلس</span>
+              </div>
+            </div>
+            <div style="padding:6px 20px 0">
+              <button onClick="{{ toggleAvailable }}" style="width:100%;display:flex;align-items:center;gap:12px;border:none;cursor:pointer;background:{{ availBg }};border-radius:18px;padding:15px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <span style="width:44px;height:24px;border-radius:99px;background:{{ availSw }};position:relative;flex:none"><span style="position:absolute;top:2.5px;left:{{ availDot }};width:19px;height:19px;border-radius:99px;background:#fff"></span></span>
+                <span style="flex:1;text-align:right;font-size:13.5px;font-weight:800;color:{{ availC }}">{{ availLabel }}</span>
+              </button>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:14px 20px 30px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div style="background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:11px;color:#6B7280">مهام اليوم</div>
+                  <div style="font-family:'IBM Plex Sans',sans-serif;font-size:22px;font-weight:700;color:#1F3B57;margin-top:4px">{{ jobsToday }}</div>
+                </div>
+                <div style="background:#fff;border-radius:16px;padding:14px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:11px;color:#6B7280">أرباح اليوم</div>
+                  <div style="font-family:'IBM Plex Sans',sans-serif;font-size:22px;font-weight:700;color:#1F3B57;margin-top:4px">{{ earningsToday }} <span style="font-size:11px;color:#6B7280">ر.س</span></div>
+                </div>
+              </div>
+              <div style="font-size:13px;font-weight:800;color:#1F3B57;margin:18px 2px 8px">مهامك القادمة</div>
+              <sc-for list="{{ upcomingJobs }}" as="j" hint-placeholder-count="2">
+                <div style="background:#fff;border-radius:16px;padding:13px 15px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-bottom:8px;display:flex;align-items:center;gap:10px">
+                  <span style="width:34px;height:34px;border-radius:11px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z" stroke="#1F3B57" strokeWidth="1.6" strokeLinejoin="round"></path></svg>
+                  </span>
+                  <span style="flex:1;display:flex;flex-direction:column;gap:1px">
+                    <span style="font-size:12.5px;font-weight:800;color:#1F3B57">{{ j.title }}</span>
+                    <span style="font-size:10.5px;color:#6B7280">{{ j.area }} · {{ j.time }}</span>
+                  </span>
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:700;color:#A87F2C">{{ j.pay }} ر.س</span>
+                </div>
+              </sc-for>
+              <button onClick="{{ goHistory }}" style="width:100%;margin-top:14px;cursor:pointer;background:transparent;color:#1F3B57;border:1.5px solid #1F3B57;border-radius:999px;padding:11px;font-size:12.5px;font-weight:800">سجل المهام والأرباح</button>
+              <button onClick="{{ switchToStore }}" style="width:100%;margin-top:8px;border:1.5px dashed rgba(199,154,60,0.5);background:rgba(199,154,60,0.06);border-radius:16px;padding:12px;cursor:pointer;font-size:12px;font-weight:800;color:#A87F2C">🍽 جرّب واجهة حساب «متجر» — مطعم بيت الجيران</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== P9 Store home + menu management ===== -->
+        <sc-if value="{{ sStoreHome }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#F7F4EE;display:flex;flex-direction:column">
+            <div style="padding:60px 20px 10px;display:flex;align-items:center;gap:12px">
+              <span style="width:42px;height:42px;border-radius:13px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="{{ pStoreIcon }}" stroke="#1F3B57" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              </span>
+              <div style="display:flex;flex-direction:column;flex:1">
+                <span style="font-size:14.5px;font-weight:800;color:#1F3B57">{{ pStoreName }}</span>
+                <span style="font-size:11px;color:#6B7280">حساب متجر · حدائق الأندلس</span>
+              </div>
+              <button onClick="{{ switchToTech }}" style="border:none;cursor:pointer;background:#fff;border-radius:999px;padding:7px 13px;font-size:10.5px;font-weight:800;color:#1F3B57;box-shadow:0 2px 8px rgba(0,0,0,0.06)">واجهة الفني</button>
+            </div>
+            <div style="padding:6px 20px 0;display:flex;background:transparent;gap:8px">
+              <button onClick="{{ setKindRest }}" style="flex:1;border:none;cursor:pointer;border-radius:999px;padding:8px;font-size:12px;font-weight:800;background:{{ kRestBg }};color:{{ kRestC }};box-shadow:0 2px 8px rgba(0,0,0,0.05)">مطعم</button>
+              <button onClick="{{ setKindPharm }}" style="flex:1;border:none;cursor:pointer;border-radius:999px;padding:8px;font-size:12px;font-weight:800;background:{{ kPharmBg }};color:{{ kPharmC }};box-shadow:0 2px 8px rgba(0,0,0,0.05)">صيدلية</button>
+            </div>
+            <div style="padding:8px 20px 0">
+              <button onClick="{{ toggleStoreOpen }}" style="width:100%;display:flex;align-items:center;gap:12px;border:none;cursor:pointer;background:{{ soBg }};border-radius:18px;padding:15px 16px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <span style="width:44px;height:24px;border-radius:99px;background:{{ soSw }};position:relative;flex:none"><span style="position:absolute;top:2.5px;left:{{ soDot }};width:19px;height:19px;border-radius:99px;background:#fff"></span></span>
+                <span style="flex:1;text-align:right;font-size:13.5px;font-weight:800;color:{{ soC }}">{{ soLabel }}</span>
+              </button>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:14px 20px 30px">
+              <div style="display:flex;align-items:center;margin-bottom:8px">
+                <span style="font-size:13px;font-weight:800;color:#1F3B57">إدارة المنيو</span>
+                <span style="flex:1"></span>
+                <button onClick="{{ goOrders }}" style="border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:7px 16px;font-size:11px;font-weight:800;position:relative">الطلبات الواردة<span style="position:absolute;top:-5px;left:-5px;width:18px;height:18px;border-radius:99px;background:#E4675A;color:#fff;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center">{{ newOrdCount }}</span></button>
+              </div>
+              <sc-for list="{{ storeMenu }}" as="sm" hint-placeholder-count="4">
+                <div style="background:#fff;border-radius:16px;padding:13px 15px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-bottom:8px;display:flex;align-items:center;gap:11px;opacity:{{ sm.op }}">
+                  <span style="width:38px;height:38px;border-radius:11px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none">
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="{{ pStoreIcon }}" stroke="#6B7280" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                  </span>
+                  <span style="flex:1;display:flex;flex-direction:column;gap:1px">
+                    <span style="font-size:12.5px;font-weight:800;color:#1F3B57">{{ sm.name }}</span>
+                    <span style="font-family:'IBM Plex Sans',sans-serif;font-size:11.5px;font-weight:700;color:#A87F2C">{{ sm.price }} ر.س</span>
+                  </span>
+                  <button onClick="{{ sm.toggle }}" style="border:none;cursor:pointer;border-radius:999px;padding:6px 13px;font-size:10.5px;font-weight:800;background:{{ sm.avBg }};color:{{ sm.avC }}">{{ sm.avLabel }}</button>
+                </div>
+              </sc-for>
+              <button style="width:100%;margin-top:6px;border:1.5px dashed rgba(31,59,87,0.3);background:transparent;border-radius:14px;padding:12px;cursor:pointer;font-size:12px;font-weight:700;color:#6B7280">+ إضافة صنف جديد</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== P10 Incoming orders queue ===== -->
+        <sc-if value="{{ sStoreOrders }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#F7F4EE;display:flex;flex-direction:column">
+            <div style="padding:60px 20px 8px;display:flex;align-items:center;gap:12px">
+              <button onClick="{{ goStoreHome }}" style="width:38px;height:38px;border-radius:99px;border:none;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.06);cursor:pointer;display:flex;align-items:center;justify-content:center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#1F3B57" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              </button>
+              <div style="font-size:18px;font-weight:800;color:#1F3B57">طلبات {{ pStoreName }}</div>
+            </div>
+            <div style="padding:6px 20px 4px;display:flex;gap:8px">
+              <button onClick="{{ ordTabActive }}" style="flex:1;border:none;cursor:pointer;border-radius:999px;padding:9px;font-size:12px;font-weight:800;background:{{ otaBg }};color:{{ otaC }}">نشطة ({{ activeOrdCount }})</button>
+              <button onClick="{{ ordTabLog }}" style="flex:1;border:none;cursor:pointer;border-radius:999px;padding:9px;font-size:12px;font-weight:800;background:{{ otlBg }};color:{{ otlC }}">سجل اليوم ({{ logOrdCount }})</button>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:8px 20px 30px">
+              <sc-for list="{{ ordersList }}" as="o" hint-placeholder-count="2">
+                <div style="background:#fff;border-radius:20px;padding:16px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-bottom:12px">
+                  <div style="display:flex;align-items:center">
+                    <span style="font-size:14px;font-weight:900;color:#1F3B57">طلب {{ o.id }}</span>
+                    <span style="font-size:10px;color:#9AA1AC;margin-right:8px">{{ o.time }}</span>
+                    <span style="flex:1"></span>
+                    <span style="background:{{ o.stBg }};color:{{ o.stC }};border-radius:999px;padding:4px 13px;font-size:10.5px;font-weight:800">{{ o.stLabel }}</span>
+                  </div>
+                  <div style="font-size:11.5px;color:#6B7280;margin-top:4px">{{ o.who }}</div>
+                  <sc-if value="{{ o.hasRx }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ o.viewRx }}" style="width:100%;margin-top:10px;border:1.5px dashed rgba(31,59,87,0.3);background:rgba(31,59,87,0.04);border-radius:12px;padding:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:7px">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M14 2H6v20h12V8zM14 2v6h6M9 13h6M9 17h6" stroke="#1F3B57" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                      <span style="font-size:11px;font-weight:800;color:#1F3B57">📎 روشتة مرفقة — اضغط للمراجعة قبل القبول</span>
+                    </button>
+                  </sc-if>
+                  <div style="background:#F7F4EE;border-radius:14px;padding:11px 14px;margin-top:10px">
+                    <sc-for list="{{ o.lines }}" as="ln" hint-placeholder-count="2">
+                      <div style="display:flex;font-size:12px;color:#4B5563;padding:3px 0"><span>{{ ln.name }}</span><span style="flex:1"></span><span style="font-family:'IBM Plex Sans',sans-serif;font-weight:700">{{ ln.price }}</span></div>
+                    </sc-for>
+                    <div style="display:flex;font-size:12.5px;color:#1F3B57;font-weight:800;padding:6px 0 0;border-top:1px solid rgba(0,0,0,0.06);margin-top:5px"><span>الإجمالي + التوصيل</span><span style="flex:1"></span><span style="font-family:'IBM Plex Sans',sans-serif">{{ o.total }} ر.س</span></div>
+                  </div>
+                  <sc-if value="{{ o.isOut }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;align-items:center;gap:9px;background:rgba(31,59,87,0.05);border-radius:12px;padding:10px 13px;margin-top:10px">
+                      <span style="width:28px;height:28px;border-radius:99px;background:linear-gradient(160deg,#27496F,#1F3B57);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800">م</span>
+                      <span style="flex:1;font-size:11px;font-weight:700;color:#1F3B57">المندوب: مشعل الرشيدي · خرج من المتجر {{ o.outTime }}</span>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M21 12a8 8 0 0 1-8 8H4l2-3.2A8 8 0 1 1 21 12z" stroke="#1F3B57" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ o.isNew }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;gap:10px;margin-top:12px">
+                      <button onClick="{{ o.reject }}" style="flex:1;cursor:pointer;background:transparent;color:#E4675A;border:1.5px solid #E4675A;border-radius:999px;padding:11px;font-size:12.5px;font-weight:800">رفض</button>
+                      <button onClick="{{ o.advance }}" style="flex:1.6;border:none;cursor:pointer;background:#3FA66B;color:#fff;border-radius:999px;padding:11px;font-size:12.5px;font-weight:800">{{ o.nextLabel }}</button>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ o.hasNext }}" hint-placeholder-val="{{ false }}">
+                    <button onClick="{{ o.advance }}" style="width:100%;margin-top:12px;border:none;cursor:pointer;background:{{ o.nextBg }};color:#fff;border-radius:999px;padding:11px;font-size:12.5px;font-weight:800">{{ o.nextLabel }}</button>
+                  </sc-if>
+                  <sc-if value="{{ o.isDone }}" hint-placeholder-val="{{ false }}">
+                    <div style="display:flex;align-items:center;gap:8px;margin-top:12px">
+                      <span style="flex:1;background:rgba(63,166,107,0.1);border-radius:999px;padding:8px;text-align:center;font-size:11px;font-weight:800;color:#2E7D51">مُسلَّم ✓ · صافي {{ o.net }} ر.س بعد العمولة</span>
+                      <button onClick="{{ goStorePayout }}" style="border:none;cursor:pointer;background:#C79A3C;color:#fff;border-radius:999px;padding:8px 15px;font-size:10.5px;font-weight:800">التفاصيل</button>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+              <sc-if value="{{ ordersEmpty }}" hint-placeholder-val="{{ false }}">
+                <div style="text-align:center;padding:40px 20px;font-size:12.5px;color:#9AA1AC">لا توجد طلبات في هذا التبويب</div>
+              </sc-if>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== P11 Order payout ===== -->
+        <sc-if value="{{ sStorePayout }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#F7F4EE;display:flex;flex-direction:column;padding:90px 24px 34px;box-sizing:border-box">
+            <div style="display:flex;flex-direction:column;align-items:center">
+              <span style="width:70px;height:70px;border-radius:99px;background:rgba(63,166,107,0.13);display:flex;align-items:center;justify-content:center">
+                <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#3FA66B" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              </span>
+              <div style="font-size:18px;font-weight:900;color:#1F3B57;margin-top:14px">تم توصيل الطلب #2841</div>
+              <div style="background:#fff;border-radius:20px;padding:6px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-top:18px;width:100%">
+                <div style="display:flex;align-items:center;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:12.5px;color:#6B7280">قيمة الطلب</span><span style="flex:1"></span><span style="font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:700;color:#1F3B57">255.00 ر.س</span></div>
+                <div style="display:flex;align-items:center;padding:12px 0;border-bottom:1px solid rgba(0,0,0,0.05)"><span style="font-size:12.5px;color:#6B7280">عمولة رفادة (12%)</span><span style="flex:1"></span><span style="font-family:'IBM Plex Sans',sans-serif;font-size:13px;font-weight:700;color:#E4675A">− 30.60 ر.س</span></div>
+                <div style="display:flex;align-items:center;padding:12px 0"><span style="font-size:13px;font-weight:900;color:#1F3B57">صافي أرباحك</span><span style="flex:1"></span><span style="font-family:'IBM Plex Sans',sans-serif;font-size:16px;font-weight:700;color:#2E7D51">224.40 ر.س</span></div>
+              </div>
+              <div style="font-size:11px;color:#6B7280;margin-top:12px;text-align:center;line-height:1.8">يُضاف الصافي لمحفظتك ويُحوّل مع دورة الصرف — التوصيل (15 ر.س) لمندوبك مباشرة.</div>
+            </div>
+            <div style="flex:1"></div>
+            <button onClick="{{ goStoreHome }}" style="width:100%;border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:14px;font-size:14px;font-weight:800">العودة للمتجر</button>
+          </div>
+        </sc-if>
+
+        <!-- ===== P3 Incoming request (Uber-style) ===== -->
+        <sc-if value="{{ sIncoming }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:rgba(21,42,63,0.55);display:flex;flex-direction:column;justify-content:flex-end;backdrop-filter:blur(3px)">
+            <div style="background:#fff;border-radius:26px 26px 0 0;padding:22px 22px 34px;box-shadow:0 -8px 30px rgba(0,0,0,0.2);animation:slideUp .3s ease">
+              <div style="display:flex;align-items:center;justify-content:center;gap:8px">
+                <span style="width:9px;height:9px;border-radius:99px;background:#E4675A;animation:toastIn 1s infinite alternate"></span>
+                <span style="font-size:12.5px;font-weight:800;color:#E4675A">طلب جديد — {{ countdown }} ثانية للرد</span>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;margin-top:16px">
+                <span style="width:46px;height:46px;border-radius:14px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z" stroke="#1F3B57" strokeWidth="1.6" strokeLinejoin="round"></path></svg>
+                </span>
+                <span style="flex:1;display:flex;flex-direction:column;gap:2px">
+                  <span style="font-size:15px;font-weight:900;color:#1F3B57">تسريب مياه — سباكة</span>
+                  <span style="font-size:11.5px;color:#6B7280">حي الياسمين — منطقة عامة (يظهر الرقم الدقيق بعد القبول)</span>
+                </span>
+              </div>
+              <div style="background:#F7F4EE;border-radius:14px;padding:12px 14px;margin-top:12px;font-size:12px;color:#4B5563;line-height:1.8">"تسريب مستمر أسفل حوض الحمام الرئيسي منذ يومين، مرفق صورتان."</div>
+              <div style="display:flex;align-items:center;margin-top:14px">
+                <span style="font-size:12px;color:#6B7280">العائد المتوقع</span>
+                <span style="flex:1"></span>
+                <span style="font-family:'IBM Plex Sans',sans-serif;font-size:18px;font-weight:700;color:#2E7D51">150 ر.س</span>
+              </div>
+              <div style="display:flex;gap:10px;margin-top:18px">
+                <button onClick="{{ declineJob }}" style="flex:1;cursor:pointer;background:transparent;color:#E4675A;border:1.5px solid #E4675A;border-radius:999px;padding:13px;font-size:14px;font-weight:800">رفض</button>
+                <button onClick="{{ acceptJob }}" style="flex:1.4;border:none;cursor:pointer;background:#3FA66B;color:#fff;border-radius:999px;padding:13px;font-size:14.5px;font-weight:800">قبول الطلب</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== P4 Job detail & execution ===== -->
+        <sc-if value="{{ sJob }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#F7F4EE;display:flex;flex-direction:column">
+            <div style="padding:60px 20px 8px;display:flex;align-items:center;gap:12px">
+              <button onClick="{{ goHome }}" style="width:38px;height:38px;border-radius:99px;border:none;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.06);cursor:pointer;display:flex;align-items:center;justify-content:center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#1F3B57" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              </button>
+              <div style="font-size:18px;font-weight:800;color:#1F3B57">تفاصيل المهمة</div>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:8px 20px 30px">
+              <div style="background:#fff;border-radius:18px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:15px;font-weight:900;color:#1F3B57">تسريب مياه — سباكة</div>
+                <div style="font-size:12px;color:#6B7280;margin-top:4px">فيلا 214 — حي الياسمين · عبدالله العتيبي</div>
+                <div style="display:flex;align-items:center;margin-top:12px">
+                  <span style="font-size:12px;color:#6B7280">العائد</span><span style="flex:1"></span>
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;font-weight:700;color:#2E7D51">150 ر.س</span>
+                </div>
+              </div>
+              <button style="width:100%;margin-top:12px;border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:16px;padding:12px;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M21 12a8 8 0 0 1-8 8H4l2-3.2A8 8 0 1 1 21 12z" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                تواصل مع الساكن
+              </button>
+              <div style="background:#fff;border-radius:18px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-top:12px">
+                <div style="font-size:13px;font-weight:800;color:#1F3B57">حالة المهمة</div>
+                <div style="font-size:12.5px;color:#A87F2C;font-weight:800;margin-top:8px">{{ jobStageLabel }}</div>
+                <sc-if value="{{ jobNotStarted }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ startJob }}" style="width:100%;margin-top:12px;border:none;cursor:pointer;background:#C79A3C;color:#fff;border-radius:999px;padding:13px;font-size:14px;font-weight:800">بدء التنفيذ</button>
+                </sc-if>
+                <sc-if value="{{ jobStarted }}" hint-placeholder-val="{{ false }}">
+                  <button style="width:100%;margin-top:12px;border:1.5px dashed rgba(31,59,87,0.3);background:transparent;border-radius:16px;padding:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 8h3l2-3h6l2 3h3v12H4zM12 17a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" stroke="#6B7280" strokeWidth="1.5" strokeLinejoin="round"></path></svg>
+                    <span style="font-size:12px;font-weight:700;color:#6B7280">إثبات إنجاز العمل (صورة)</span>
+                  </button>
+                  <button onClick="{{ completeJob }}" style="width:100%;margin-top:10px;border:none;cursor:pointer;background:#3FA66B;color:#fff;border-radius:999px;padding:13px;font-size:14px;font-weight:800">تم الانتهاء</button>
+                </sc-if>
+                <sc-if value="{{ jobDone }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:rgba(199,154,60,0.1);border-radius:14px;padding:12px;margin-top:12px;text-align:center;font-size:12.5px;font-weight:800;color:#A87F2C">🕒 بانتظار تأكيد الساكن</div>
+                  <button onClick="{{ simulateConfirm }}" style="width:100%;margin-top:10px;border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:12px;font-size:12.5px;font-weight:800">محاكاة تأكيد الساكن</button>
+                </sc-if>
+                <sc-if value="{{ jobPaid }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:rgba(63,166,107,0.1);border-radius:14px;padding:14px;margin-top:12px">
+                    <div style="font-size:12.5px;font-weight:800;color:#2E7D51;text-align:center">✅ تم التحويل — {{ payoutNet }} ر.س</div>
+                    <div style="font-size:10.5px;color:#6B7280;text-align:center;margin-top:4px">بعد خصم عمولة رفادة {{ commissionPct }}% من أصل 150 ر.س</div>
+                  </div>
+                </sc-if>
+                <button onClick="{{ goDisputeP }}" style="width:100%;margin-top:10px;border:none;background:transparent;cursor:pointer;color:#E4675A;font-size:11.5px;font-weight:800;padding:6px">الإبلاغ عن مشكلة في هذه المهمة</button>
+              </div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== P8 Report an issue (provider side) ===== -->
+        <sc-if value="{{ sDisputeP }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#F7F4EE;display:flex;flex-direction:column">
+            <div style="padding:60px 20px 8px;display:flex;align-items:center;gap:12px">
+              <button onClick="{{ goJob }}" style="width:38px;height:38px;border-radius:99px;border:none;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.06);cursor:pointer;display:flex;align-items:center;justify-content:center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#1F3B57" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              </button>
+              <div style="font-size:18px;font-weight:800;color:#1F3B57">الإبلاغ عن مشكلة</div>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:8px 20px 30px">
+              <div style="font-size:12px;font-weight:700;color:#1F3B57;margin-bottom:8px">نوع المشكلة</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ disputePReasons }}" as="dr" hint-placeholder-count="3">
+                  <button onClick="{{ dr.pick }}" style="display:flex;align-items:center;gap:11px;background:{{ dr.bg }};border:1.5px solid {{ dr.bd }};border-radius:14px;padding:12px 14px;cursor:pointer;text-align:right">
+                    <span style="width:16px;height:16px;border-radius:99px;border:2px solid {{ dr.dotBd }};display:flex;align-items:center;justify-content:center;flex:none"><span style="width:7px;height:7px;border-radius:99px;background:{{ dr.dot }}"></span></span>
+                    <span style="font-size:12px;font-weight:700;color:#1F3B57">{{ dr.label }}</span>
+                  </button>
+                </sc-for>
+              </div>
+            </div>
+            <div style="padding:0 20px 30px">
+              <button onClick="{{ submitDisputeP }}" style="width:100%;border:none;cursor:pointer;background:#E4675A;color:#fff;border-radius:999px;padding:13px;font-size:14px;font-weight:800">إرسال لمكتب الإدارة</button>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- ===== P5 History (mentioned, light) ===== -->
+        <sc-if value="{{ sHistory }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute;inset:0;background:#F7F4EE;display:flex;flex-direction:column">
+            <div style="padding:60px 20px 8px;display:flex;align-items:center;gap:12px">
+              <button onClick="{{ goHome }}" style="width:38px;height:38px;border-radius:99px;border:none;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.06);cursor:pointer;display:flex;align-items:center;justify-content:center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#1F3B57" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              </button>
+              <div style="font-size:18px;font-weight:800;color:#1F3B57">المحفظة والأرباح</div>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:8px 20px 30px">
+              <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:16px">
+                <div style="font-size:11.5px;color:rgba(255,255,255,0.7)">الرصيد المتاح للسحب</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:30px;font-weight:700;color:#fff;margin-top:4px">{{ walletAvail }} <span style="font-size:12px;color:rgba(255,255,255,0.7)">ر.س</span></div>
+                <div style="display:flex;align-items:center;gap:6px;margin-top:8px">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M6 11V8a6 6 0 0 1 12 0v3M5 11h14v10H5z" stroke="#C79A3C" strokeWidth="1.6" strokeLinejoin="round"></path></svg>
+                  <span style="font-size:10.5px;color:#C79A3C;font-weight:700">150 ر.س محجوزة في الإسكرو حتى تأكيد السكان</span>
+                </div>
+              </div>
+
+              <div style="background:#fff;border-radius:16px;padding:14px 15px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-top:10px;display:flex;align-items:center;gap:11px">
+                <span style="width:36px;height:36px;border-radius:11px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V9l7-5 7 5v12M9 21v-5h6v5" stroke="#1F3B57" strokeWidth="1.6" strokeLinejoin="round"></path></svg>
+                </span>
+                <span style="flex:1;display:flex;flex-direction:column;gap:1px">
+                  <span style="font-size:12.5px;font-weight:800;color:#1F3B57">البنك الأهلي — حساب •••• 8842</span>
+                  <span style="font-size:10.5px;color:#6B7280">حساب الصرف المعتمد</span>
+                </span>
+                <span style="font-size:11px;font-weight:800;color:#C79A3C">تغيير</span>
+              </div>
+
+              <div style="display:flex;background:#fff;border-radius:999px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-top:10px">
+                <button onClick="{{ setPayoutAuto }}" style="flex:1;border:none;cursor:pointer;border-radius:999px;padding:9px;font-size:12px;font-weight:800;background:{{ pmAutoBg }};color:{{ pmAutoC }}">تحويل تلقائي أسبوعي</button>
+                <button onClick="{{ setPayoutManual }}" style="flex:1;border:none;cursor:pointer;border-radius:999px;padding:9px;font-size:12px;font-weight:800;background:{{ pmManBg }};color:{{ pmManC }}">سحب يدوي</button>
+              </div>
+              <sc-if value="{{ payoutIsAuto }}" hint-placeholder-val="{{ true }}">
+                <div style="background:rgba(63,166,107,0.08);border-radius:14px;padding:11px 14px;margin-top:8px;font-size:11px;color:#2E7D51;font-weight:700;line-height:1.8">يُحوَّل رصيدك تلقائيًا كل خميس إلى حسابك البنكي — التحويل القادم: الخميس 16 يوليو</div>
+              </sc-if>
+
+              <sc-if value="{{ payoutIsManual }}" hint-placeholder-val="{{ false }}">
+                <sc-if value="{{ wdIdle }}" hint-placeholder-val="{{ true }}">
+                  <button onClick="{{ requestWithdraw }}" style="width:100%;margin-top:10px;border:none;cursor:pointer;background:#C79A3C;color:#fff;border-radius:999px;padding:13px;font-size:14px;font-weight:800;box-shadow:0 6px 18px rgba(199,154,60,0.35)">اسحب {{ walletAvail }} ر.س الآن</button>
+                </sc-if>
+                <sc-if value="{{ wdActive }}" hint-placeholder-val="{{ false }}">
+                  <div style="background:#fff;border-radius:18px;padding:16px 16px 6px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-top:10px">
+                    <div style="font-size:12.5px;font-weight:800;color:#1F3B57;margin-bottom:10px">حالة طلب السحب — {{ wdAmount }} ر.س</div>
+                    <sc-for list="{{ wdSteps }}" as="ws" hint-placeholder-count="3">
+                      <div style="display:flex;gap:11px">
+                        <div style="display:flex;flex-direction:column;align-items:center">
+                          <span style="width:12px;height:12px;border-radius:99px;background:{{ ws.dot }};margin-top:3px;flex:none"></span>
+                          <span style="width:2px;flex:1;min-height:18px;background:{{ ws.line }};display:{{ ws.lineDisp }}"></span>
+                        </div>
+                        <div style="padding-bottom:13px">
+                          <div style="font-size:12px;font-weight:800;color:{{ ws.c }}">{{ ws.label }}</div>
+                          <div style="font-size:10px;color:#9AA1AC">{{ ws.sub }}</div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <sc-if value="{{ wdNotDone }}" hint-placeholder-val="{{ true }}">
+                    <button onClick="{{ advanceWd }}" style="width:100%;margin-top:10px;border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:12px;font-size:12.5px;font-weight:800">الخطوة التالية (محاكاة)</button>
+                  </sc-if>
+                  <sc-if value="{{ wdDone }}" hint-placeholder-val="{{ false }}">
+                    <div style="background:rgba(63,166,107,0.12);border-radius:16px;padding:14px;margin-top:10px;display:flex;align-items:center;gap:10px">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#3FA66B" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                      <span style="flex:1;font-size:12px;font-weight:800;color:#2E7D51">وصل {{ wdAmount }} ر.س إلى حسابك •••• 8842</span>
+                      <button onClick="{{ resetWd }}" style="border:none;background:transparent;cursor:pointer;color:#2E7D51;font-size:10.5px;font-weight:800;text-decoration:underline">إعادة</button>
+                    </div>
+                  </sc-if>
+                </sc-if>
+              </sc-if>
+
+              <div style="font-size:12.5px;font-weight:800;color:#1F3B57;margin:16px 2px 0">مهام مكتملة — تفاصيل الأرباح</div>
+              <sc-for list="{{ pastJobs }}" as="pj" hint-placeholder-count="4">
+                <div style="background:#fff;border-radius:16px;padding:13px 15px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-top:10px;display:flex;align-items:center;gap:10px">
+                  <span style="flex:1;display:flex;flex-direction:column;gap:1px">
+                    <span style="font-size:12.5px;font-weight:800;color:#1F3B57">{{ pj.title }}</span>
+                    <span style="font-size:10.5px;color:#6B7280">{{ pj.date }}</span>
+                  </span>
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:12.5px;font-weight:700;color:#2E7D51">{{ pj.pay }} ر.س</span>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </sc-if>
+
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 440, &quot;height&quot;: 900}, &quot;previewScreen&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;&quot;, &quot;home&quot;, &quot;job&quot;, &quot;wallet&quot;, &quot;storeHome&quot;, &quot;storeOrders&quot;], &quot;default&quot;: &quot;&quot;, &quot;tsType&quot;: &quot;string&quot;}}">
+class Component extends DCLogic {
+  state = {
+    logged: false,
+    screen: 'home',
+    available: true,
+    incomingShown: true,
+    countdown: 20,
+    jobStage: 'accepted', // accepted -> started -> done -> paid
+    toast: null,
+    disputePReason: null,
+    payoutMode: 'auto',
+    wdStage: 0, // 0 idle, 1 requested, 2 processing, 3 done
+    // P9–P11 store variant
+    storeOpen: true,
+    storeKind: 'rest',
+    menuAvail: { 0: true, 1: true, 2: false, 3: true },
+    ordersSt: {
+      rest: { 0: 'new', 1: 'preparing', 2: 'delivered' },
+      pharm: { 0: 'new', 1: 'out', 2: 'delivered' },
+    },
+    ordTab: 'active',
+  };
+
+  showToast = msg => {
+    clearTimeout(this._tt);
+    this.setState({ toast: msg });
+    this._tt = setTimeout(() => this.setState({ toast: null }), 2600);
+  };
+
+  componentDidMount() {
+    if (this.props.previewScreen) {
+      this.setState({ logged: true, screen: this.props.previewScreen, incomingShown: false });
+    }
+    this._iv = setInterval(() => {
+      this.setState(s => {
+        if (!s.logged || !s.incomingShown || !s.available) return null;
+        if (s.countdown <= 1) return { countdown: 20 };
+        return { countdown: s.countdown - 1 };
+      });
+    }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this._iv); }
+
+  renderVals() {
+    const st = this.state;
+    const NAVY = '#1F3B57', GREEN = '#3FA66B';
+
+    const doLogin = () => { this.setState({ logged: true }); this.showToast('حياك الله — أكوا فيكس'); };
+    const toggleAvailable = () => this.setState(s => ({ available: !s.available }));
+    const goHome = () => this.setState({ screen: 'home' });
+    const goHistory = () => this.setState({ screen: 'history' });
+    const acceptJob = () => { this.setState({ incomingShown: false, screen: 'job', jobStage: 'accepted' }); this.showToast('تم قبول الطلب — تظهر الآن التفاصيل الكاملة'); };
+    const declineJob = () => { this.setState({ incomingShown: false, countdown: 20 }); this.showToast('تم رفض الطلب — أُرسل لأقرب مقدم آخر'); };
+    const startJob = () => this.setState({ jobStage: 'started' });
+    const completeJob = () => { this.setState({ jobStage: 'done' }); this.showToast('تم تسجيل إنجاز المهمة — وصل إشعار تقييم للساكن. المبلغ محجوز حتى تأكيده'); };
+    const simulateConfirm = () => { this.setState({ jobStage: 'paid' }); this.showToast('أكّد الساكن الاكتمال — تم تحويل المبلغ لك'); };
+    const goJob = () => this.setState({ screen: 'job' });
+    const goDisputeP = () => this.setState({ screen: 'disputeP' });
+    const disputePReasonDefs = ['الساكن غير موجود', 'بلاغ حول الدخول للوحدة', 'مشكلة في الدفع'];
+    const disputePReasons = disputePReasonDefs.map(label => {
+      const on = st.disputePReason === label;
+      return { label, pick: () => this.setState({ disputePReason: label }),
+        bg: on ? 'rgba(228,103,90,0.08)' : '#fff', bd: on ? '#E4675A' : 'rgba(0,0,0,0.06)',
+        dotBd: on ? '#E4675A' : '#C6CBD3', dot: on ? '#E4675A' : 'transparent' };
+    });
+    const submitDisputeP = () => { this.setState({ screen: 'job', disputePReason: null }); this.showToast('تم إرسال البلاغ — تم تجميد المبلغ لحين مراجعة الإدارة'); };
+
+    // ---- P5+ wallet & withdrawal cycle
+    const wdStepDefs = [
+      { label: 'تم إنشاء طلب السحب', sub: 'اليوم — 3:42 م' },
+      { label: 'قيد التحويل البنكي', sub: 'عادةً خلال ساعات العمل — بلا رسوم' },
+      { label: 'وصل الرصيد إلى حسابك', sub: 'البنك الأهلي •••• 8842' },
+    ];
+    const wdSteps = wdStepDefs.map((s, i) => {
+      const done = i < st.wdStage;
+      const current = i === st.wdStage - 1;
+      return {
+        label: s.label, sub: done ? s.sub : '',
+        c: done ? '#1F3B57' : '#9AA1AC',
+        dot: done ? (current && st.wdStage < 3 ? '#C79A3C' : GREEN) : '#D8DCE2',
+        line: i < st.wdStage - 1 ? GREEN : '#E7E3DA',
+        lineDisp: i === wdStepDefs.length - 1 ? 'none' : 'block',
+      };
+    });
+    // ---- P9–P11 store variant
+    const storeIdentity = {
+      rest: { name: 'مطعم بيت الجيران', emoji: '🍽️', logoBg: 'rgba(199,154,60,0.15)' },
+      pharm: { name: 'صيدلية الشفاء', emoji: '💊', logoBg: 'rgba(31,59,87,0.1)' },
+    }[st.storeKind];
+    const storeMenuDefs = {
+      rest: [
+        { name: 'مشويات مشكلة (وجبة)', emoji: '🥘', price: 185 },
+        { name: 'مندي لحم', emoji: '🍖', price: 140 },
+        { name: 'أرز بخاري بالدجاج', emoji: '🍗', price: 95 },
+        { name: 'سلطة خضراء كبيرة', emoji: '🥗', price: 35 },
+      ],
+      pharm: [
+        { name: 'بنادول أزرق — شريط', emoji: '💊', price: 28 },
+        { name: 'فيتامين سي 1000', emoji: '🍊', price: 95 },
+        { name: 'جهاز قياس حرارة', emoji: '🌡️', price: 220 },
+        { name: 'شاش ومطهر جروح', emoji: '🩹', price: 60 },
+      ],
+    }[st.storeKind];
+    const storeMenu = storeMenuDefs.map((m, i) => {
+      const av = st.menuAvail[i];
+      return {
+        ...m, op: av ? 1 : 0.55,
+        avLabel: av ? 'متاح' : 'غير متاح',
+        avBg: av ? 'rgba(63,166,107,0.13)' : 'rgba(107,114,128,0.13)',
+        avC: av ? '#2E7D51' : '#6B7280',
+        toggle: () => this.setState(s2 => ({ menuAvail: { ...s2.menuAvail, [i]: !s2.menuAvail[i] } })),
+      };
+    });
+    // ---- order queue: full lifecycle استلام → تسجيل → تحضير → خروج → تسليم
+    const orderDefs = {
+      rest: [
+        { id: '#2842', who: 'فيلا 88 — نورة القحطاني', time: 'الآن', lines: [{ name: 'مندي لحم × 1', price: 140 }, { name: 'أرز بخاري × 2', price: 190 }], total: 345, net: '303.60' },
+        { id: '#2841', who: 'فيلا 214 — عبدالله العتيبي', time: 'منذ 8 دقائق', lines: [{ name: 'مشويات مشكلة × 1', price: 185 }, { name: 'سلطة خضراء × 2', price: 70 }], total: 270, net: '224.40' },
+        { id: '#2839', who: 'فيلا 96 — منيرة الدوسري', time: 'منذ ساعتين', lines: [{ name: 'أرز بخاري × 1', price: 95 }], total: 110, net: '83.60' },
+      ],
+      pharm: [
+        { id: '#P-311', who: 'فيلا 214 — عبدالله العتيبي', time: 'الآن', rx: true, lines: [{ name: 'بنادول أزرق × 2', price: 56 }, { name: 'فيتامين سي × 1', price: 95 }], total: 166, net: '132.88' },
+        { id: '#P-309', who: 'فيلا 12 — لطيفة الزهراني', time: 'منذ 20 دقيقة', lines: [{ name: 'جهاز قياس حرارة × 1', price: 220 }], total: 235, net: '193.60' },
+        { id: '#P-305', who: 'فيلا 45 — ماجد البقمي', time: 'صباحًا', lines: [{ name: 'مسكن أطفال × 1', price: 42 }], total: 57, net: '36.96' },
+      ],
+    }[st.storeKind];
+    const ordStagesFlow = ['new', 'preparing', 'ready', 'out', 'delivered'];
+    const ordMeta = {
+      new: ['طلب جديد 🔔', 'rgba(228,103,90,0.13)', '#B24439'],
+      preparing: ['قيد التحضير', 'rgba(199,154,60,0.16)', '#A87F2C'],
+      ready: ['جاهز — بانتظار المندوب', 'rgba(31,59,87,0.1)', '#1F3B57'],
+      out: ['خرج مع المندوب', 'rgba(61,42,92,0.12)', '#3D2A5C'],
+      delivered: ['مُسلَّم ✓', 'rgba(63,166,107,0.13)', '#2E7D51'],
+    };
+    const nextMeta = {
+      new: [st.storeKind === 'pharm' ? 'الروشتة سليمة — قبول وتسجيل الطلب' : 'قبول وتسجيل الطلب — بدء التحضير', '#3FA66B'],
+      preparing: ['الأوردر جاهز ✓ — استدعاء مندوب التوصيل', '#1F3B57'],
+      ready: ['📦 خروج الأوردر — تسليم للمندوب', '#C79A3C'],
+      out: ['تأكيد وصوله للساكن (محاكاة)', '#1F3B57'],
+    };
+    const advanceToasts = {
+      preparing: 'تم تسجيل الطلب وقبوله — وصل إشعار «قيد التحضير» للساكن',
+      ready: 'الأوردر جاهز — تم إشعار أقرب مندوب توصيل',
+      out: 'خرج الأوردر من المتجر — الساكن يتتبع المندوب الآن',
+      delivered: 'تم التسليم — يُحرَّر المبلغ بعد تأكيد الساكن',
+    };
+    const setOrd = (i, stage) => this.setState(s2 => ({ ordersSt: { ...s2.ordersSt, [s2.storeKind]: { ...s2.ordersSt[s2.storeKind], [i]: stage } } }));
+    const ordersAll = orderDefs.map((o, i) => {
+      const stg = st.ordersSt[st.storeKind][i] || 'new';
+      const m = ordMeta[stg];
+      const nx = nextMeta[stg];
+      const nextStage = ordStagesFlow[ordStagesFlow.indexOf(stg) + 1];
+      return {
+        ...o, stg,
+        stLabel: m[0], stBg: m[1], stC: m[2],
+        hasRx: !!o.rx && stg === 'new',
+        viewRx: () => this.showToast('📄 روشتة د. أيمن الشهري — باراسيتامول + فيتامين سي — سليمة'),
+        isNew: stg === 'new',
+        hasNext: stg !== 'new' && stg !== 'delivered',
+        isOut: stg === 'out',
+        outTime: 'منذ دقائق',
+        isDone: stg === 'delivered',
+        nextLabel: nx ? nx[0] : '',
+        nextBg: nx ? nx[1] : '#1F3B57',
+        advance: () => { setOrd(i, nextStage); this.showToast(advanceToasts[nextStage]); },
+        reject: () => { setOrd(i, 'delivered'); this.showToast('تم رفض الطلب — يُسترد مبلغ الساكن فورًا من الإسكرو'); },
+      };
+    });
+    const activeOrders = ordersAll.filter(o => o.stg !== 'delivered');
+    const logOrders = ordersAll.filter(o => o.stg === 'delivered');
+    const ordersList = st.ordTab === 'active' ? activeOrders : logOrders;
+    const requestWithdraw = () => { this.setState({ wdStage: 1 }); this.showToast('تم إنشاء طلب السحب — 1,240 ر.س'); };
+    const advanceWd = () => {
+      const next = Math.min(st.wdStage + 1, 3);
+      this.setState({ wdStage: next });
+      if (next === 3) this.showToast('وصل الرصيد إلى حسابك البنكي ✓');
+    };
+
+    const upcomingJobs = [
+      { title: 'تسريب مياه — سباكة', area: 'حي الياسمين', time: 'خلال 20 دقيقة', pay: 150 },
+      { title: 'صيانة خلاط حمام', area: 'الحي الشرقي', time: 'اليوم 4:00 م', pay: 90 },
+    ];
+    const pastJobs = [
+      { title: 'إصلاح تسريب مطبخ', date: 'أمس — 2:30 م', pay: 130 },
+      { title: 'تركيب سخان مياه', date: 'أمس — 11:00 ص', pay: 220 },
+      { title: 'صيانة دورية سباكة', date: 'منذ يومين', pay: 90 },
+      { title: 'إصلاح صرف حمام', date: 'منذ 3 أيام', pay: 110 },
+    ];
+
+    return {
+      hasToast: !!st.toast, toast: st.toast,
+      sLogin: !st.logged,
+      sHome: st.logged && st.screen === 'home',
+      sIncoming: st.logged && st.screen === 'home' && st.incomingShown && st.available,
+      sJob: st.logged && (st.screen === 'job'),
+      sDisputeP: st.logged && st.screen === 'disputeP',
+      sHistory: st.logged && st.screen === 'history',
+      sStoreHome: st.logged && st.screen === 'storeHome',
+      sStoreOrders: st.logged && st.screen === 'storeOrders',
+      sStorePayout: st.logged && st.screen === 'storePayout',
+      switchToStore: () => { this.setState({ screen: 'storeHome' }); this.showToast('واجهة المتجر — نفس الحساب، نوع «متجر» بدل «فني»'); },
+      switchToTech: () => this.setState({ screen: 'home' }),
+      goStoreHome: () => this.setState({ screen: 'storeHome' }),
+      goOrders: () => this.setState({ screen: 'storeOrders' }),
+      goStorePayout: () => this.setState({ screen: 'storePayout' }),
+      toggleStoreOpen: () => this.setState(s2 => ({ storeOpen: !s2.storeOpen })),
+      soBg: st.storeOpen ? 'rgba(63,166,107,0.1)' : '#fff',
+      soSw: st.storeOpen ? GREEN : '#C6CBD3',
+      soDot: st.storeOpen ? '23px' : '2.5px',
+      soC: st.storeOpen ? '#2E7D51' : '#6B7280',
+      soLabel: st.storeOpen ? 'المتجر مفتوح — يستقبل الطلبات' : 'المتجر مغلق الآن',
+      storeMenu,
+      pStoreName: storeIdentity.name,
+      pStoreIcon: st.storeKind === 'pharm' ? 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM12 8v8M8 12h8' : 'M7 3v7a2 2 0 0 0 2 2v9M7 3v5M11 3v5M17 3c-2 0-3 3-3 6h3v12',
+      setKindRest: () => this.setState({ storeKind: 'rest' }),
+      setKindPharm: () => this.setState({ storeKind: 'pharm' }),
+      kRestBg: st.storeKind === 'rest' ? '#1F3B57' : '#fff', kRestC: st.storeKind === 'rest' ? '#fff' : '#6B7280',
+      kPharmBg: st.storeKind === 'pharm' ? '#1F3B57' : '#fff', kPharmC: st.storeKind === 'pharm' ? '#fff' : '#6B7280',
+      newOrdCount: String(ordersAll.filter(o => o.stg === 'new').length),
+      ordTabActive: () => this.setState({ ordTab: 'active' }),
+      ordTabLog: () => this.setState({ ordTab: 'log' }),
+      otaBg: st.ordTab === 'active' ? '#1F3B57' : '#fff', otaC: st.ordTab === 'active' ? '#fff' : '#6B7280',
+      otlBg: st.ordTab === 'log' ? '#1F3B57' : '#fff', otlC: st.ordTab === 'log' ? '#fff' : '#6B7280',
+      activeOrdCount: String(activeOrders.length), logOrdCount: String(logOrders.length),
+      ordersList, ordersEmpty: ordersList.length === 0,
+      doLogin,
+      toggleAvailable,
+      availBg: st.available ? 'rgba(63,166,107,0.1)' : '#fff',
+      availSw: st.available ? GREEN : '#C6CBD3',
+      availDot: st.available ? '23px' : '2.5px',
+      availC: st.available ? '#2E7D51' : '#6B7280',
+      availLabel: st.available ? 'متاح لاستقبال الطلبات' : 'غير متاح حاليًا',
+      jobsToday: '3', earningsToday: '410',
+      upcomingJobs, pastJobs,
+      goHome, goHistory,
+      countdown: st.countdown, acceptJob, declineJob,
+      startJob, completeJob,
+      jobNotStarted: st.jobStage === 'accepted',
+      jobStarted: st.jobStage === 'started',
+      jobDone: st.jobStage === 'done',
+      jobPaid: st.jobStage === 'paid',
+      jobStageLabel: st.jobStage === 'accepted' ? 'بانتظار بدء التنفيذ' : st.jobStage === 'started' ? 'جاري التنفيذ الآن' : st.jobStage === 'done' ? 'تم الانتهاء ✓' : 'تم التحويل ✓',
+      simulateConfirm, goJob, goDisputeP, disputePReasons, submitDisputeP,
+      payoutNet: '127.50', commissionPct: '15',
+      // wallet & withdrawal
+      walletAvail: '1,240', wdAmount: '1,240',
+      setPayoutAuto: () => this.setState({ payoutMode: 'auto', wdStage: 0 }),
+      setPayoutManual: () => this.setState({ payoutMode: 'manual' }),
+      pmAutoBg: st.payoutMode === 'auto' ? '#1F3B57' : 'transparent', pmAutoC: st.payoutMode === 'auto' ? '#fff' : '#6B7280',
+      pmManBg: st.payoutMode === 'manual' ? '#1F3B57' : 'transparent', pmManC: st.payoutMode === 'manual' ? '#fff' : '#6B7280',
+      payoutIsAuto: st.payoutMode === 'auto', payoutIsManual: st.payoutMode === 'manual',
+      wdIdle: st.wdStage === 0, wdActive: st.wdStage > 0,
+      wdNotDone: st.wdStage > 0 && st.wdStage < 3, wdDone: st.wdStage === 3,
+      wdSteps, requestWithdraw, advanceWd,
+      resetWd: () => this.setState({ wdStage: 0 }),
+    };
+  }
+}
+</script>
+</body>
+</html>

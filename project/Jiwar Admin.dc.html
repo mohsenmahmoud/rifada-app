@@ -1,0 +1,2229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F7F4EE;}
+a{color:#1F3B57;}a:hover{color:#C79A3C;}
+button{font-family:'Cairo',sans-serif;}
+input,textarea,select{font-family:'Cairo',sans-serif;box-sizing:border-box;}
+input:focus,textarea:focus{outline:2px solid #C79A3C;}
+::placeholder{color:#A8AEB8;}
+@keyframes toastIn{from{opacity:0;transform:translate(-50%,-8px);}to{opacity:1;transform:translate(-50%,0);}}
+</style>
+</helmet>
+
+<div dir="rtl" style="min-height:100vh;font-family:'Cairo',sans-serif;background:#F7F4EE">
+
+  <!-- Toast -->
+  <sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+    <div style="position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:90;background:#1F3B57;color:#fff;border-radius:999px;padding:10px 24px;font-size:13px;font-weight:700;box-shadow:0 8px 24px rgba(31,59,87,0.35);white-space:nowrap;animation:toastIn .25s ease">{{ toast }}</div>
+  </sc-if>
+
+  <!-- ===== A1 Login ===== -->
+  <sc-if value="{{ sLogin }}" hint-placeholder-val="{{ false }}">
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(170deg,#27496F 0%,#1F3B57 50%,#152A3F 100%)">
+      <div style="width:420px;background:#fff;border-radius:24px;padding:38px 36px;box-shadow:0 24px 60px rgba(0,0,0,0.3)">
+        <div style="display:flex;align-items:center;gap:12px">
+          <svg width="38" height="38" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#C79A3C" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#1F3B57" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+          <div>
+            <div style="font-size:20px;font-weight:900;color:#1F3B57">رفادة — لوحة الإدارة</div>
+            <div style="font-family:'IBM Plex Sans',sans-serif;font-size:10px;font-weight:600;color:#C79A3C;letter-spacing:2px">JIWAR OPERATOR</div>
+          </div>
+        </div>
+        <div style="font-size:12.5px;font-weight:700;color:#1F3B57;margin:26px 0 6px">البريد الإلكتروني</div>
+        <input defaultValue="admin@andalus-gardens.sa" dir="ltr" style="width:100%;background:#F7F4EE;border:none;border-radius:14px;padding:13px 16px;font-family:'IBM Plex Sans',sans-serif;font-size:13.5px;font-weight:500;color:#1F3B57">
+        <div style="font-size:12.5px;font-weight:700;color:#1F3B57;margin:14px 0 6px">كلمة المرور</div>
+        <input type="password" defaultValue="12345678" style="width:100%;background:#F7F4EE;border:none;border-radius:14px;padding:13px 16px;font-size:14px;letter-spacing:4px;color:#1F3B57">
+        <div style="font-size:12.5px;font-weight:700;color:#1F3B57;margin:14px 0 6px">الكمبوند</div>
+        <div style="display:flex;gap:8px">
+          <button onClick="{{ pickC0 }}" style="flex:1;border-radius:12px;padding:10px;font-size:12px;font-weight:800;cursor:pointer;background:{{ c0Bg }};color:{{ c0C }};border:1.5px solid {{ c0Bd }}">حدائق الأندلس</button>
+          <button onClick="{{ pickC1 }}" style="flex:1;border-radius:12px;padding:10px;font-size:12px;font-weight:800;cursor:pointer;background:{{ c1Bg }};color:{{ c1C }};border:1.5px solid {{ c1Bd }}">قرطبة هيلز</button>
+        </div>
+        <button onClick="{{ doLogin }}" style="width:100%;margin-top:22px;border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:14px;font-size:15px;font-weight:800" style-hover="background:#17304A">تسجيل الدخول</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ===== Shell ===== -->
+  <sc-if value="{{ sApp }}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;min-height:100vh">
+
+      <!-- Sidebar -->
+      <div style="width:232px;flex:none;background:#1F3B57;display:flex;flex-direction:column;padding:22px 0 18px;position:sticky;top:0;height:100vh;box-sizing:border-box;overflow-y:auto">
+        <div style="display:flex;align-items:center;gap:10px;padding:0 20px 18px">
+          <svg width="28" height="28" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#C79A3C" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#fff" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+          <div>
+            <div style="font-size:15px;font-weight:900;color:#fff;line-height:1.2">رفادة</div>
+            <div style="font-size:9.5px;color:rgba(255,255,255,0.55)">لوحة الإدارة</div>
+          </div>
+        </div>
+        <sc-for list="{{ navItems }}" as="n" hint-placeholder-count="8">
+          <sc-if value="{{ n.isHeader }}" hint-placeholder-val="{{ false }}">
+            <div style="padding:14px 20px 6px;font-size:10px;font-weight:800;color:rgba(255,255,255,0.4);letter-spacing:1px">{{ n.label }}</div>
+          </sc-if>
+          <sc-if value="{{ n.isItem }}" hint-placeholder-val="{{ true }}">
+            <button onClick="{{ n.go }}" style="display:flex;align-items:center;gap:11px;width:100%;border:none;cursor:pointer;text-align:right;background:{{ n.bg }};padding:10px 20px;border-right:3px solid {{ n.bar }}">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="{{ n.icon }}" stroke="{{ n.ic }}" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              <span style="flex:1;font-size:12.5px;font-weight:700;color:{{ n.c }}">{{ n.label }}</span>
+              <sc-if value="{{ n.hasBadge }}" hint-placeholder-val="{{ false }}">
+                <span style="background:#C79A3C;color:#fff;border-radius:999px;padding:1px 8px;font-size:10px;font-weight:800;font-family:'IBM Plex Sans',sans-serif">{{ n.badge }}</span>
+              </sc-if>
+            </button>
+          </sc-if>
+        </sc-for>
+        <div style="flex:1"></div>
+        <a href="Jiwar App.dc.html" style="display:flex;align-items:center;gap:10px;margin:10px 14px 0;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);border-radius:14px;padding:10px 14px;text-decoration:none">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 2h10v20H7zM10 19h4" stroke="#C79A3C" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+          <span style="font-size:11.5px;font-weight:800;color:#fff">فتح تطبيق الساكن</span>
+        </a>
+        <a href="Jiwar Provider.dc.html" style="display:flex;align-items:center;gap:10px;margin:8px 14px 0;background:rgba(63,166,107,0.15);border:1px solid rgba(63,166,107,0.3);border-radius:14px;padding:10px 14px;text-decoration:none">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6z" stroke="#3FA66B" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+          <span style="font-size:11.5px;font-weight:800;color:#fff">تطبيق مقدم الخدمة</span>
+        </a>
+      </div>
+
+      <!-- Main -->
+      <div style="flex:1;min-width:0;display:flex;flex-direction:column">
+        <!-- Topbar -->
+        <div style="display:flex;align-items:center;gap:14px;padding:16px 28px;background:#fff;box-shadow:0 2px 12px rgba(0,0,0,0.05);position:sticky;top:0;z-index:20">
+          <div style="font-size:17px;font-weight:900;color:#1F3B57">{{ pageTitle }}</div>
+          <div style="flex:1"></div>
+          <div style="display:flex;background:#F1EDE4;border-radius:999px;padding:3px">
+            <span style="background:#1F3B57;color:#fff;border-radius:999px;padding:4px 14px;font-size:11px;font-weight:800">عربي</span>
+            <span style="color:#6B7280;border-radius:999px;padding:4px 14px;font-size:11px;font-weight:800">EN</span>
+          </div>
+          <button onClick="{{ goPortfolio }}" style="display:flex;align-items:center;gap:8px;border:1.5px solid rgba(31,59,87,0.2);background:#fff;border-radius:999px;padding:7px 16px;cursor:pointer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V4h9v17M14 9h5v12M8 8h3M8 12h3M8 16h3" stroke="#1F3B57" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+            <span style="font-size:12px;font-weight:800;color:#1F3B57">{{ compound }}</span>
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+          </button>
+          <div style="width:38px;height:38px;border-radius:99px;background:linear-gradient(160deg,#27496F,#1F3B57);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800">م س</div>
+        </div>
+
+        <div style="flex:1;padding:24px 28px 50px;max-width:1180px;box-sizing:border-box">
+
+          <!-- ===== A2 Dashboard home — مركز القيادة ===== -->
+          <sc-if value="{{ secHome }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff;border-radius:18px;padding:14px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);display:flex;align-items:center;gap:12px;margin-bottom:14px">
+              <div style="flex:1;display:flex;align-items:center;gap:9px;background:#F7F4EE;border-radius:999px;padding:10px 16px;min-width:0">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex:none"><circle cx="11" cy="11" r="7" stroke="#6B7280" strokeWidth="1.6"></circle><path d="M20 20l-3.5-3.5" stroke="#6B7280" strokeWidth="1.6" strokeLinecap="round"></path></svg>
+                <input value="{{ cmdQuery }}" onChange="{{ setCmdQuery }}" placeholder="ابحث عن وحدة، ساكن، تذكرة، أو مورد…" style="flex:1;border:none;background:transparent;font-size:12.5px;color:#1F3B57;outline:none;font-family:'Cairo',sans-serif;min-width:0">
+                <span style="font-size:10px;color:#9AA1AC;white-space:nowrap;flex:none">اكتب للبحث الفوري</span>
+              </div>
+              <sc-for list="{{ quickActions }}" as="qa" hint-placeholder-count="3">
+                <button onClick="{{ qa.act }}" style="border:none;cursor:pointer;background:{{ qa.bg }};color:{{ qa.c }};border-radius:999px;padding:10px 16px;font-size:11.5px;font-weight:800;display:flex;align-items:center;gap:7px;white-space:nowrap;flex:none">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="{{ qa.icon }}" stroke="{{ qa.c }}" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                  {{ qa.label }}
+                </button>
+              </sc-for>
+            </div>
+
+            <sc-if value="{{ cmdSearching }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden;margin-bottom:14px">
+                <div style="padding:11px 18px;background:#F1EDE4;font-size:11px;font-weight:800;color:#6B7280">{{ cmdCount }} نتيجة</div>
+                <sc-for list="{{ cmdResults }}" as="cr" hint-placeholder-count="3">
+                  <button onClick="{{ cr.act }}" style="width:100%;display:flex;align-items:center;gap:12px;padding:12px 18px;border:none;background:transparent;cursor:pointer;text-align:right;border-bottom:1px solid rgba(0,0,0,0.04)" style-hover="background:#FAF8F3">
+                    <span style="width:30px;height:30px;border-radius:9px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="{{ cr.icon }}" stroke="#1F3B57" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                    </span>
+                    <span style="flex:1;font-size:12.5px;font-weight:700;color:#1F3B57">{{ cr.title }}</span>
+                    <span style="font-size:11px;color:#6B7280">{{ cr.meta }}</span>
+                    <span style="background:rgba(31,59,87,0.07);color:#1F3B57;border-radius:999px;padding:2px 11px;font-size:10px;font-weight:800;white-space:nowrap">{{ cr.kind }}</span>
+                  </button>
+                </sc-for>
+                <sc-if value="{{ cmdEmpty }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:26px;text-align:center;font-size:12px;color:#9AA1AC">لا نتائج مطابقة</div>
+                </sc-if>
+              </div>
+            </sc-if>
+
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
+              <sc-for list="{{ kpis }}" as="k" hint-placeholder-count="4">
+                <button onClick="{{ k.act }}" style="border:none;cursor:pointer;text-align:right;background:#fff;border-radius:18px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)" style-hover="box-shadow:0 4px 18px rgba(0,0,0,0.1)">
+                  <span style="display:flex;align-items:center;gap:8px">
+                    <span style="width:32px;height:32px;border-radius:10px;background:{{ k.iconBg }};display:flex;align-items:center;justify-content:center">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="{{ k.icon }}" stroke="{{ k.iconC }}" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                    </span>
+                    <span style="font-size:11.5px;font-weight:700;color:#6B7280">{{ k.label }}</span>
+                  </span>
+                  <span style="display:flex;align-items:baseline;gap:8px;margin-top:10px">
+                    <span style="font-family:'IBM Plex Sans',sans-serif;font-size:28px;font-weight:700;color:#1F3B57;font-variant-numeric:tabular-nums">{{ k.value }}</span>
+                    <span style="font-size:11px;font-weight:800;color:{{ k.trendC }}">{{ k.trend }}</span>
+                  </span>
+                  <span style="display:flex;align-items:flex-end;gap:3px;height:30px;margin-top:10px">
+                    <sc-for list="{{ k.spark }}" as="sp" hint-placeholder-count="6">
+                      <span style="flex:1;height:{{ sp.h }};border-radius:3px;background:{{ sp.c }}"></span>
+                    </sc-for>
+                  </span>
+                  <span style="display:flex;align-items:center;margin-top:8px">
+                    <span style="font-size:10px;color:#9AA1AC">{{ k.target }}</span>
+                    <span style="flex:1"></span>
+                    <span style="font-size:10.5px;color:#A87F2C;font-weight:800">{{ k.cta }} ←</span>
+                  </span>
+                </button>
+              </sc-for>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-top:14px">
+              <div style="background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="display:flex;align-items:center">
+                  <span style="font-size:14px;font-weight:800;color:#1F3B57">تحتاج قرارك الآن</span>
+                  <span style="background:#E4675A;color:#fff;border-radius:999px;padding:2px 10px;font-size:10px;font-weight:800;margin-right:9px">{{ inboxCount }}</span>
+                  <span style="flex:1"></span>
+                  <span style="font-size:10.5px;color:#9AA1AC">قرار واحد بضغطة — بلا فتح شاشات</span>
+                </div>
+                <sc-for list="{{ decisionInbox }}" as="d" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+                    <span style="width:34px;height:34px;border-radius:10px;background:{{ d.iconBg }};display:flex;align-items:center;justify-content:center;flex:none">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="{{ d.icon }}" stroke="{{ d.iconC }}" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                    </span>
+                    <span style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+                      <span style="font-size:12.5px;font-weight:800;color:#1F3B57">{{ d.title }}</span>
+                      <span style="font-size:10.5px;color:#6B7280">{{ d.meta }}</span>
+                    </span>
+                    <sc-if value="{{ d.pending }}" hint-placeholder-val="{{ true }}">
+                      <span style="display:flex;gap:7px;flex:none">
+                        <button onClick="{{ d.reject }}" style="cursor:pointer;background:transparent;color:#E4675A;border:1.5px solid rgba(228,103,90,0.4);border-radius:999px;padding:6px 14px;font-size:11px;font-weight:800;white-space:nowrap">{{ d.rejectLabel }}</button>
+                        <button onClick="{{ d.approve }}" style="border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:6px 16px;font-size:11px;font-weight:800;white-space:nowrap">{{ d.approveLabel }}</button>
+                      </span>
+                    </sc-if>
+                    <sc-if value="{{ d.done }}" hint-placeholder-val="{{ false }}">
+                      <span style="background:rgba(63,166,107,0.13);color:#2E7D51;border-radius:999px;padding:5px 14px;font-size:10.5px;font-weight:800;white-space:nowrap;flex:none">{{ d.doneLabel }}</span>
+                    </sc-if>
+                  </div>
+                </sc-for>
+                <sc-if value="{{ inboxEmpty }}" hint-placeholder-val="{{ false }}">
+                  <div style="padding:26px;text-align:center;font-size:12.5px;color:#2E7D51;font-weight:800">لا قرارات معلّقة — كل شيء مغلق ✓</div>
+                </sc-if>
+              </div>
+
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:18px 20px">
+                  <div style="display:flex;align-items:center">
+                    <span style="font-size:13.5px;font-weight:800;color:#fff">تنبيهات تشغيلية</span>
+                    <span style="flex:1"></span>
+                    <span style="background:rgba(228,103,90,0.25);color:#FFB4AB;border-radius:999px;padding:2px 10px;font-size:10px;font-weight:800">{{ alertCount }}</span>
+                  </div>
+                  <sc-for list="{{ opsAlerts }}" as="al" hint-placeholder-count="3">
+                    <button onClick="{{ al.act }}" style="width:100%;display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.07);border:none;border-radius:13px;padding:11px 13px;cursor:pointer;text-align:right;margin-top:9px">
+                      <span style="width:8px;height:8px;border-radius:99px;background:{{ al.dot }};flex:none"></span>
+                      <span style="flex:1;font-size:11.5px;font-weight:700;color:#fff;line-height:1.6">{{ al.text }}</span>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M15 5l-7 7 7 7" stroke="rgba(255,255,255,0.5)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                    </button>
+                  </sc-for>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:13.5px;font-weight:800;color:#1F3B57">النشاط الأخير</div>
+                  <sc-for list="{{ activity }}" as="a" hint-placeholder-count="4">
+                    <div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+                      <span style="width:7px;height:7px;border-radius:99px;background:#C79A3C;margin-top:6px;flex:none"></span>
+                      <span style="flex:1;font-size:11.5px;color:#4B5563;line-height:1.7">{{ a.text }}</span>
+                      <span style="font-size:10px;color:#9AA1AC;white-space:nowrap">{{ a.time }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== A36 Unit 360 ===== -->
+          <sc-if value="{{ secUnit360 }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ backToResidents }}" style="display:flex;align-items:center;gap:7px;border:none;background:transparent;cursor:pointer;font-size:12.5px;font-weight:800;color:#6B7280;margin-bottom:12px;font-family:'Cairo',sans-serif">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              العودة لدليل السكان
+            </button>
+            <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:20px;padding:22px 26px;display:flex;align-items:center;gap:18px">
+              <span style="width:56px;height:56px;border-radius:16px;background:rgba(199,154,60,0.22);display:flex;align-items:center;justify-content:center;flex:none">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z" stroke="#C79A3C" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              </span>
+              <span style="flex:1;display:flex;flex-direction:column;gap:3px;min-width:0">
+                <span style="font-size:20px;font-weight:900;color:#fff">{{ u360Unit }} — {{ u360Owner }}</span>
+                <span style="font-size:11.5px;color:rgba(255,255,255,0.6)">{{ u360Sub }}</span>
+              </span>
+              <sc-for list="{{ u360Actions }}" as="ua" hint-placeholder-count="3">
+                <button onClick="{{ ua.act }}" style="border:none;cursor:pointer;background:{{ ua.bg }};color:{{ ua.c }};border-radius:999px;padding:9px 16px;font-size:11.5px;font-weight:800;white-space:nowrap;flex:none">{{ ua.label }}</button>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px">
+              <sc-for list="{{ u360Stats }}" as="us" hint-placeholder-count="4">
+                <div style="background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:11px;color:#6B7280">{{ us.label }}</div>
+                  <div style="font-family:'IBM Plex Sans',sans-serif;font-size:24px;font-weight:700;color:{{ us.c }};margin-top:5px;font-variant-numeric:tabular-nums">{{ us.value }}</div>
+                  <div style="font-size:10.5px;color:#9AA1AC;margin-top:3px">{{ us.sub }}</div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:14px;margin-top:14px">
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:13.5px;font-weight:800;color:#1F3B57">سجل السداد — 6 أشهر</div>
+                  <div style="display:flex;align-items:flex-end;gap:10px;height:96px;margin-top:16px">
+                    <sc-for list="{{ u360Pay }}" as="up" hint-placeholder-count="6">
+                      <span style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px">
+                        <span style="width:100%;height:{{ up.h }};border-radius:8px 8px 3px 3px;background:{{ up.c }}"></span>
+                        <span style="font-size:9.5px;color:#9AA1AC">{{ up.m }}</span>
+                      </span>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;gap:16px;margin-top:12px;font-size:10.5px;color:#6B7280">
+                    <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:3px;background:#3FA66B"></span>سُدّد في الموعد</span>
+                    <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:3px;background:#C79A3C"></span>سُدّد متأخرًا</span>
+                    <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:3px;background:#E4675A"></span>غير مسدّد</span>
+                  </div>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="display:flex;align-items:center"><span style="font-size:13.5px;font-weight:800;color:#1F3B57">تذاكر الوحدة</span><span style="flex:1"></span><span style="font-size:10.5px;color:#6B7280">{{ u360TixCount }} تذكرة إجمالًا</span></div>
+                  <sc-for list="{{ u360Tickets }}" as="ut" hint-placeholder-count="3">
+                    <button onClick="{{ ut.open }}" style="width:100%;display:flex;align-items:center;gap:11px;border:none;background:transparent;cursor:pointer;text-align:right;padding:11px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+                      <span style="font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:#9AA1AC;flex:none">#{{ ut.id }}</span>
+                      <span style="flex:1;font-size:12.5px;font-weight:700;color:#1F3B57">{{ ut.title }}</span>
+                      <span style="font-size:10.5px;color:#6B7280;white-space:nowrap">{{ ut.date }}</span>
+                      <span style="background:{{ ut.pillBg }};color:{{ ut.pillC }};border-radius:999px;padding:2px 11px;font-size:10px;font-weight:800;white-space:nowrap;flex:none">{{ ut.statusLabel }}</span>
+                    </button>
+                  </sc-for>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:13.5px;font-weight:800;color:#1F3B57">آخر النشاط على الوحدة</div>
+                  <sc-for list="{{ u360Timeline }}" as="tl" hint-placeholder-count="4">
+                    <div style="display:flex;gap:11px;padding:9px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+                      <span style="width:7px;height:7px;border-radius:99px;background:{{ tl.dot }};margin-top:6px;flex:none"></span>
+                      <span style="flex:1;font-size:11.5px;color:#4B5563;line-height:1.7">{{ tl.text }}</span>
+                      <span style="font-size:10px;color:#9AA1AC;white-space:nowrap">{{ tl.time }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:13.5px;font-weight:800;color:#1F3B57">أفراد العائلة والصلاحيات</div>
+                  <sc-for list="{{ u360Family }}" as="uf" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+                      <span style="width:30px;height:30px;border-radius:99px;background:{{ uf.avBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex:none">{{ uf.initial }}</span>
+                      <span style="flex:1;display:flex;flex-direction:column;gap:1px;min-width:0">
+                        <span style="font-size:12px;font-weight:800;color:#1F3B57">{{ uf.name }}</span>
+                        <span style="font-size:10px;color:#6B7280">{{ uf.rel }}</span>
+                      </span>
+                      <span style="background:rgba(31,59,87,0.07);color:#1F3B57;border-radius:999px;padding:2px 10px;font-size:9.5px;font-weight:800;white-space:nowrap;flex:none">{{ uf.perms }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:13.5px;font-weight:800;color:#1F3B57">سياراتك والتصاريح</div>
+                  <sc-for list="{{ u360Assets }}" as="ua2" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+                      <span style="width:30px;height:30px;border-radius:9px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="{{ ua2.icon }}" stroke="#1F3B57" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                      </span>
+                      <span style="flex:1;font-size:12px;font-weight:700;color:#1F3B57">{{ ua2.label }}</span>
+                      <span style="font-size:10.5px;color:#6B7280;white-space:nowrap">{{ ua2.meta }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:13.5px;font-weight:800;color:#1F3B57">استخدام الخدمات — 30 يومًا</div>
+                  <sc-for list="{{ u360Usage }}" as="uu" hint-placeholder-count="4">
+                    <div style="display:flex;align-items:center;gap:12px;margin-top:12px">
+                      <span style="font-size:11.5px;color:#4B5563;width:96px">{{ uu.label }}</span>
+                      <span style="flex:1;height:9px;border-radius:99px;background:#EFEBE2;overflow:hidden"><span style="display:block;width:{{ uu.w }};height:100%;border-radius:99px;background:#C79A3C"></span></span>
+                      <span style="font-family:'IBM Plex Sans',sans-serif;font-size:11.5px;font-weight:700;color:#1F3B57;width:38px;text-align:left">{{ uu.n }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== A37 Automation rules ===== -->
+          <sc-if value="{{ secAutomation }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px">
+              <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:20px">
+                <div style="font-size:12px;color:rgba(255,255,255,0.7)">إجراءات نفّذتها القواعد — يوليو</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:30px;font-weight:700;color:#fff;margin-top:5px">1,284</div>
+                <div style="font-size:11px;color:#7BD8A5;margin-top:5px;font-weight:800">بلا تدخل بشري</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">ساعات عمل مُوفَّرة</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:30px;font-weight:700;color:#1F3B57;margin-top:5px">62 <span style="font-size:12px;color:#6B7280">ساعة</span></div>
+                <div style="font-size:11px;color:#6B7280;margin-top:5px">≈ موظف بدوام جزئي</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">قواعد مفعّلة</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:30px;font-weight:700;color:#2E7D51;margin-top:5px">{{ rulesOnCount }} <span style="font-size:12px;color:#6B7280">من {{ rulesTotal }}</span></div>
+                <div style="font-size:11px;color:#6B7280;margin-top:5px">تعمل على مدار الساعة</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ ruleRows }}" as="r" hint-placeholder-count="4">
+                <div style="background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);display:flex;align-items:center;gap:16px">
+                  <button onClick="{{ r.toggle }}" style="width:46px;height:26px;border-radius:99px;border:none;background:{{ r.swBg }};position:relative;cursor:pointer;flex:none"><span style="position:absolute;top:3px;left:{{ r.dot }};width:20px;height:20px;border-radius:99px;background:#fff"></span></button>
+                  <span style="flex:1;display:flex;flex-direction:column;gap:6px;min-width:0">
+                    <span style="display:flex;align-items:center;gap:9px;flex-wrap:wrap">
+                      <span style="background:rgba(31,59,87,0.07);color:#1F3B57;border-radius:8px;padding:3px 11px;font-size:11px;font-weight:800;white-space:nowrap">إذا {{ r.when }}</span>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" style="flex:none"><path d="M15 5l-7 7 7 7" stroke="#C79A3C" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                      <span style="background:rgba(199,154,60,0.14);color:#A87F2C;border-radius:8px;padding:3px 11px;font-size:11px;font-weight:800;white-space:nowrap">{{ r.then }}</span>
+                    </span>
+                    <span style="font-size:10.5px;color:#6B7280">{{ r.stat }}</span>
+                  </span>
+                  <span style="background:{{ r.stBg }};color:{{ r.stC }};border-radius:999px;padding:4px 14px;font-size:10.5px;font-weight:800;white-space:nowrap;flex:none">{{ r.stLabel }}</span>
+                </div>
+              </sc-for>
+              <button onClick="{{ addRule }}" style="border:1.5px dashed #C79A3C;background:rgba(199,154,60,0.06);border-radius:18px;padding:16px;cursor:pointer;font-size:12.5px;font-weight:800;color:#A87F2C">+ أضف قاعدة جديدة — «إذا … فـ …»</button>
+            </div>
+          </sc-if>
+
+          <!-- ===== A38 Team & audit ===== -->
+          <sc-if value="{{ secTeam }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:1.15fr 1fr;gap:14px">
+              <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden">
+                <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;background:#F1EDE4">
+                  <span style="flex:1;font-size:13.5px;font-weight:800;color:#1F3B57">فريق العمل</span>
+                  <button onClick="{{ inviteStaff }}" style="border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:7px 16px;font-size:11px;font-weight:800">+ دعوة موظف</button>
+                </div>
+                <sc-for list="{{ staffRows }}" as="stf" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(0,0,0,0.04)">
+                    <span style="width:34px;height:34px;border-radius:99px;background:linear-gradient(160deg,#27496F,#1F3B57);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex:none">{{ stf.initial }}</span>
+                    <span style="flex:1;display:flex;flex-direction:column;gap:2px;min-width:0">
+                      <span style="font-size:12.5px;font-weight:800;color:#1F3B57">{{ stf.name }}</span>
+                      <span style="font-size:10.5px;color:#6B7280">{{ stf.role }} · آخر دخول {{ stf.last }}</span>
+                    </span>
+                    <span style="background:{{ stf.stBg }};color:{{ stf.stC }};border-radius:999px;padding:3px 12px;font-size:10px;font-weight:800;white-space:nowrap;flex:none">{{ stf.status }}</span>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:18px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:13.5px;font-weight:800;color:#1F3B57">صلاحيات الأدوار</div>
+                <div style="display:flex;gap:7px;margin-top:12px;flex-wrap:wrap">
+                  <sc-for list="{{ roleTabs }}" as="rt" hint-placeholder-count="4">
+                    <button onClick="{{ rt.pick }}" style="border:none;cursor:pointer;border-radius:999px;padding:7px 15px;font-size:11px;font-weight:800;background:{{ rt.bg }};color:{{ rt.c }};white-space:nowrap">{{ rt.label }}</button>
+                  </sc-for>
+                </div>
+                <sc-for list="{{ rolePerms }}" as="rp" hint-placeholder-count="6">
+                  <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+                    <span style="width:18px;height:18px;border-radius:6px;background:{{ rp.bg }};display:flex;align-items:center;justify-content:center;flex:none">
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="{{ rp.mark }}" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                    </span>
+                    <span style="flex:1;font-size:12px;color:{{ rp.c }};font-weight:700">{{ rp.label }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden;margin-top:14px">
+              <div style="padding:14px 18px;background:#F1EDE4;display:flex;align-items:center">
+                <span style="flex:1;font-size:13.5px;font-weight:800;color:#1F3B57">سجل التدقيق — من فعل ماذا</span>
+                <span style="font-size:10.5px;color:#6B7280">كل إجراء مالي أو حساسّ مسجّل ولا يُحذف</span>
+              </div>
+              <sc-for list="{{ auditRows }}" as="au" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid rgba(0,0,0,0.04)">
+                  <span style="width:70px;font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:#9AA1AC;flex:none">{{ au.time }}</span>
+                  <span style="width:120px;font-size:12px;font-weight:800;color:#1F3B57;flex:none">{{ au.who }}</span>
+                  <span style="flex:1;font-size:11.5px;color:#4B5563;line-height:1.6">{{ au.what }}</span>
+                  <span style="background:{{ au.tagBg }};color:{{ au.tagC }};border-radius:999px;padding:2px 11px;font-size:9.5px;font-weight:800;white-space:nowrap;flex:none">{{ au.tag }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A39 Reports ===== -->
+          <sc-if value="{{ secReports }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border-radius:18px;padding:16px 20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);display:flex;align-items:center;gap:14px;margin-bottom:14px">
+              <span style="font-size:12.5px;font-weight:800;color:#1F3B57;white-space:nowrap">الفترة</span>
+              <sc-for list="{{ repPeriods }}" as="rp2" hint-placeholder-count="3">
+                <button onClick="{{ rp2.pick }}" style="border:1.5px solid {{ rp2.bd }};cursor:pointer;background:{{ rp2.bg }};color:{{ rp2.c }};border-radius:999px;padding:8px 16px;font-size:11.5px;font-weight:800;white-space:nowrap">{{ rp2.label }}</button>
+              </sc-for>
+              <span style="flex:1"></span>
+              <button onClick="{{ exportBoard }}" style="border:none;cursor:pointer;background:#C79A3C;color:#fff;border-radius:999px;padding:10px 20px;font-size:12px;font-weight:800;display:flex;align-items:center;gap:8px;white-space:nowrap">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M12 3v12M7 11l5 5 5-5M4 20h16" stroke="#fff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                صدّر تقرير مجلس الملاك
+              </button>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+              <sc-for list="{{ reportCards }}" as="rc" hint-placeholder-count="6">
+                <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);display:flex;flex-direction:column">
+                  <span style="width:40px;height:40px;border-radius:12px;background:{{ rc.iconBg }};display:flex;align-items:center;justify-content:center">
+                    <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><path d="{{ rc.icon }}" stroke="{{ rc.iconC }}" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                  </span>
+                  <div style="font-size:14px;font-weight:800;color:#1F3B57;margin-top:14px">{{ rc.title }}</div>
+                  <div style="font-size:11.5px;color:#6B7280;margin-top:5px;line-height:1.7">{{ rc.desc }}</div>
+                  <div style="display:flex;align-items:baseline;gap:7px;margin-top:12px">
+                    <span style="font-family:'IBM Plex Sans',sans-serif;font-size:22px;font-weight:700;color:#1F3B57">{{ rc.headline }}</span>
+                    <span style="font-size:11px;color:#6B7280">{{ rc.unit }}</span>
+                  </div>
+                  <div style="flex:1"></div>
+                  <div style="display:flex;gap:8px;margin-top:14px">
+                    <button onClick="{{ rc.pdf }}" style="flex:1;border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:9px;font-size:11px;font-weight:800">PDF</button>
+                    <button onClick="{{ rc.xls }}" style="flex:1;cursor:pointer;background:transparent;color:#1F3B57;border:1.5px solid rgba(31,59,87,0.2);border-radius:999px;padding:9px;font-size:11px;font-weight:800">Excel</button>
+                    <button onClick="{{ rc.sched }}" style="flex:1;cursor:pointer;background:rgba(199,154,60,0.12);color:#A87F2C;border:none;border-radius:999px;padding:9px;font-size:11px;font-weight:800">جدولة</button>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A3 Tickets queue ===== -->
+          <sc-if value="{{ secTickets }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:8px;margin-bottom:14px">
+              <sc-for list="{{ ticketFilters }}" as="f" hint-placeholder-count="4">
+                <button onClick="{{ f.pick }}" style="border-radius:999px;padding:7px 18px;font-size:12px;font-weight:800;cursor:pointer;background:{{ f.bg }};color:{{ f.c }};border:1.5px solid {{ f.bd }}">{{ f.label }}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ tixBulkActive }}" hint-placeholder-val="{{ false }}">
+              <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:16px;padding:14px 20px;margin-bottom:12px;display:flex;align-items:center;gap:14px">
+                <span style="background:#C79A3C;color:#fff;border-radius:999px;padding:4px 13px;font-size:11.5px;font-weight:800;white-space:nowrap">{{ tixCount }} تذكرة محدّدة</span>
+                <span style="flex:1"></span>
+                <button onClick="{{ tixAssign }}" style="border:none;cursor:pointer;background:#C79A3C;color:#fff;border-radius:999px;padding:9px 18px;font-size:11.5px;font-weight:800;white-space:nowrap">أسندها لفني واحد</button>
+                <button onClick="{{ tixPriority }}" style="border:none;cursor:pointer;background:rgba(255,255,255,0.12);color:#fff;border-radius:999px;padding:9px 18px;font-size:11.5px;font-weight:800;white-space:nowrap">ارفع الأولوية</button>
+                <button onClick="{{ tixResolve }}" style="border:none;cursor:pointer;background:rgba(63,166,107,0.3);color:#CFF3DF;border-radius:999px;padding:9px 18px;font-size:11.5px;font-weight:800;white-space:nowrap">أغلقها كمحلولة</button>
+                <button onClick="{{ tixClear }}" style="border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,0.55);font-size:11.5px;font-weight:800;white-space:nowrap">إلغاء</button>
+              </div>
+            </sc-if>
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:#F1EDE4;font-size:11px;font-weight:800;color:#6B7280">
+                <button onClick="{{ tixAll }}" style="width:22px;height:22px;border-radius:6px;border:1.5px solid {{ tixAllBd }};background:{{ tixAllBg }};cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;padding:0">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="{{ tixAllMark }}" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                </button>
+                <span style="width:52px">الرقم</span><span style="flex:1.6">البلاغ</span><span style="width:80px">الفئة</span><span style="width:90px">الوحدة</span><span style="width:70px">الأولوية</span><span style="width:100px">الفني</span><span style="width:100px">الحالة</span>
+              </div>
+              <sc-for list="{{ queueRows }}" as="t" hint-placeholder-count="6">
+                <div style="width:100%;display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(0,0,0,0.04)">
+                  <button onClick="{{ t.toggleSel }}" style="width:22px;height:22px;border-radius:6px;border:1.5px solid {{ t.cbBd }};background:{{ t.cbBg }};cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;padding:0">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="{{ t.cbMark }}" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                  </button>
+                  <span style="width:52px;font-family:'IBM Plex Sans',sans-serif;font-size:11.5px;font-weight:600;color:#6B7280">#{{ t.id }}</span>
+                  <button onClick="{{ t.open }}" style="flex:1.6;border:none;background:transparent;cursor:pointer;text-align:right;font-size:12.5px;font-weight:700;color:#1F3B57;line-height:1.5;font-family:'Cairo',sans-serif;padding:0">{{ t.title }}</button>
+                  <span style="width:80px;font-size:11.5px;color:#6B7280">{{ t.cat }}</span>
+                  <span style="width:90px;font-size:11.5px;color:#6B7280">{{ t.unit }}</span>
+                  <span style="width:70px"><span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:800;color:{{ t.prC }}"><span style="width:8px;height:8px;border-radius:99px;background:{{ t.prC }}"></span>{{ t.prLabel }}</span></span>
+                  <span style="width:100px;font-size:11.5px;color:#4B5563">{{ t.tech }}</span>
+                  <span style="width:100px"><span style="background:{{ t.pillBg }};color:{{ t.pillC }};border-radius:999px;padding:3px 12px;font-size:10px;font-weight:800">{{ t.statusLabel }}</span></span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A4 Ticket detail ===== -->
+          <sc-if value="{{ secTicketDetail }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ goTickets }}" style="display:flex;align-items:center;gap:7px;border:none;background:transparent;cursor:pointer;font-size:12.5px;font-weight:800;color:#6B7280;margin-bottom:12px;font-family:'Cairo',sans-serif">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              العودة لطابور التذاكر
+            </button>
+            <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:14px">
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span style="font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;color:#6B7280">#{{ dtId }}</span>
+                    <span style="background:{{ dtPillBg }};color:{{ dtPillC }};border-radius:999px;padding:3px 13px;font-size:11px;font-weight:800">{{ dtStatusLabel }}</span>
+                    <span style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:800;color:{{ dtPrC }}"><span style="width:8px;height:8px;border-radius:99px;background:{{ dtPrC }}"></span>{{ dtPrLabel }}</span>
+                    <span style="flex:1"></span>
+                    <span style="font-size:11.5px;color:#9AA1AC">{{ dtDate }}</span>
+                  </div>
+                  <div style="font-size:17px;font-weight:900;color:#1F3B57;margin-top:12px;line-height:1.6">{{ dtTitle }}</div>
+                  <div style="font-size:12.5px;color:#6B7280;margin-top:4px">{{ dtCat }} · {{ dtUnit }} · {{ dtResident }}</div>
+                  <div style="background:#F7F4EE;border-radius:14px;padding:13px 16px;margin-top:14px;font-size:12.5px;color:#4B5563;line-height:1.9">{{ dtDesc }}</div>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:13.5px;font-weight:800;color:#1F3B57">ملاحظات داخلية</div>
+                  <sc-for list="{{ dtNotes }}" as="n" hint-placeholder-count="2">
+                    <div style="background:rgba(199,154,60,0.08);border-radius:12px;padding:10px 14px;margin-top:8px">
+                      <div style="font-size:10.5px;font-weight:800;color:#A87F2C">{{ n.by }} · {{ n.time }}</div>
+                      <div style="font-size:12px;color:#4B5563;margin-top:2px;line-height:1.8">{{ n.text }}</div>
+                    </div>
+                  </sc-for>
+                  <div style="display:flex;gap:8px;margin-top:10px">
+                    <input value="{{ noteDraft }}" onChange="{{ setNoteDraft }}" placeholder="أضف ملاحظة للفريق…" style="flex:1;background:#F7F4EE;border:none;border-radius:12px;padding:11px 14px;font-size:12.5px;color:#1F3B57">
+                    <button onClick="{{ addNote }}" style="border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:12px;padding:0 20px;font-size:12px;font-weight:800">إضافة</button>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:13.5px;font-weight:800;color:#1F3B57">تعيين فني</div>
+                  <sc-for list="{{ techOptions }}" as="tp" hint-placeholder-count="3">
+                    <button onClick="{{ tp.pick }}" style="width:100%;display:flex;align-items:center;gap:11px;background:{{ tp.bg }};border:1.5px solid {{ tp.bd }};border-radius:14px;padding:11px 13px;cursor:pointer;margin-top:8px;text-align:right">
+                      <span style="width:34px;height:34px;border-radius:99px;background:linear-gradient(160deg,#27496F,#1F3B57);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex:none">{{ tp.initial }}</span>
+                      <span style="flex:1;display:flex;flex-direction:column">
+                        <span style="font-size:12.5px;font-weight:800;color:#1F3B57">{{ tp.name }}</span>
+                        <span style="font-size:10.5px;color:#6B7280">{{ tp.spec }} · {{ tp.load }} تذاكر نشطة</span>
+                      </span>
+                      <span style="width:17px;height:17px;border-radius:99px;border:2px solid {{ tp.dotBd }};display:flex;align-items:center;justify-content:center"><span style="width:8px;height:8px;border-radius:99px;background:{{ tp.dot }}"></span></span>
+                    </button>
+                  </sc-for>
+                </div>
+                <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:13.5px;font-weight:800;color:#1F3B57">تحديث الحالة</div>
+                  <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+                    <button onClick="{{ stReceived }}" style="border-radius:12px;padding:10px;font-size:12px;font-weight:800;cursor:pointer;background:{{ stRBg }};color:{{ stRC }};border:1.5px solid {{ stRBd }}">تم الاستلام</button>
+                    <button onClick="{{ stProgress }}" style="border-radius:12px;padding:10px;font-size:12px;font-weight:800;cursor:pointer;background:{{ stPBg }};color:{{ stPC }};border:1.5px solid {{ stPBd }}">جاري التنفيذ</button>
+                    <button onClick="{{ stResolved }}" style="border-radius:12px;padding:10px;font-size:12px;font-weight:800;cursor:pointer;background:{{ stVBg }};color:{{ stVC }};border:1.5px solid {{ stVBd }}">تم الحل</button>
+                  </div>
+                  <div style="font-size:10.5px;color:#9AA1AC;margin-top:10px;line-height:1.7">يصل إشعار فوري للساكن مع كل تغيير في الحالة.</div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== A5 Residents ===== -->
+          <sc-if value="{{ secResidents }}" hint-placeholder-val="{{ false }}">
+            <input value="{{ resQuery }}" onChange="{{ setResQuery }}" placeholder="ابحث بالاسم أو رقم الوحدة…" style="width:340px;background:#fff;border:none;border-radius:999px;padding:12px 20px;font-size:13px;color:#1F3B57;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-bottom:14px">
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:#F1EDE4;font-size:11px;font-weight:800;color:#6B7280">
+                <span style="width:100px">الوحدة</span><span style="flex:1">الساكن (المالك)</span><span style="width:110px">أفراد العائلة</span><span style="width:130px">الهاتف</span><span style="width:110px">نموذج الدفع</span><span style="width:110px">حالة السداد</span>
+              </div>
+              <sc-for list="{{ residents }}" as="r" hint-placeholder-count="6">
+                <div style="border-bottom:1px solid rgba(0,0,0,0.04)">
+                  <div style="display:flex;align-items:center;gap:12px;padding:13px 18px">
+                    <button onClick="{{ r.open360 }}" style="width:100px;border:none;background:transparent;cursor:pointer;text-align:right;font-size:12.5px;font-weight:800;color:#1F3B57;font-family:'Cairo',sans-serif;padding:0;text-decoration:underline;text-decoration-color:rgba(31,59,87,0.25);text-underline-offset:3px">{{ r.unit }}</button>
+                    <span style="flex:1;display:flex;align-items:center;gap:9px">
+                      <span style="width:30px;height:30px;border-radius:99px;background:linear-gradient(160deg,#27496F,#1F3B57);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800">{{ r.initial }}</span>
+                      <span style="font-size:12.5px;font-weight:700;color:#1F3B57">{{ r.name }}</span>
+                    </span>
+                    <span style="width:110px">
+                      <button onClick="{{ r.toggleFam }}" style="border:none;cursor:{{ r.famCursor }};background:{{ r.famBg }};color:{{ r.famC }};border-radius:999px;padding:4px 13px;font-size:10.5px;font-weight:800">{{ r.famLabel }}</button>
+                    </span>
+                    <span dir="ltr" style="width:130px;font-family:'IBM Plex Sans',sans-serif;font-size:11.5px;color:#6B7280;text-align:right">{{ r.phone }}</span>
+                    <span style="width:110px;font-size:11.5px;color:#4B5563">{{ r.model }}</span>
+                    <span style="width:110px"><span style="background:{{ r.payBg }};color:{{ r.payC }};border-radius:999px;padding:3px 12px;font-size:10px;font-weight:800">{{ r.pay }}</span></span>
+                  </div>
+                  <sc-if value="{{ r.famOpen }}" hint-placeholder-val="{{ false }}">
+                    <div style="background:#FAF8F3;padding:6px 18px 12px 18px">
+                      <sc-for list="{{ r.famList }}" as="fm" hint-placeholder-count="2">
+                        <div style="display:flex;align-items:center;gap:10px;padding:8px 0 8px 0;margin-right:112px;border-bottom:1px dashed rgba(0,0,0,0.05)">
+                          <span style="width:24px;height:24px;border-radius:99px;background:{{ fm.avBg }};color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800">{{ fm.initial }}</span>
+                          <span style="font-size:11.5px;font-weight:700;color:#1F3B57">{{ fm.name }}</span>
+                          <span style="font-size:10.5px;color:#6B7280">{{ fm.rel }}</span>
+                          <span style="flex:1"></span>
+                          <span style="background:rgba(31,59,87,0.07);color:#1F3B57;border-radius:999px;padding:2px 11px;font-size:9.5px;font-weight:800">{{ fm.perms }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A6 Broadcast ===== -->
+          <sc-if value="{{ secBroadcast }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:14px">
+              <div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:14px;font-weight:800;color:#1F3B57">إعلان جديد</div>
+                <input value="{{ bcTitle }}" onChange="{{ setBcTitle }}" placeholder="عنوان الإعلان" style="width:100%;margin-top:12px;background:#F7F4EE;border:none;border-radius:14px;padding:13px 16px;font-size:13.5px;font-weight:700;color:#1F3B57">
+                <textarea value="{{ bcBody }}" onChange="{{ setBcBody }}" rows="4" placeholder="نص الإعلان…" style="width:100%;margin-top:8px;background:#F7F4EE;border:none;border-radius:14px;padding:13px 16px;font-size:13px;color:#1F3B57;resize:none;line-height:1.8"></textarea>
+                <div style="font-size:12px;font-weight:800;color:#1F3B57;margin:14px 0 8px">الجمهور المستهدف</div>
+                <div style="display:flex;gap:8px">
+                  <sc-for list="{{ bcTargets }}" as="bt" hint-placeholder-count="3">
+                    <button onClick="{{ bt.pick }}" style="border-radius:999px;padding:8px 18px;font-size:12px;font-weight:800;cursor:pointer;background:{{ bt.bg }};color:{{ bt.c }};border:1.5px solid {{ bt.bd }}">{{ bt.label }}</button>
+                  </sc-for>
+                </div>
+                <div style="display:flex;gap:10px;margin-top:18px">
+                  <button onClick="{{ sendBc }}" style="flex:1;border:none;cursor:pointer;background:#C79A3C;color:#fff;border-radius:999px;padding:13px;font-size:13.5px;font-weight:800">إرسال الآن</button>
+                  <button onClick="{{ scheduleBc }}" style="flex:1;cursor:pointer;background:transparent;color:#1F3B57;border:1.5px solid #1F3B57;border-radius:999px;padding:13px;font-size:13.5px;font-weight:800">جدولة لاحقًا</button>
+                </div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:14px;font-weight:800;color:#1F3B57">المرسلة مؤخرًا</div>
+                <sc-for list="{{ bcSent }}" as="b" hint-placeholder-count="3">
+                  <div style="padding:11px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+                    <div style="display:flex;align-items:center"><span style="font-size:12.5px;font-weight:800;color:#1F3B57">{{ b.title }}</span><span style="flex:1"></span><span style="font-size:10px;color:#9AA1AC">{{ b.time }}</span></div>
+                    <div style="font-size:11px;color:#6B7280;margin-top:2px">{{ b.target }} · وصل إلى {{ b.reach }} ساكن</div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== A7/A12/A21 Vendors & Providers ===== -->
+          <sc-if value="{{ secVendors }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;gap:8px;margin-bottom:14px">
+              <button onClick="{{ vTabMaint }}" style="border-radius:999px;padding:8px 20px;font-size:12.5px;font-weight:800;cursor:pointer;background:{{ vmBg }};color:{{ vmC }};border:1.5px solid {{ vmBd }}">موردو الصيانة</button>
+              <button onClick="{{ vTabMarket }}" style="border-radius:999px;padding:8px 20px;font-size:12.5px;font-weight:800;cursor:pointer;background:{{ vkBg }};color:{{ vkC }};border:1.5px solid {{ vkBd }}">موردو السوق الداخلي</button>
+              <button onClick="{{ vTabProviders }}" style="border-radius:999px;padding:8px 20px;font-size:12.5px;font-weight:800;cursor:pointer;background:{{ vpBg }};color:{{ vpC }};border:1.5px solid {{ vpBd }}">مقدمو الخدمة الفورية 🟩</button>
+            </div>
+
+            <sc-if value="{{ vTabIsProviders }}" hint-placeholder-val="{{ false }}">
+              <div style="display:flex;align-items:center;margin-bottom:12px">
+                <div style="font-size:12px;color:#6B7280">مطابقة فورية على غرار أوبر — كل مقدم لديه تطبيقه الخاص (P1–P4)</div>
+                <span style="flex:1"></span>
+                <button onClick="{{ goOnboard }}" style="border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:8px 18px;font-size:12px;font-weight:800">+ تعيين مقدم خدمة جديد</button>
+              </div>
+              <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden">
+                <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:#F1EDE4;font-size:11px;font-weight:800;color:#6B7280">
+                  <span style="flex:1">المقدم</span><span style="width:120px">الفئة</span><span style="width:100px">المنطقة</span><span style="width:90px">التقييم</span><span style="width:90px">مهام منجزة</span><span style="width:100px">الحالة</span>
+                </div>
+                <sc-for list="{{ providerDirectory }}" as="p" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(0,0,0,0.04)">
+                    <span style="flex:1;display:flex;align-items:center;gap:9px">
+                      <span style="width:30px;height:30px;border-radius:99px;background:linear-gradient(160deg,#27496F,#1F3B57);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800">{{ p.initial }}</span>
+                      <span style="font-size:12.5px;font-weight:700;color:#1F3B57">{{ p.name }}</span>
+                    </span>
+                    <span style="width:120px;font-size:11.5px;color:#4B5563">{{ p.cat }}</span>
+                    <span style="width:100px;font-size:11.5px;color:#6B7280">{{ p.zone }}</span>
+                    <span style="width:90px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:700;color:#1F3B57">★ {{ p.rating }}</span>
+                    <span style="width:90px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:#4B5563">{{ p.jobs }}</span>
+                    <span style="width:100px"><span style="background:{{ p.stBg }};color:{{ p.stC }};border-radius:999px;padding:3px 12px;font-size:10px;font-weight:800">{{ p.status }}</span></span>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ vTabIsList }}" hint-placeholder-val="{{ true }}">
+              <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+                <sc-for list="{{ vendorCards }}" as="v" hint-placeholder-count="3">
+                  <div style="background:#fff;border-radius:18px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                    <div style="display:flex;align-items:center;gap:10px">
+                      <span style="width:40px;height:40px;border-radius:12px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#1F3B57">{{ v.initial }}</span>
+                      <span style="display:flex;flex-direction:column">
+                        <span style="font-size:13.5px;font-weight:800;color:#1F3B57">{{ v.name }}</span>
+                        <span style="font-size:11px;color:#6B7280">{{ v.spec }}</span>
+                      </span>
+                    </div>
+                    <div style="display:flex;gap:14px;margin-top:14px">
+                      <span style="display:flex;flex-direction:column"><span style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;font-weight:700;color:#1F3B57">★ {{ v.rating }}</span><span style="font-size:9.5px;color:#9AA1AC">التقييم</span></span>
+                      <span style="display:flex;flex-direction:column"><span style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;font-weight:700;color:#1F3B57">{{ v.jobs }}</span><span style="font-size:9.5px;color:#9AA1AC">{{ v.jobsLabel }}</span></span>
+                      <span style="display:flex;flex-direction:column"><span style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;font-weight:700;color:#A87F2C">{{ v.commission }}</span><span style="font-size:9.5px;color:#9AA1AC">العمولة</span></span>
+                    </div>
+                    <div style="display:flex;align-items:center;margin-top:14px">
+                      <span style="background:{{ v.stBg }};color:{{ v.stC }};border-radius:999px;padding:3px 12px;font-size:10px;font-weight:800">{{ v.status }}</span>
+                      <span style="flex:1"></span>
+                      <span dir="ltr" style="font-family:'IBM Plex Sans',sans-serif;font-size:11px;color:#6B7280">{{ v.phone }}</span>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </sc-if>
+          </sc-if>
+
+          <!-- ===== A20 Provider onboarding ===== -->
+          <sc-if value="{{ secOnboard }}" hint-placeholder-val="{{ false }}">
+            <button onClick="{{ backToVendors }}" style="display:flex;align-items:center;gap:7px;border:none;background:transparent;cursor:pointer;font-size:12.5px;font-weight:800;color:#6B7280;margin-bottom:12px;font-family:'Cairo',sans-serif">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 5l7 7-7 7" stroke="#6B7280" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              العودة لدليل الموردين
+            </button>
+            <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:14px">
+              <div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:14px;font-weight:800;color:#1F3B57">بيانات مقدم الخدمة الجديد</div>
+                <input value="{{ obName }}" onChange="{{ setObName }}" placeholder="الاسم الكامل" style="width:100%;margin-top:12px;background:#F7F4EE;border:none;border-radius:14px;padding:12px 16px;font-size:13px;color:#1F3B57">
+                <div style="display:flex;gap:8px;margin-top:8px">
+                  <input dir="ltr" value="{{ obPhone }}" onChange="{{ setObPhone }}" placeholder="رقم الهاتف" style="flex:1;background:#F7F4EE;border:none;border-radius:14px;padding:12px 16px;font-size:12.5px;color:#1F3B57">
+                  <input value="{{ obCommission }}" onChange="{{ setObCommission }}" placeholder="نسبة العمولة %" style="flex:1;background:#F7F4EE;border:none;border-radius:14px;padding:12px 16px;font-size:12.5px;color:#1F3B57">
+                </div>
+                <div style="font-size:12px;font-weight:800;color:#1F3B57;margin:14px 0 8px">فئة الخدمة</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ obCats }}" as="oc" hint-placeholder-count="5">
+                    <button onClick="{{ oc.pick }}" style="border-radius:999px;padding:7px 16px;font-size:11.5px;font-weight:800;cursor:pointer;background:{{ oc.bg }};color:{{ oc.c }};border:1.5px solid {{ oc.bd }}">{{ oc.label }}</button>
+                  </sc-for>
+                </div>
+                <button style="width:100%;margin-top:16px;border:1.5px dashed rgba(31,59,87,0.3);background:transparent;border-radius:14px;padding:12px;cursor:pointer;font-size:12px;font-weight:700;color:#6B7280">رفع الوثائق والشهادات</button>
+                <button onClick="{{ saveOnboard }}" style="width:100%;margin-top:14px;border:none;cursor:pointer;background:#C79A3C;color:#fff;border-radius:999px;padding:13px;font-size:14px;font-weight:800">حفظ وإصدار بيانات الدخول</button>
+              </div>
+              <sc-if value="{{ obDone }}" hint-placeholder-val="{{ false }}">
+                <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:22px;display:flex;flex-direction:column;align-items:center;text-align:center">
+                  <svg width="86" height="86" viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM20 17v3h-3" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round"></path></svg>
+                  <div style="font-size:13.5px;font-weight:800;color:#fff;margin-top:12px">شارك رمز QR أو رابط SMS مع {{ obName }} لتثبيت تطبيق مقدم الخدمة</div>
+                  <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:8px">تم إصدار بيانات الدخول تلقائيًا — الهاتف {{ obPhone }}</div>
+                </div>
+              </sc-if>
+              <sc-if value="{{ obNotDone }}" hint-placeholder-val="{{ true }}">
+                <div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="font-size:13px;font-weight:800;color:#1F3B57">كيف تعمل المطابقة الفورية</div>
+                  <div style="font-size:11.5px;color:#6B7280;margin-top:8px;line-height:2">بعد الحفظ، يظهر المقدم في قائمة السكان عند طلب خدمة من فئته — يصله إشعار فوري (على غرار أوبر) مع مهلة للرد.</div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <!-- ===== A31 Bill aggregator settings ===== -->
+          <sc-if value="{{ secBillAgg }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:14px">
+              <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:20px">
+                <div style="font-size:12px;color:rgba(255,255,255,0.7)">رسوم خدمة الفواتير — يوليو</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:30px;font-weight:700;color:#fff;margin-top:6px">4,215 <span style="font-size:13px;color:rgba(255,255,255,0.7)">ر.س</span></div>
+                <div style="font-size:11px;color:#7BD8A5;margin-top:6px;font-weight:800">1,405 عملية سداد × 3 ر.س</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">فواتير مربوطة</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:28px;font-weight:700;color:#1F3B57;margin-top:6px">612</div>
+                <div style="font-size:11px;color:#6B7280;margin-top:6px">عبر 238 وحدة — 71% من السكان</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">شريك التجميع</div>
+                <div style="font-size:19px;font-weight:900;color:#1F3B57;margin-top:8px">مدفوعات مدى</div>
+                <div style="font-size:11px;color:#6B7280;margin-top:6px">السعودية — تسوية يومية T+1</div>
+              </div>
+            </div>
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:#F1EDE4;font-size:11px;font-weight:800;color:#6B7280">
+                <span style="flex:1">الفئة</span><span style="flex:1.6">المزودون المتاحون للسكان</span><span style="width:110px">عمليات يوليو</span><span style="width:100px">الحالة</span>
+              </div>
+              <sc-for list="{{ billAggRows }}" as="ba" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(0,0,0,0.04)">
+                  <span style="flex:1;display:flex;align-items:center;gap:9px">
+                    <span style="width:32px;height:32px;border-radius:10px;background:#F1EDE4;display:flex;align-items:center;justify-content:center;flex:none">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="{{ ba.icon }}" stroke="#1F3B57" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                    </span>
+                    <span style="font-size:12.5px;font-weight:800;color:#1F3B57">{{ ba.cat }}</span>
+                  </span>
+                  <span style="flex:1.6;font-size:11.5px;color:#4B5563">{{ ba.providers }}</span>
+                  <span style="width:110px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:#4B5563">{{ ba.txns }}</span>
+                  <span style="width:100px">
+                    <button onClick="{{ ba.toggle }}" style="border:none;cursor:pointer;background:{{ ba.stBg }};color:{{ ba.stC }};border-radius:999px;padding:4px 14px;font-size:10px;font-weight:800">{{ ba.status }}</button>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A28 Real-estate listing moderation ===== -->
+          <sc-if value="{{ secReMod }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12.5px;color:#6B7280;margin-bottom:14px;line-height:1.8">كل إعلان يتحقق تلقائيًا من أن المعلن ساكن موثّق في الوحدة نفسها — الإدارة تراجع المحتوى فقط. لا معاملات دفع داخل التطبيق.</div>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ reModList }}" as="r" hint-placeholder-count="3">
+                <div style="background:#fff;border-radius:18px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="display:flex;align-items:center">
+                    <span style="font-size:13.5px;font-weight:800;color:#1F3B57">{{ r.title }}</span>
+                    <span style="margin-right:10px;background:rgba(31,59,87,0.08);color:#1F3B57;border-radius:999px;padding:3px 12px;font-size:10px;font-weight:800">{{ r.typeLabel }}</span>
+                    <span style="flex:1"></span>
+                    <span style="background:{{ r.stBg }};color:{{ r.stC }};border-radius:999px;padding:3px 12px;font-size:10.5px;font-weight:800">{{ r.status }}</span>
+                  </div>
+                  <div style="font-size:11.5px;color:#6B7280;margin-top:4px">{{ r.owner }} · {{ r.price }} · وحدة موثّقة ✓ · {{ r.date }}</div>
+                  <sc-if value="{{ r.pending }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex;gap:8px;margin-top:14px">
+                      <button onClick="{{ r.approve }}" style="flex:1;border:none;cursor:pointer;background:#3FA66B;color:#fff;border-radius:999px;padding:9px;font-size:11.5px;font-weight:800">اعتماد ونشر</button>
+                      <button onClick="{{ r.reject }}" style="flex:1;cursor:pointer;background:transparent;color:#E4675A;border:1.5px solid #E4675A;border-radius:999px;padding:9px;font-size:11.5px;font-weight:800">رفض مع إخطار المعلن</button>
+                    </div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A29/A30 Stores directory & onboarding ===== -->
+          <sc-if value="{{ secStoresDir }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:center;margin-bottom:12px">
+              <div style="font-size:12px;color:#6B7280">متاجر معتمدة داخل الكمبوند وحوله — كل متجر لديه واجهة «متجر» في تطبيق مقدم الخدمة (P9–P11)</div>
+              <span style="flex:1"></span>
+              <button onClick="{{ addStore }}" style="border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:8px 18px;font-size:12px;font-weight:800">+ تعيين متجر جديد</button>
+            </div>
+            <sc-if value="{{ storeAddedShown }}" hint-placeholder-val="{{ false }}">
+              <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:16px 20px;margin-bottom:12px;display:flex;align-items:center;gap:14px">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM20 17v3h-3" stroke="#fff" strokeWidth="1.4" strokeLinejoin="round"></path></svg>
+                <span style="flex:1;font-size:12.5px;font-weight:800;color:#fff;line-height:1.8">تدفق التعيين مطابق لمقدمي الخدمة: بيانات المتجر + «نوع مقدم الخدمة» (فئة مفتوحة — مطعم، صيدلية، بقالة، ورد، أو أي فئة جديدة دون تعديل برمجي) + السجل التجاري + نسبة العمولة (12%) → إصدار بيانات دخول واجهة المتجر عبر QR / SMS</span>
+              </div>
+            </sc-if>
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:#F1EDE4;font-size:11px;font-weight:800;color:#6B7280">
+                <span style="flex:1">المتجر</span><span style="width:100px">النوع</span><span style="width:90px">التقييم</span><span style="width:110px">طلبات هذا الشهر</span><span style="width:110px">عمولة محصّلة</span><span style="width:90px">الحالة</span>
+              </div>
+              <sc-for list="{{ storesTable }}" as="s" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(0,0,0,0.04)">
+                  <span style="flex:1;display:flex;align-items:center;gap:9px">
+                    <span style="width:32px;height:32px;border-radius:10px;background:{{ s.logoBg }};display:flex;align-items:center;justify-content:center;font-size:15px">{{ s.emoji }}</span>
+                    <span style="font-size:12.5px;font-weight:700;color:#1F3B57">{{ s.name }}</span>
+                  </span>
+                  <span style="width:100px;font-size:11.5px;color:#4B5563">{{ s.kind }}</span>
+                  <span style="width:90px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:700;color:#1F3B57">★ {{ s.rating }}</span>
+                  <span style="width:110px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;color:#4B5563">{{ s.orders }}</span>
+                  <span style="width:110px;font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:700;color:#A87F2C">{{ s.commission }} ر.س</span>
+                  <span style="width:90px"><span style="background:{{ s.stBg }};color:{{ s.stC }};border-radius:999px;padding:3px 12px;font-size:10px;font-weight:800">{{ s.status }}</span></span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A27 Service category sourcing settings ===== -->
+          <sc-if value="{{ secSourcing }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:12.5px;color:#6B7280;margin-bottom:14px;line-height:1.8">لكل فئة خدمة، اختر إن كانت تُدار داخليًا بفريق المجمع أو متاحة عبر سوق مقدمي الخدمة الفوري — يمكن التوسع تدريجيًا فئة بفئة.</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <sc-for list="{{ sourcingRows }}" as="s" hint-placeholder-count="5">
+                <div style="background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);display:flex;align-items:center;gap:14px">
+                  <span style="flex:1;font-size:13.5px;font-weight:800;color:#1F3B57">{{ s.cat }}</span>
+                  <button onClick="{{ s.setInHouse }}" style="border-radius:999px;padding:8px 18px;font-size:12px;font-weight:800;cursor:pointer;background:{{ s.inBg }};color:{{ s.inC }};border:1.5px solid {{ s.inBd }}">تدار داخليًا</button>
+                  <button onClick="{{ s.setOutsourced }}" style="border-radius:999px;padding:8px 18px;font-size:12px;font-weight:800;cursor:pointer;background:{{ s.outBg }};color:{{ s.outC }};border:1.5px solid {{ s.outBd }}">سوق مقدمي الخدمة 🟩</button>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A25 Commission & revenue analytics ===== -->
+          <sc-if value="{{ secRevenue }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+              <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:20px">
+                <div style="font-size:12px;color:rgba(255,255,255,0.7)">إجمالي العمولة — يوليو</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:32px;font-weight:700;color:#fff;margin-top:6px">18,420 <span style="font-size:13px;color:rgba(255,255,255,0.7)">ر.س</span></div>
+                <div style="font-size:11px;color:#7BD8A5;margin-top:6px;font-weight:800">↑ 22% عن يونيو</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">عدد المهام المكتملة</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:28px;font-weight:700;color:#1F3B57;margin-top:6px">312</div>
+                <div style="font-size:11px;color:#6B7280;margin-top:6px">متوسط قيمة المهمة 162 ر.س</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">حصة الكمبوند من العمولة</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:28px;font-weight:700;color:#1F3B57;margin-top:6px">2,763 <span style="font-size:12px;color:#6B7280">ر.س</span></div>
+                <div style="font-size:11px;color:#6B7280;margin-top:6px">15% من عمولة رفادة — إيراد جديد للإدارة</div>
+              </div>
+            </div>
+            <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-top:14px">
+              <div style="font-size:14px;font-weight:800;color:#1F3B57">العمولة حسب فئة الخدمة</div>
+              <sc-for list="{{ revenueByCat }}" as="r" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:14px;margin-top:14px">
+                  <span style="font-size:12px;font-weight:700;color:#1F3B57;width:120px">{{ r.cat }}</span>
+                  <div style="flex:1;height:11px;border-radius:99px;background:#EFEBE2;overflow:hidden"><div style="width:{{ r.w }};height:100%;border-radius:99px;background:#C79A3C"></div></div>
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:700;color:#1F3B57;width:80px">{{ r.val }} ر.س</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A24 Provider verification & vetting ===== -->
+          <sc-if value="{{ secVerify }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:14px">
+              <sc-for list="{{ vetting }}" as="v" hint-placeholder-count="3">
+                <div style="background:#fff;border-radius:18px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <span style="width:38px;height:38px;border-radius:99px;background:linear-gradient(160deg,#27496F,#1F3B57);color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800">{{ v.initial }}</span>
+                    <span style="display:flex;flex-direction:column">
+                      <span style="font-size:13.5px;font-weight:800;color:#1F3B57">{{ v.name }}</span>
+                      <span style="font-size:11px;color:#6B7280">{{ v.cat }}</span>
+                    </span>
+                  </div>
+                  <div style="margin-top:14px;display:flex;flex-direction:column;gap:8px">
+                    <div style="display:flex;align-items:center;gap:8px"><span style="width:16px;height:16px;border-radius:5px;background:{{ v.idBg }};display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path></svg></span><span style="font-size:11.5px;color:#4B5563">تحقق الهوية</span></div>
+                    <div style="display:flex;align-items:center;gap:8px"><span style="width:16px;height:16px;border-radius:5px;background:{{ v.certBg }};display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path></svg></span><span style="font-size:11.5px;color:#4B5563">الشهادات والتراخيص</span></div>
+                    <div style="display:flex;align-items:center;gap:8px"><span style="width:16px;height:16px;border-radius:5px;background:{{ v.bgBg }};display:flex;align-items:center;justify-content:center"><svg width="10" height="10" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"></path></svg></span><span style="font-size:11.5px;color:#4B5563">الفحص الأمني (اختياري)</span></div>
+                  </div>
+                  <button onClick="{{ v.activate }}" style="width:100%;margin-top:14px;border:none;cursor:{{ v.cursor }};background:{{ v.actBg }};color:#fff;border-radius:999px;padding:11px;font-size:12.5px;font-weight:800;opacity:{{ v.op }}">{{ v.actLabel }}</button>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A26 Dispute resolution center ===== -->
+          <sc-if value="{{ secDisputes }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <sc-for list="{{ disputesList }}" as="d" hint-placeholder-count="3">
+                <div style="background:#fff;border-radius:18px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="display:flex;align-items:center">
+                    <span style="font-size:13.5px;font-weight:800;color:#1F3B57">{{ d.title }}</span>
+                    <span style="flex:1"></span>
+                    <span style="background:rgba(199,154,60,0.16);color:#A87F2C;border-radius:999px;padding:3px 12px;font-size:10.5px;font-weight:800">المبلغ محجوز: {{ d.amount }} ر.س</span>
+                  </div>
+                  <div style="font-size:11.5px;color:#6B7280;margin-top:4px">{{ d.by }} · {{ d.reason }} · {{ d.date }}</div>
+                  <sc-if value="{{ d.open }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex;gap:8px;margin-top:14px">
+                      <button onClick="{{ d.refund }}" style="flex:1;border:none;cursor:pointer;background:#E4675A;color:#fff;border-radius:999px;padding:9px;font-size:11.5px;font-weight:800">استرداد كامل للساكن</button>
+                      <button onClick="{{ d.partial }}" style="flex:1;cursor:pointer;background:transparent;color:#A87F2C;border:1.5px solid #C79A3C;border-radius:999px;padding:9px;font-size:11.5px;font-weight:800">دفع جزئي</button>
+                      <button onClick="{{ d.release }}" style="flex:1;cursor:pointer;background:transparent;color:#2E7D51;border:1.5px solid #3FA66B;border-radius:999px;padding:9px;font-size:11.5px;font-weight:800">دفع كامل للمقدم</button>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ d.resolved }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:12px;background:rgba(63,166,107,0.1);border-radius:999px;padding:8px;text-align:center;font-size:11.5px;font-weight:800;color:#2E7D51">تم الحل: {{ d.resolution }}</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A8 Amenities ===== -->
+          <sc-if value="{{ secAmen }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <sc-for list="{{ amenAdmin }}" as="a" hint-placeholder-count="4">
+                <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="display:flex;align-items:center">
+                    <span style="font-size:14.5px;font-weight:800;color:#1F3B57">{{ a.name }}</span>
+                    <span style="flex:1"></span>
+                    <span style="font-size:11px;color:#6B7280">ساعات العمل: {{ a.hours }}</span>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:12px;margin-top:14px">
+                    <span style="font-size:12px;color:#6B7280">السعة لكل ساعة</span>
+                    <button onClick="{{ a.dec }}" style="width:30px;height:30px;border-radius:10px;border:1.5px solid rgba(31,59,87,0.2);background:#fff;cursor:pointer;font-size:15px;font-weight:800;color:#1F3B57">−</button>
+                    <span style="font-family:'IBM Plex Sans',sans-serif;font-size:17px;font-weight:700;color:#1F3B57;width:28px;text-align:center">{{ a.cap }}</span>
+                    <button onClick="{{ a.inc }}" style="width:30px;height:30px;border-radius:10px;border:1.5px solid rgba(31,59,87,0.2);background:#fff;cursor:pointer;font-size:15px;font-weight:800;color:#1F3B57">+</button>
+                  </div>
+                  <div style="margin-top:14px">
+                    <div style="display:flex"><span style="font-size:11px;color:#6B7280">حجوزات اليوم</span><span style="flex:1"></span><span style="font-family:'IBM Plex Sans',sans-serif;font-size:11px;font-weight:600;color:#1F3B57">{{ a.booked }} / {{ a.total }}</span></div>
+                    <div style="height:8px;border-radius:99px;background:#EFEBE2;margin-top:6px;overflow:hidden"><div style="width:{{ a.pctW }};height:100%;border-radius:99px;background:#C79A3C"></div></div>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A9 Collection ===== -->
+          <sc-if value="{{ secCollection }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">
+              <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:18px;padding:20px">
+                <div style="font-size:12px;color:rgba(255,255,255,0.7)">معدل التحصيل — يوليو</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:38px;font-weight:700;color:#fff;margin-top:6px">87%</div>
+                <div style="height:9px;border-radius:99px;background:rgba(255,255,255,0.15);margin-top:10px;overflow:hidden"><div style="width:87%;height:100%;border-radius:99px;background:#C79A3C"></div></div>
+                <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-top:8px">↑ 4% عن يونيو · المستهدف 92%</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">إجمالي المحصّل</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:28px;font-weight:700;color:#1F3B57;margin-top:6px">2.86M <span style="font-size:13px;color:#6B7280">ر.س</span></div>
+                <div style="font-size:11px;color:#2E7D51;font-weight:800;margin-top:6px">618 وحدة سدّدت من 712</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">حسابات متأخرة</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:28px;font-weight:700;color:#E4675A;margin-top:6px">14</div>
+                <div style="font-size:11px;color:#6B7280;margin-top:6px">متوسط التأخير: 9 أيام</div>
+              </div>
+            </div>
+            <sc-if value="{{ bulkActive }}" hint-placeholder-val="{{ false }}">
+              <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:16px;padding:14px 20px;margin-bottom:12px;display:flex;align-items:center;gap:14px">
+                <span style="background:#C79A3C;color:#fff;border-radius:999px;padding:4px 13px;font-size:11.5px;font-weight:800;white-space:nowrap">{{ bulkCount }} محدّد</span>
+                <span style="font-size:12px;color:rgba(255,255,255,0.7);white-space:nowrap">إجمالي {{ bulkAmount }} ر.س مستحقة</span>
+                <span style="flex:1"></span>
+                <button onClick="{{ bulkRemind }}" style="border:none;cursor:pointer;background:#C79A3C;color:#fff;border-radius:999px;padding:9px 18px;font-size:11.5px;font-weight:800;white-space:nowrap">أرسل تذكيرًا للكل</button>
+                <button onClick="{{ bulkPlan }}" style="border:none;cursor:pointer;background:rgba(255,255,255,0.12);color:#fff;border-radius:999px;padding:9px 18px;font-size:11.5px;font-weight:800;white-space:nowrap">اعرض خطة تقسيط</button>
+                <button onClick="{{ bulkEscalate }}" style="border:none;cursor:pointer;background:rgba(228,103,90,0.25);color:#FFD3CE;border-radius:999px;padding:9px 18px;font-size:11.5px;font-weight:800;white-space:nowrap">صعّد قانونيًا</button>
+                <button onClick="{{ bulkClear }}" style="border:none;background:transparent;cursor:pointer;color:rgba(255,255,255,0.55);font-size:11.5px;font-weight:800;white-space:nowrap">إلغاء</button>
+              </div>
+            </sc-if>
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden;margin-top:14px">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:#F1EDE4;font-size:11px;font-weight:800;color:#6B7280">
+                <button onClick="{{ bulkAll }}" style="width:22px;height:22px;border-radius:6px;border:1.5px solid {{ bulkAllBd }};background:{{ bulkAllBg }};cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;padding:0">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="{{ bulkAllMark }}" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                </button>
+                <span style="width:96px">الوحدة</span><span style="flex:1">الساكن</span><span style="width:110px">المبلغ</span><span style="width:100px">أيام التأخير</span><span style="width:120px">الإجراء</span>
+              </div>
+              <sc-for list="{{ overdue }}" as="o" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(0,0,0,0.04)">
+                  <button onClick="{{ o.toggle }}" style="width:22px;height:22px;border-radius:6px;border:1.5px solid {{ o.cbBd }};background:{{ o.cbBg }};cursor:pointer;display:flex;align-items:center;justify-content:center;flex:none;padding:0">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M4 12.5l5 5L20 6.5" stroke="{{ o.cbMark }}" strokeWidth="3.2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                  </button>
+                  <button onClick="{{ o.open360 }}" style="width:96px;border:none;background:transparent;cursor:pointer;text-align:right;font-size:12.5px;font-weight:800;color:#1F3B57;font-family:'Cairo',sans-serif;padding:0;text-decoration:underline;text-decoration-color:rgba(31,59,87,0.25);text-underline-offset:3px">{{ o.unit }}</button>
+                  <span style="flex:1;font-size:12.5px;color:#4B5563">{{ o.name }}</span>
+                  <span style="width:110px;font-family:'IBM Plex Sans',sans-serif;font-size:12.5px;font-weight:600;color:#1F3B57">{{ o.amount }} ر.س</span>
+                  <span style="width:100px"><span style="background:{{ o.dBg }};color:{{ o.dC }};border-radius:999px;padding:3px 12px;font-size:10.5px;font-weight:800">{{ o.days }} يوم</span></span>
+                  <span style="width:120px"><button onClick="{{ o.remind }}" style="border:1.5px solid #1F3B57;background:transparent;color:#1F3B57;border-radius:999px;padding:5px 14px;font-size:10.5px;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif">إرسال تذكير</button></span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A10 SLA ===== -->
+          <sc-if value="{{ secSla }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+              <div style="font-size:14px;font-weight:800;color:#1F3B57">وقت الحل الفعلي مقابل مستهدف SLA — بالساعات</div>
+              <sc-for list="{{ slaRows }}" as="s" hint-placeholder-count="5">
+                <div style="margin-top:18px">
+                  <div style="display:flex;align-items:center">
+                    <span style="font-size:12.5px;font-weight:700;color:#1F3B57;width:110px">{{ s.cat }}</span>
+                    <span style="font-size:11px;color:#6B7280">فعلي {{ s.actual }} س · مستهدف {{ s.target }} س</span>
+                    <span style="flex:1"></span>
+                    <sc-if value="{{ s.breach }}" hint-placeholder-val="{{ false }}">
+                      <span style="background:rgba(228,103,90,0.13);color:#E4675A;border-radius:999px;padding:2px 12px;font-size:10px;font-weight:800">تجاوز SLA</span>
+                    </sc-if>
+                    <sc-if value="{{ s.ok }}" hint-placeholder-val="{{ true }}">
+                      <span style="background:rgba(63,166,107,0.13);color:#2E7D51;border-radius:999px;padding:2px 12px;font-size:10px;font-weight:800">ضمن الهدف</span>
+                    </sc-if>
+                  </div>
+                  <div style="position:relative;height:12px;border-radius:99px;background:#EFEBE2;margin-top:8px;overflow:visible">
+                    <div style="width:{{ s.barW }};height:100%;border-radius:99px;background:{{ s.barC }}"></div>
+                    <div style="position:absolute;top:-4px;right:{{ s.targetX }};width:2.5px;height:20px;background:#1F3B57;border-radius:2px"></div>
+                  </div>
+                </div>
+              </sc-for>
+              <div style="display:flex;align-items:center;gap:6px;margin-top:18px"><span style="width:14px;height:2.5px;background:#1F3B57;border-radius:2px"></span><span style="font-size:10.5px;color:#6B7280">الخط الداكن = مستهدف SLA</span></div>
+            </div>
+          </sc-if>
+
+          <!-- ===== A11 Lost moderation ===== -->
+          <sc-if value="{{ secLostMod }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+              <sc-for list="{{ lostMod }}" as="l" hint-placeholder-count="3">
+                <div style="background:#fff;border-radius:18px;padding:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                  <div style="display:flex;align-items:center">
+                    <span style="background:{{ l.pillBg }};color:{{ l.pillC }};border-radius:999px;padding:3px 12px;font-size:10px;font-weight:800">{{ l.pill }}</span>
+                    <span style="flex:1"></span>
+                    <span style="font-size:10.5px;color:#9AA1AC">{{ l.date }}</span>
+                  </div>
+                  <div style="font-size:14px;font-weight:800;color:#1F3B57;margin-top:10px">{{ l.title }}</div>
+                  <div style="font-size:11.5px;color:#6B7280;margin-top:3px">{{ l.loc }} · أبلغ عنه {{ l.by }}</div>
+                  <sc-if value="{{ l.pending }}" hint-placeholder-val="{{ true }}">
+                    <div style="display:flex;gap:8px;margin-top:14px">
+                      <button onClick="{{ l.approve }}" style="flex:1;border:none;cursor:pointer;background:#3FA66B;color:#fff;border-radius:999px;padding:8px;font-size:11.5px;font-weight:800">اعتماد ونشر</button>
+                      <button onClick="{{ l.remove }}" style="flex:1;cursor:pointer;background:transparent;color:#E4675A;border:1.5px solid #E4675A;border-radius:999px;padding:8px;font-size:11.5px;font-weight:800">إزالة</button>
+                    </div>
+                  </sc-if>
+                  <sc-if value="{{ l.approved }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:14px;background:rgba(63,166,107,0.1);border-radius:999px;padding:8px;text-align:center;font-size:11.5px;font-weight:800;color:#2E7D51">منشور للسكان ✓</div>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A13 Gate log ===== -->
+          <sc-if value="{{ secGateLog }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:#F1EDE4;font-size:11px;font-weight:800;color:#6B7280">
+                <span style="flex:1">الزائر</span><span style="width:110px">الوحدة المضيفة</span><span style="width:110px">الدخول</span><span style="width:110px">الخروج</span><span style="width:110px">الحالة</span>
+              </div>
+              <sc-for list="{{ gateLog }}" as="g" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px;padding:13px 18px;border-bottom:1px solid rgba(0,0,0,0.04)">
+                  <span style="flex:1;font-size:12.5px;font-weight:700;color:#1F3B57">{{ g.name }}</span>
+                  <span style="width:110px;font-size:12px;color:#4B5563">{{ g.unit }}</span>
+                  <span style="width:110px;font-size:11.5px;color:#6B7280">{{ g.in }}</span>
+                  <span style="width:110px;font-size:11.5px;color:#6B7280">{{ g.out }}</span>
+                  <span style="width:110px"><span style="background:{{ g.pillBg }};color:{{ g.pillC }};border-radius:999px;padding:3px 12px;font-size:10px;font-weight:800">{{ g.status }}</span></span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A14 Sentiment ===== -->
+          <sc-if value="{{ secSentiment }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:1fr 2fr;gap:14px">
+              <div style="background:linear-gradient(140deg,#1F3B57 0%,#3D2A5C 100%);border-radius:18px;padding:24px;display:flex;flex-direction:column">
+                <div style="font-size:12.5px;color:rgba(255,255,255,0.7)">رضا السكان العام</div>
+                <div style="display:flex;align-items:baseline;gap:8px;margin-top:8px">
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:52px;font-weight:700;color:#fff">4.2</span>
+                  <span style="font-size:16px;color:rgba(255,255,255,0.6)">/ 5</span>
+                </div>
+                <div style="font-size:11.5px;color:rgba(255,255,255,0.6);margin-top:4px">من الاستبيان العام — يوليو 2026 · 214 ردًا</div>
+                <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(63,166,107,0.2);border-radius:999px;padding:5px 14px;margin-top:14px;align-self:flex-start">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 19V5M6 11l6-6 6 6" stroke="#7BD8A5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+                  <span style="font-size:11.5px;font-weight:800;color:#7BD8A5">0.3 عن الشهر الماضي</span>
+                </div>
+                <div style="flex:1"></div>
+                <div style="font-size:10.5px;color:rgba(255,255,255,0.45);line-height:1.8">يُجمع تلقائيًا من استبيانات ما بعد البلاغات والاستبيان الشهري داخل التطبيق.</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;align-content:start">
+                <sc-for list="{{ sentiments }}" as="s" hint-placeholder-count="6">
+                  <div style="background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                    <div style="display:flex;align-items:center">
+                      <span style="font-size:13.5px;font-weight:800;color:#1F3B57">{{ s.cat }}</span>
+                      <span style="flex:1"></span>
+                      <span style="background:{{ s.pillBg }};color:{{ s.pillC }};border-radius:999px;padding:3px 13px;font-size:10.5px;font-weight:800">{{ s.pill }}</span>
+                    </div>
+                    <div style="font-size:11px;color:#6B7280;margin-top:6px">{{ s.count }} ردًا · {{ s.note }}</div>
+                    <div style="height:7px;border-radius:99px;background:#EFEBE2;margin-top:10px;overflow:hidden"><div style="width:{{ s.barW }};height:100%;border-radius:99px;background:{{ s.barC }}"></div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== A15 Scoring ===== -->
+          <sc-if value="{{ secScoring }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:1.2fr 1fr;gap:14px">
+              <div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:14px;font-weight:800;color:#1F3B57">قواعد احتساب نقاط الثقة</div>
+                <sc-for list="{{ scoreRules }}" as="sr" hint-placeholder-count="5">
+                  <div style="display:flex;align-items:center;gap:12px;padding:13px 0;border-bottom:1px solid rgba(0,0,0,0.05)">
+                    <span style="flex:1;font-size:12.5px;color:#4B5563">{{ sr.label }}</span>
+                    <button onClick="{{ sr.dec }}" style="width:26px;height:26px;border-radius:9px;border:1.5px solid rgba(31,59,87,0.2);background:#fff;cursor:pointer;font-size:13px;font-weight:800;color:#1F3B57">−</button>
+                    <span style="font-family:'IBM Plex Sans',sans-serif;font-size:14px;font-weight:700;color:{{ sr.c }};width:46px;text-align:center">{{ sr.val }}</span>
+                    <button onClick="{{ sr.inc }}" style="width:26px;height:26px;border-radius:9px;border:1.5px solid rgba(31,59,87,0.2);background:#fff;cursor:pointer;font-size:13px;font-weight:800;color:#1F3B57">+</button>
+                  </div>
+                </sc-for>
+                <div style="font-size:10.5px;color:#9AA1AC;margin-top:12px">تسري التغييرات على دورة الاحتساب القادمة (أول الشهر).</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:22px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:14px;font-weight:800;color:#1F3B57">توزيع السكان حسب المستوى</div>
+                <sc-for list="{{ scoreDist }}" as="sd" hint-placeholder-count="4">
+                  <div style="margin-top:16px">
+                    <div style="display:flex"><span style="font-size:12px;font-weight:700;color:#1F3B57">{{ sd.label }}</span><span style="flex:1"></span><span style="font-family:'IBM Plex Sans',sans-serif;font-size:11.5px;font-weight:600;color:#6B7280">{{ sd.count }} ساكن</span></div>
+                    <div style="height:10px;border-radius:99px;background:#EFEBE2;margin-top:6px;overflow:hidden"><div style="width:{{ sd.w }};height:100%;border-radius:99px;background:{{ sd.c }}"></div></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== A16 Messages inbox ===== -->
+          <sc-if value="{{ secInbox }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:300px 1fr;gap:14px;height:560px">
+              <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow-y:auto;padding:8px">
+                <sc-for list="{{ threads }}" as="th" hint-placeholder-count="4">
+                  <button onClick="{{ th.pick }}" style="width:100%;display:flex;align-items:center;gap:10px;border:none;cursor:pointer;text-align:right;background:{{ th.bg }};border-radius:14px;padding:12px">
+                    <span style="width:36px;height:36px;border-radius:99px;background:linear-gradient(160deg,#27496F,#1F3B57);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex:none">{{ th.initial }}</span>
+                    <span style="flex:1;min-width:0;display:flex;flex-direction:column">
+                      <span style="font-size:12.5px;font-weight:800;color:#1F3B57">{{ th.name }}</span>
+                      <span style="font-size:10.5px;color:#6B7280;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ th.last }}</span>
+                    </span>
+                    <sc-if value="{{ th.unread }}" hint-placeholder-val="{{ false }}">
+                      <span style="width:9px;height:9px;border-radius:99px;background:#C79A3C;flex:none"></span>
+                    </sc-if>
+                  </button>
+                </sc-for>
+              </div>
+              <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);display:flex;flex-direction:column;overflow:hidden">
+                <div style="padding:14px 18px;border-bottom:1px solid rgba(0,0,0,0.06);display:flex;align-items:center;gap:10px">
+                  <span style="font-size:13.5px;font-weight:800;color:#1F3B57">{{ inboxName }}</span>
+                  <span style="font-size:11px;color:#6B7280">· {{ inboxUnit }}</span>
+                  <span style="flex:1"></span>
+                  <button onClick="{{ assignStaff }}" style="border:1.5px solid rgba(31,59,87,0.25);background:#fff;color:#1F3B57;border-radius:999px;padding:5px 14px;font-size:10.5px;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif">تعيين لموظف</button>
+                </div>
+                <div style="flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+                  <sc-for list="{{ inboxMsgs }}" as="m" hint-placeholder-count="3">
+                    <div style="display:flex;justify-content:{{ m.align }}">
+                      <div style="max-width:70%;background:{{ m.bg }};color:{{ m.color }};border-radius:{{ m.radius }};padding:9px 14px;font-size:12.5px;font-weight:600;line-height:1.7;box-shadow:0 1px 6px rgba(0,0,0,0.05)">{{ m.text }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="padding:10px 14px;border-top:1px solid rgba(0,0,0,0.06)">
+                  <div style="display:flex;gap:6px;margin-bottom:8px">
+                    <sc-for list="{{ canned }}" as="cn" hint-placeholder-count="3">
+                      <button onClick="{{ cn.use }}" style="border:1.5px solid rgba(31,59,87,0.15);background:#F7F4EE;color:#1F3B57;border-radius:999px;padding:5px 12px;font-size:10.5px;font-weight:700;cursor:pointer;font-family:'Cairo',sans-serif">{{ cn.label }}</button>
+                    </sc-for>
+                  </div>
+                  <div style="display:flex;gap:8px">
+                    <input value="{{ inboxDraft }}" onChange="{{ setInboxDraft }}" placeholder="اكتب ردك…" style="flex:1;background:#F7F4EE;border:none;border-radius:999px;padding:11px 16px;font-size:12.5px;color:#1F3B57">
+                    <button onClick="{{ sendInbox }}" style="border:none;cursor:pointer;background:#1F3B57;color:#fff;border-radius:999px;padding:0 22px;font-size:12px;font-weight:800">إرسال</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <!-- ===== A17 Portfolio ===== -->
+          <sc-if value="{{ secPortfolio }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+              <sc-for list="{{ portfolio }}" as="p" hint-placeholder-count="3">
+                <div style="background:{{ p.bg }};border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);border:2px solid {{ p.bd }}">
+                  <div style="display:flex;align-items:center">
+                    <span style="font-size:15px;font-weight:900;color:{{ p.titleC }}">{{ p.name }}</span>
+                    <span style="flex:1"></span>
+                    <sc-if value="{{ p.active }}" hint-placeholder-val="{{ false }}">
+                      <span style="background:#C79A3C;color:#fff;border-radius:999px;padding:3px 12px;font-size:10px;font-weight:800">الحالي</span>
+                    </sc-if>
+                  </div>
+                  <div style="font-size:11px;color:{{ p.subC }};margin-top:2px">{{ p.units }} وحدة · {{ p.city }}</div>
+                  <div style="display:flex;gap:16px;margin-top:16px">
+                    <span style="display:flex;flex-direction:column"><span style="font-family:'IBM Plex Sans',sans-serif;font-size:17px;font-weight:700;color:{{ p.titleC }}">{{ p.collection }}</span><span style="font-size:9.5px;color:{{ p.subC }}">التحصيل</span></span>
+                    <span style="display:flex;flex-direction:column"><span style="font-family:'IBM Plex Sans',sans-serif;font-size:17px;font-weight:700;color:{{ p.titleC }}">{{ p.open }}</span><span style="font-size:9.5px;color:{{ p.subC }}">تذاكر مفتوحة</span></span>
+                    <span style="display:flex;flex-direction:column"><span style="font-family:'IBM Plex Sans',sans-serif;font-size:17px;font-weight:700;color:{{ p.titleC }}">{{ p.csat }}</span><span style="font-size:9.5px;color:{{ p.subC }}">الرضا</span></span>
+                  </div>
+                  <button onClick="{{ p.switchTo }}" style="width:100%;margin-top:16px;border:none;cursor:pointer;background:{{ p.btnBg }};color:{{ p.btnC }};border-radius:999px;padding:10px;font-size:12px;font-weight:800">{{ p.btnLabel }}</button>
+                </div>
+              </sc-for>
+            </div>
+            <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-top:14px">
+              <div style="font-size:14px;font-weight:800;color:#1F3B57">مقارنة المحفظة — معدل التحصيل</div>
+              <sc-for list="{{ portfolioBars }}" as="pb" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:14px;margin-top:14px">
+                  <span style="font-size:12px;font-weight:700;color:#1F3B57;width:130px">{{ pb.name }}</span>
+                  <div style="flex:1;height:11px;border-radius:99px;background:#EFEBE2;overflow:hidden"><div style="width:{{ pb.w }};height:100%;border-radius:99px;background:{{ pb.c }}"></div></div>
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:700;color:#1F3B57;width:44px">{{ pb.val }}</span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A18 Predictive ===== -->
+          <sc-if value="{{ secPredict }}" hint-placeholder-val="{{ false }}">
+            <div style="background:rgba(199,154,60,0.1);border:1px solid rgba(199,154,60,0.35);border-radius:16px;padding:13px 18px;margin-bottom:14px;display:flex;align-items:center;gap:10px">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 3l10 18H2zM12 10v5M12 18h.01" stroke="#A87F2C" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+              <span style="font-size:12.5px;font-weight:700;color:#A87F2C">حلّل النظام 4,120 تذكرة تاريخية — 3 أصول مرشحة للتعطل خلال 60 يومًا</span>
+            </div>
+            <div style="background:#fff;border-radius:18px;box-shadow:0 2px 12px rgba(0,0,0,0.06);overflow:hidden">
+              <div style="display:flex;align-items:center;gap:12px;padding:12px 18px;background:#F1EDE4;font-size:11px;font-weight:800;color:#6B7280">
+                <span style="flex:1">الأصل</span><span style="width:130px">الموقع</span><span style="width:130px">آخر صيانة</span><span style="width:120px">احتمال العطل</span><span style="width:130px">الإجراء</span>
+              </div>
+              <sc-for list="{{ assets }}" as="a" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(0,0,0,0.04)">
+                  <span style="flex:1;font-size:12.5px;font-weight:700;color:#1F3B57">{{ a.name }}</span>
+                  <span style="width:130px;font-size:11.5px;color:#6B7280">{{ a.loc }}</span>
+                  <span style="width:130px;font-size:11.5px;color:#6B7280">{{ a.last }}</span>
+                  <span style="width:120px"><span style="background:{{ a.rBg }};color:{{ a.rC }};border-radius:999px;padding:3px 13px;font-size:10.5px;font-weight:800">{{ a.risk }}</span></span>
+                  <span style="width:130px"><button onClick="{{ a.schedule }}" style="border:1.5px solid #1F3B57;background:transparent;color:#1F3B57;border-radius:999px;padding:5px 14px;font-size:10.5px;font-weight:800;cursor:pointer;font-family:'Cairo',sans-serif">جدولة صيانة</button></span>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <!-- ===== A19 IoT ===== -->
+          <sc-if value="{{ secIot }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">استهلاك الكهرباء — يوليو</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#1F3B57;margin-top:6px">214.6 <span style="font-size:12px;color:#6B7280">م.و.س</span></div>
+                <div style="font-size:11px;color:#2E7D51;font-weight:800;margin-top:4px">↓ 6% عن يونيو</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">استهلاك المياه — يوليو</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#1F3B57;margin-top:6px">12,840 <span style="font-size:12px;color:#6B7280">م³</span></div>
+                <div style="font-size:11px;color:#E4675A;font-weight:800;margin-top:4px">↑ 3% عن يونيو</div>
+              </div>
+              <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+                <div style="font-size:12px;color:#6B7280">عدادات متصلة</div>
+                <div style="font-family:'IBM Plex Sans',sans-serif;font-size:26px;font-weight:700;color:#1F3B57;margin-top:6px">683 <span style="font-size:12px;color:#6B7280">/ 712</span></div>
+                <div style="font-size:11px;color:#6B7280;margin-top:4px">29 عدادًا غير متصل</div>
+              </div>
+            </div>
+            <div style="background:#fff;border-radius:18px;padding:20px;box-shadow:0 2px 12px rgba(0,0,0,0.06);margin-top:14px">
+              <div style="font-size:14px;font-weight:800;color:#1F3B57">الاستهلاك حسب الحي — كهرباء</div>
+              <sc-for list="{{ iotZones }}" as="z" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:14px;margin-top:14px">
+                  <span style="font-size:12px;font-weight:700;color:#1F3B57;width:110px">{{ z.name }}</span>
+                  <div style="flex:1;height:11px;border-radius:99px;background:#EFEBE2;overflow:hidden"><div style="width:{{ z.w }};height:100%;border-radius:99px;background:{{ z.c }}"></div></div>
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:11.5px;font-weight:600;color:#6B7280;width:80px">{{ z.val }}</span>
+                  <sc-if value="{{ z.anomaly }}" hint-placeholder-val="{{ false }}">
+                    <span style="background:rgba(228,103,90,0.13);color:#E4675A;border-radius:999px;padding:2px 11px;font-size:10px;font-weight:800">استهلاك شاذ</span>
+                  </sc-if>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1360, &quot;height&quot;: 940}, &quot;startLoggedIn&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;العرض&quot;}}">
+class Component extends DCLogic {
+  state = {
+    logged: false,
+    compoundIdx: 0,
+    sec: 'home',
+    toast: null,
+    // tickets
+    tickets: [
+      { id: 1042, title: 'تسريب مياه في الحمام الرئيسي', cat: 'سباكة', unit: 'فيلا 214', resident: 'عبدالله العتيبي', pr: 'urgent', status: 'inprogress', tech: 1, date: '8 يوليو — 9:14 ص', desc: 'تسريب مستمر أسفل حوض الحمام الرئيسي منذ يومين، والمياه بدأت تتجمع على الأرضية. مرفق صورتان وفيديو.', notes: [{ by: 'م. سامي (مشرف)', time: 'أمس 11:30 ص', text: 'تم فحص التسريب — مصدره وصلة الخلاط. مطلوب وصلة بديلة من المخزن.' }] },
+      { id: 1051, title: 'صيانة دورية للتكييف المركزي', cat: 'تكييف', unit: 'فيلا 214', resident: 'عبدالله العتيبي', pr: 'normal', status: 'received', tech: null, date: 'اليوم — 8:40 ص', desc: 'طلب صيانة دورية قبل ذروة الصيف.', notes: [] },
+      { id: 1049, title: 'إنارة الممر الخارجي متقطعة', cat: 'كهرباء', unit: 'الحي الشرقي', resident: 'منطقة مشتركة', pr: 'normal', status: 'inprogress', tech: 0, date: 'أمس — 6:20 م', desc: 'أعمدة الإنارة 12-16 بالممر الشرقي تعمل بشكل متقطع بعد الغروب.', notes: [] },
+      { id: 1047, title: 'باب الكراج لا يغلق بالكامل', cat: 'نجارة', unit: 'فيلا 96', resident: 'منيرة الدوسري', pr: 'urgent', status: 'received', tech: null, date: 'أمس — 3:05 م', desc: 'الباب يتوقف قبل الإغلاق بـ20 سم تقريبًا.', notes: [] },
+      { id: 1044, title: 'تشقق في سيراميك المسبح', cat: 'مناطق مشتركة', unit: 'النادي', resident: 'منطقة مشتركة', pr: 'normal', status: 'inprogress', tech: 2, date: '7 يوليو — 1:00 م', desc: 'تشققات ظاهرة في الحوض الصغير — مطلوب معاينة قبل موسم الصيف.', notes: [] },
+      { id: 1038, title: 'مصباح المدخل الخارجي لا يعمل', cat: 'كهرباء', unit: 'فيلا 214', resident: 'عبدالله العتيبي', pr: 'normal', status: 'resolved', tech: 0, date: '2 يوليو — 10:15 ص', desc: 'المصباح الرئيسي فوق باب الفيلا لا يعمل.', notes: [{ by: 'خالد المطيري (فني)', time: '2 يوليو 2:40 م', text: 'تم استبدال المصباح والتأكد من سلامة التوصيلات.' }] },
+      { id: 1035, title: 'رائحة صرف في المطبخ', cat: 'سباكة', unit: 'فيلا 152', resident: 'فهد الشمري', pr: 'normal', status: 'resolved', tech: 1, date: '1 يوليو — 9:00 ص', desc: 'رائحة كريهة من بالوعة المطبخ صباحًا.', notes: [] },
+    ],
+    selId: 1042,
+    filter: 'all',
+    noteDraft: '',
+    // residents
+    resQuery: '',
+    openFamRow: null,
+    // broadcast
+    bcTitle: '', bcBody: '', bcTarget: 0,
+    bcSent: [
+      { title: 'انقطاع مياه مؤقت يوم الخميس', target: 'كل السكان', reach: 712, time: 'اليوم 8:00 ص' },
+      { title: 'يوم رياضي للعائلات — السبت', target: 'كل السكان', reach: 712, time: 'أمس' },
+      { title: 'أعمال تنسيق الحدائق بالحي الشرقي', target: 'الحي الشرقي', reach: 184, time: '6 يوليو' },
+    ],
+    // vendors
+    vendorTab: 'maint',
+    obName: '', obPhone: '', obCommission: '', obCat: null, obDone: false, sec2: null,
+    // service provider marketplace — trust & business layer (addendum 2)
+    sourcing: { 'صيانة تكييف': 'out', 'تنظيف': 'out', 'كهرباء': 'in', 'سباكة': 'in', 'تدريب رياضي': 'out' },
+    reModState: { 0: 'pending', 1: 'pending', 2: 'approved' },
+    cmdQuery: '', inboxDone: {},
+    u360Unit: 'فيلا 214', u360Tab: 'overview',
+    bulkSel: {}, bulkTixSel: {},
+    rules: { 0: true, 1: true, 2: false, 3: true },
+    teamRole: 0, repPeriod: 'يوليو 2026',
+    billAggOn: { 0: true, 1: true, 2: true, 3: true, 4: false },
+    storeAddedShown: false,
+    vettingState: { 0: 'pending', 1: 'active', 2: 'pending' },
+    disputesState: { 0: 'open', 1: 'open', 2: 'resolved' },
+    // amenities
+    caps: { gym: 12, pool: 20, club: 40, kids: 15 },
+    // lost moderation
+    lostMod: [
+      { title: 'سماعة بلوتوث', loc: 'ملعب كرة القدم', by: 'فيلا 88', date: 'اليوم', kind: 'found', state: 'pending' },
+      { title: 'مفتاح سيارة', loc: 'بجوار البوابة الرئيسية', by: 'فيلا 12', date: 'أمس', kind: 'found', state: 'approved' },
+      { title: 'قطة رمادية صغيرة', loc: 'الحديقة المركزية', by: 'فيلا 214', date: 'اليوم', kind: 'lost', state: 'pending' },
+      { title: 'نظارة شمسية رياضية', loc: 'الجيم', by: 'فيلا 45', date: 'منذ 3 أيام', kind: 'found', state: 'approved' },
+    ],
+    // scoring
+    rules: [
+      { label: 'سداد في الموعد (شهريًا)', val: 40 },
+      { label: 'تقييم بلاغ بعد الحل', val: 15 },
+      { label: 'حضور فعالية مجتمعية', val: 25 },
+      { label: 'حجز مرفق دون تغيّب', val: 10 },
+      { label: 'تأخر سداد أكثر من 15 يومًا', val: -60 },
+      { label: 'إلغاء حجز متأخر', val: -20 },
+    ],
+    // inbox
+    threadIdx: 0,
+    inboxDraft: '',
+    threadMsgs: {
+      0: [
+        { me: false, text: 'لو سمحت، فني السباكة هيوصل امتى النهارده؟' },
+        { me: true, text: 'الفني محمد الغامدي في الطريق إليك — الوصول المتوقع خلال 20 دقيقة.' },
+      ],
+      1: [
+        { me: false, text: 'هل يمكن حجز القاعة الكبرى لعيد ميلاد يوم الجمعة؟' },
+      ],
+      2: [
+        { me: false, text: 'متى يتم تفعيل بطاقة الدخول الجديدة؟' },
+        { me: true, text: 'تم تفعيلها بالفعل — جربها على البوابة وأخبرنا.' },
+        { me: false, text: 'تعمل الآن، شكرًا جزيلًا!' },
+      ],
+    },
+  };
+
+  go = sec => this.setState({ sec });
+  showToast = msg => {
+    clearTimeout(this._tt);
+    this.setState({ toast: msg });
+    this._tt = setTimeout(() => this.setState({ toast: null }), 2800);
+  };
+
+  componentDidMount() {
+    if (this.props.previewSection) {
+      this.setState({ logged: true, sec: this.props.previewSection });
+    }
+  }
+
+  renderVals() {
+    const st = this.state;
+    const NAVY = '#1F3B57', GOLD = '#C79A3C', GREEN = '#3FA66B', CORAL = '#E4675A', SLATE = '#6B7280';
+    const go = this.go;
+    const compounds = ['حدائق الأندلس', 'قرطبة هيلز'];
+    const compound = compounds[st.compoundIdx];
+
+    const meta = {
+      received:   { label: 'تم الاستلام',  bg: 'rgba(107,114,128,0.12)', c: SLATE },
+      inprogress: { label: 'جاري التنفيذ', bg: 'rgba(199,154,60,0.16)',  c: '#A87F2C' },
+      resolved:   { label: 'تم الحل',      bg: 'rgba(63,166,107,0.14)',  c: '#2E7D51' },
+    };
+    const techs = [
+      { name: 'خالد المطيري', spec: 'كهرباء وإنارة', load: 3 },
+      { name: 'محمد الغامدي', spec: 'سباكة', load: 2 },
+      { name: 'تركي السبيعي', spec: 'أعمال عامة', load: 4 },
+    ];
+    const prMeta = { urgent: { label: 'عاجلة', c: CORAL }, normal: { label: 'عادية', c: '#A87F2C' } };
+
+    // ---- nav
+    const icons = {
+      home: 'M4 11l8-7 8 7v9h-5v-6h-6v6H4z',
+      tickets: 'M20.5 6.8a4.5 4.5 0 0 1-6 4.2l-7 7a2.1 2.1 0 0 1-3-3l7-7a4.5 4.5 0 0 1 5.7-5.6L14.6 5l2.4 2.4 2.6-2.6c.6.6.9 1.2.9 2z',
+      residents: 'M16 19v-1a4 4 0 0 0-8 0v1M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM20 19v-1a3.5 3.5 0 0 0-2.5-3.3M16.5 4.3a3.5 3.5 0 0 1 0 6.4',
+      broadcast: 'M3 10v4h3l6 5V5l-6 5zM16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11',
+      amen: 'M2 15.5c2 0 2-1.5 4-1.5s2 1.5 4 1.5 2-1.5 4-1.5 2 1.5 4 1.5M2 19.5c2 0 2-1.5 4-1.5s2 1.5 4 1.5 2-1.5 4-1.5 2 1.5 4 1.5M8 11V7a4 4 0 0 1 8 0',
+      vendors: 'M4 21V8l4-5h8l4 5v13zM4 8h16M12 12a3 3 0 0 0 3 3',
+      collection: 'M3 7h18v12H3zM3 11h18M6 15h4',
+      sla: 'M12 7v5l3.5 2M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18z',
+      lost: 'M15.5 15.5L21 21M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15z',
+      gate: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM20 17v3h-3',
+      sentiment: 'M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM8.5 10h.01M15.5 10h.01M8.5 14.5a5 5 0 0 0 7 0',
+      scoring: 'M12 2l2.5 5.3 5.5.8-4 4 1 5.9-5-2.8-5 2.8 1-5.9-4-4 5.5-.8z',
+      inbox: 'M21 12a8 8 0 0 1-8 8H4l2-3.2A8 8 0 1 1 21 12z',
+      portfolio: 'M3 21h18M5 21V4h9v17M14 9h5v12M8 8h3M8 12h3M8 16h3',
+      predict: 'M3 17l5-5 4 3 6-7 3 3M3 21h18',
+      iot: 'M12 18h.01M8.5 15a5 5 0 0 1 7 0M5.5 12a9.5 9.5 0 0 1 13 0M2.5 9a14 14 0 0 1 19 0',
+    };
+    const openCount = st.tickets.filter(t => t.status !== 'resolved').length;
+    const navDefs = [
+      { header: 'التشغيل اليومي' },
+      { key: 'home', label: 'لوحة التحكم', icon: icons.home },
+      { key: 'tickets', label: 'طابور التذاكر', icon: icons.tickets, badge: String(openCount) },
+      { key: 'residents', label: 'دليل السكان', icon: icons.residents },
+      { key: 'broadcast', label: 'الإعلانات', icon: icons.broadcast },
+      { key: 'amen', label: 'إدارة المرافق', icon: icons.amen },
+      { key: 'vendors', label: 'الموردون ومقدمو الخدمة', icon: icons.vendors },
+      { header: 'المالية والأداء' },
+      { key: 'collection', label: 'التحصيل', icon: icons.collection },
+      { key: 'sla', label: 'متابعة SLA', icon: icons.sla },
+      { key: 'sentiment', label: 'مشاعر السكان', icon: icons.sentiment },
+      { key: 'scoring', label: 'نقاط الثقة', icon: icons.scoring },
+      { header: 'المجتمع' },
+      { key: 'inbox', label: 'رسائل السكان', icon: icons.inbox, badge: '2' },
+      { key: 'lostmod', label: 'مراجعة المفقودات', icon: icons.lost },
+      { key: 'gatelog', label: 'سجل الزوار', icon: icons.gate },
+      { header: 'السوق العقاري والمتاجر' },
+      { key: 'billAgg', label: 'الفواتير — مزودو الفواتير', icon: 'M14 2H6v20h12V8zM14 2v6h6M13 11l-3 4h4l-3 4' },
+      { key: 'reMod', label: 'مراجعة إعلانات العقارات', icon: 'M3 21h18M5 21V9l7-5 7 5v12M9 14h6M9 17h6' },
+      { key: 'storesDir', label: 'متاجر «المتجر»', icon: 'M4 8h16M4 8l1-4h14l1 4M4 8v13h16V8M9 21v-7h6v7' },
+      { header: 'سوق مقدمي الخدمة 🟩' },
+      { key: 'sourcing', label: 'إعدادات مصادر الخدمة', icon: 'M4 21V8l4-5h8l4 5v13zM4 8h16M9 12h6M9 16h6' },
+      { key: 'revenue', label: 'عمولة السوق والإيرادات', icon: 'M3 3v18h18M7 15l4-5 3 3 5-7' },
+      { key: 'verify', label: 'اعتماد مقدمي الخدمة', icon: 'M9 12l2 2 4-4M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18z' },
+      { key: 'disputes', label: 'مركز فض النزاعات', icon: 'M12 9v4M12 17h.01M10.3 3.9L2.6 18a1.5 1.5 0 0 0 1.3 2.2h16.2a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z' },
+      { header: 'الإنتاجية والحكم' },
+      { key: 'automation', label: 'قواعد الأتمتة', icon: 'M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19 12c0-.4 0-.8-.1-1.2l2-1.5-2-3.5-2.4 1a7 7 0 0 0-2-1.2L14 3h-4l-.5 2.6a7 7 0 0 0-2 1.2l-2.4-1-2 3.5 2 1.5a7 7 0 0 0 0 2.4l-2 1.5 2 3.5 2.4-1a7 7 0 0 0 2 1.2L10 21h4l.5-2.6a7 7 0 0 0 2-1.2l2.4 1 2-3.5-2-1.5c.1-.4.1-.8.1-1.2z', badge: '4' },
+      { key: 'team', label: 'الفريق والصلاحيات', icon: 'M16 19v-1a4 4 0 0 0-8 0v1M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM20 19v-1a3.5 3.5 0 0 0-2.5-3.3M9 12l1.5 1.5L13 11' },
+      { key: 'reports', label: 'التقارير والتصدير', icon: 'M14 2H6v20h12V8zM14 2v6h6M9 13h6M9 17h4' },
+      { header: 'التوسع والبيانات' },
+      { key: 'portfolio', label: 'المحفظة العقارية', icon: icons.portfolio },
+      { key: 'predict', label: 'الصيانة التنبؤية', icon: icons.predict },
+      { key: 'iot', label: 'العدادات الذكية', icon: icons.iot },
+    ];
+    const secForNav = st.sec === 'ticketDetail' ? 'tickets' : (st.sec === 'onboard' ? 'vendors' : (st.sec === 'unit360' ? 'residents' : st.sec));
+    const navItems = navDefs.map(n => {
+      if (n.header) return { isHeader: true, isItem: false, label: n.header };
+      const on = secForNav === n.key;
+      return {
+        isHeader: false, isItem: true,
+        label: n.label, icon: n.icon,
+        go: () => go(n.key),
+        bg: on ? 'rgba(255,255,255,0.1)' : 'transparent',
+        bar: on ? '#C79A3C' : 'transparent',
+        c: on ? '#fff' : 'rgba(255,255,255,0.65)',
+        ic: on ? '#C79A3C' : 'rgba(255,255,255,0.55)',
+        hasBadge: !!n.badge, badge: n.badge || '',
+      };
+    });
+    const titles = {
+      home: 'لوحة التحكم — ' + compound, tickets: 'طابور التذاكر', ticketDetail: 'تفاصيل التذكرة',
+      residents: 'دليل السكان', broadcast: 'الإعلانات والتعميمات', amen: 'إدارة المرافق', vendors: 'دليل الموردين',
+      collection: 'لوحة التحصيل', sla: 'متابعة اتفاقيات مستوى الخدمة', sentiment: 'مشاعر السكان', scoring: 'إدارة نقاط الثقة',
+      inbox: 'رسائل السكان', lostmod: 'مراجعة المفقودات', gatelog: 'سجل الزوار والبوابات',
+      portfolio: 'المحفظة العقارية', predict: 'الصيانة التنبؤية', iot: 'العدادات الذكية',
+      onboard: 'تعيين مقدم خدمة جديد',
+      sourcing: 'إعدادات مصادر الخدمة', revenue: 'عمولة السوق والإيرادات',
+      verify: 'اعتماد مقدمي الخدمة', disputes: 'مركز فض النزاعات',
+      reMod: 'مراجعة إعلانات العقارات', storesDir: 'متاجر «المتجر» الموحد',
+      unit360: 'ملف الوحدة الشامل', automation: 'قواعد الأتمتة — تقليل العمل اليدوي',
+      team: 'الفريق والصلاحيات وسجل التدقيق', reports: 'التقارير والتصدير',
+      billAgg: 'خدمة الفواتير — إعدادات مزودي الفواتير',
+    };
+
+    // ---- tickets
+    const decorate = t => ({
+      ...t,
+      statusLabel: meta[t.status].label, pillBg: meta[t.status].bg, pillC: meta[t.status].c,
+      prLabel: prMeta[t.pr].label, prC: prMeta[t.pr].c,
+      tech: t.tech === null ? 'غير معيّن' : techs[t.tech].name,
+      toggleSel: () => this.setState(s2 => ({ bulkTixSel: { ...s2.bulkTixSel, [t.id]: !s2.bulkTixSel[t.id] } })),
+        cbBg: st.bulkTixSel[t.id] ? NAVY : '#fff',
+        cbBd: st.bulkTixSel[t.id] ? NAVY : 'rgba(0,0,0,0.18)',
+        cbMark: st.bulkTixSel[t.id] ? '#fff' : 'transparent',
+        open: () => this.setState({ sec: 'ticketDetail', selId: t.id }),
+    });
+    const filters = [
+      { key: 'all', label: 'الكل' },
+      { key: 'received', label: 'تم الاستلام' },
+      { key: 'inprogress', label: 'جاري التنفيذ' },
+      { key: 'resolved', label: 'تم الحل' },
+    ];
+    const ticketFilters = filters.map(f => {
+      const on = st.filter === f.key;
+      return { label: f.label, pick: () => this.setState({ filter: f.key }),
+        bg: on ? NAVY : '#fff', c: on ? '#fff' : SLATE, bd: on ? NAVY : 'rgba(0,0,0,0.08)' };
+    });
+    const queueRows = st.tickets.filter(t => st.filter === 'all' || t.status === st.filter).map(decorate);
+    const homeTickets = st.tickets.slice(0, 5).map(decorate);
+    const tixSelIds = st.tickets.filter(t => st.bulkTixSel[t.id]).map(t => t.id);
+    const tixAllOn = queueRows.length > 0 && queueRows.every(t => st.bulkTixSel[t.id]);
+    const sel = st.tickets.find(t => t.id === st.selId) || st.tickets[0];
+    const updateSel = patch => this.setState(s2 => ({ tickets: s2.tickets.map(t => t.id === sel.id ? { ...t, ...patch } : t) }));
+    const techOptions = techs.map((tp, i) => {
+      const on = sel.tech === i;
+      return {
+        name: tp.name, spec: tp.spec, load: tp.load, initial: tp.name[0],
+        pick: () => { updateSel({ tech: i }); this.showToast('تم تعيين ' + tp.name + ' — وصله إشعار بالمهمة'); },
+        bg: on ? 'rgba(199,154,60,0.1)' : '#fff', bd: on ? GOLD : 'rgba(0,0,0,0.06)',
+        dotBd: on ? GOLD : '#C6CBD3', dot: on ? GOLD : 'transparent',
+      };
+    });
+    const stBtn = key => {
+      const on = sel.status === key;
+      return { bg: on ? meta[key].bg : '#fff', c: on ? meta[key].c : SLATE, bd: on ? meta[key].c : 'rgba(0,0,0,0.08)' };
+    };
+    const setStatus = key => () => { updateSel({ status: key }); this.showToast('تم تحديث الحالة إلى «' + meta[key].label + '» — وصل إشعار للساكن'); };
+    const addNote = () => {
+      const txt = st.noteDraft.trim();
+      if (!txt) return;
+      updateSel({ notes: [...sel.notes, { by: 'أنت (الإدارة)', time: 'الآن', text: txt }] });
+      this.setState({ noteDraft: '' });
+    };
+
+    // ---- KPIs & activity
+    const goSec = k => () => this.setState({ sec: k });
+    const kpis = [
+      { label: 'تذاكر مفتوحة', value: String(openCount), trend: '↓ 3 عن الأسبوع', trendC: GREEN, icon: icons.tickets, iconBg: 'rgba(199,154,60,0.14)', iconC: '#A87F2C', cta: 'افتح الطابور', act: goSec('tickets'), target: 'الهدف: أقل من 10', spark: [{ h: '70%', c: 'rgba(199,154,60,0.55)' }, { h: '85%', c: 'rgba(199,154,60,0.55)' }, { h: '62%', c: 'rgba(199,154,60,0.55)' }, { h: '78%', c: 'rgba(199,154,60,0.55)' }, { h: '55%', c: 'rgba(199,154,60,0.55)' }, { h: '45%', c: 'rgba(199,154,60,0.55)' }] },
+      { label: 'معدل التحصيل', value: '87%', trend: '↑ 4% عن يونيو', trendC: GREEN, icon: icons.collection, iconBg: 'rgba(63,166,107,0.13)', iconC: GREEN, cta: '14 حساب متأخر', act: goSec('collection'), target: 'الهدف: 92%', spark: [{ h: '62%', c: 'rgba(63,166,107,0.6)' }, { h: '68%', c: 'rgba(63,166,107,0.6)' }, { h: '71%', c: 'rgba(63,166,107,0.6)' }, { h: '76%', c: 'rgba(63,166,107,0.6)' }, { h: '83%', c: 'rgba(63,166,107,0.6)' }, { h: '87%', c: 'rgba(63,166,107,0.6)' }] },
+      { label: 'متوسط وقت الحل', value: '18 س', trend: '↓ 6 س عن يونيو', trendC: GREEN, icon: icons.sla, iconBg: 'rgba(31,59,87,0.09)', iconC: NAVY, cta: 'تتبّع الـSLA', act: goSec('sla'), target: 'الهدف: 24 ساعة', spark: [{ h: '95%', c: 'rgba(31,59,87,0.45)' }, { h: '88%', c: 'rgba(31,59,87,0.45)' }, { h: '80%', c: 'rgba(31,59,87,0.45)' }, { h: '72%', c: 'rgba(31,59,87,0.45)' }, { h: '66%', c: 'rgba(31,59,87,0.45)' }, { h: '58%', c: 'rgba(31,59,87,0.45)' }] },
+      { label: 'رضا السكان', value: '4.2', trend: '↑ 0.3 هذا الشهر', trendC: GREEN, icon: icons.sentiment, iconBg: 'rgba(228,103,90,0.11)', iconC: CORAL, cta: 'تحليل الرضا', act: goSec('sentiment'), target: 'الهدف: 4.5', spark: [{ h: '58%', c: 'rgba(228,103,90,0.5)' }, { h: '60%', c: 'rgba(228,103,90,0.5)' }, { h: '66%', c: 'rgba(228,103,90,0.5)' }, { h: '70%', c: 'rgba(228,103,90,0.5)' }, { h: '76%', c: 'rgba(228,103,90,0.5)' }, { h: '84%', c: 'rgba(228,103,90,0.5)' }] },
+    ];
+
+    // ---- A36 unit 360
+    const u360Defs = {
+      'فيلا 214': { owner: 'عبدالله العتيبي', model: 'إيجار شهري', balance: '7,400', score: '850', tier: 'ذهبي',
+        pay: [['فبر','ok'],['مار','ok'],['أبر','late'],['ماي','ok'],['يون','ok'],['يول','due']],
+        family: [
+          { name: 'سارة عبدالله', rel: 'الزوجة', perms: 'كل الصلاحيات', avBg: 'linear-gradient(160deg,#8A5A83,#5C3A57)' },
+          { name: 'يوسف عبدالله', rel: 'الابن — 16 سنة', perms: '3 من 6', avBg: 'linear-gradient(160deg,#3E7A5E,#2A5741)' },
+          { name: 'أم عبدالله', rel: 'الوالدة', perms: '3 من 6', avBg: 'linear-gradient(160deg,#8A6D3B,#5C4A2A)' },
+        ] },
+    };
+    const u360 = u360Defs[st.u360Unit] || u360Defs['فيلا 214'];
+    const payColors = { ok: '#3FA66B', late: '#C79A3C', due: '#E4675A' };
+    const payHeights = { ok: '86%', late: '62%', due: '40%' };
+    const u360Pay = u360.pay.map(([m, k]) => ({ m, c: payColors[k], h: payHeights[k] }));
+    const u360Tickets = st.tickets.slice(0, 4).map(decorate).map(t => ({ ...t, date: t.date || 'يوليو' }));
+    const u360Stats = [
+      { label: 'الرصيد المستحق', value: u360.balance, sub: 'استحقاق 25 يوليو', c: '#B24439' },
+      { label: 'التزام السداد', value: '5 من 6', sub: 'آخر 6 أشهر', c: '#2E7D51' },
+      { label: 'تذاكر مفتوحة', value: '2', sub: 'متوسط الحل 16 س', c: '#1F3B57' },
+      { label: 'نقاط الثقة', value: u360.score, sub: 'مستوى ' + u360.tier, c: '#A87F2C' },
+    ];
+    const u360Actions = [
+      { label: 'أرسل تذكير سداد', bg: '#C79A3C', c: '#fff', act: () => this.showToast('أُرسل تذكير سداد لـ' + u360.owner + ' — إشعار + رسالة') },
+      { label: 'افتح محادثة', bg: 'rgba(255,255,255,0.12)', c: '#fff', act: () => this.setState({ sec: 'inbox' }) },
+      { label: 'أنشئ تذكرة', bg: 'rgba(255,255,255,0.12)', c: '#fff', act: () => this.setState({ sec: 'tickets' }) },
+    ];
+    const u360Assets = [
+      { label: 'سيارة — ط ن ص 4821', meta: 'مسجّلة', icon: 'M3 13l2-5h14l2 5M3 13v5h2M21 13v5h-2M6 18a1.5 1.5 0 1 0 0-3M18 18a1.5 1.5 0 1 0 0-3' },
+      { label: 'تصريح زائر نشط', meta: 'ينتهي 6 م', icon: 'M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h3v3h-3zM20 17v3h-3' },
+      { label: 'قطة مسجّلة', meta: 'تطعيم محدّث', icon: 'M12 5l-3 3v6a3 3 0 0 0 6 0V8zM9 8L6 5v4M15 8l3-3v4' },
+    ];
+    const u360Usage = [
+      { label: 'طلبات المتجر', n: '14', w: '90%' },
+      { label: 'مقدمو خدمة', n: '3', w: '40%' },
+      { label: 'حجز مرافق', n: '6', w: '60%' },
+      { label: 'فعاليات', n: '2', w: '25%' },
+    ];
+    const u360Timeline = [
+      { text: 'سدّد 7,400 ر.س — إيصال #88412', time: 'منذ ساعة', dot: '#3FA66B' },
+      { text: 'أنشأ بلاغ صيانة تكييف #1051', time: '8:40 ص', dot: '#C79A3C' },
+      { text: 'حجز الجيم — 6 مساءً', time: 'أمس', dot: '#1F3B57' },
+      { text: 'أصدر تصريح زائر لمحمد الحارثي', time: 'أمس', dot: '#1F3B57' },
+    ];
+    const openUnit = unit => () => this.setState({ sec: 'unit360', u360Unit: unit });
+
+    // ---- A37 automation rules
+    const ruleDefs = [
+      { when: 'تذكرة كهرباء عاجلة', then: 'أسندها لعبدالعزيز الزهراني فورًا', stat: 'نفّذت 38 مرة هذا الشهر · متوسط بدء التنفيذ 11 دقيقة' },
+      { when: 'تأخّر السداد 3 أيام', then: 'أرسل تذكيرًا للساكن', stat: 'نفّذت 112 مرة · 71% سدّدوا خلال 48 ساعة' },
+      { when: 'تذكرة تجاوزت 20 ساعة', then: 'صعّدها لمشرف الصيانة', stat: 'معطّلة — التصعيد يدوي حاليًا' },
+      { when: 'اكتمال حجز مرفق', then: 'افتح قائمة انتظار وأبلغ المسجّلين', stat: 'نفّذت 24 مرة · 12 على قائمة الانتظار الآن' },
+    ];
+    const ruleRows = ruleDefs.map((r, i) => {
+      const on = !!st.rules[i];
+      return { ...r, swBg: on ? GREEN : '#C6CBD3', dot: on ? '23px' : '3px',
+        stLabel: on ? 'مفعّلة' : 'معطّلة',
+        stBg: on ? 'rgba(63,166,107,0.13)' : 'rgba(107,114,128,0.13)',
+        stC: on ? '#2E7D51' : '#6B7280',
+        toggle: () => { this.setState(s2 => ({ rules: { ...s2.rules, [i]: !on } })); this.showToast(on ? 'أُوقفت القاعدة — سيعود الإجراء يدويًا' : 'فُعّلت القاعدة — تعمل تلقائيًا من الآن'); } };
+    });
+    const rulesOnCount = String(ruleDefs.filter((r, i) => st.rules[i]).length);
+    const addRule = () => this.showToast('منشئ القواعد: شرط (فئة، أولوية، تأخير، مرفق) ← إجراء (إسناد، تذكير، تصعيد، إشعار)');
+
+    // ---- A38 team & audit
+    const staffDefs = [
+      { name: 'نورة القحطاني', role: 'مدير المجمع', last: 'الآن', ok: true },
+      { name: 'تركي العسيري', role: 'محاسب', last: 'منذ 20 دقيقة', ok: true },
+      { name: 'ماجد البقمي', role: 'مشرف صيانة', last: 'منذ ساعتين', ok: true },
+      { name: 'حسن الجهني', role: 'أمن البوابة', last: 'أمس', ok: false },
+    ];
+    const staffRows = staffDefs.map(x => ({ ...x, initial: x.name[0],
+      status: x.ok ? 'نشط' : 'بانتظار القبول',
+      stBg: x.ok ? 'rgba(63,166,107,0.13)' : 'rgba(199,154,60,0.16)',
+      stC: x.ok ? '#2E7D51' : '#A87F2C' }));
+    const inviteStaff = () => this.showToast('دعوة موظف: البريد + الدور + نطاق المناطق — يُصدر رابط تسجيل صالح 48 ساعة');
+    const roleDefs = ['مدير المجمع', 'محاسب', 'مشرف صيانة', 'أمن البوابة'];
+    const roleTabs = roleDefs.map((label, i) => ({ label, pick: () => this.setState({ teamRole: i }),
+      bg: st.teamRole === i ? NAVY : '#F7F4EE', c: st.teamRole === i ? '#fff' : SLATE }));
+    const permLabels = ['عرض لوحة التحكم', 'إدارة التذاكر والإسناد', 'التحصيل والمبالغ المستردة', 'فض النزاعات وتحرير الإسكرو', 'بث الإعلانات', 'إدارة الفريق والصلاحيات', 'سجل البوابة والتصاريح'];
+    const roleMatrix = [
+      [1,1,1,1,1,1,1],
+      [1,0,1,1,0,0,0],
+      [1,1,0,0,1,0,0],
+      [1,0,0,0,0,0,1],
+    ];
+    const rolePerms = permLabels.map((label, i) => {
+      const on = !!roleMatrix[st.teamRole][i];
+      return { label, bg: on ? GREEN : '#D8DCE2',
+        mark: on ? 'M4 12.5l5 5L20 6.5' : 'M6 6l12 12M18 6L6 18',
+        c: on ? '#1F3B57' : '#9AA1AC' };
+    });
+    const auditRows = [
+      { time: '10:42 ص', who: 'تركي العسيري', what: 'حرّر مبلغ إسكرو 150 ر.س لمقدم الخدمة عبدالعزيز الزهراني (نزاع #D-118)', tag: 'مالي', tagBg: 'rgba(228,103,90,0.11)', tagC: '#B24439' },
+      { time: '10:05 ص', who: 'نورة القحطاني', what: 'غيّرت حصة دعوات الضيوف من 5 إلى 10 شهريًا', tag: 'إعدادات', tagBg: 'rgba(31,59,87,0.08)', tagC: '#1F3B57' },
+      { time: '9:31 ص', who: 'ماجد البقمي', what: 'أسند التذكرة #1049 إلى فهد الشمري ورفع الأولوية لعاجلة', tag: 'تشغيل', tagBg: 'rgba(199,154,60,0.16)', tagC: '#A87F2C' },
+      { time: '9:12 ص', who: 'النظام (قاعدة أتمتة)', what: 'أرسل تذكير سداد لـ14 حسابًا متأخرًا', tag: 'أتمتة', tagBg: 'rgba(63,166,107,0.13)', tagC: '#2E7D51' },
+      { time: 'أمس', who: 'نورة القحطاني', what: 'اعتمدت إعلان فيلا 87 للبيع ونشرته في سوق العقارات', tag: 'محتوى', tagBg: 'rgba(61,42,92,0.12)', tagC: '#3D2A5C' },
+    ];
+
+    // ---- A39 reports
+    const repPeriodDefs = ['يوليو 2026', 'الربع الثاني', 'سنة 2026'];
+    const repPeriods = repPeriodDefs.map(label => {
+      const on = st.repPeriod === label;
+      return { label, pick: () => this.setState({ repPeriod: label }),
+        bg: on ? NAVY : '#fff', c: on ? '#fff' : SLATE, bd: on ? NAVY : 'rgba(0,0,0,0.1)' };
+    });
+    const mkRep = (title, desc, headline, unit, icon, iconBg, iconC) => ({
+      title, desc, headline, unit, icon, iconBg, iconC,
+      pdf: () => this.showToast('جُهّز «' + title + '» — ' + st.repPeriod + ' بصيغة PDF'),
+      xls: () => this.showToast('جُهّز «' + title + '» — ' + st.repPeriod + ' بصيغة Excel'),
+      sched: () => this.showToast('سيُرسل «' + title + '» تلقائيًا أول كل شهر لمجلس الملاك'),
+    });
+    const reportCards = [
+      mkRep('تقرير التحصيل', 'المحصّل والمتأخر لكل وحدة مع أعمار المديونية.', '87%', 'معدل التحصيل', 'M3 7h18v12H3zM3 11h18M6 15h4', 'rgba(63,166,107,0.13)', '#2E7D51'),
+      mkRep('تقرير الصيانة', 'التذاكر بالفئة والفني وزمن الحل مقابل الـSLA.', '18 س', 'متوسط الحل', 'M20.5 6.8a4.5 4.5 0 0 1-6 4.2l-7 7a2.1 2.1 0 0 1-3-3l7-7a4.5 4.5 0 0 1 5.7-5.6L14.6 5l2.4 2.4 2.6-2.6c.6.6.9 1.2.9 2z', 'rgba(199,154,60,0.14)', '#A87F2C'),
+      mkRep('تقرير رضا السكان', 'نتائج الاستبيان بالفئة مع الاتجاه الشهري.', '4.2 / 5', 'المؤشر العام', 'M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18zM8.5 10h.01M15.5 10h.01M8.5 14.5a5 5 0 0 0 7 0', 'rgba(228,103,90,0.11)', '#B24439'),
+      mkRep('تقرير إيراد السوق', 'العمولة بالفئة وحصة الإدارة من كل خدمة.', '18,420', 'ر.س هذا الشهر', 'M3 3v18h18M7 15l4-5 3 3 5-7', 'rgba(31,59,87,0.09)', '#1F3B57'),
+      mkRep('تقرير استخدام المرافق', 'الحجوزات بالمرفق والساعة ونسب الإشغال.', '78%', 'إشغال الذروة', 'M2 15.5c2 0 2-1.5 4-1.5s2 1.5 4 1.5 2-1.5 4-1.5 2 1.5 4 1.5M8 11V7a4 4 0 0 1 8 0', 'rgba(61,42,92,0.1)', '#3D2A5C'),
+      mkRep('تقرير مجلس الملاك', 'ملخّص شامل جاهز للعرض في الاجتماع الشهري.', '9 صفحات', 'جاهز للطباعة', 'M14 2H6v20h12V8zM14 2v6h6M9 13h6M9 17h4', 'rgba(199,154,60,0.14)', '#A87F2C'),
+    ];
+    const exportBoard = () => this.showToast('صُدّر تقرير مجلس الملاك — ' + st.repPeriod + ' (9 صفحات PDF)');
+
+    // ---- residents
+    const resDefs = [
+      { unit: 'فيلا 214', name: 'عبدالله العتيبي', phone: '050 123 4567', model: 'إيجار شهري', pay: 'سداد منتظم', ok: true, fam: [
+        { name: 'سارة عبدالله', rel: 'الزوجة', perms: 'كل الصلاحيات', avBg: 'linear-gradient(160deg,#8A5A83,#5C3A57)' },
+        { name: 'يوسف عبدالله', rel: 'الابن — 16 سنة', perms: '3 من 6 صلاحيات', avBg: 'linear-gradient(160deg,#3E7A5E,#2A5741)' },
+        { name: 'أم عبدالله', rel: 'الوالدة', perms: '3 من 6 صلاحيات', avBg: 'linear-gradient(160deg,#8A6D3B,#5C4A2A)' },
+      ] },
+      { unit: 'فيلا 96', name: 'منيرة الدوسري', phone: '011 8765 4321', model: 'تقسيط تمليك', pay: 'سداد منتظم', ok: true, fam: [
+        { name: 'سلطان الحربي', rel: 'الزوج', perms: 'كل الصلاحيات', avBg: 'linear-gradient(160deg,#27496F,#1F3B57)' },
+      ] },
+      { unit: 'فيلا 152', name: 'فهد الشمري', phone: '012 5551 0198', model: 'تقسيط تمليك', pay: 'متأخر 6 أيام', ok: false },
+      { unit: 'فيلا 88', name: 'نورة القحطاني', phone: '010 9273 6645', model: 'إيجار شهري', pay: 'سداد منتظم', ok: true },
+      { unit: 'فيلا 45', name: 'ماجد البقمي', phone: '011 3402 7789', model: 'إيجار شهري', pay: 'متأخر 12 يومًا', ok: false },
+      { unit: 'فيلا 180', name: 'عمر الفولي', phone: '012 6688 1023', model: 'تقسيط تمليك', pay: 'سداد منتظم', ok: true },
+      { unit: 'فيلا 12', name: 'لطيفة الزهراني', phone: '010 4419 8850', model: 'إيجار شهري', pay: 'سداد منتظم', ok: true },
+    ];
+    const q = st.resQuery.trim();
+    const residents = resDefs.filter(r => !q || r.name.includes(q) || r.unit.includes(q)).map((r, ri) => ({
+      open360: openUnit(r.unit),
+      famList: (r.fam || []).map(f => ({ ...f, initial: f.name[0] })),
+      famLabel: r.fam ? '👨‍👩‍👦 ' + (r.fam.length + 1) : '1',
+      famBg: r.fam ? 'rgba(31,59,87,0.08)' : 'transparent',
+      famC: r.fam ? '#1F3B57' : '#9AA1AC',
+      famCursor: r.fam ? 'pointer' : 'default',
+      famOpen: r.fam && st.openFamRow === r.unit,
+      toggleFam: r.fam ? () => this.setState(s2 => ({ openFamRow: s2.openFamRow === r.unit ? null : r.unit })) : () => {},
+      ...r, initial: r.name[0],
+      payBg: r.ok ? 'rgba(63,166,107,0.13)' : 'rgba(228,103,90,0.13)',
+      payC: r.ok ? '#2E7D51' : CORAL,
+    }));
+
+    // ---- broadcast
+    const targets = ['كل السكان', 'الحي الشرقي', 'حي الياسمين'];
+    const bcTargets = targets.map((label, i) => {
+      const on = st.bcTarget === i;
+      return { label, pick: () => this.setState({ bcTarget: i }),
+        bg: on ? NAVY : '#fff', c: on ? '#fff' : SLATE, bd: on ? NAVY : 'rgba(0,0,0,0.08)' };
+    });
+    const pushBc = timeLabel => {
+      const title = st.bcTitle.trim() || 'إعلان بدون عنوان';
+      const reach = st.bcTarget === 0 ? 712 : st.bcTarget === 1 ? 184 : 226;
+      this.setState(s2 => ({
+        bcSent: [{ title, target: targets[st.bcTarget], reach, time: timeLabel }, ...s2.bcSent],
+        bcTitle: '', bcBody: '',
+      }));
+    };
+    const sendBc = () => { pushBc('الآن'); this.showToast('تم إرسال الإعلان — وصل إشعار للسكان المستهدفين'); };
+    const scheduleBc = () => { pushBc('مجدول — غدًا 9 ص'); this.showToast('تمت جدولة الإعلان ليوم غد 9 صباحًا'); };
+
+    // ---- vendors
+    const maintVendors = [
+      { name: 'النور للكهرباء', spec: 'كهرباء وإنارة', rating: '4.7', jobs: '86', jobsLabel: 'مهمة منجزة', commission: '—', status: 'نشط', ok: true, phone: '0100 442 8871' },
+      { name: 'أكوا فيكس', spec: 'سباكة وصرف', rating: '4.5', jobs: '64', jobsLabel: 'مهمة منجزة', commission: '—', status: 'نشط', ok: true, phone: '0111 208 5540' },
+      { name: 'مصاعد الصفوة', spec: 'مصاعد وبوابات', rating: '4.2', jobs: '17', jobsLabel: 'مهمة منجزة', commission: '—', status: 'قيد المراجعة', ok: false, phone: '0122 903 1174' },
+    ];
+    const marketVendors = [
+      { name: 'كلين هوم', spec: 'تنظيف الوحدات', rating: '4.8', jobs: '126', jobsLabel: 'حجزًا', commission: '12%', status: 'نشط', ok: true, phone: '0100 771 2934' },
+      { name: 'كول تك', spec: 'صيانة تكييف', rating: '4.6', jobs: '89', jobsLabel: 'حجزًا', commission: '10%', status: 'نشط', ok: true, phone: '0115 620 4483' },
+      { name: 'بيست كنترول السعودية', spec: 'مكافحة حشرات', rating: '4.7', jobs: '64', jobsLabel: 'حجزًا', commission: '12%', status: 'نشط', ok: true, phone: '0109 348 5512' },
+    ];
+    const vendorCards = (st.vendorTab === 'maint' ? maintVendors : marketVendors).map(v => ({
+      ...v, initial: v.name[0],
+      stBg: v.ok ? 'rgba(63,166,107,0.13)' : 'rgba(199,154,60,0.16)',
+      stC: v.ok ? '#2E7D51' : '#A87F2C',
+    }));
+    // ---- A20/A21 provider marketplace (addendum)
+    const providerDirDefs = [
+      { name: 'عبدالعزيز الزهراني', cat: 'سباكة', zone: 'حي الياسمين', rating: '4.8', jobs: 62, ok: true },
+      { name: 'فهد الشمري', cat: 'سباكة', zone: 'الحي الشرقي', rating: '4.6', jobs: 41, ok: true },
+      { name: 'مشاري القحطاني', cat: 'صيانة تكييف', zone: 'حي الياسمين', rating: '4.9', jobs: 28, ok: true },
+      { name: 'شركة النور', cat: 'كهرباء', zone: 'كل المناطق', rating: '4.4', jobs: 19, ok: false },
+    ];
+    const providerDirectory = providerDirDefs.map(p => ({
+      ...p, initial: p.name[0],
+      status: p.ok ? 'نشط' : 'قيد المراجعة',
+      stBg: p.ok ? 'rgba(63,166,107,0.13)' : 'rgba(199,154,60,0.16)',
+      stC: p.ok ? '#2E7D51' : '#A87F2C',
+    }));
+    const obCatDefs = ['سباكة', 'كهرباء', 'صيانة تكييف', 'تنظيف', 'تدريب رياضي'];
+    const obCats = obCatDefs.map(label => {
+      const on = st.obCat === label;
+      return { label, pick: () => this.setState({ obCat: label }),
+        bg: on ? 'rgba(199,154,60,0.14)' : '#fff', c: on ? '#A87F2C' : SLATE, bd: on ? GOLD : 'rgba(0,0,0,0.08)' };
+    });
+    const saveOnboard = () => { this.setState({ obDone: true }); this.showToast('تم تعيين ' + (st.obName.trim() || 'مقدم الخدمة') + ' — تم إصدار بيانات دخول تطبيق مقدم الخدمة'); };
+
+    // ---- A31 bill aggregator settings
+    const billAggDefs = [
+      { cat: 'كهرباء', icon: 'M13 2L5 13h5l-1 9 8-11h-5z', providers: 'الشركة السعودية للكهرباء · حساب المشترك', txns: 486 },
+      { cat: 'مياه', icon: 'M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z', providers: 'شركة المياه الوطنية · الرياض', txns: 342 },
+      { cat: 'غاز', icon: 'M12 3s5 5 5 9.5a5 5 0 0 1-10 0C7 8 12 3 12 3zM12 21v-3', providers: 'غاز المدن · موزّعو الأسطوانات المعتمدون', txns: 218 },
+      { cat: 'إنترنت واتصالات', icon: 'M2 9a15 15 0 0 1 20 0M5.5 12.5a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0M12 19.5h.01', providers: 'STC · Mobily · Zain · Salam', txns: 359 },
+      { cat: 'أخرى', icon: 'M14 2H6v20h12V8zM14 2v6h6M9 13h6M9 17h6', providers: 'اشتراكات أندية · تأمين — قيد التفعيل', txns: 0 },
+    ];
+    const billAggRows = billAggDefs.map((b, i) => {
+      const on = !!st.billAggOn[i];
+      return { ...b, txns: String(b.txns),
+        status: on ? 'مفعّلة' : 'موقوفة',
+        stBg: on ? 'rgba(63,166,107,0.13)' : 'rgba(107,114,128,0.13)',
+        stC: on ? '#2E7D51' : '#6B7280',
+        toggle: () => { this.setState(s2 => ({ billAggOn: { ...s2.billAggOn, [i]: !s2.billAggOn[i] } })); this.showToast((on ? 'أوقفت' : 'فُعّلت') + ' فئة «' + b.cat + '» لكل السكان'); },
+      };
+    });
+
+    // ---- A28 real-estate moderation
+    const reModDefs = [
+      { title: 'فيلا 214 — للإيجار (غرفة الضيوف الملحقة)', type: 'rent', owner: 'عبدالله العتيبي — فيلا 214', price: '12,000 ر.س / شهر', date: 'اليوم' },
+      { title: 'شقة 12ب — البوابة الشرقية', type: 'sale', owner: 'فهد الشمري — شقة 12ب', price: '4.2M ر.س', date: 'أمس' },
+      { title: 'فيلا 87 — حي الياسمين', type: 'sale', owner: 'منيرة الدوسري — فيلا 87', price: '9.4M ر.س', date: 'منذ 3 أيام' },
+    ];
+    const reModList = reModDefs.map((r, i) => {
+      const state = st.reModState[i];
+      const meta = { pending: ['بانتظار المراجعة', 'rgba(199,154,60,0.16)', '#A87F2C'], approved: ['منشور ✓', 'rgba(63,166,107,0.13)', '#2E7D51'], rejected: ['مرفوض', 'rgba(228,103,90,0.13)', '#B24439'] }[state];
+      return {
+        ...r, typeLabel: r.type === 'sale' ? 'للبيع' : 'للإيجار',
+        status: meta[0], stBg: meta[1], stC: meta[2],
+        pending: state === 'pending',
+        approve: () => { this.setState(s2 => ({ reModState: { ...s2.reModState, [i]: 'approved' } })); this.showToast('تم نشر الإعلان — وصل إشعار للمعلن'); },
+        reject: () => { this.setState(s2 => ({ reModState: { ...s2.reModState, [i]: 'rejected' } })); this.showToast('تم رفض الإعلان مع إخطار المعلن بالسبب'); },
+      };
+    });
+
+    // ---- A29/A30 stores directory
+    const storesTableDefs = [
+      { name: 'مطعم بيت الجيران', emoji: '🍽️', logoBg: 'rgba(199,154,60,0.15)', kind: 'مطعم', rating: '4.7', orders: 148, commission: '4,120', ok: true },
+      { name: 'بيتزا المدينة', emoji: '🍕', logoBg: 'rgba(228,103,90,0.13)', kind: 'مطعم', rating: '4.5', orders: 96, commission: '2,660', ok: true },
+      { name: 'صيدلية الشفاء', emoji: '💊', logoBg: 'rgba(31,59,87,0.1)', kind: 'صيدلية', rating: '4.9', orders: 210, commission: '3,480', ok: true },
+      { name: 'عصائر النخيل', emoji: '🥤', logoBg: 'rgba(63,166,107,0.12)', kind: 'مطعم', rating: '4.8', orders: 12, commission: '190', ok: false },
+    ];
+    const storesTable = storesTableDefs.map(s => ({
+      ...s,
+      status: s.ok ? 'نشط' : 'قيد الاعتماد',
+      stBg: s.ok ? 'rgba(63,166,107,0.13)' : 'rgba(199,154,60,0.16)',
+      stC: s.ok ? '#2E7D51' : '#A87F2C',
+    }));
+    const addStore = () => this.setState(s2 => ({ storeAddedShown: !s2.storeAddedShown }));
+
+    // ---- مركز القيادة: بحث شامل، إجراءات سريعة، صندوق قرارات، تنبيهات
+    const quickActions = [
+      { label: 'بث إعلان', icon: 'M3 11v2a1 1 0 0 0 1 1h3l5 4V6L7 10H4a1 1 0 0 0-1 1zM16 8a5 5 0 0 1 0 8', bg: '#1F3B57', c: '#fff', act: () => this.setState({ sec: 'broadcast' }) },
+      { label: 'تذكير تحصيل', icon: 'M6 8a6 6 0 1 1 12 0c0 5 2 6 2 6H4s2-1 2-6M10 20h4', bg: 'rgba(199,154,60,0.14)', c: '#A87F2C', act: () => this.showToast('أُرسل تذكير سداد لـ14 حسابًا متأخرًا عبر التطبيق والرسائل') },
+      { label: 'استدعاء فني', icon: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-2.6z', bg: 'rgba(63,166,107,0.12)', c: '#2E7D51', act: () => this.setState({ sec: 'vendors', vendorTab: 'providers' }) },
+    ];
+
+    const cmdIcons = {
+      unit: 'M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z',
+      ticket: 'M14 2H6v20h12V8zM14 2v6h6M9 13h6M9 17h6',
+      vendor: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 0 0 5.4-5.4l-2.4 2.4-2.6-2.6z',
+      store: 'M4 8h16M4 8l1-4h14l1 4M4 8v13h16V8M9 21v-7h6v7',
+    };
+    const cmdIndex = [
+      ...resDefs.map(r => ({ kind: 'ساكن', icon: cmdIcons.unit, title: r.name, meta: r.unit + ' · ' + r.pay, act: () => this.setState({ sec: 'residents', resQuery: r.unit, cmdQuery: '' }) })),
+      ...st.tickets.slice(0, 8).map(t => ({ kind: 'تذكرة', icon: cmdIcons.ticket, title: '#' + t.id + ' — ' + t.title, meta: t.unit, act: () => this.setState({ sec: 'ticketDetail', selId: t.id, cmdQuery: '' }) })),
+      ...providerDirDefs.map(p => ({ kind: 'مقدم خدمة', icon: cmdIcons.vendor, title: p.name, meta: p.cat + ' · ★ ' + p.rating, act: () => this.setState({ sec: 'vendors', vendorTab: 'providers', cmdQuery: '' }) })),
+      ...storesTableDefs.map(x => ({ kind: 'متجر', icon: cmdIcons.store, title: x.name, meta: x.kind + ' · ' + x.orders + ' طلب', act: () => this.setState({ sec: 'storesDir', cmdQuery: '' }) })),
+    ];
+    const cq = (st.cmdQuery || '').trim();
+    const cmdResults = cq ? cmdIndex.filter(x => (x.title + ' ' + x.meta).includes(cq)).slice(0, 6) : [];
+
+    const inboxDefs = [
+      { key: 'rx', title: 'طلب صيدلية بروشتة — بانتظار مراجعة الإدارة', meta: 'فيلا 214 · صيدلية الشفاء · 166 ر.س', icon: cmdIcons.store, iconBg: 'rgba(31,59,87,0.08)', iconC: '#1F3B57',
+        approveLabel: 'اعتماد', rejectLabel: 'رفض', okMsg: 'اعتُمد الطلب — أُخطرت الصيدلية', noMsg: 'رُفض الطلب — استُرد مبلغ الساكن' },
+      { key: 'listing', title: 'إعلان عقاري جديد بانتظار النشر', meta: 'فيلا 214 — للإيجار · 12,000 ر.س/شهر', icon: cmdIcons.unit, iconBg: 'rgba(199,154,60,0.14)', iconC: '#A87F2C',
+        approveLabel: 'انشر', rejectLabel: 'ارفض', okMsg: 'نُشر الإعلان — وصل إشعار للمعلن', noMsg: 'رُفض الإعلان مع إخطار المعلن' },
+      { key: 'dispute', title: 'نزاع مفتوح — المبلغ مجمّد في الإسكرو', meta: 'تسريب مياه · 150 ر.س · عبدالله العتيبي', icon: 'M12 9v4M12 17h.01M10.3 3.9L2.6 18a1.5 1.5 0 0 0 1.3 2.2h16.2a1.5 1.5 0 0 0 1.3-2.2L13.7 3.9a1.5 1.5 0 0 0-2.6 0z', iconBg: 'rgba(228,103,90,0.11)', iconC: '#B24439',
+        approveLabel: 'ادفع للمقدم', rejectLabel: 'استرد للساكن', okMsg: 'حُوّل المبلغ لمقدم الخدمة', noMsg: 'استُرد المبلغ كاملًا للساكن' },
+      { key: 'event', title: 'فعالية اقترحها ساكن — تحتاج حجز مرفق', meta: 'ورشة رسم للأطفال · قاعة الأنشطة · 20 مكانًا', icon: 'M8 2v4M16 2v4M3 10h18M5 6h14v15H5z', iconBg: 'rgba(61,42,92,0.1)', iconC: '#3D2A5C',
+        approveLabel: 'اعتمد', rejectLabel: 'ارفض', okMsg: 'اعتُمدت الفعالية وحُجزت القاعة', noMsg: 'رُفضت الفعالية مع إخطار المنظّم' },
+      { key: 'provider', title: 'مقدم خدمة جديد — مستندات مكتملة', meta: 'شركة النور للصيانة · كهرباء', icon: cmdIcons.vendor, iconBg: 'rgba(63,166,107,0.12)', iconC: '#2E7D51',
+        approveLabel: 'فعّل', rejectLabel: 'أجّل', okMsg: 'فُعّل حساب شركة النور — أُصدرت بيانات الدخول', noMsg: 'أُجّل الاعتماد لحين استكمال المراجعة' },
+    ];
+    const decisionInbox = inboxDefs.map(d => {
+      const state = st.inboxDone[d.key];
+      const set = (v, msg) => () => { this.setState(s2 => ({ inboxDone: { ...s2.inboxDone, [d.key]: v } })); this.showToast(msg); };
+      return { ...d, pending: !state, done: !!state,
+        doneLabel: state === 'ok' ? 'تم ✓' : 'أُغلق',
+        approve: set('ok', d.okMsg), reject: set('no', d.noMsg) };
+    });
+    const pendingCount = decisionInbox.filter(d => d.pending).length;
+
+    const opsAlerts = [
+      { text: '3 تذاكر تجاوزت مهلة الـSLA (24 ساعة)', dot: '#E4675A', act: () => this.setState({ sec: 'sla' }) },
+      { text: '14 حسابًا متأخرًا — 46,800 ر.س مستحقة', dot: '#C79A3C', act: () => this.setState({ sec: 'collection' }) },
+      { text: 'أكاديمية السباحة مكتملة — 12 على قائمة الانتظار', dot: '#C79A3C', act: () => this.setState({ sec: 'amen' }) },
+      { text: 'مؤشر رضا «التواصل» سلبي هذا الشهر', dot: '#E4675A', act: () => this.setState({ sec: 'sentiment' }) },
+    ];
+    const activity = [
+      { text: 'عبدالله العتيبي (فيلا 214) سدّد 7,400 ر.س — إيصال #88412', time: 'منذ ساعة' },
+      { text: 'بلاغ جديد #1051 — صيانة تكييف، فيلا 214', time: '8:40 ص' },
+      { text: 'تصريح زائر جديد صادر من فيلا 96', time: 'أمس' },
+      { text: 'حجز الجيم اكتمل لموعد 6 مساءً', time: 'أمس' },
+      { text: 'بلاغ مفقودات جديد بانتظار المراجعة', time: 'أمس' },
+    ];
+
+
+    // ---- A27 sourcing settings
+    const sourcingCats = ['صيانة تكييف', 'تنظيف', 'كهرباء', 'سباكة', 'تدريب رياضي'];
+    const sourcingRows = sourcingCats.map(cat => {
+      const out = st.sourcing[cat] === 'out';
+      return {
+        cat,
+        setInHouse: () => this.setState(s2 => ({ sourcing: { ...s2.sourcing, [cat]: 'in' } })),
+        setOutsourced: () => { this.setState(s2 => ({ sourcing: { ...s2.sourcing, [cat]: 'out' } })); this.showToast('تم تفعيل السوق الفوري لفئة «' + cat + '»'); },
+        inBg: !out ? NAVY : '#fff', inC: !out ? '#fff' : SLATE, inBd: !out ? NAVY : 'rgba(0,0,0,0.08)',
+        outBg: out ? 'rgba(63,166,107,0.13)' : '#fff', outC: out ? '#2E7D51' : SLATE, outBd: out ? GREEN : 'rgba(0,0,0,0.08)',
+      };
+    });
+
+    // ---- A25 revenue analytics
+    const revenueByCat = [
+      { cat: 'صيانة تكييف', val: '6,840', w: '92%' },
+      { cat: 'تنظيف', val: '5,120', w: '70%' },
+      { cat: 'سباكة', val: '3,910', w: '53%' },
+      { cat: 'تدريب رياضي', val: '1,850', w: '25%' },
+      { cat: 'مكافحة حشرات', val: '700', w: '10%' },
+    ];
+
+    // ---- A24 verification & vetting
+    const vettingDefs = [
+      { name: 'عبدالعزيز الزهراني', cat: 'سباكة — أكوا فيكس', id: true, cert: true, bg: false },
+      { name: 'مشاري القحطاني', cat: 'صيانة تكييف — كول تك', id: true, cert: true, bg: true },
+      { name: 'سارة الدوسري', cat: 'تنظيف — كلين هوم', id: true, cert: false, bg: false },
+    ];
+    const vetting = vettingDefs.map((v, i) => {
+      const state = st.vettingState[i];
+      const ready = v.id && v.cert;
+      const active = state === 'active';
+      return {
+        name: v.name, cat: v.cat, initial: v.name[0],
+        idBg: v.id ? GREEN : '#D8DCE2', certBg: v.cert ? GREEN : '#D8DCE2', bgBg: v.bg ? GREEN : '#D8DCE2',
+        activate: (ready && !active) ? () => { this.setState(s2 => ({ vettingState: { ...s2.vettingState, [i]: 'active' } })); this.showToast('تم تفعيل حساب ' + v.name); } : () => {},
+        actLabel: active ? 'مُفعّل ✓' : 'تفعيل الحساب',
+        actBg: active ? GREEN : (ready ? NAVY : '#C6CBD3'),
+        cursor: (ready && !active) ? 'pointer' : 'default',
+        op: (ready || active) ? 1 : 0.6,
+      };
+    });
+
+    // ---- A26 disputes
+    const disputeDefs = [
+      { title: 'تسريب مياه — سباكة', by: 'عبدالله العتيبي (فيلا 214)', reason: 'لم يكتمل العمل', date: 'اليوم', amount: '150' },
+      { title: 'تنظيف شامل للوحدة', by: 'فهد الشمري (فيلا 152)', reason: 'جودة رديئة', date: 'أمس', amount: '650' },
+      { title: 'صيانة تكييف', by: 'منيرة الدوسري (فيلا 96)', reason: 'لم يحضر مقدم الخدمة', date: 'منذ يومين', amount: '350' },
+    ];
+    const disputesList = disputeDefs.map((d, i) => {
+      const state = st.disputesState[i];
+      const resolve = label => () => { this.setState(s2 => ({ disputesState: { ...s2.disputesState, [i]: label } })); this.showToast('تم حل النزاع — ' + label); };
+      return {
+        ...d, open: state === 'open', resolved: state !== 'open',
+        resolution: state === 'refund' ? 'استرداد كامل للساكن' : state === 'partial' ? 'دفع جزئي' : state === 'release' ? 'دفع كامل للمقدم' : 'تمت المراجعة مسبقًا',
+        refund: resolve('refund'), partial: resolve('partial'), release: resolve('release'),
+      };
+    });
+
+    // ---- amenities
+    const amenDefs = [
+      { key: 'gym', name: 'الجيم', hours: '6 ص – 11 م', booked: 9 },
+      { key: 'pool', name: 'المسبح', hours: '10 ص – 8 م', booked: 14 },
+      { key: 'club', name: 'النادي الاجتماعي', hours: '9 ص – 12 م', booked: 22 },
+      { key: 'kids', name: 'منطقة الأطفال', hours: '9 ص – 9 م', booked: 6 },
+    ];
+    const amenAdmin = amenDefs.map(a => {
+      const cap = st.caps[a.key];
+      const total = cap * 4;
+      const pct = Math.min(100, Math.round((a.booked / total) * 100));
+      return {
+        ...a, cap, total, pctW: pct + '%',
+        inc: () => this.setState(s2 => ({ caps: { ...s2.caps, [a.key]: s2.caps[a.key] + 1 } })),
+        dec: () => this.setState(s2 => ({ caps: { ...s2.caps, [a.key]: Math.max(1, s2.caps[a.key] - 1) } })),
+      };
+    });
+
+    // ---- collection
+    const overdue = [
+      { unit: 'فيلا 45', name: 'ماجد البقمي', amount: '7,400', days: 12 },
+      { unit: 'فيلا 152', name: 'فهد الشمري', amount: '148,200', days: 6 },
+      { unit: 'شقة 3-14', name: 'العنود الرشيد', amount: '3,050', days: 9 },
+      { unit: 'فيلا 201', name: 'بندر المالكي', amount: '7,400', days: 21 },
+      { unit: 'شقة 7-02', name: 'ريم الشهري', amount: '3,050', days: 4 },
+    ].map(o => ({
+      ...o,
+      dBg: o.days > 10 ? 'rgba(228,103,90,0.13)' : 'rgba(199,154,60,0.16)',
+      dC: o.days > 10 ? CORAL : '#A87F2C',
+      remind: () => this.showToast('تم إرسال تذكير سداد إلى ' + o.name),
+      open360: openUnit(o.unit),
+      toggle: () => this.setState(s2 => ({ bulkSel: { ...s2.bulkSel, [o.unit]: !s2.bulkSel[o.unit] } })),
+      cbBg: st.bulkSel[o.unit] ? NAVY : '#fff',
+      cbBd: st.bulkSel[o.unit] ? NAVY : 'rgba(0,0,0,0.18)',
+      cbMark: st.bulkSel[o.unit] ? '#fff' : 'transparent',
+    }));
+    const bulkKeys = overdue.filter(o => st.bulkSel[o.unit]);
+    const bulkAllOn = bulkKeys.length === overdue.length && overdue.length > 0;
+    const bulkSum = bulkKeys.reduce((a, o) => a + parseInt(String(o.amount).replace(/,/g, ''), 10), 0);
+
+    // ---- SLA
+    const slaRows = [
+      { cat: 'سباكة', actual: 14, target: 24 },
+      { cat: 'كهرباء', actual: 11, target: 24 },
+      { cat: 'تكييف', actual: 31, target: 24 },
+      { cat: 'نجارة', actual: 20, target: 36 },
+      { cat: 'مناطق مشتركة', actual: 52, target: 48 },
+    ].map(s => {
+      const max = 60;
+      const breach = s.actual > s.target;
+      return {
+        ...s, breach, ok: !breach,
+        barW: Math.round((s.actual / max) * 100) + '%',
+        barC: breach ? CORAL : GREEN,
+        targetX: Math.round((s.target / max) * 100) + '%',
+      };
+    });
+
+    // ---- lost moderation
+    const lostMod = st.lostMod.map((l, i) => ({
+      title: l.title, loc: l.loc, by: l.by, date: l.date,
+      pill: l.kind === 'found' ? 'وُجد' : 'مفقود',
+      pillBg: l.kind === 'found' ? 'rgba(63,166,107,0.13)' : 'rgba(228,103,90,0.13)',
+      pillC: l.kind === 'found' ? '#2E7D51' : CORAL,
+      pending: l.state === 'pending', approved: l.state === 'approved',
+      approve: () => { this.setState(s2 => ({ lostMod: s2.lostMod.map((x, xi) => xi === i ? { ...x, state: 'approved' } : x) })); this.showToast('تم اعتماد البلاغ ونشره للسكان'); },
+      remove: () => { this.setState(s2 => ({ lostMod: s2.lostMod.filter((x, xi) => xi !== i) })); this.showToast('تمت إزالة البلاغ'); },
+    }));
+
+    // ---- gate log
+    const gateLog = [
+      { name: 'مشاري الحمود (زائر)', unit: 'فيلا 96', in: 'اليوم 5:04 م', out: '—', status: 'داخل الكمبوند', inC: true },
+      { name: 'شركة كلين هوم', unit: 'فيلا 88', in: 'اليوم 1:12 م', out: 'اليوم 4:50 م', status: 'غادر', inC: false },
+      { name: 'أسرة د. حاتم الشريف (3 أفراد)', unit: 'فيلا 214', in: 'أمس 7:30 م', out: 'أمس 11:15 م', status: 'غادر', inC: false },
+      { name: 'مندوب توصيل', unit: 'شقة 3-14', in: 'أمس 2:20 م', out: 'أمس 2:35 م', status: 'غادر', inC: false },
+      { name: 'كابتن عمر (مدرب)', unit: 'النادي', in: 'أمس 9:00 ص', out: 'أمس 12:00 م', status: 'غادر', inC: false },
+    ].map(g => ({ ...g, pillBg: g.inC ? 'rgba(63,166,107,0.13)' : 'rgba(107,114,128,0.1)', pillC: g.inC ? '#2E7D51' : SLATE }));
+
+    // ---- sentiment
+    const sentiments = [
+      { cat: 'الصيانة', count: 45, pos: true, pct: 82, note: 'أشاد السكان بسرعة الاستجابة' },
+      { cat: 'الأمن', count: 41, pos: true, pct: 88, note: 'ثقة عالية في فريق البوابات' },
+      { cat: 'التواصل', count: 38, pos: false, pct: 34, note: 'بلاغات من تأخر الرد على الرسائل' },
+      { cat: 'النظافة', count: 36, pos: true, pct: 71, note: 'تحسن ملحوظ بعد تغيير المورد' },
+      { cat: 'المرافق', count: 29, pos: true, pct: 76, note: 'طلبات لزيادة مواعيد المسبح' },
+      { cat: 'السداد', count: 25, pos: false, pct: 46, note: 'طلب تفعيل التقسيط على الرسوم' },
+    ].map(s => ({
+      ...s,
+      pill: s.pos ? 'إيجابي' : 'سلبي',
+      pillBg: s.pos ? 'rgba(63,166,107,0.13)' : 'rgba(228,103,90,0.13)',
+      pillC: s.pos ? '#2E7D51' : CORAL,
+      barW: s.pct + '%', barC: s.pos ? GREEN : CORAL,
+    }));
+
+    // ---- scoring
+    const scoreRules = st.rules.map((r, i) => ({
+      label: r.label,
+      val: (r.val > 0 ? '+' : '') + r.val,
+      c: r.val > 0 ? GREEN : CORAL,
+      inc: () => this.setState(s2 => ({ rules: s2.rules.map((x, xi) => xi === i ? { ...x, val: x.val + 5 } : x) })),
+      dec: () => this.setState(s2 => ({ rules: s2.rules.map((x, xi) => xi === i ? { ...x, val: x.val - 5 } : x) })),
+    }));
+    const scoreDist = [
+      { label: 'ذهبي (800+)', count: 212, w: '30%', c: GOLD },
+      { label: 'فضي (600–799)', count: 328, w: '46%', c: '#9AA1AC' },
+      { label: 'برونزي (400–599)', count: 141, w: '20%', c: '#Bohnen' },
+      { label: 'تحت المراجعة (<400)', count: 31, w: '4%', c: CORAL },
+    ];
+    scoreDist[2].c = '#C88A5B';
+
+    // ---- inbox
+    const threadDefs = [
+      { name: 'عبدالله العتيبي', unit: 'فيلا 214', unread: false },
+      { name: 'نورة القحطاني', unit: 'فيلا 88', unread: true },
+      { name: 'لطيفة الزهراني', unit: 'فيلا 12', unread: true },
+    ];
+    const threads = threadDefs.map((t, i) => {
+      const msgs = st.threadMsgs[i] || [];
+      const last = msgs.length ? msgs[msgs.length - 1].text : '';
+      const on = st.threadIdx === i;
+      return { ...t, initial: t.name[0], last,
+        pick: () => this.setState({ threadIdx: i }),
+        bg: on ? 'rgba(199,154,60,0.12)' : 'transparent' };
+    });
+    const curThread = threadDefs[st.threadIdx];
+    const inboxMsgs = (st.threadMsgs[st.threadIdx] || []).map(m => ({
+      text: m.text,
+      align: m.me ? 'flex-end' : 'flex-start',
+      bg: m.me ? NAVY : '#F1EDE4',
+      color: m.me ? '#fff' : NAVY,
+      radius: m.me ? '14px 14px 4px 14px' : '14px 14px 14px 4px',
+    }));
+    const sendInbox = () => {
+      const txt = st.inboxDraft.trim();
+      if (!txt) return;
+      this.setState(s2 => ({
+        threadMsgs: { ...s2.threadMsgs, [st.threadIdx]: [...(s2.threadMsgs[st.threadIdx] || []), { me: true, text: txt }] },
+        inboxDraft: '',
+      }));
+    };
+    const canned = [
+      'تم استلام طلبك وجارٍ المتابعة',
+      'الفني في الطريق إليك',
+      'تم الحل — نرجو تقييم الخدمة',
+    ].map(label => ({ label, use: () => this.setState({ inboxDraft: label }) }));
+
+    // ---- portfolio
+    const portfolioDefs = [
+      { name: 'حدائق الأندلس', city: 'القاهرة الجديدة', units: 712, collection: '87%', open: '12', csat: '4.2' },
+      { name: 'قرطبة هيلز', city: 'مدينتي', units: 1250, collection: '91%', open: '28', csat: '4.4' },
+      { name: 'النخيل ريزيدنس', city: '6 أكتوبر', units: 486, collection: '78%', open: '9', csat: '3.9' },
+    ];
+    const portfolio = portfolioDefs.map((p, i) => {
+      const active = st.compoundIdx === i;
+      return {
+        ...p, active,
+        bg: active ? 'linear-gradient(160deg,#27496F,#1F3B57)' : '#fff',
+        bd: active ? '#C79A3C' : 'transparent',
+        titleC: active ? '#fff' : NAVY,
+        subC: active ? 'rgba(255,255,255,0.65)' : SLATE,
+        btnBg: active ? 'rgba(255,255,255,0.14)' : NAVY,
+        btnC: '#fff',
+        btnLabel: active ? 'أنت تديره الآن' : 'التبديل إليه',
+        switchTo: active ? () => {} : () => { this.setState({ compoundIdx: Math.min(i, 1) }); this.showToast('تم التبديل إلى ' + p.name); },
+      };
+    });
+    const portfolioBars = [
+      { name: 'قرطبة هيلز', val: '91%', w: '91%', c: GREEN },
+      { name: 'حدائق الأندلس', val: '87%', w: '87%', c: GOLD },
+      { name: 'النخيل ريزيدنس', val: '78%', w: '78%', c: CORAL },
+    ];
+
+    // ---- predictive
+    const assets = [
+      { name: 'مضخة المياه الرئيسية — رقم 2', loc: 'غرفة المضخات', last: 'منذ 14 شهرًا', risk: 'مرتفع 84%', high: true },
+      { name: 'مصعد البرج B', loc: 'الحي الشرقي', last: 'منذ 9 أشهر', risk: 'مرتفع 71%', high: true },
+      { name: 'تشيلر النادي الاجتماعي', loc: 'النادي', last: 'منذ 7 أشهر', risk: 'متوسط 55%', high: false },
+      { name: 'بوابة الجراج الآلية — مدخل 3', loc: 'البوابة الجنوبية', last: 'منذ 4 أشهر', risk: 'منخفض 22%', high: false },
+    ].map(a => ({
+      ...a,
+      rBg: a.high ? 'rgba(228,103,90,0.13)' : a.risk.includes('متوسط') ? 'rgba(199,154,60,0.16)' : 'rgba(63,166,107,0.13)',
+      rC: a.high ? CORAL : a.risk.includes('متوسط') ? '#A87F2C' : '#2E7D51',
+      schedule: () => this.showToast('تمت جدولة صيانة وقائية لـ«' + a.name + '»'),
+    }));
+
+    // ---- IoT
+    const iotZones = [
+      { name: 'حي الياسمين', val: '61.2 م.و.س', w: '78%', c: GOLD, anomaly: false },
+      { name: 'الحي الشرقي', val: '74.8 م.و.س', w: '95%', c: '#E4675A', anomaly: true },
+      { name: 'الحي الغربي', val: '48.1 م.و.س', w: '61%', c: GOLD, anomaly: false },
+      { name: 'المرافق المشتركة', val: '30.5 م.و.س', w: '39%', c: '#2B5A8C', anomaly: false },
+    ];
+
+    const cSel = i => {
+      const on = st.compoundIdx === i;
+      return { bg: on ? 'rgba(199,154,60,0.12)' : '#fff', c: on ? '#A87F2C' : SLATE, bd: on ? GOLD : 'rgba(0,0,0,0.1)' };
+    };
+
+    return {
+      hasToast: !!st.toast, toast: st.toast,
+      sLogin: !st.logged, sApp: st.logged,
+      pickC0: () => this.setState({ compoundIdx: 0 }),
+      pickC1: () => this.setState({ compoundIdx: 1 }),
+      c0Bg: cSel(0).bg, c0C: cSel(0).c, c0Bd: cSel(0).bd,
+      c1Bg: cSel(1).bg, c1C: cSel(1).c, c1Bd: cSel(1).bd,
+      doLogin: () => { this.setState({ logged: true, sec: 'home' }); this.showToast('حياك الله — ' + compound); },
+      navItems, compound,
+      pageTitle: titles[st.sec] || '',
+      goPortfolio: () => go('portfolio'),
+      goTickets: () => go('tickets'),
+      // sections
+      secHome: st.sec === 'home', secTickets: st.sec === 'tickets', secTicketDetail: st.sec === 'ticketDetail',
+      secResidents: st.sec === 'residents', secBroadcast: st.sec === 'broadcast', secAmen: st.sec === 'amen',
+      secVendors: st.sec === 'vendors', secOnboard: st.sec === 'onboard',
+      secReMod: st.sec === 'reMod', secStoresDir: st.sec === 'storesDir',
+      secBillAgg: st.sec === 'billAgg', billAggRows,
+      reModList, storesTable, addStore, storeAddedShown: st.storeAddedShown,
+      secSourcing: st.sec === 'sourcing', secRevenue: st.sec === 'revenue',
+      secVerify: st.sec === 'verify', secDisputes: st.sec === 'disputes',
+      secCollection: st.sec === 'collection', secSla: st.sec === 'sla',
+      secLostMod: st.sec === 'lostmod', secGateLog: st.sec === 'gatelog', secSentiment: st.sec === 'sentiment',
+      secScoring: st.sec === 'scoring', secInbox: st.sec === 'inbox', secPortfolio: st.sec === 'portfolio',
+      secPredict: st.sec === 'predict', secIot: st.sec === 'iot',
+      // home
+      kpis, homeTickets, activity,
+      cmdQuery: st.cmdQuery, setCmdQuery: e => this.setState({ cmdQuery: e.target.value }),
+      cmdSearching: !!cq, cmdResults, cmdCount: String(cmdResults.length), cmdEmpty: !!cq && cmdResults.length === 0,
+      quickActions, decisionInbox, inboxCount: String(pendingCount), inboxEmpty: pendingCount === 0,
+      opsAlerts, alertCount: String(opsAlerts.length),
+      // A36 unit 360
+      secUnit360: st.sec === 'unit360',
+      backToResidents: () => this.setState({ sec: 'residents' }),
+      u360Unit: st.u360Unit, u360Owner: u360.owner,
+      u360Sub: u360.model + ' · نقاط ثقة ' + u360.score + ' · مستوى ' + u360.tier,
+      u360Actions, u360Stats, u360Pay, u360Tickets, u360TixCount: String(u360Tickets.length + 6),
+      u360Family: u360.family.map(f => ({ ...f, initial: f.name[0] })),
+      u360Assets, u360Usage, u360Timeline,
+      // A37/A38/A39
+      secAutomation: st.sec === 'automation', ruleRows, rulesOnCount, rulesTotal: String(ruleDefs.length), addRule,
+      secTeam: st.sec === 'team', staffRows, inviteStaff, roleTabs, rolePerms, auditRows,
+      secReports: st.sec === 'reports', repPeriods, reportCards, exportBoard,
+      // tickets
+      ticketFilters, queueRows,
+      bulkActive: bulkKeys.length > 0, bulkCount: String(bulkKeys.length),
+      bulkAmount: bulkSum.toLocaleString('en-US'),
+      bulkAll: () => this.setState(s2 => { const all = overdue.filter(o => s2.bulkSel[o.unit]).length === overdue.length; const next = {}; if (!all) overdue.forEach(o => { next[o.unit] = true; }); return { bulkSel: next }; }),
+      bulkAllBg: bulkAllOn ? NAVY : '#fff', bulkAllBd: bulkAllOn ? NAVY : 'rgba(0,0,0,0.18)', bulkAllMark: bulkAllOn ? '#fff' : 'transparent',
+      bulkClear: () => this.setState({ bulkSel: {} }),
+      bulkRemind: () => { this.showToast('أُرسل تذكير سداد لـ' + bulkKeys.length + ' حسابًا — إشعار + رسالة نصية'); this.setState({ bulkSel: {} }); },
+      bulkPlan: () => { this.showToast('عُرضت خطة تقسيط على ' + bulkKeys.length + ' حسابًا — 3 أقساط بلا فوائد'); this.setState({ bulkSel: {} }); },
+      bulkEscalate: () => { this.showToast('صُعّد ' + bulkKeys.length + ' حسابًا للإدارة القانونية مع كشف مديونية'); this.setState({ bulkSel: {} }); },
+      tixBulkActive: tixSelIds.length > 0, tixCount: String(tixSelIds.length),
+      tixAll: () => this.setState(s2 => { const rows = s2.tickets.filter(t => s2.filter === 'all' || t.status === s2.filter); const all = rows.every(t => s2.bulkTixSel[t.id]); const next = {}; if (!all) rows.forEach(t => { next[t.id] = true; }); return { bulkTixSel: next }; }),
+      tixAllBg: tixAllOn ? NAVY : '#fff', tixAllBd: tixAllOn ? NAVY : 'rgba(0,0,0,0.18)', tixAllMark: tixAllOn ? '#fff' : 'transparent',
+      tixClear: () => this.setState({ bulkTixSel: {} }),
+      tixAssign: () => { this.showToast('أُسندت ' + tixSelIds.length + ' تذكرة لعبدالعزيز الزهراني — أُشعر الفني والسكان'); this.setState({ bulkTixSel: {} }); },
+      tixPriority: () => { this.showToast('رُفعت أولوية ' + tixSelIds.length + ' تذكرة إلى عاجلة'); this.setState({ bulkTixSel: {} }); },
+      tixResolve: () => { const ids = tixSelIds; this.setState(s2 => ({ tickets: s2.tickets.map(t => ids.includes(t.id) ? { ...t, status: 'resolved' } : t), bulkTixSel: {} })); this.showToast('أُغلقت ' + ids.length + ' تذكرة كمحلولة — أُرسل استبيان رضا'); },
+      dtId: sel.id, dtTitle: sel.title, dtCat: sel.cat, dtUnit: sel.unit, dtResident: sel.resident,
+      dtDate: sel.date, dtDesc: sel.desc, dtNotes: sel.notes,
+      dtStatusLabel: meta[sel.status].label, dtPillBg: meta[sel.status].bg, dtPillC: meta[sel.status].c,
+      dtPrLabel: prMeta[sel.pr].label, dtPrC: prMeta[sel.pr].c,
+      techOptions,
+      stReceived: setStatus('received'), stProgress: setStatus('inprogress'), stResolved: setStatus('resolved'),
+      stRBg: stBtn('received').bg, stRC: stBtn('received').c, stRBd: stBtn('received').bd,
+      stPBg: stBtn('inprogress').bg, stPC: stBtn('inprogress').c, stPBd: stBtn('inprogress').bd,
+      stVBg: stBtn('resolved').bg, stVC: stBtn('resolved').c, stVBd: stBtn('resolved').bd,
+      noteDraft: st.noteDraft, setNoteDraft: e => this.setState({ noteDraft: e.target.value }), addNote,
+      // residents
+      residents, resQuery: st.resQuery, setResQuery: e => this.setState({ resQuery: e.target.value }),
+      // broadcast
+      bcTitle: st.bcTitle, setBcTitle: e => this.setState({ bcTitle: e.target.value }),
+      bcBody: st.bcBody, setBcBody: e => this.setState({ bcBody: e.target.value }),
+      bcTargets, sendBc, scheduleBc, bcSent: st.bcSent,
+      // vendors
+      vTabMaint: () => this.setState({ vendorTab: 'maint' }),
+      vTabMarket: () => this.setState({ vendorTab: 'market' }),
+      vmBg: st.vendorTab === 'maint' ? NAVY : '#fff', vmC: st.vendorTab === 'maint' ? '#fff' : SLATE, vmBd: st.vendorTab === 'maint' ? NAVY : 'rgba(0,0,0,0.08)',
+      vkBg: st.vendorTab === 'market' ? NAVY : '#fff', vkC: st.vendorTab === 'market' ? '#fff' : SLATE, vkBd: st.vendorTab === 'market' ? NAVY : 'rgba(0,0,0,0.08)',
+      vendorCards,
+      vTabProviders: () => this.setState({ vendorTab: 'providers' }),
+      vpBg: st.vendorTab === 'providers' ? NAVY : '#fff', vpC: st.vendorTab === 'providers' ? '#fff' : SLATE, vpBd: st.vendorTab === 'providers' ? NAVY : 'rgba(0,0,0,0.08)',
+      vTabIsProviders: st.vendorTab === 'providers', vTabIsList: st.vendorTab !== 'providers',
+      providerDirectory, goOnboard: () => this.setState({ sec: 'onboard', obDone: false, obName: '', obPhone: '', obCommission: '', obCat: null }),
+      backToVendors: () => this.setState({ sec: 'vendors' }),
+      obName: st.obName, setObName: e => this.setState({ obName: e.target.value }),
+      obPhone: st.obPhone, setObPhone: e => this.setState({ obPhone: e.target.value }),
+      obCommission: st.obCommission, setObCommission: e => this.setState({ obCommission: e.target.value }),
+      obCats, saveOnboard, obDone: st.obDone, obNotDone: !st.obDone,
+      sourcingRows, revenueByCat, vetting, disputesList,
+      // amen / collection / sla
+      amenAdmin, overdue, slaRows,
+      // moderation / gate
+      lostMod, gateLog,
+      // sentiment / scoring
+      sentiments, scoreRules, scoreDist,
+      // inbox
+      threads, inboxMsgs, inboxName: curThread.name, inboxUnit: curThread.unit,
+      inboxDraft: st.inboxDraft, setInboxDraft: e => this.setState({ inboxDraft: e.target.value }),
+      sendInbox, canned,
+      assignStaff: () => this.showToast('تم تعيين المحادثة للموظفة سارة من خدمة السكان'),
+      // portfolio / predict / iot
+      portfolio, portfolioBars, assets, iotZones,
+    };
+  }
+}
+</script>
+</body>
+</html>
