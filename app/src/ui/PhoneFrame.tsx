@@ -5,7 +5,10 @@ import { color, device, font } from '@/theme/tokens';
 export function StatusBar({ dark = false, time = '9:41' }: { dark?: boolean; time?: string }) {
   const c = dark ? '#fff' : '#000';
   return (
+    // Forced LTR: the app is RTL, but the iOS status bar keeps the clock on
+    // the left and the radios on the right regardless of app direction.
     <div
+      dir="ltr"
       style={{
         display: 'flex',
         gap: 154,

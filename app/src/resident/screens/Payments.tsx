@@ -22,7 +22,7 @@ import { Radio } from './Marketplace';
  * multi-year installment buyer, switched by the segmented control.
  */
 function Statement() {
-  const { st, set, go, isRent, paid } = useResident();
+  const { set, go, isRent, paid } = useResident();
   const total = statementTotal(isRent);
   const items = statementItems(isRent);
 
@@ -294,7 +294,11 @@ function PayNow() {
 
 /** R11b — Payment success with receipt. */
 function PaySuccess() {
-  const { st, go, showToast } = useResident();
+  const { st, go, showToast, isRent } = useResident();
+  // Falls back to the statement figures when the screen is opened cold from
+  // the gallery rather than reached through the pay flow.
+  const amount = st.paidAmount || fmt(statementTotal(isRent));
+  const method = st.paidMethod || methodDefs[0].name;
   return (
     <div
       style={{
@@ -313,7 +317,7 @@ function PaySuccess() {
         تم الدفع بنجاح
       </div>
       <div style={{ fontSize: 13.5, color: color.slate, marginTop: 6 }}>
-        <span style={{ ...numeric, fontWeight: 600 }}>{st.paidAmount}</span> ر.س — {st.paidMethod}
+        <span style={{ ...numeric, fontWeight: 600 }}>{amount}</span> ر.س — {method}
       </div>
 
       <Card pad="6px 18px" style={{ width: '100%', marginTop: 22 }}>
