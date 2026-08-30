@@ -22,9 +22,12 @@ to open it in the interactive frame).
 
 | | source prototype | screens |
 | --- | --- | --- |
-| تطبيق الساكن | `Jiwar Phone Pub.dc.html` | 67 (60 in the gallery) |
-| مقدم الخدمة | `Jiwar Provider.dc.html` | P1–P11 |
-| لوحة الإدارة | `Jiwar Admin.dc.html` | A1–A39, 29 sections |
+| تطبيق الساكن | `Jiwar Phone Pub.dc.html` | 70 registered, 68 in the gallery |
+| مقدم الخدمة | `Jiwar Provider.dc.html` | P1–P11, 8 in the gallery |
+| لوحة الإدارة | `Jiwar Admin.dc.html` | A1–A39, 29 sections, 30 in the gallery |
+
+(The galleries omit a few transient states — a success screen only reachable
+mid-flow, say — that the interactive frame still reaches.)
 
 The resident and provider apps run inside an iOS device frame at 402×874. The
 admin console is a desktop app at 1360×940, so its gallery uses laptop-shaped
@@ -36,7 +39,7 @@ tiles rather than phone ones.
 src/
   theme/tokens.ts     palette, type, radii, shadows — lifted from the prototypes
   ui/                 Icon, PhoneFrame, and the shared mobile primitives
-  resident/           store.tsx + data/ + screens/  (67 screens, typed registry)
+  resident/           store.tsx + data/ + screens/  (typed screen registry)
   provider/           data.ts + ProviderApp.tsx     (technician and store faces)
   admin/              store.tsx + data.ts + ui.tsx + sections/ + AdminConsole.tsx
   App.tsx             interface switcher, mode switcher, shared Gallery
