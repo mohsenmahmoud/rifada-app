@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { color, font, radius, shadow } from '@/theme/tokens';
 import { Wordmark } from '@/resident/Brand';
 import { ResidentApp } from '@/resident/ResidentApp';
 import { galleryGroups, galleryScreenCount } from '@/resident/gallery';
 import type { ScreenKey } from '@/resident/types';
+import { ProviderApp } from '@/provider/ProviderApp';
+import { providerGallery, providerScreenCount } from '@/provider/gallery';
+import type { ProviderScreen } from '@/provider/types';
 
 type AppId = 'resident' | 'provider' | 'admin';
 type Mode = 'phone' | 'gallery';
@@ -17,11 +20,18 @@ export function App() {
   const [app, setApp] = useState<AppId>('resident');
   const [mode, setMode] = useState<Mode>('phone');
   const [initialScreen, setInitialScreen] = useState<ScreenKey>('home');
+  const [providerScreen, setProviderScreen] = useState<ProviderScreen | null>(null);
   /** Remounts the phone so a gallery tap always lands on the chosen screen. */
   const [phoneKey, setPhoneKey] = useState(0);
 
   const openInPhone = (key: ScreenKey) => {
     setInitialScreen(key);
+    setPhoneKey((k) => k + 1);
+    setMode('phone');
+  };
+
+  const openProviderInPhone = (key: ProviderScreen) => {
+    setProviderScreen(key);
     setPhoneKey((k) => k + 1);
     setMode('phone');
   };
@@ -157,10 +167,18 @@ export function App() {
           <ResidentApp key={phoneKey} initialScreen={initialScreen} />
         </div>
       )}
-
       {app === 'resident' && mode === 'gallery' && <ResidentGallery onOpen={openInPhone} />}
 
-      {app !== 'resident' && <NotYetBuilt app={app} />}
+      {app === 'provider' && mode === 'phone' && (
+        <div style={{ padding: '6px 0 60px' }}>
+          <ProviderApp key={phoneKey} fixedScreen={null} initialScreen={providerScreen} />
+        </div>
+      )}
+      {app === 'provider' && mode === 'gallery' && (
+        <ProviderGallery onOpen={openProviderInPhone} />
+      )}
+
+      {app === 'admin' && <NotYetBuilt app={app} />}
     </div>
   );
 }
@@ -181,18 +199,27 @@ const APP_TONE: Record<AppId, string> = {
  * Live gallery: every screen rendered in full at 0.49 scale, grouped by
  * feature. Tapping a tile opens it in the interactive phone.
  */
-function ResidentGallery({ onOpen }: { onOpen: (k: ScreenKey) => void }) {
+function Gallery<K extends string>({
+  intro,
+  groups,
+  onOpen,
+  renderScreen,
+  footer,
+}: {
+  intro: string;
+  groups: { name: string; screens: { id: string; key: K; title: string }[] }[];
+  onOpen: (k: K) => void;
+  renderScreen: (k: K) => ReactNode;
+  footer?: ReactNode;
+}) {
   return (
     <div
       dir="rtl"
       style={{ width: '100%', maxWidth: 1340, boxSizing: 'border-box', padding: '6px 28px 70px' }}
     >
-      <div style={{ fontSize: 13, color: color.slate }}>
-        كل شاشة معروضة كاملة وحيّة ({galleryScreenCount} شاشة) — اضغط على أي شاشة لفتحها في الجوال
-        التفاعلي.
-      </div>
+      <div style={{ fontSize: 13, color: color.slate }}>{intro}</div>
 
-      {galleryGroups.map((g) => (
+      {groups.map((g) => (
         <div key={g.name} style={{ marginTop: 30 }}>
           <div
             style={{
@@ -256,9 +283,7 @@ function ResidentGallery({ onOpen }: { onOpen: (k: ScreenKey) => void }) {
                       pointerEvents: 'none',
                     }}
                   >
-                    {/* `bare` keeps the status bar (the screens reserve 66px
-                        for it) but drops the bezel, so the tile is all app. */}
-                    <ResidentApp bare fixedScreen={s.key} width={480} height={1014} />
+                    {renderScreen(s.key)}
                   </div>
                   <button
                     onClick={() => onOpen(s.key)}
@@ -279,22 +304,49 @@ function ResidentGallery({ onOpen }: { onOpen: (k: ScreenKey) => void }) {
         </div>
       ))}
 
-      <div
-        style={{
-          marginTop: 34,
-          background: 'rgba(63,166,107,0.1)',
-          borderRadius: 18,
-          padding: '14px 18px',
-          fontSize: 12.5,
-          color: color.greenDeep,
-          fontWeight: 700,
-          lineHeight: 1.8,
-        }}
-      >
-        كل مراحل المنتج (1–4) مبنية وقابلة للتجربة: الخدمات والسداد والمرافق، المفقودات وتصاريح
-        الزوار، المتجر وسوق العقارات، الفعاليات واسأل جيرانك ورفادتنا، والمكافآت ونقاط الثقة.
-      </div>
+      {footer}
     </div>
+  );
+}
+
+function ResidentGallery({ onOpen }: { onOpen: (k: ScreenKey) => void }) {
+  return (
+    <Gallery
+      intro={`كل شاشة معروضة كاملة وحيّة (${galleryScreenCount} شاشة) — اضغط على أي شاشة لفتحها في الجوال التفاعلي.`}
+      groups={galleryGroups}
+      onOpen={onOpen}
+      // `bare` keeps the status bar (screens reserve 66px for it) but drops the
+      // bezel, so the tile is all app.
+      renderScreen={(k) => <ResidentApp bare fixedScreen={k} width={480} height={1014} />}
+      footer={
+        <div
+          style={{
+            marginTop: 34,
+            background: 'rgba(63,166,107,0.1)',
+            borderRadius: 18,
+            padding: '14px 18px',
+            fontSize: 12.5,
+            color: color.greenDeep,
+            fontWeight: 700,
+            lineHeight: 1.8,
+          }}
+        >
+          كل مراحل المنتج (1–4) مبنية وقابلة للتجربة: الخدمات والسداد والمرافق، المفقودات وتصاريح
+          الزوار، المتجر وسوق العقارات، الفعاليات واسأل جيرانك ورفادتنا، والمكافآت ونقاط الثقة.
+        </div>
+      }
+    />
+  );
+}
+
+function ProviderGallery({ onOpen }: { onOpen: (k: ProviderScreen) => void }) {
+  return (
+    <Gallery
+      intro={`واجهتان في تطبيق واحد — الفني والمتجر (${providerScreenCount} شاشات). اضغط على أي شاشة لفتحها في الجوال التفاعلي.`}
+      groups={providerGallery}
+      onOpen={onOpen}
+      renderScreen={(k) => <ProviderApp bare fixedScreen={k} width={480} height={1014} />}
+    />
   );
 }
 
