@@ -16,8 +16,9 @@ import { useResident } from '../store';
 import type { ShareKind } from '../types';
 import { ChipRow, Note } from './parts';
 import { Radio } from './Marketplace';
+import { t } from '@/i18n/lang';
 
-const priceLabel = (p: number) => (p === 0 ? 'مجانًا' : `${p} ر.س`);
+const priceLabel = (p: number) => (p === 0 ? t('مجانًا') : `${p} ر.س`);
 
 /** R67 — Browse what neighbours are sharing, plus your own listings. */
 function Browse() {
@@ -34,7 +35,7 @@ function Browse() {
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={() => go('home')} />
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-          <span style={{ fontSize: 18, fontWeight: 900, color: color.navy }}>رفادتنا</span>
+          <span style={{ fontSize: 18, fontWeight: 900, color: color.navy }}>{t('رفادتنا')}</span>
           <span
             style={{
               fontSize: 10.5,
@@ -60,8 +61,8 @@ function Browse() {
         }}
       >
         {[
-          { k: 'browse' as const, l: 'معروض للمشاركة' },
-          { k: 'mine' as const, l: 'مشاركاتي' },
+          { k: 'browse' as const, l: t('معروض للمشاركة') },
+          { k: 'mine' as const, l: t('مشاركاتي') },
         ].map((t) => {
           const on = st.shareTab === t.k;
           return (
@@ -120,7 +121,7 @@ function Browse() {
                   <Icon path={icons.plus} size={17} stroke={color.gold} width={2} />
                 </span>
                 <span style={{ flex: 1, fontSize: 13.5, fontWeight: 800, color: '#fff' }}>
-                  {mine.length > 0 ? 'مشاركتك منشورة لجيرانك' : 'اعرض ما لديك على جيرانك'}
+                  {mine.length > 0 ? t('مشاركتك منشورة لجيرانك') : t('اعرض ما لديك على جيرانك')}
                 </span>
               </div>
               <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 9, lineHeight: 1.8 }}>
@@ -252,10 +253,10 @@ function Browse() {
                 >
                   {(
                     [
-                      ['space', 'قاعة أو مساحة'],
-                      ['gear', 'معدات'],
-                      ['sport', 'ملعب'],
-                      ['park', 'مكان انتظار'],
+                      ['space', t('قاعة أو مساحة')],
+                      ['gear', t('معدات')],
+                      ['sport', t('ملعب')],
+                      ['park', t('مكان انتظار')],
                     ] as [ShareKind, string][]
                   ).map(([k, label]) => (
                     <span
@@ -380,7 +381,7 @@ function Create() {
         price,
         unit: st.shUnit === 'مجانًا' ? 'مجانًا بين الجيران' : st.shUnit,
         desc: `مشاركة جديدة من وحدتك الموثّقة — متاحة يوم ${st.shDay} من ${st.shHour}.`,
-        slots: [[st.shDay, st.shHour, 'متاح']],
+        slots: [[st.shDay, st.shHour, t('متاح')]],
       },
       screen: 'share',
       shareTab: 'mine',
@@ -394,7 +395,7 @@ function Create() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <ScreenHeader title="شارك شيئًا لديك" onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
-        <Label>النوع</Label>
+        <Label>{t('النوع')}</Label>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
           {shareKindDefs.map((k) => {
             const on = st.shKind === k.key;
@@ -438,7 +439,7 @@ function Create() {
           style={{ ...inputStyle, marginTop: 16, fontSize: 13 }}
         />
 
-        <Label style={{ marginTop: 16 }}>أيام الإتاحة</Label>
+        <Label style={{ marginTop: 16 }}>{t('أيام الإتاحة')}</Label>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
           {shareDayDefs.map((d) => {
             const on = st.shDay === d;
@@ -450,7 +451,7 @@ function Create() {
           })}
         </div>
 
-        <Label style={{ marginTop: 16 }}>من الساعة — إلى الساعة</Label>
+        <Label style={{ marginTop: 16 }}>{t('من الساعة — إلى الساعة')}</Label>
         <div style={{ display: 'flex', gap: 8 }}>
           {shareHourDefs.map((h) => {
             const on = st.shHour === h;
@@ -471,7 +472,7 @@ function Create() {
           })}
         </div>
 
-        <Label style={{ marginTop: 16 }}>التكلفة</Label>
+        <Label style={{ marginTop: 16 }}>{t('التكلفة')}</Label>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <input
             value={st.shPrice}
@@ -521,7 +522,7 @@ function Create() {
           }}
         >
           <Icon path={icons.camera} size={18} stroke={color.slate} width={1.5} />
-          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.slate }}>أضف صورًا</span>
+          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.slate }}>{t('أضف صورًا')}</span>
         </button>
 
         <div style={{ marginTop: 12 }}>
@@ -606,7 +607,7 @@ function Detail() {
         <Card pad={16} style={{ borderRadius: 18 }}>
           <div style={{ fontSize: 12.5, color: color.slateDark, lineHeight: 1.9 }}>{sel.desc}</div>
           <div style={{ display: 'flex', alignItems: 'center', marginTop: 14 }}>
-            <span style={{ fontSize: 12, color: color.slate }}>التكلفة</span>
+            <span style={{ fontSize: 12, color: color.slate }}>{t('التكلفة')}</span>
             <span style={{ flex: 1 }} />
             <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: color.goldDeep }}>
               {priceLabel(sel.price)}
@@ -674,7 +675,7 @@ function Detail() {
 
       <div style={{ padding: '0 20px 34px' }}>
         <PillButton size="lg" full onClick={book}>
-          {st.shareSlotIdx === null ? 'اختر موعدًا للحجز' : 'أكّد الحجز'}
+          {st.shareSlotIdx === null ? t('اختر موعدًا للحجز') : t('أكّد الحجز')}
         </PillButton>
       </div>
     </div>

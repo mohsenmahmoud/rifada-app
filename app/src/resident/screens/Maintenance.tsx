@@ -5,13 +5,14 @@ import { catDefs, stepsDoneFor, ticketSteps } from '../data/amenities';
 import { icons } from '../data/icons';
 import { ticketMeta } from '../data/services';
 import { useResident } from '../store';
+import { t } from '@/i18n/lang';
 
 /** R5 — Create a ticket. */
 export function MaintNew() {
   const { st, set, back, go, showToast } = useResident();
 
   const submit = () => {
-    const cat = st.cat ?? 'أخرى';
+    const cat = st.cat ?? t('أخرى');
     const title = st.desc.trim() ? st.desc.trim() : `بلاغ ${cat} جديد`;
 
     // The auto-assign switch reroutes to instant matching instead of the
@@ -24,7 +25,7 @@ export function MaintNew() {
 
     const id = st.nextId;
     set((s) => ({
-      tickets: [{ id, title, cat, status: 'received', date: 'الآن', note: null }, ...s.tickets],
+      tickets: [{ id, title, cat, status: 'received', date: t('الآن'), note: null }, ...s.tickets],
       nextId: s.nextId + 1,
       cat: null,
       desc: '',
@@ -40,7 +41,7 @@ export function MaintNew() {
       <ScreenHeader title="بلاغ جديد" onBack={back} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
-        <Label>نوع المشكلة</Label>
+        <Label>{t('نوع المشكلة')}</Label>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
           {catDefs.map((c) => {
             const on = st.cat === c.label;
@@ -76,7 +77,7 @@ export function MaintNew() {
           })}
         </div>
 
-        <Label style={{ marginTop: 16 }}>وصف المشكلة</Label>
+        <Label style={{ marginTop: 16 }}>{t('وصف المشكلة')}</Label>
         <textarea
           value={st.desc}
           onChange={(e) => set({ desc: e.target.value })}
@@ -119,7 +120,7 @@ export function MaintNew() {
           </span>
         </button>
 
-        <Label style={{ marginTop: 16 }}>الأولوية</Label>
+        <Label style={{ marginTop: 16 }}>{t('الأولوية')}</Label>
         <div
           style={{
             display: 'flex',
@@ -130,8 +131,8 @@ export function MaintNew() {
           }}
         >
           {[
-            { k: 'normal', l: 'عادية' },
-            { k: 'urgent', l: 'عاجلة' },
+            { k: 'normal', l: t('عادية') },
+            { k: 'urgent', l: t('عاجلة') },
           ].map((p) => {
             const on = st.priority === p.k;
             return (
@@ -188,7 +189,7 @@ export function MaintNew() {
 
       <div style={{ padding: '0 20px 34px' }}>
         <PillButton tone="gold" size="lg" full onClick={submit}>
-          {st.autoMatch ? 'ابحث عن مقدم خدمة الآن' : 'إرسال البلاغ'}
+          {st.autoMatch ? t('ابحث عن مقدم خدمة الآن') : t('إرسال البلاغ')}
         </PillButton>
       </div>
     </div>
@@ -202,7 +203,7 @@ export function MaintList() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={() => go('svcHub')} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>بلاغاتي</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('بلاغاتي')}</div>
         <div style={{ flex: 1 }} />
         <PillButton tone="gold" size="sm" onClick={() => go('maintNew')}>
           + بلاغ جديد
@@ -357,7 +358,7 @@ export function MaintDetail() {
 
         {isResolved && !rated && (
           <Card pad={16} style={{ borderRadius: 18, marginTop: 12 }}>
-            <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>قيّم تجربتك مع الفني</div>
+            <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{t('قيّم تجربتك مع الفني')}</div>
             <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
               {[1, 2, 3, 4, 5].map((n) => (
                 <button

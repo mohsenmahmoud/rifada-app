@@ -12,13 +12,14 @@ import { icons } from '../data/icons';
 import { UNIT_SHORT } from '../data/seed';
 import { useResident } from '../store';
 import { Note } from './parts';
+import { t } from '@/i18n/lang';
 
 /** R43 — Family members; the owner creates each account and sets its rights. */
 function Members() {
   const { st, set, back, go, showToast } = useResident();
 
   const createAccount = () => {
-    const name = st.nfName.trim() || 'فرد العائلة';
+    const name = st.nfName.trim() || t('فرد العائلة');
     const count = Object.values(st.nfPerms).filter(Boolean).length;
     set({
       nfDone: {
@@ -37,7 +38,7 @@ function Members() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={back} />
-        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>أفراد العائلة</div>
+        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>{t('أفراد العائلة')}</div>
         <PillButton
           tone="gold"
           size="sm"
@@ -99,7 +100,7 @@ function Members() {
               <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
                 <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{f.name}</span>
                 <span style={{ fontSize: 11, color: color.slate }}>
-                  {f.rel} · {f.full ? 'كل الصلاحيات' : `${granted} من 6 صلاحيات`}
+                  {f.rel} · {f.full ? t('كل الصلاحيات') : `${granted} من 6 صلاحيات`}
                 </span>
               </span>
               <Icon path="M15 5l-7 7 7 7" size={14} stroke={color.slateLight} width={2} />

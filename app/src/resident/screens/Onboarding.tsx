@@ -5,6 +5,7 @@ import { Wordmark } from '../Brand';
 import { icons } from '../data/icons';
 import { UNIT } from '../data/seed';
 import { useResident } from '../store';
+import { t } from '@/i18n/lang';
 
 /** R1 — Splash / invite-code entry. */
 export function Splash() {
@@ -190,7 +191,7 @@ export function Otp() {
         </div>
         <div style={{ fontSize: 12.5, color: color.slate, marginTop: 18 }}>
           لم يصلك الكود؟{' '}
-          <span style={{ color: color.gold, fontWeight: 700 }}>إعادة الإرسال خلال 00:24</span>
+          <span style={{ color: color.gold, fontWeight: 700 }}>{t('إعادة الإرسال خلال 00:24')}</span>
         </div>
       </div>
       <div style={{ flex: 1 }} />
@@ -222,7 +223,7 @@ export function Setup() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={back} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>إنشاء الحساب</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('إنشاء الحساب')}</div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '10px 22px 30px' }}>
@@ -242,11 +243,11 @@ export function Setup() {
             }}
           >
             <Icon path={icons.camera} size={24} stroke={color.slate} width={1.5} />
-            <span style={{ fontSize: 9.5, color: color.slate }}>إضافة صورة</span>
+            <span style={{ fontSize: 9.5, color: color.slate }}>{t('إضافة صورة')}</span>
           </div>
         </div>
 
-        <FieldLabel>الاسم الكامل</FieldLabel>
+        <FieldLabel>{t('الاسم الكامل')}</FieldLabel>
         <input
           defaultValue={cfg.residentName}
           style={{
@@ -264,7 +265,7 @@ export function Setup() {
           }}
         />
 
-        <FieldLabel style={{ marginTop: 16 }}>الوحدة</FieldLabel>
+        <FieldLabel style={{ marginTop: 16 }}>{t('الوحدة')}</FieldLabel>
         <div
           style={{
             background: 'rgba(199,154,60,0.12)',

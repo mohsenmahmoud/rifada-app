@@ -7,8 +7,9 @@ import { avatarBg, UNIT_SHORT } from '../data/seed';
 import { useResident } from '../store';
 import type { Comment, CommunityPost, PostAttachment } from '../types';
 import { ChipRow } from './parts';
+import { t } from '@/i18n/lang';
 
-const ME = 'عبدالله العتيبي';
+const ME = t('عبدالله العتيبي');
 
 type FullPost = CommunityPost & { comments: Comment[] };
 
@@ -231,7 +232,7 @@ function Feed() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={() => go('home')} />
-        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>اسأل جيرانك</div>
+        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>{t('اسأل جيرانك')}</div>
         <StatusPill tone="green" style={{ fontSize: 10, padding: '5px 13px', fontWeight: 800 }}>
           {ACTIVE_NEIGHBOURS} جارًا نشطًا
         </StatusPill>
@@ -523,12 +524,12 @@ function Post() {
   ];
 
   const send = () => {
-    const t = st.cmComment.trim();
-    if (!t) {
-      showToast('اكتب تعليقك أولًا');
+    const body = st.cmComment.trim();
+    if (!body) {
+      showToast(t('اكتب تعليقك أولًا'));
       return;
     }
-    const entry = { who: ME, unit: UNIT_SHORT, avBg: avatarBg.me, time: 'الآن', text: t, att: st.cmComAtt };
+    const entry = { who: ME, unit: UNIT_SHORT, avBg: avatarBg.me, time: t('الآن'), text: body, att: st.cmComAtt };
     if (st.cmReplyTo !== null) {
       const key = `${i}_${st.cmReplyTo}`;
       set((s) => ({
@@ -737,7 +738,7 @@ function Post() {
         >
           <button
             onClick={() =>
-              set({ cmComAtt: { type: 'image', name: 'صورة من جوالك', bg: avatarBg.tarek } })
+              set({ cmComAtt: { type: 'image', name: t('صورة من جوالك'), bg: avatarBg.tarek } })
             }
             aria-label="إرفاق صورة"
             style={iconBtn}
@@ -747,7 +748,7 @@ function Post() {
           <button
             onClick={() =>
               set({
-                cmComAtt: { type: 'link', title: 'رابط مرفق', url: 'example-sa.com' },
+                cmComAtt: { type: 'link', title: t('رابط مرفق'), url: 'example-sa.com' },
               })
             }
             aria-label="إرفاق رابط"
@@ -759,7 +760,7 @@ function Post() {
             value={st.cmComment}
             onChange={(e) => set({ cmComment: e.target.value })}
             onKeyDown={(e) => e.key === 'Enter' && send()}
-            placeholder={st.cmReplyTo !== null ? 'اكتب ردك…' : 'اكتب تعليقك…'}
+            placeholder={st.cmReplyTo !== null ? t('اكتب ردك…') : t('اكتب تعليقك…')}
             style={{
               flex: 1,
               border: 'none',
@@ -801,15 +802,15 @@ function New() {
   const isEdit = st.cmEditIdx !== null;
 
   const publish = () => {
-    const t = st.cmDraft.trim();
-    if (!t) {
-      showToast('اكتب منشورك أولًا');
+    const body = st.cmDraft.trim();
+    if (!body) {
+      showToast(t('اكتب منشورك أولًا'));
       return;
     }
     if (isEdit) {
       set((s) => ({
         cmUserPosts: s.cmUserPosts.map((p, k) =>
-          k === s.cmEditIdx ? { ...p, text: t, tag: s.cmTag, att: s.cmNewAtt, time: 'عُدّل الآن' } : p,
+          k === s.cmEditIdx ? { ...p, text: body, tag: s.cmTag, att: s.cmNewAtt, time: t('عُدّل الآن') } : p,
         ),
         cmDraft: '',
         cmNewAtt: null,
@@ -825,9 +826,9 @@ function New() {
           who: ME,
           unit: UNIT_SHORT,
           avBg: avatarBg.me,
-          time: 'الآن',
+          time: t('الآن'),
           tag: s.cmTag,
-          text: t,
+          text: body,
           att: s.cmNewAtt,
           likes: 0,
           mine: true,
@@ -848,7 +849,7 @@ function New() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title={isEdit ? 'تعديل المنشور' : 'منشور جديد'} onBack={back} />
+      <ScreenHeader title={isEdit ? t('تعديل المنشور') : t('منشور جديد')} onBack={back} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 30px' }}>
         <Card pad={16}>
@@ -930,7 +931,7 @@ function New() {
               onBlur={() =>
                 st.cmNewLinkUrl.trim() &&
                 set({
-                  cmNewAtt: { type: 'link', title: 'رابط مرفق', url: st.cmNewLinkUrl.trim() },
+                  cmNewAtt: { type: 'link', title: t('رابط مرفق'), url: st.cmNewLinkUrl.trim() },
                   cmNewLinkOpen: false,
                 })
               }
@@ -964,7 +965,7 @@ function New() {
               label="صورة"
               onClick={() =>
                 set({
-                  cmNewAtt: { type: 'image', name: 'صورة من جوالك', bg: avatarBg.karim },
+                  cmNewAtt: { type: 'image', name: t('صورة من جوالك'), bg: avatarBg.karim },
                   cmNewLinkOpen: false,
                 })
               }
@@ -974,7 +975,7 @@ function New() {
               label="ملف"
               onClick={() =>
                 set({
-                  cmNewAtt: { type: 'file', name: 'مرفق.pdf', size: '0.8 MB' },
+                  cmNewAtt: { type: 'file', name: t('مرفق.pdf'), size: '0.8 MB' },
                   cmNewLinkOpen: false,
                 })
               }
@@ -991,12 +992,14 @@ function New() {
           تصنيف المنشور
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          {(['سؤال', 'توصية', 'عام'] as const).map((t) => {
-            const on = st.cmTag === t;
+          {/* The tag values are the state's own type (PostTag), so they stay
+              Arabic — only the label is translated. */}
+          {(['سؤال', 'توصية', 'عام'] as const).map((tag) => {
+            const on = st.cmTag === tag;
             return (
               <button
-                key={t}
-                onClick={() => set({ cmTag: t })}
+                key={tag}
+                onClick={() => set({ cmTag: tag })}
                 style={{
                   flex: 1,
                   borderRadius: radius.pill,
@@ -1010,7 +1013,7 @@ function New() {
                   fontFamily: font.sans,
                 }}
               >
-                {t}
+                {t(tag)}
               </button>
             );
           })}
@@ -1019,7 +1022,7 @@ function New() {
 
       <div style={{ padding: '0 20px 34px' }}>
         <PillButton tone="gold" size="lg" full onClick={publish}>
-          {isEdit ? 'احفظ التعديلات' : 'انشر لجيرانك'}
+          {isEdit ? t('احفظ التعديلات') : t('انشر لجيرانك')}
         </PillButton>
       </div>
     </div>

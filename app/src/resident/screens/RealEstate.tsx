@@ -5,6 +5,7 @@ import { icons } from '../data/icons';
 import { listingStateMeta, myListingDefs, reDefs } from '../data/realestate';
 import { useResident } from '../store';
 import { Avatar, Note } from './parts';
+import { t } from '@/i18n/lang';
 
 /** Background-image style, so a missing photo degrades to the gradient. */
 const photoStyle = (src: string): React.CSSProperties => ({
@@ -45,8 +46,8 @@ function Browse() {
 
       <div style={{ padding: '6px 18px 4px', display: 'flex', gap: 8 }}>
         {[
-          { k: 'sale' as const, l: 'للبيع' },
-          { k: 'rent' as const, l: 'للإيجار' },
+          { k: 'sale' as const, l: t('للبيع') },
+          { k: 'rent' as const, l: t('للإيجار') },
         ].map((t) => {
           const on = st.reTab === t.k;
           return (
@@ -74,7 +75,7 @@ function Browse() {
       </div>
 
       <div style={{ padding: '8px 18px 0', display: 'flex', gap: 6, overflowX: 'auto' }}>
-        {['عدد الغرف ▾', 'المساحة ▾', 'نطاق السعر ▾'].map((f) => (
+        {[t('عدد الغرف ▾'), t('المساحة ▾'), t('نطاق السعر ▾')].map((f) => (
           <span
             key={f}
             style={{
@@ -133,7 +134,7 @@ function Browse() {
                   fontWeight: 800,
                 }}
               >
-                {l.type === 'sale' ? 'للبيع' : 'للإيجار'}
+                {l.type === 'sale' ? t('للبيع') : t('للإيجار')}
               </span>
             </div>
             <div style={{ padding: '13px 15px 15px' }}>
@@ -172,7 +173,7 @@ function Create() {
       <ScreenHeader title="أعلن عن وحدتك" onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <Card pad="13px 16px" style={{ borderRadius: radius.inner, display: 'flex', alignItems: 'center' }}>
-          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>الوحدة</span>
+          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{t('الوحدة')}</span>
           <span style={{ flex: 1 }} />
           <span style={{ fontSize: 12.5, color: color.slate }}>فيلا 214 — حي الياسمين (موثّقة)</span>
         </Card>
@@ -188,8 +189,8 @@ function Create() {
           }}
         >
           {[
-            { k: 'sale' as const, l: 'بيع' },
-            { k: 'rent' as const, l: 'إيجار' },
+            { k: 'sale' as const, l: t('بيع') },
+            { k: 'rent' as const, l: t('إيجار') },
           ].map((t) => {
             const on = st.crType === t.k;
             return (
@@ -218,7 +219,7 @@ function Create() {
         <input
           value={st.crPrice}
           onChange={(e) => set({ crPrice: e.target.value })}
-          placeholder={st.crType === 'sale' ? 'سعر البيع (ر.س)' : 'الإيجار الشهري (ر.س)'}
+          placeholder={st.crType === 'sale' ? t('سعر البيع (ر.س)') : t('الإيجار الشهري (ر.س)')}
           style={inputStyle}
         />
         <textarea
@@ -245,7 +246,7 @@ function Create() {
           }}
         >
           <Icon path={icons.camera} size={18} stroke={color.slate} width={1.5} />
-          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.slate }}>إضافة صور الوحدة</span>
+          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.slate }}>{t('إضافة صور الوحدة')}</span>
         </button>
 
         <div style={{ fontSize: 12.5, fontWeight: 700, color: color.navy, margin: '14px 0 8px' }}>
@@ -253,8 +254,8 @@ function Create() {
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           {[
-            { k: 'chat', l: 'شات داخل التطبيق فقط' },
-            { k: 'phone', l: 'إظهار رقم الجوال' },
+            { k: 'chat', l: t('شات داخل التطبيق فقط') },
+            { k: 'phone', l: t('إظهار رقم الجوال') },
           ].map((c) => {
             const on = st.crContact === c.k;
             return (
@@ -348,7 +349,7 @@ function Detail() {
             fontWeight: 800,
           }}
         >
-          {l.type === 'sale' ? 'للبيع' : 'للإيجار'}
+          {l.type === 'sale' ? t('للبيع') : t('للإيجار')}
         </span>
         <span
           style={{
@@ -439,7 +440,7 @@ function Mine() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={back} />
-        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>إعلاناتي</div>
+        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>{t('إعلاناتي')}</div>
         <PillButton tone="gold" size="sm" onClick={() => go('reCreate')} style={{ padding: '8px 16px', fontSize: 11.5 }}>
           + إعلان جديد
         </PillButton>
@@ -472,9 +473,9 @@ function Mine() {
                     }))
                   }
                 >
-                  {state === 'active' ? 'إيقاف مؤقت' : 'إعادة تفعيل'}
+                  {state === 'active' ? t('إيقاف مؤقت') : t('إعادة تفعيل')}
                 </SmallAction>
-                <SmallAction onClick={() => go('reCreate')}>تعديل</SmallAction>
+                <SmallAction onClick={() => go('reCreate')}>{t('تعديل')}</SmallAction>
                 <SmallAction
                   tone="green"
                   onClick={() => {

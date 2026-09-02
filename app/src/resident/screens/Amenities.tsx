@@ -4,6 +4,7 @@ import { BackButton, Card, PillButton, ScreenHeader, StatusPill } from '@/ui/pri
 import { amenDefs } from '../data/amenities';
 import { icons } from '../data/icons';
 import { useResident } from '../store';
+import { t } from '@/i18n/lang';
 
 /** R8 — Amenity list with inline slots. */
 export function Amenities() {
@@ -12,7 +13,7 @@ export function Amenities() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={() => go('home')} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>حجز المرافق</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('حجز المرافق')}</div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
@@ -38,7 +39,7 @@ export function Amenities() {
                 <span style={{ fontSize: 11.5, color: color.slate }}>{a.sub}</span>
               </span>
               <span style={{ flex: 1 }} />
-              <StatusPill tone="green">متاح اليوم</StatusPill>
+              <StatusPill tone="green">{t('متاح اليوم')}</StatusPill>
             </div>
 
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 12 }}>
@@ -67,7 +68,7 @@ export function Amenities() {
             {a.hasTrainer && (
               <button
                 onClick={() => {
-                  set({ reqKind: 'تدريب رياضي' });
+                  set({ reqKind: t('تدريب رياضي') });
                   go('reqService');
                 }}
                 style={{
@@ -197,7 +198,7 @@ export function AmenDone() {
         }}
       >
         <Icon path={icons.qr} size={86} width={1.4} />
-        <span style={{ fontSize: 11.5, color: color.slate }}>أظهر هذا الرمز عند الدخول</span>
+        <span style={{ fontSize: 11.5, color: color.slate }}>{t('أظهر هذا الرمز عند الدخول')}</span>
       </div>
       <PillButton size="lg" full onClick={() => go('home')} style={{ marginTop: 26 }}>
         العودة للرئيسية

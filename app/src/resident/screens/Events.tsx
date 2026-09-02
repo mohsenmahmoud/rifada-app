@@ -24,6 +24,7 @@ import { avatarBg } from '../data/seed';
 import { useResident } from '../store';
 import type { Group } from '../types';
 import { ChipRow, Note, Stars } from './parts';
+import { t } from '@/i18n/lang';
 
 const HERO_IMG = `${import.meta.env.BASE_URL}img/hero-compound.webp`;
 
@@ -37,7 +38,7 @@ function seatState(idx: number, going: boolean) {
     taken,
     pct,
     full,
-    label: full ? 'مكتملة' : `${e.seats - taken} مكان متاح`,
+    label: full ? t('مكتملة') : `${e.seats - taken} مكان متاح`,
     fillC: full ? color.coral : pct > 75 ? color.gold : color.green,
   };
 }
@@ -50,7 +51,7 @@ function Feed() {
     ...clubDefs.map((c) => ({
       ...c,
       about: '',
-      organizer: 'ساكن',
+      organizer: t('ساكن'),
     })),
     ...st.myGroups,
   ];
@@ -76,7 +77,7 @@ function Feed() {
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={() => go('home')} />
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-          <span style={{ fontSize: 18, fontWeight: 900, color: color.navy }}>الفعاليات والمجتمع</span>
+          <span style={{ fontSize: 18, fontWeight: 900, color: color.navy }}>{t('الفعاليات والمجتمع')}</span>
           <span
             style={{
               fontSize: 10.5,
@@ -111,7 +112,7 @@ function Feed() {
           }}
         >
           <Icon path={icons.plus} size={13} stroke="#fff" width={2.4} />
-          {isGroupsTab ? 'أنشئ مجموعة' : 'نظّم فعالية'}
+          {isGroupsTab ? t('أنشئ مجموعة') : t('نظّم فعالية')}
         </button>
       </div>
 
@@ -126,15 +127,15 @@ function Feed() {
         }}
       >
         {[
-          { k: 'up' as const, l: 'قادمة' },
-          { k: 'mine' as const, l: 'فعالياتي' },
-          { k: 'groups' as const, l: 'مجموعات' },
-        ].map((t) => {
-          const on = st.evTab === t.k;
+          { k: 'up' as const, l: t('قادمة') },
+          { k: 'mine' as const, l: t('فعالياتي') },
+          { k: 'groups' as const, l: t('مجموعات') },
+        ].map((item) => {
+          const on = st.evTab === item.k;
           return (
             <button
-              key={t.k}
-              onClick={() => set({ evTab: t.k })}
+              key={item.k}
+              onClick={() => set({ evTab: item.k })}
               style={{
                 flex: 1,
                 border: 'none',
@@ -148,7 +149,7 @@ function Feed() {
                 color: on ? '#fff' : color.slate,
               }}
             >
-              {t.l}
+              {item.l}
             </button>
           );
         })}
@@ -284,7 +285,7 @@ function Feed() {
                       flex: 'none',
                     }}
                   >
-                    {heroGoing ? 'أنت مسجّل ✓' : 'احجز مكانك'}
+                    {heroGoing ? t('أنت مسجّل ✓') : t('احجز مكانك')}
                   </span>
                 </span>
               </span>
@@ -433,7 +434,7 @@ function Feed() {
                               whiteSpace: 'nowrap',
                             }}
                           >
-                            {e.price === 0 ? 'مجانًا' : `${e.price} ر.س`}
+                            {e.price === 0 ? t('مجانًا') : `${e.price} ر.س`}
                           </span>
                         </span>
                       </span>
@@ -454,7 +455,7 @@ function Feed() {
                 marginBottom: 12,
               }}
             >
-              <div style={{ fontSize: 13.5, fontWeight: 800, color: '#fff' }}>حضورك هذا الشهر</div>
+              <div style={{ fontSize: 13.5, fontWeight: 800, color: '#fff' }}>{t('حضورك هذا الشهر')}</div>
               <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
                 <MiniStat
                   value={String(Object.values(st.evRsvp).filter(Boolean).length)}
@@ -597,7 +598,7 @@ function Feed() {
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginTop: 11 }}>
                     <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-                      {rated ? `تقييمك: ${rated} من 5` : 'قيّم الفعالية'}
+                      {rated ? `تقييمك: ${rated} من 5` : t('قيّم الفعالية')}
                     </span>
                     <span style={{ flex: 1 }} />
                     <Stars
@@ -708,7 +709,7 @@ function Feed() {
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      {mine ? 'منظّم' : joined ? 'عضو ✓' : 'انضم'}
+                      {mine ? t('منظّم') : joined ? t('عضو ✓') : t('انضم')}
                     </button>
                     <button
                       onClick={() => go('groupDetail', { gdIdx: i })}
@@ -776,12 +777,12 @@ function Detail() {
           <InfoRow icon={icons.people} text={`ينظّمها ${e.host}`} />
           <InfoRow
             icon="M3 7h18v13H3zM3 11h18M8 3v4M16 3v4"
-            text={`${seats.label} · ${e.price === 0 ? 'مجانًا' : `${e.price} ر.س`}`}
+            text={`${seats.label} · ${e.price === 0 ? t('مجانًا') : `${e.price} ر.س`}`}
           />
         </Card>
 
         <Card pad={16} style={{ borderRadius: 18, marginTop: 10 }}>
-          <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>جيرانك المسجّلون</div>
+          <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t('جيرانك المسجّلون')}</div>
           <div style={{ display: 'flex', alignItems: 'center', marginTop: 12 }}>
             {attendeeFaces.map((at) => (
               <span
@@ -905,12 +906,12 @@ function Detail() {
             const now = !going;
             set((s) => ({ evRsvp: { ...s.evRsvp, [i]: now } }));
             showToast(
-              now ? 'تم حجز مكانك — تصريح الدخول في مستنداتك' : 'أُلغي تسجيلك في هذه الفعالية',
+              now ? t('تم حجز مكانك — تصريح الدخول في مستنداتك') : t('أُلغي تسجيلك في هذه الفعالية'),
             );
           }}
           style={{ flex: 1, fontSize: 14.5 }}
         >
-          {going ? 'أنت مسجّل ✓ — إلغاء' : seats.full ? 'قائمة الانتظار' : 'احجز مكانك'}
+          {going ? t('أنت مسجّل ✓ — إلغاء') : seats.full ? t('قائمة الانتظار') : t('احجز مكانك')}
         </PillButton>
       </div>
     </div>
@@ -924,7 +925,7 @@ function Create() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <ScreenHeader title="اقترح فعالية" onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
-        <Label>نوع الفعالية</Label>
+        <Label>{t('نوع الفعالية')}</Label>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
           {evKindDefs.map((k) => {
             const on = st.evKind === k.key;
@@ -969,7 +970,7 @@ function Create() {
           />
         </div>
 
-        <Label style={{ marginTop: 16 }}>المكان</Label>
+        <Label style={{ marginTop: 16 }}>{t('المكان')}</Label>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
           {evPlaceDefs.map((p) => (
             <Chip key={p} label={p} on={st.evPlace === p} onClick={() => set({ evPlace: p })} />
@@ -1010,25 +1011,25 @@ function GroupDetail() {
   const i = st.gdIdx;
   const g = allGroups[i] ?? allGroups[0];
   const isMine = !!g.mine;
-  const about = g.about || groupAbouts[i] || 'مجموعة يديرها سكان الكمبوند.';
+  const about = g.about || groupAbouts[i] || t('مجموعة يديرها سكان الكمبوند.');
   const next = groupNextDefs[i] ?? { when: st.gdMeetWhen || '—', place: st.gdMeetPlace || '—' };
   const posts = [...(groupPostDefs[i] ?? []), ...(st.gdExtraPosts[i] ?? [])];
   const joinedMeet = !!st.gdMeetJoined[i];
 
   const send = () => {
-    const t = st.gdDraft.trim();
-    if (!t) {
-      showToast('اكتب رسالتك أولًا');
+    const body = st.gdDraft.trim();
+    if (!body) {
+      showToast(t('اكتب رسالتك أولًا'));
       return;
     }
     set((s) => ({
       gdExtraPosts: {
         ...s.gdExtraPosts,
-        [i]: [...(s.gdExtraPosts[i] ?? []), { who: 'عبدالله العتيبي', text: t, time: 'الآن' }],
+        [i]: [...(s.gdExtraPosts[i] ?? []), { who: t('عبدالله العتيبي'), text: body, time: t('الآن') }],
       },
       gdDraft: '',
     }));
-    showToast('نُشرت رسالتك لأعضاء المجموعة');
+    showToast(t('نُشرت رسالتك لأعضاء المجموعة'));
   };
 
   return (
@@ -1075,7 +1076,7 @@ function GroupDetail() {
 
         <Card pad={16} style={{ borderRadius: 18, marginTop: 10 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>اللقاء القادم</span>
+            <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t('اللقاء القادم')}</span>
             <span style={{ flex: 1 }} />
             <StatusPill tone="gold" style={{ fontSize: 9.5, padding: '3px 11px', fontWeight: 800 }}>
               {next.when}
@@ -1098,11 +1099,11 @@ function GroupDetail() {
             full
             onClick={() => {
               set((s) => ({ gdMeetJoined: { ...s.gdMeetJoined, [i]: !joinedMeet } }));
-              showToast(joinedMeet ? 'ألغيت حضورك' : 'سجّلنا حضورك — سيصلك تذكير قبل اللقاء');
+              showToast(joinedMeet ? t('ألغيت حضورك') : t('سجّلنا حضورك — سيصلك تذكير قبل اللقاء'));
             }}
             style={{ marginTop: 12, padding: 12, fontSize: 13 }}
           >
-            {joinedMeet ? 'سأحضر ✓' : 'سأحضر اللقاء القادم'}
+            {joinedMeet ? t('سأحضر ✓') : t('سأحضر اللقاء القادم')}
           </PillButton>
         </Card>
 
@@ -1193,9 +1194,9 @@ function GroupDetail() {
                       [i]: [
                         ...(s.gdExtraPosts[i] ?? []),
                         {
-                          who: 'عبدالله العتيبي',
-                          text: `اللقاء القادم: ${s.gdMeetWhen || 'قريبًا'} — ${s.gdMeetPlace || 'يُحدد لاحقًا'}`,
-                          time: 'الآن',
+                          who: t('عبدالله العتيبي'),
+                          text: `اللقاء القادم: ${s.gdMeetWhen || t('قريبًا')} — ${s.gdMeetPlace || t('يُحدد لاحقًا')}`,
+                          time: t('الآن'),
                         },
                       ],
                     },
@@ -1276,7 +1277,7 @@ function GroupCreate() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <ScreenHeader title="أنشئ مجموعة" onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
-        <Label>نوع المجموعة</Label>
+        <Label>{t('نوع المجموعة')}</Label>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
           {gcKindDefs.map((k) => (
             <KindTile
@@ -1303,7 +1304,7 @@ function GroupCreate() {
           style={{ ...inputStyle, marginTop: 8, fontSize: 12.5, resize: 'none', lineHeight: 1.7 }}
         />
 
-        <Label style={{ marginTop: 16 }}>دورية اللقاء</Label>
+        <Label style={{ marginTop: 16 }}>{t('دورية اللقاء')}</Label>
         <div style={{ display: 'flex', gap: 8 }}>
           {gcFreqDefs.map((f) => (
             <Chip
@@ -1316,7 +1317,7 @@ function GroupCreate() {
           ))}
         </div>
 
-        <Label style={{ marginTop: 16 }}>من يمكنه الانضمام</Label>
+        <Label style={{ marginTop: 16 }}>{t('من يمكنه الانضمام')}</Label>
         <div style={{ display: 'flex', gap: 8 }}>
           {gcPrivacyDefs.map((p) => (
             <Chip
@@ -1343,7 +1344,7 @@ function GroupCreate() {
           size="lg"
           full
           onClick={() => {
-            const name = st.gcName.trim() || 'مجموعة جديدة';
+            const name = st.gcName.trim() || t('مجموعة جديدة');
             set((s) => ({
               myGroups: [
                 ...s.myGroups,
@@ -1353,7 +1354,7 @@ function GroupCreate() {
                   members: 1,
                   meets: s.gcFreq,
                   mine: true,
-                  organizer: 'عبدالله العتيبي',
+                  organizer: t('عبدالله العتيبي'),
                   about: s.gcAbout.trim() || `مجموعة أنشأها ساكن في ${cfg.compoundName}.`,
                 },
               ],

@@ -10,6 +10,7 @@ import type { ProviderScreen } from '@/provider/types';
 import { AdminConsole } from '@/admin/AdminConsole';
 import { adminGallery, adminScreenCount, type AdminGalleryKey } from '@/admin/gallery';
 import type { SectionKey } from '@/admin/data';
+import { useLang, t } from '@/i18n/lang';
 
 type AppId = 'resident' | 'provider' | 'admin';
 type Mode = 'phone' | 'gallery';
@@ -20,6 +21,7 @@ type Mode = 'phone' | 'gallery';
  * every screen renders in full rather than as a title and blurb.
  */
 export function App() {
+  const { lang, dir, setLang } = useLang();
   const [app, setApp] = useState<AppId>('resident');
   const [mode, setMode] = useState<Mode>('phone');
   const [initialScreen, setInitialScreen] = useState<ScreenKey>('home');
@@ -59,7 +61,7 @@ export function App() {
       }}
     >
       <div
-        dir="rtl"
+        dir={dir}
         style={{
           width: '100%',
           maxWidth: 1340,
@@ -88,11 +90,49 @@ export function App() {
             </span>
           </div>
           <div style={{ fontSize: 11.5, color: color.slate }}>
-            نموذج تفاعلي — كل المراحل 1–4 · {APP_LABEL[app]}
+            {t('نموذج تفاعلي — كل المراحل 1–4')} · {t(APP_LABEL[app])}
           </div>
         </div>
 
         <div style={{ flex: 1 }} />
+
+        {/* language switcher — the bilingual shell's AR/EN segmented control */}
+        <div
+          style={{
+            display: 'flex',
+            background: '#fff',
+            borderRadius: radius.pill,
+            padding: 4,
+            boxShadow: shadow.card,
+          }}
+        >
+          {([
+            { k: 'ar' as const, l: 'العربية' },
+            { k: 'en' as const, l: 'English' },
+          ]).map((o) => {
+            const on = lang === o.k;
+            return (
+              <button
+                key={o.k}
+                onClick={() => setLang(o.k)}
+                style={{
+                  border: 'none',
+                  cursor: 'pointer',
+                  borderRadius: radius.pill,
+                  padding: '7px 18px',
+                  fontSize: 12.5,
+                  fontWeight: 800,
+                  fontFamily: font.sans,
+                  background: on ? color.navy : 'transparent',
+                  color: on ? '#fff' : color.slate,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {o.l}
+              </button>
+            );
+          })}
+        </div>
 
         {/* interface switcher */}
         <div
@@ -126,7 +166,7 @@ export function App() {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {APP_LABEL[a]}
+                {t(APP_LABEL[a])}
               </button>
             );
           })}
@@ -144,8 +184,8 @@ export function App() {
         >
           {(
             [
-              { k: 'phone' as Mode, l: app === 'admin' ? 'اللوحة التفاعلية' : 'الجوال التفاعلي' },
-              { k: 'gallery' as Mode, l: 'معرض الشاشات' },
+              { k: 'phone' as Mode, l: t(app === 'admin' ? 'اللوحة التفاعلية' : 'الجوال التفاعلي') },
+              { k: 'gallery' as Mode, l: t('معرض الشاشات') },
             ]
           ).map((m) => {
             const on = mode === m.k;

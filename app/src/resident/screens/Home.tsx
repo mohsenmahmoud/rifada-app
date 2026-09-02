@@ -6,6 +6,7 @@ import { serviceDefs } from '../data/services';
 import { UNIT_NO, UNIT_SHORT } from '../data/seed';
 import { fmt, statementTotal } from '../data/payments';
 import { useResident } from '../store';
+import { t } from '@/i18n/lang';
 
 const HERO_IMG = `${import.meta.env.BASE_URL}img/hero-compound.webp`;
 
@@ -14,17 +15,17 @@ export function Home() {
   const { st, cfg, go, isRent, paid, firstName, initials, can, lockToast } = useResident();
 
   const heroLabel = paid
-    ? 'كل المستحقات مسددة'
+    ? t('كل المستحقات مسددة')
     : isRent
-      ? 'المستحق حتى 25 يوليو'
-      : 'القسط القادم — 1 سبتمبر';
+      ? t('المستحق حتى 25 يوليو')
+      : t('القسط القادم — 1 سبتمبر');
   const total = statementTotal(isRent);
-  const heroAmount = paid ? '0 ريال' : `${fmt(total)} ريال`;
+  const heroAmount = paid ? t('0 ريال') : `${fmt(total)} ريال`;
   const heroSub = paid
-    ? 'شكرًا لالتزامك بالسداد'
+    ? t('شكرًا لالتزامك بالسداد')
     : isRent
       ? `إيجار شهري · ${UNIT_SHORT}`
-      : 'تقسيط تمليك · سنة 3 من 8';
+      : t('تقسيط تمليك · سنة 3 من 8');
 
   // move-in completion, computed off the receive checklist only
   let done = 0;
@@ -214,14 +215,14 @@ export function Home() {
                 whiteSpace: 'nowrap',
               }}
             >
-              {paid ? 'تم السداد ✓' : 'ادفع الآن'}
+              {paid ? t('تم السداد ✓') : t('ادفع الآن')}
             </button>
           </div>
         </div>
 
         {/* services grid */}
         <div style={{ display: 'flex', alignItems: 'baseline', margin: '22px 2px 10px' }}>
-          <span style={{ fontSize: 16.5, fontWeight: 800, color: color.navy }}>خدماتك</span>
+          <span style={{ fontSize: 16.5, fontWeight: 800, color: color.navy }}>{t('خدماتك')}</span>
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           {serviceDefs.map((s) => {
@@ -418,7 +419,7 @@ export function ServicesList() {
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px' }}>
-        <div style={{ fontSize: 21, fontWeight: 900, color: color.navy }}>خدماتك</div>
+        <div style={{ fontSize: 21, fontWeight: 900, color: color.navy }}>{t('خدماتك')}</div>
       </div>
       <div
         style={{
@@ -509,7 +510,7 @@ export function ServiceHub() {
         >
           <Icon path={icons.chevron} size={16} width={2} />
         </button>
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>الخدمات</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('الخدمات')}</div>
       </div>
 
       <div
@@ -550,7 +551,7 @@ export function ServiceHub() {
           >
             <Icon path="M13 2L4 14h6l-1 8 9-12h-6z" size={24} stroke={color.gold} />
           </span>
-          <span style={{ fontSize: 16.5, fontWeight: 900, color: '#fff' }}>اطلب مقدم خدمة</span>
+          <span style={{ fontSize: 16.5, fontWeight: 900, color: '#fff' }}>{t('اطلب مقدم خدمة')}</span>
           <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', lineHeight: 1.8 }}>
             مطابقة فورية مع أقرب فني متاح — سباكة، كهرباء، تنظيف وغيرها. تدفع بضمان رفادة ولا يُحوَّل
             المبلغ إلا بعد رضاك.
@@ -616,7 +617,7 @@ export function ServiceHub() {
               alignSelf: 'flex-start',
             }}
           >
-            {open > 0 ? `${open} بلاغات مفتوحة` : 'لا توجد بلاغات مفتوحة'}
+            {open > 0 ? `${open} بلاغات مفتوحة` : t('لا توجد بلاغات مفتوحة')}
           </span>
         </button>
       </div>

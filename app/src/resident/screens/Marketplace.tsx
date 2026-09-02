@@ -11,6 +11,7 @@ import {
 import { UNIT } from '../data/seed';
 import { useResident } from '../store';
 import { Stars, Timeline } from './parts';
+import { t } from '@/i18n/lang';
 
 /** R33 — Request an instant service. */
 function Request() {
@@ -19,7 +20,7 @@ function Request() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <ScreenHeader title="اطلب خدمة فورية" onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
-        <FieldLabel>نوع الخدمة</FieldLabel>
+        <FieldLabel>{t('نوع الخدمة')}</FieldLabel>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
           {reqKindDefs.map((k) => {
             const on = st.reqKind === k.label;
@@ -55,7 +56,7 @@ function Request() {
           })}
         </div>
 
-        <FieldLabel style={{ marginTop: 16 }}>تفاصيل الطلب</FieldLabel>
+        <FieldLabel style={{ marginTop: 16 }}>{t('تفاصيل الطلب')}</FieldLabel>
         <textarea
           value={st.reqNotes}
           onChange={(e) => set({ reqNotes: e.target.value })}
@@ -78,7 +79,7 @@ function Request() {
         />
 
         <Card pad="13px 16px" style={{ borderRadius: radius.inner, marginTop: 12, display: 'flex', alignItems: 'center' }}>
-          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>الوحدة</span>
+          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{t('الوحدة')}</span>
           <span style={{ flex: 1 }} />
           <span style={{ fontSize: 12.5, color: color.slate }}>{UNIT}</span>
         </Card>
@@ -195,7 +196,7 @@ function Escrow() {
             <span style={{ ...numeric, fontSize: 30, fontWeight: 700, color: color.navy }}>
               {prov.price}
             </span>
-            <span style={{ fontSize: 13, color: color.slate }}>ر.س</span>
+            <span style={{ fontSize: 13, color: color.slate }}>{t('ر.س')}</span>
           </div>
           <div
             style={{
@@ -255,7 +256,7 @@ function LiveJob() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={() => go('home')} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>حالة الطلب</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('حالة الطلب')}</div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
@@ -454,7 +455,7 @@ function Dispute() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <ScreenHeader title="الإبلاغ عن مشكلة" onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
-        <FieldLabel>ما المشكلة؟</FieldLabel>
+        <FieldLabel>{t('ما المشكلة؟')}</FieldLabel>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {disputeReasonDefs.map((label) => {
             const on = st.disputeReason === label;
@@ -481,7 +482,7 @@ function Dispute() {
           })}
         </div>
 
-        <FieldLabel style={{ marginTop: 16 }}>التفاصيل</FieldLabel>
+        <FieldLabel style={{ marginTop: 16 }}>{t('التفاصيل')}</FieldLabel>
         <textarea
           value={st.disputeNotes}
           onChange={(e) => set({ disputeNotes: e.target.value })}
@@ -518,7 +519,7 @@ function Dispute() {
           }}
         >
           <Icon path={icons.camera} size={18} stroke={color.slate} width={1.5} />
-          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.slate }}>إضافة صورة</span>
+          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.slate }}>{t('إضافة صورة')}</span>
         </button>
 
         <div

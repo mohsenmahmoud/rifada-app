@@ -15,6 +15,7 @@ import { UNIT } from '../data/seed';
 import { useResident } from '../store';
 import { DetailRow, Note, SuccessMark, Timeline } from './parts';
 import { Radio } from './Marketplace';
+import { t } from '@/i18n/lang';
 
 /**
  * R10 — Statement. Carries the dual rent/installment model that is the key
@@ -30,7 +31,7 @@ function Statement() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={() => go('home')} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>السداد</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('السداد')}</div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
@@ -44,8 +45,8 @@ function Statement() {
           }}
         >
           {[
-            { k: 'rent' as const, l: 'إيجار شهري' },
-            { k: 'installment' as const, l: 'تقسيط تمليك' },
+            { k: 'rent' as const, l: t('إيجار شهري') },
+            { k: 'installment' as const, l: t('تقسيط تمليك') },
           ].map((m) => {
             const on = (isRent ? 'rent' : 'installment') === m.k;
             return (
@@ -77,15 +78,15 @@ function Statement() {
             <span style={{ ...numeric, fontSize: 34, fontWeight: 700, color: color.navy }}>
               {fmt(total)}
             </span>
-            <span style={{ fontSize: 14, fontWeight: 700, color: color.slate }}>ريال</span>
+            <span style={{ fontSize: 14, fontWeight: 700, color: color.slate }}>{t('ريال')}</span>
           </div>
 
           {!isRent && (
             <div style={{ marginTop: 14 }}>
               <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>سنة 3 من 8</span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t('سنة 3 من 8')}</span>
                 <span style={{ flex: 1 }} />
-                <span style={{ fontSize: 11.5, color: color.slate }}>11 قسطًا متبقيًا من 16</span>
+                <span style={{ fontSize: 11.5, color: color.slate }}>{t('11 قسطًا متبقيًا من 16')}</span>
               </div>
               <div
                 style={{
@@ -143,7 +144,7 @@ function Statement() {
             </div>
           ))}
           <div style={{ display: 'flex', alignItems: 'center', padding: '12px 0' }}>
-            <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>الإجمالي</span>
+            <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t('الإجمالي')}</span>
             <span style={{ flex: 1 }} />
             <span style={{ ...numeric, fontSize: 14.5, fontWeight: 700, color: color.navy }}>
               {fmt(total)} ر.س
@@ -153,9 +154,9 @@ function Statement() {
 
         <Card pad="2px 16px" style={{ marginTop: 12 }}>
           {[
-            { label: 'سجل السداد والإيصالات', to: 'payHistory' as const },
-            { label: 'الخدمات المالية والتأمين', to: 'fin' as const },
-            { label: 'إدارة الدفع التلقائي', to: 'autopay' as const },
+            { label: t('سجل السداد والإيصالات'), to: 'payHistory' as const },
+            { label: t('الخدمات المالية والتأمين'), to: 'fin' as const },
+            { label: t('إدارة الدفع التلقائي'), to: 'autopay' as const },
           ].map((pl) => (
             <button
               key={pl.label}
@@ -187,7 +188,7 @@ function Statement() {
           onClick={() => (paid ? go('payHistory') : go('payNow'))}
           style={{ marginTop: 16, boxShadow: '0 6px 18px rgba(199,154,60,0.35)' }}
         >
-          {paid ? 'تم السداد ✓ — عرض الإيصال' : `ادفع ${fmt(total)} ر.س`}
+          {paid ? t('تم السداد ✓ — عرض الإيصال') : `ادفع ${fmt(total)} ر.س`}
         </PillButton>
       </div>
     </div>
@@ -225,9 +226,9 @@ function PayNow() {
             alignItems: 'center',
           }}
         >
-          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>المبلغ المطلوب</span>
+          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>{t('المبلغ المطلوب')}</span>
           <span style={{ ...numeric, fontSize: 32, fontWeight: 700, color: '#fff', marginTop: 2 }}>
-            {fmt(total)} <span style={{ fontSize: 15 }}>ر.س</span>
+            {fmt(total)} <span style={{ fontSize: 15 }}>{t('ر.س')}</span>
           </span>
         </div>
 
@@ -273,7 +274,7 @@ function PayNow() {
           }}
         >
           <Icon path={icons.shield} size={14} stroke={color.slate} width={1.5} />
-          <span style={{ fontSize: 11, color: color.slate }}>معاملة مؤمنة عبر بوابة دفع معتمدة</span>
+          <span style={{ fontSize: 11, color: color.slate }}>{t('معاملة مؤمنة عبر بوابة دفع معتمدة')}</span>
         </div>
       </div>
 
@@ -355,8 +356,8 @@ function History() {
     ...(st.rentPaid || st.instPaid
       ? [
           {
-            label: isRent ? 'إيجار يوليو + رسوم الصيانة' : 'قسط سنة 3 + رسوم الصيانة',
-            date: '10 يوليو 2026',
+            label: isRent ? t('إيجار يوليو + رسوم الصيانة') : t('قسط سنة 3 + رسوم الصيانة'),
+            date: t('10 يوليو 2026'),
             no: '88412',
             amount: st.paidAmount || fmt(statementTotal(isRent)),
           },
@@ -491,7 +492,7 @@ function Autopay() {
                 color: st.autoPayOn ? color.greenDeep : color.navy,
               }}
             >
-              {st.autoPayOn ? 'الدفع التلقائي مفعّل' : 'الدفع التلقائي متوقف'}
+              {st.autoPayOn ? t('الدفع التلقائي مفعّل') : t('الدفع التلقائي متوقف')}
             </span>
             <span style={{ fontSize: 11, color: color.slate }}>
               يُخصم المستحق تلقائيًا يوم 25 من كل شهر
@@ -521,9 +522,9 @@ function Autopay() {
             <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>
               بطاقة بنكية •••• 4821
             </span>
-            <span style={{ fontSize: 11, color: color.slate }}>مدى — البنك الأهلي السعودي</span>
+            <span style={{ fontSize: 11, color: color.slate }}>{t('مدى — البنك الأهلي السعودي')}</span>
           </span>
-          <span style={{ fontSize: 11.5, fontWeight: 800, color: color.gold }}>تغيير</span>
+          <span style={{ fontSize: 11.5, fontWeight: 800, color: color.gold }}>{t('تغيير')}</span>
         </Card>
 
         <div style={{ fontSize: 13.5, fontWeight: 800, color: color.navy, margin: '18px 2px 10px' }}>
@@ -598,18 +599,18 @@ function Financial() {
   const finItems = [
     {
       dot: color.orange,
-      title: 'حماية من السرقة',
-      sub: 'تغطية حتى 50,000 ر.س على محتويات الوحدة — بوليصة سارية.',
+      title: t('حماية من السرقة'),
+      sub: t('تغطية حتى 50,000 ر.س على محتويات الوحدة — بوليصة سارية.'),
     },
     {
       dot: color.green,
-      title: 'تقييم السداد',
-      sub: 'سجل سداد إيجابي يفيدك عند التقدم لعقود إيجار أو تقسيط مستقبلية.',
+      title: t('تقييم السداد'),
+      sub: t('سجل سداد إيجابي يفيدك عند التقدم لعقود إيجار أو تقسيط مستقبلية.'),
     },
     {
       dot: color.navy,
-      title: 'تأمين الوحدة',
-      sub: 'بوليصة JW-214-2026 — سارية حتى 31 ديسمبر 2026.',
+      title: t('تأمين الوحدة'),
+      sub: t('بوليصة JW-214-2026 — سارية حتى 31 ديسمبر 2026.'),
     },
   ];
 

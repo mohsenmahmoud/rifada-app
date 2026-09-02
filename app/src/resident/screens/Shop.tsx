@@ -15,6 +15,7 @@ import {
 } from '../data/shop';
 import { useResident } from '../store';
 import { Avatar } from './parts';
+import { t } from '@/i18n/lang';
 
 const menuOf = (idx: number) => menuByStore[idx] ?? menuByStore[0];
 
@@ -28,13 +29,13 @@ function Browse() {
     .filter((s) => (st.fdTab === 'all' || s.kind === st.fdTab) && (!q || s.name.includes(q)));
 
   const catLabel = shopCatDefs.find((c) => c.key === st.fdTab)?.label ?? '';
-  const header = q ? 'نتائج البحث' : st.fdTab === 'all' ? 'الأقرب لك' : catLabel;
+  const header = q ? t('نتائج البحث') : st.fdTab === 'all' ? t('الأقرب لك') : catLabel;
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={back} />
-        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>المتجر</div>
+        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>{t('المتجر')}</div>
         <button
           onClick={() => go('foodHistory')}
           style={{
@@ -231,14 +232,14 @@ function Browse() {
                 )}
               </span>
               <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-                ★ {s.rating} · {s.eta} · توصيل {s.deliv === 0 ? 'مجاني' : `${s.deliv} ر.س`}
+                ★ {s.rating} · {s.eta} · توصيل {s.deliv === 0 ? t('مجاني') : `${s.deliv} ر.س`}
               </span>
             </span>
             <StatusPill
               tone={s.open ? 'green' : 'gray'}
               style={{ fontSize: 10, padding: '3px 12px', fontWeight: 800 }}
             >
-              {s.open ? 'مفتوح' : 'مغلق الآن'}
+              {s.open ? t('مفتوح') : t('مغلق الآن')}
             </StatusPill>
           </button>
         ))}
@@ -319,7 +320,7 @@ function Menu() {
             {store.name}
           </span>
           <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-            ★ {store.rating} · {store.eta} · توصيل {store.deliv === 0 ? 'مجاني' : `${store.deliv} ر.س`}
+            ★ {store.rating} · {store.eta} · توصيل {store.deliv === 0 ? t('مجاني') : `${store.deliv} ر.س`}
           </span>
         </div>
       </div>
@@ -343,7 +344,7 @@ function Menu() {
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', margin: '14px 20px 8px' }}>
-          <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>القائمة</span>
+          <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t('القائمة')}</span>
           <span style={{ flex: 1 }} />
           <span style={{ fontSize: 10.5, color: color.slate }}>{menu.length} صنف</span>
         </div>
@@ -490,7 +491,7 @@ function Menu() {
             >
               {count}
             </span>
-            <span style={{ flex: 1, textAlign: 'center' }}>عرض السلة</span>
+            <span style={{ flex: 1, textAlign: 'center' }}>{t('عرض السلة')}</span>
             <span style={{ ...numeric, fontSize: 13, fontWeight: 700 }}>{subtotal} ر.س</span>
           </button>
         </div>
@@ -531,7 +532,7 @@ function Cart() {
           ))}
           <div style={{ display: 'flex', alignItems: 'center', padding: '12px 0' }}>
             <span style={{ fontSize: 12, fontWeight: 900, color: color.navy, whiteSpace: 'nowrap' }}>
-              الإجمالي + التوصيل ({subtotal >= 200 ? 'مجاني 🎉' : `${delivery} ر.س`})
+              الإجمالي + التوصيل ({subtotal >= 200 ? t('مجاني 🎉') : `${delivery} ر.س`})
             </span>
             <span style={{ flex: 1 }} />
             <span style={{ ...numeric, fontSize: 15, fontWeight: 700, color: color.navy, whiteSpace: 'nowrap' }}>
@@ -544,7 +545,7 @@ function Cart() {
           pad="13px 16px"
           style={{ borderRadius: radius.inner, marginTop: 10, display: 'flex', alignItems: 'center' }}
         >
-          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>التوصيل إلى</span>
+          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{t('التوصيل إلى')}</span>
           <span style={{ flex: 1 }} />
           <span style={{ fontSize: 12.5, color: color.slate }}>{UNIT}</span>
         </Card>
@@ -576,7 +577,7 @@ function Cart() {
           <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, color: color.navy }}>
             بطاقة بنكية •••• 4821
           </span>
-          <span style={{ fontSize: 11, fontWeight: 800, color: color.gold }}>تغيير</span>
+          <span style={{ fontSize: 11, fontWeight: 800, color: color.gold }}>{t('تغيير')}</span>
         </Card>
 
         <div
@@ -633,7 +634,7 @@ function Track() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={() => go('home')} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>تتبع الطلب</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('تتبع الطلب')}</div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
@@ -647,7 +648,7 @@ function Track() {
           }}
         >
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', fontWeight: 700 }}>
-            {stage >= orderStepDefs.length - 1 ? 'اكتمل الطلب' : 'الوصول المتوقع خلال'}
+            {stage >= orderStepDefs.length - 1 ? t('اكتمل الطلب') : t('الوصول المتوقع خلال')}
           </div>
           <div style={{ fontSize: 24, fontWeight: 900, color: '#fff', marginTop: 2 }}>
             {trackEtas[Math.max(0, stage)]}

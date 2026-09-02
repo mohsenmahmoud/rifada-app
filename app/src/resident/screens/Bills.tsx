@@ -16,6 +16,7 @@ import { useResident } from '../store';
 import type { BillKey } from '../types';
 import { ChipRow, Note } from './parts';
 import { Radio } from './Marketplace';
+import { t } from '@/i18n/lang';
 
 /** Resolve a bill's status from either the seeded set or a newly linked one. */
 function statusOf(
@@ -41,7 +42,7 @@ function Home() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={() => go('home')} />
-        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>فواتيرك</div>
+        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>{t('فواتيرك')}</div>
         <button
           onClick={() => go('billHistory')}
           style={{
@@ -75,7 +76,7 @@ function Home() {
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 4 }}>
             <span style={{ ...numeric, fontSize: 28, fontWeight: 700, color: '#fff' }}>{totalDue}</span>
-            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)' }}>ر.س</span>
+            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)' }}>{t('ر.س')}</span>
           </div>
           <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>
             منفصلة تمامًا عن رسوم الوحدة — تُسدد عبر شريك الدفع المعتمد
@@ -147,7 +148,7 @@ function Home() {
               {linked ? (
                 <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 4 }}>
                   <span style={{ ...numeric, fontSize: 14, fontWeight: 700, color: color.navy }}>
-                    {d.amount} <span style={{ fontSize: 9.5, color: color.slate }}>ر.س</span>
+                    {d.amount} <span style={{ fontSize: 9.5, color: color.slate }}>{t('ر.س')}</span>
                   </span>
                   <StatusPill bg={m.bg} c={m.c} style={{ fontSize: 9.5, padding: '2px 10px', fontWeight: 800 }}>
                     {m.label}
@@ -215,7 +216,7 @@ function Link() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <ScreenHeader title="ربط فاتورة جديدة" onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
-        <Label>نوع الفاتورة</Label>
+        <Label>{t('نوع الفاتورة')}</Label>
         <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', marginBottom: 16 }}>
           {billOrder.map((key) => {
             const on = cat === key;
@@ -268,7 +269,7 @@ function Link() {
           })}
         </div>
 
-        <Label style={{ marginTop: 16 }}>رقم الحساب / العداد / المشترك</Label>
+        <Label style={{ marginTop: 16 }}>{t('رقم الحساب / العداد / المشترك')}</Label>
         <input
           dir="ltr"
           value={st.linkAccountNo}
@@ -346,7 +347,7 @@ function Detail() {
             <span style={{ ...numeric, fontSize: 34, fontWeight: 700, color: color.navy }}>
               {d.amount}
             </span>
-            <span style={{ fontSize: 13, color: color.slate }}>ر.س</span>
+            <span style={{ fontSize: 13, color: color.slate }}>{t('ر.س')}</span>
           </div>
           <StatusPill bg={m.bg} c={m.c} style={{ fontSize: 10.5, padding: '3px 14px', fontWeight: 800, marginTop: 8 }}>
             {m.label}
@@ -354,7 +355,7 @@ function Detail() {
         </Card>
 
         <Card pad={16} style={{ borderRadius: 18, marginTop: 12 }}>
-          <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>تفاصيل الفاتورة</div>
+          <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t('تفاصيل الفاتورة')}</div>
           {d.lines.map((bl) => (
             <div
               key={bl.name}
@@ -372,7 +373,7 @@ function Detail() {
             </div>
           ))}
           <div style={{ display: 'flex', fontSize: 11, color: color.slate, paddingTop: 8 }}>
-            <span>رسوم خدمة رفادة</span>
+            <span>{t('رسوم خدمة رفادة')}</span>
             <span style={{ flex: 1 }} />
             <span style={{ ...numeric, fontWeight: 700 }}>{BILL_SERVICE_FEE} ر.س</span>
           </div>
@@ -535,7 +536,7 @@ function Autopay() {
           </span>
           <span style={{ flex: 1, textAlign: 'right', display: 'flex', flexDirection: 'column', gap: 1 }}>
             <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>
-              {on ? 'السداد التلقائي مفعّل' : 'السداد التلقائي متوقف'}
+              {on ? t('السداد التلقائي مفعّل') : t('السداد التلقائي متوقف')}
             </span>
             <span style={{ fontSize: 10.5, color: color.slate }}>
               تُسدد تلقائيًا في تاريخ الاستحقاق من بطاقتك المحفوظة
@@ -544,7 +545,7 @@ function Autopay() {
         </button>
 
         <Card pad={16} style={{ borderRadius: 18, marginTop: 12 }}>
-          <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>حد التنبيه</div>
+          <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t('حد التنبيه')}</div>
           <div style={{ fontSize: 10.5, color: color.slate, marginTop: 2 }}>
             نبهك قبل السداد إذا تجاوزت الفاتورة هذا المبلغ
           </div>
@@ -577,7 +578,7 @@ function Autopay() {
         </Card>
 
         <div style={{ marginTop: 12 }}>
-          <Note>عند تجاوز الحد، يتوقف السداد التلقائي وتصلك رسالة لمراجعة الفاتورة قبل الدفع.</Note>
+          <Note>{t('عند تجاوز الحد، يتوقف السداد التلقائي وتصلك رسالة لمراجعة الفاتورة قبل الدفع.')}</Note>
         </div>
       </div>
     </div>
