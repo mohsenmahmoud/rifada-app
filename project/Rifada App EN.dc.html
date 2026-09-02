@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<meta name="ext-resource-dependency" content="./Rifada Phone EN.dc.html" data-resource-id="./Rifada%20Phone%20EN.dc.html" />
+<meta name="ext-resource-dependency" content="./ios-frame.jsx" data-resource-id="./ios-frame.jsx" />
+<meta name="ext-resource-dependency" content="./image-slot.js" data-resource-id="./image-slot.js" />
+<template id="__bundler_thumbnail" data-bg-color="#1F3B57">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#1F3B57"/>
+    <path d="M330 470L520 280l190 190" fill="none" stroke="#C79A3C" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M490 560l190-190 190 190" fill="none" stroke="#F7F4EE" stroke-width="46" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9E4D9;}
+a{color:#1F3B57;}a:hover{color:#C79A3C;}
+button{font-family:'Cairo',sans-serif;}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;font-family:'Cairo',sans-serif;background:radial-gradient(1200px 600px at 50% -10%, #F3EFE6 0%, #E9E4D9 60%)">
+
+  <!-- preload globals for the embedded phone (bundler inlines main-page x-imports) -->
+  <div style="position:absolute;width:0;height:0;overflow:hidden">
+    <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="1px,1px"><span></span></x-import>
+    <x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="1px,1px"></x-import>
+  </div>
+
+  <!-- Top toolbar -->
+  <div dir="ltr" style="width:100%;max-width:1340px;box-sizing:border-box;display:flex;align-items:center;gap:14px;padding:20px 28px 14px">
+    <svg width="30" height="30" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#C79A3C" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#1F3B57" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+    <div style="display:flex;flex-direction:column">
+      <div style="font-size:17px;font-weight:900;color:#1F3B57;line-height:1.2">Rifada <span style="font-size:12px;font-weight:800;color:#C79A3C">رفادة</span></div>
+      <div style="font-size:11.5px;color:#6B7280">Interactive prototype — Cycles 1–4 · Resident app (English)</div>
+    </div>
+    <div style="flex:1"></div>
+    <a href="Jiwar Provider.dc.html" style="display:flex;align-items:center;gap:7px;background:#3FA66B;border-radius:999px;padding:8px 18px;text-decoration:none">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M13 2L4 14h6l-1 8 9-12h-6z" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:800;color:#fff">Provider app</span>
+    </a>
+    <a href="Jiwar Admin.dc.html" style="display:flex;align-items:center;gap:7px;background:#1F3B57;border-radius:999px;padding:8px 18px;text-decoration:none">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M3 21h18M5 21V4h9v17M14 9h5v12M8 8h3M8 12h3M8 16h3" stroke="#C79A3C" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+      <span style="font-size:12px;font-weight:800;color:#fff">Admin console</span>
+    </a>
+    <div style="display:flex;background:#fff;border-radius:999px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+      <button onClick="{{ setPhone }}" style="border:none;cursor:pointer;border-radius:999px;padding:7px 18px;font-size:12.5px;font-weight:700;background:{{ tabPhoneBg }};color:{{ tabPhoneC }}">Interactive phone</button>
+      <button onClick="{{ setMap }}" style="border:none;cursor:pointer;border-radius:999px;padding:7px 18px;font-size:12.5px;font-weight:700;background:{{ tabMapBg }};color:{{ tabMapC }}">Screen gallery</button>
+    </div>
+  </div>
+
+  <!-- Phone mode -->
+  <sc-if value="{{ isPhone }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:6px 0 60px;width:470px">
+      <dc-import name="Rifada Phone EN" embed-phone="{{ true }}" initial-screen="{{ initialScreen }}" payment-model="{{ pModel }}" compound-name="{{ cName }}" resident-name="{{ rName }}" hint-size="470px,920px"></dc-import>
+    </div>
+  </sc-if>
+
+  <!-- Map / gallery mode -->
+  <sc-if value="{{ isMap }}" hint-placeholder-val="{{ false }}">
+    <div dir="ltr" style="width:100%;max-width:1340px;box-sizing:border-box;padding:6px 28px 70px">
+      <div style="font-size:13px;color:#6B7280">Every screen is rendered live — click any screen to open it in the interactive phone.</div>
+      <sc-for list="{{ mapGroups }}" as="g" hint-placeholder-count="3">
+        <div style="margin-top:30px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:800;color:#1F3B57"><span style="width:8px;height:8px;border-radius:99px;background:#C79A3C"></span>{{ g.name }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:12px">
+            <sc-for list="{{ g.screens }}" as="s" hint-placeholder-count="3">
+              <div style="width:236px;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:8px;padding:0 2px">
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:10.5px;font-weight:700;color:#C79A3C;letter-spacing:1px;flex:none">{{ s.id }}</span>
+                  <span style="font-size:12.5px;font-weight:800;color:#1F3B57;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.t }}</span>
+                </div>
+                <div style="position:relative;width:236px;height:497px;border-radius:22px;overflow:hidden;background:#EDE9DF;box-shadow:0 2px 12px rgba(0,0,0,0.09)">
+                  <div style="width:480px;height:1014px;transform:scale(0.49);transform-origin:top left;pointer-events:none">
+                    <dc-import name="Rifada Phone EN" fixed-screen="{{ s.key }}" payment-model="{{ pModel }}" compound-name="{{ cName }}" resident-name="{{ rName }}" hint-size="480px,1014px"></dc-import>
+                  </div>
+                  <button onClick="{{ s.go }}" title="Open in the interactive phone" style="position:absolute;inset:0;background:transparent;border:none;cursor:pointer;padding:0"></button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+      <div style="margin-top:34px;background:rgba(63,166,107,0.1);border-radius:18px;padding:14px 18px;font-size:12.5px;color:#2E7D51;font-weight:700;line-height:1.8">All product cycles (1–4) are built and fully interactive: maintenance, payments and amenities; lost & found, marketplace and gate passes; rewards, messaging and trust score; smart home and contract renewal.</div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;: {&quot;width&quot;: 1340, &quot;height&quot;: 1000}, &quot;paymentModel&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;rent&quot;, &quot;installment&quot;], &quot;default&quot;: &quot;rent&quot;, &quot;tsType&quot;: &quot;'rent'|'installment'&quot;, &quot;section&quot;: &quot;Payment model&quot;}, &quot;compoundName&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Andalus Gardens&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Content&quot;}, &quot;residentName&quot;: {&quot;editor&quot;: &quot;text&quot;, &quot;default&quot;: &quot;Abdullah Al-Otaibi&quot;, &quot;tsType&quot;: &quot;string&quot;, &quot;section&quot;: &quot;Content&quot;}, &quot;startOnMap&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Display&quot;}}">
+class Component extends DCLogic {
+  state = { mode: null, initialScreen: 'home' };
+
+  renderVals() {
+    const props = this.props;
+    const st = this.state;
+    const NAVY = '#1F3B57', SLATE = '#6B7280';
+    const mode = st.mode ?? ((props.startOnMap ?? false) ? 'map' : 'phone');
+    const seg = on => (on ? NAVY : 'transparent');
+    const segC = on => (on ? '#fff' : SLATE);
+
+    const mapDefs = [
+      ['Onboarding', [
+        ['R1', 'splash', 'Splash & invite code'],
+        ['R2', 'otp', 'OTP verification'],
+        ['R3', 'setup', 'Account setup'],
+      ]],
+      ['Home & navigation', [
+        ['R4', 'home', 'Home dashboard'],
+        ['R4b', 'services', 'Services hub'],
+        ['R13', 'feed', 'Announcements & community'],
+        ['R14', 'profile', 'Profile'],
+        ['R22', 'notifs', 'Notifications'],
+      ]],
+      ['Services', [
+        ['HUB', 'svcHub', 'Services — choose a path'],
+        ['R5', 'maintNew', 'New ticket'],
+        ['R6', 'maintList', 'Ticket list'],
+        ['R7', 'maintDetail', 'Ticket detail & rating'],
+        ['R28', 'survey', 'Satisfaction survey'],
+      ]],
+      ['Amenities', [
+        ['R8', 'amen', 'Book amenities'],
+        ['R9', 'amenConfirm', 'Booking confirmation'],
+        ['R9b', 'amenDone', 'Booking success + QR'],
+      ]],
+      ['Payments — rent & installments', [
+        ['R10', 'pay', 'Statement'],
+        ['R11', 'payNow', 'Pay now'],
+        ['R11b', 'paySuccess', 'Payment success & receipt'],
+        ['R16', 'payHistory', 'Payment history'],
+        ['R39', 'autopay', 'Autopay — debit cycle'],
+        ['R27', 'fin', 'Financial services'],
+      ]],
+      ['Move-in & handover', [
+        ['R12', 'movein', 'Move-in/out checklist'],
+      ]],
+      ['Community & services', [
+        ['R17', 'gate', 'Vehicles & gate passes'],
+        ['R18', 'lost', 'Lost & found — browse'],
+        ['R19', 'lostReport', 'Lost & found — report'],
+        ['R20', 'market', 'Marketplace'],
+        ['R21', 'marketDetail', 'Service detail & booking'],
+        ['R23', 'chat', 'Chat with management'],
+      ]],
+      ['Rewards & trust', [
+        ['R24', 'rewards', 'Rewards'],
+        ['R25', 'rewardsModal', 'Redemption modal'],
+        ['R26', 'score', 'Trust score'],
+      ]],
+      ['Real-estate market — resident to resident', [
+        ['R39', 'reBrowse', 'Browse listings'],
+        ['R40', 'reCreate', 'List your unit'],
+        ['R41', 'reDetail', 'Listing detail'],
+        ['R42', 'reMine', 'My listings'],
+      ]],
+      ['Family accounts', [
+        ['R43', 'family', 'Family members'],
+        ['R44', 'famPerms', 'Member permissions'],
+      ]],
+      ['My bills — external billers', [
+        ['R51', 'bills', 'My bills — home'],
+        ['R52', 'billLink', 'Link a new bill'],
+        ['R53', 'billDetail', 'Bill detail & payment'],
+        ['R54', 'billHistory', 'Bill payment history'],
+        ['R55', 'billAutopay', 'Bill autopay'],
+      ]],
+      ['The Store — all product vendors', [
+        ['R46', 'food', 'Store — browse'],
+        ['R47', 'foodMenu', 'Menu & cart'],
+        ['R48', 'foodCart', 'Cart & checkout'],
+        ['R49', 'foodTrack', 'Order tracking'],
+        ['R50', 'foodHistory', 'Past orders'],
+      ]],
+      ['Provider marketplace — instant matching', [
+        ['R33', 'reqService', 'Request a service'],
+        ['R34', 'matching', 'Available providers'],
+        ['R37', 'escrow', 'Escrow hold'],
+        ['R35', 'liveJob', 'Live job status'],
+        ['R36', 'rateProvider', 'Rate the provider'],
+        ['R38', 'dispute', 'Report an issue'],
+      ]],
+      ['Scale & data', [
+        ['R29', 'consent', 'Data-sharing consent'],
+        ['R30', 'pets', 'Pets'],
+        ['R31', 'smart', 'Smart home'],
+        ['R32', 'renew', 'Service contract renewal'],
+        ['D1', 'docs', 'Documents'],
+        ['D2', 'contacts', 'Contacts'],
+        ['D3', 'links', 'Important links'],
+      ]],
+    ];
+    const jump = key => () => this.setState({
+      mode: 'phone',
+      initialScreen: key === 'rewardsModal' ? 'rewards' : key,
+    });
+    const mapGroups = mapDefs.map(def => ({
+      name: def[0],
+      screens: def[1].map(s => ({ id: s[0], key: s[1], t: s[2], go: jump(s[1]) })),
+    }));
+
+    return {
+      isPhone: mode === 'phone', isMap: mode === 'map',
+      setPhone: () => this.setState({ mode: 'phone' }),
+      setMap: () => this.setState({ mode: 'map' }),
+      tabPhoneBg: seg(mode === 'phone'), tabPhoneC: segC(mode === 'phone'),
+      tabMapBg: seg(mode === 'map'), tabMapC: segC(mode === 'map'),
+      mapGroups,
+      initialScreen: st.initialScreen,
+      pModel: props.paymentModel ?? 'rent',
+      cName: props.compoundName ?? 'Andalus Gardens',
+      rName: props.residentName ?? 'Abdullah Al-Otaibi',
+    };
+  }
+}
+</script>
+</body>
+</html>

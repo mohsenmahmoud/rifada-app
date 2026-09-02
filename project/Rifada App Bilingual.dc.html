@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#E9E4D9;}
+a{color:#1F3B57;}a:hover{color:#C79A3C;}
+button{font-family:'Cairo',sans-serif;}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;font-family:'Cairo',sans-serif;background:radial-gradient(1200px 600px at 50% -10%, #F3EFE6 0%, #E9E4D9 60%)">
+
+  <!-- preload globals for the embedded phones -->
+  <div style="position:absolute;width:0;height:0;overflow:hidden">
+    <x-import component-from-global-scope="IOSDevice" from="./ios-frame.jsx" hint-size="1px,1px"><span></span></x-import>
+    <x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="1px,1px"></x-import>
+  </div>
+
+  <!-- Top toolbar -->
+  <div dir="{{ dir }}" style="width:100%;max-width:1340px;box-sizing:border-box;display:flex;align-items:center;gap:14px;padding:20px 28px 14px">
+    <svg width="30" height="30" viewBox="0 0 48 48" fill="none"><path d="M8 27L21 14l13 13" stroke="#C79A3C" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path><path d="M17 36L30 23l13 13" stroke="#1F3B57" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"></path></svg>
+    <div style="display:flex;flex-direction:column">
+      <div style="font-size:17px;font-weight:900;color:#1F3B57;line-height:1.2">{{ brandMain }} <span style="font-size:12px;font-weight:800;color:#C79A3C">{{ brandAccent }}</span></div>
+      <div style="font-size:11.5px;color:#6B7280">{{ subtitle }}</div>
+    </div>
+    <div style="flex:1"></div>
+    <div style="display:flex;background:#fff;border-radius:999px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+      <button onClick="{{ setAr }}" style="border:none;cursor:pointer;border-radius:999px;padding:7px 18px;font-size:12.5px;font-weight:800;background:{{ tabArBg }};color:{{ tabArC }}">العربية</button>
+      <button onClick="{{ setEn }}" style="border:none;cursor:pointer;border-radius:999px;padding:7px 18px;font-size:12.5px;font-weight:800;background:{{ tabEnBg }};color:{{ tabEnC }}">English</button>
+    </div>
+    <div style="display:flex;background:#fff;border-radius:999px;padding:4px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+      <button onClick="{{ setPhone }}" style="border:none;cursor:pointer;border-radius:999px;padding:7px 18px;font-size:12.5px;font-weight:700;background:{{ tabPhoneBg }};color:{{ tabPhoneC }}">{{ tPhone }}</button>
+      <button onClick="{{ setMap }}" style="border:none;cursor:pointer;border-radius:999px;padding:7px 18px;font-size:12.5px;font-weight:700;background:{{ tabMapBg }};color:{{ tabMapC }}">{{ tMap }}</button>
+    </div>
+  </div>
+
+  <!-- Phone mode -->
+  <sc-if value="{{ isPhone }}" hint-placeholder-val="{{ true }}">
+    <div style="padding:6px 0 60px;width:470px">
+      <sc-if value="{{ isAr }}" hint-placeholder-val="{{ true }}">
+        <dc-import name="Jiwar Phone Pub" embed-phone="{{ true }}" initial-screen="{{ initialScreen }}" on-switch-lang="{{ switchLang }}" hint-size="470px,920px"></dc-import>
+      </sc-if>
+      <sc-if value="{{ isEn }}" hint-placeholder-val="{{ false }}">
+        <dc-import name="Rifada Phone EN" embed-phone="{{ true }}" initial-screen="{{ initialScreen }}" on-switch-lang="{{ switchLang }}" hint-size="470px,920px"></dc-import>
+      </sc-if>
+    </div>
+  </sc-if>
+
+  <!-- Gallery mode -->
+  <sc-if value="{{ isMap }}" hint-placeholder-val="{{ false }}">
+    <div dir="{{ dir }}" style="width:100%;max-width:1340px;box-sizing:border-box;padding:6px 28px 70px">
+      <div style="font-size:13px;color:#6B7280">{{ mapHint }}</div>
+      <sc-for list="{{ mapGroups }}" as="g" hint-placeholder-count="3">
+        <div style="margin-top:30px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:14.5px;font-weight:800;color:#1F3B57"><span style="width:8px;height:8px;border-radius:99px;background:#C79A3C"></span>{{ g.name }}</div>
+          <div style="display:flex;flex-wrap:wrap;gap:18px;margin-top:12px">
+            <sc-for list="{{ g.screens }}" as="s" hint-placeholder-count="3">
+              <div style="width:236px;display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;align-items:center;gap:8px;padding:0 2px">
+                  <span style="font-family:'IBM Plex Sans',sans-serif;font-size:10.5px;font-weight:700;color:#C79A3C;letter-spacing:1px;flex:none">{{ s.id }}</span>
+                  <span style="font-size:12.5px;font-weight:800;color:#1F3B57;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ s.t }}</span>
+                </div>
+                <div style="position:relative;width:236px;height:497px;border-radius:22px;overflow:hidden;background:#EDE9DF;box-shadow:0 2px 12px rgba(0,0,0,0.09)">
+                  <div style="width:480px;height:1014px;transform:scale(0.49);transform-origin:{{ scaleOrigin }};pointer-events:none">
+                    <sc-if value="{{ isAr }}" hint-placeholder-val="{{ true }}">
+                      <dc-import name="Jiwar Phone Pub" fixed-screen="{{ s.key }}" hint-size="480px,1014px"></dc-import>
+                    </sc-if>
+                    <sc-if value="{{ isEn }}" hint-placeholder-val="{{ false }}">
+                      <dc-import name="Rifada Phone EN" fixed-screen="{{ s.key }}" hint-size="480px,1014px"></dc-import>
+                    </sc-if>
+                  </div>
+                  <button onClick="{{ s.go }}" style="position:absolute;inset:0;background:transparent;border:none;cursor:pointer;padding:0"></button>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1340,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  state = { mode: 'phone', lang: 'ar', initialScreen: 'home' };
+
+  renderVals() {
+    const st = this.state;
+    const NAVY = '#1F3B57', SLATE = '#6B7280';
+    const ar = st.lang === 'ar';
+    const seg = on => (on ? NAVY : 'transparent');
+    const segC = on => (on ? '#fff' : SLATE);
+
+    // [id, key, tAr, tEn]
+    const defs = [
+      ['الدخول والتفعيل', 'Onboarding', [
+        ['R1', 'splash', 'شاشة البداية وكود الدعوة', 'Splash & invite code'],
+        ['R2', 'otp', 'التحقق برسالة OTP', 'OTP verification'],
+        ['R3', 'setup', 'إنشاء الحساب', 'Account setup'],
+      ]],
+      ['الرئيسية والتنقّل', 'Home & navigation', [
+        ['R4', 'home', 'الشاشة الرئيسية', 'Home dashboard'],
+        ['R4b', 'services', 'مركز الخدمات', 'Services hub'],
+        ['R13', 'feed', 'الفعاليات والمجتمع', 'Events & community'],
+        ['R14', 'profile', 'الملف الشخصي', 'Profile'],
+        ['R22', 'notifs', 'الإشعارات', 'Notifications'],
+      ]],
+      ['الخدمات', 'Services', [
+        ['HUB', 'svcHub', 'الخدمات — اختيار المسار', 'Services — choose a path'],
+        ['R5', 'maintNew', 'بلاغ جديد', 'New request'],
+        ['R6', 'maintList', 'بلاغاتي', 'My requests'],
+        ['R7', 'maintDetail', 'تفاصيل البلاغ والتقييم', 'Request detail & rating'],
+        ['R28', 'survey', 'استبيان الرضا', 'Satisfaction survey'],
+      ]],
+      ['المرافق', 'Amenities', [
+        ['R8', 'amen', 'حجز المرافق', 'Book amenities'],
+        ['R9', 'amenConfirm', 'تأكيد الحجز', 'Booking confirmation'],
+        ['R9b', 'amenDone', 'نجاح الحجز + QR', 'Booking success + QR'],
+      ]],
+      ['السداد — إيجار وتقسيط', 'Payments — rent & installments', [
+        ['R10', 'pay', 'كشف الحساب', 'Account statement'],
+        ['R11', 'payNow', 'إتمام الدفع', 'Pay now'],
+        ['R11b', 'paySuccess', 'نجاح الدفع والإيصال', 'Payment success & receipt'],
+        ['R16', 'payHistory', 'سجل السداد', 'Payment history'],
+        ['R39', 'autopay', 'الدفع التلقائي — دورة الخصم', 'Autopay — debit cycle'],
+        ['R27', 'fin', 'الخدمات المالية', 'Financial services'],
+      ]],
+      ['الانتقال والاستلام', 'Move-in & handover', [
+        ['R12', 'movein', 'قائمة الاستلام والتسليم', 'Move-in/out checklist'],
+      ]],
+      ['المجتمع والخدمات', 'Community & services', [
+        ['R17', 'gate', 'المركبات وتصاريح الزوار', 'Vehicles & gate passes'],
+        ['R18', 'lost', 'المفقودات — تصفح', 'Lost & found — browse'],
+        ['R19', 'lostReport', 'المفقودات — إبلاغ', 'Lost & found — report'],
+        ['R21', 'marketDetail', 'تفاصيل الخدمة والحجز', 'Service detail & booking'],
+        ['R23', 'chat', 'الرسائل مع الإدارة', 'Chat with management'],
+      ]],
+      ['اسأل جيرانك', 'Community feed', [
+        ['R75', 'community', 'اسأل جيرانك — المنشورات', 'Ask your neighbors — feed'],
+        ['R76', 'communityPost', 'المنشور والتعليقات', 'Post & comments'],
+        ['R77', 'communityNew', 'منشور جديد', 'New post'],
+      ]],
+      ['المكافآت والثقة', 'Rewards & trust', [
+        ['R24', 'rewards', 'المكافآت', 'Rewards'],
+        ['R25', 'rewardsModal', 'نافذة الاستبدال', 'Redemption modal'],
+        ['R26', 'score', 'نقاط الثقة', 'Trust score'],
+      ]],
+      ['سوق العقارات — بين الجيران', 'Real-estate market', [
+        ['R39', 'reBrowse', 'تصفح الإعلانات', 'Browse listings'],
+        ['R40', 'reCreate', 'أعلن عن وحدتك', 'List your unit'],
+        ['R41', 'reDetail', 'تفاصيل الإعلان', 'Listing detail'],
+        ['R42', 'reMine', 'إعلاناتي', 'My listings'],
+      ]],
+      ['حسابات العائلة', 'Family accounts', [
+        ['R43', 'family', 'أفراد العائلة', 'Family members'],
+        ['R44', 'famPerms', 'صلاحيات الفرد', 'Member permissions'],
+      ]],
+      ['فواتيرك', 'Utility bills', [
+        ['R51', 'bills', 'فواتيرك — الرئيسية', 'Bills — home'],
+        ['R52', 'billLink', 'ربط فاتورة جديدة', 'Link a new bill'],
+        ['R53', 'billDetail', 'تفاصيل الفاتورة والدفع', 'Bill detail & payment'],
+        ['R54', 'billHistory', 'سجل سداد الفواتير', 'Bill payment log'],
+        ['R55', 'billAutopay', 'الدفع التلقائي للفواتير', 'Bill autopay'],
+      ]],
+      ['المتجر', 'Shops', [
+        ['R46', 'food', 'المتجر — التصفح', 'Shops — browse'],
+        ['R47', 'foodMenu', 'المنيو والسلة', 'Menu & cart'],
+        ['R48', 'foodCart', 'السلة والدفع', 'Cart & checkout'],
+        ['R49', 'foodTrack', 'تتبع الطلب', 'Order tracking'],
+        ['R50', 'foodHistory', 'طلباتي السابقة', 'Past orders'],
+      ]],
+      ['سوق مقدمي الخدمة', 'Provider marketplace', [
+        ['R33', 'reqService', 'اطلب خدمة فورية', 'Request a service'],
+        ['R34', 'matching', 'مقدمو الخدمة المتاحون', 'Available providers'],
+        ['R37', 'escrow', 'حجز المبلغ (Escrow)', 'Escrow hold'],
+        ['R35', 'liveJob', 'حالة الطلب المباشرة', 'Live job status'],
+        ['R36', 'rateProvider', 'تقييم مقدم الخدمة', 'Rate the provider'],
+        ['R38', 'dispute', 'الإبلاغ عن مشكلة', 'Report an issue'],
+      ]],
+      ['رفادتنا — مشاركات الجيران', 'Neighbor Share', [
+        ['R67', 'share', 'المعروض للمشاركة', 'Available to share'],
+        ['R68', 'shareCreate', 'شارك شيئًا لديك', 'Share something'],
+        ['R69', 'shareDetail', 'تفاصيل المشاركة والحجز', 'Share detail & booking'],
+      ]],
+      ['التوسع والبيانات', 'Scale & data', [
+        ['R29', 'consent', 'موافقة مشاركة البيانات', 'Data-sharing consent'],
+        ['R30', 'pets', 'الحيوانات الأليفة', 'Pets'],
+        ['R32', 'renew', 'تجديد عقد الخدمات', 'Contract renewal'],
+        ['D1', 'docs', 'الوثائق', 'Documents'],
+        ['D2', 'contacts', 'أرقام مهمة', 'Key contacts'],
+        ['D3', 'links', 'روابط سريعة', 'Quick links'],
+      ]],
+    ];
+    const jump = key => () => this.setState({ mode: 'phone', initialScreen: key === 'rewardsModal' ? 'rewards' : key });
+    const mapGroups = defs.map(g => ({
+      name: ar ? g[0] : g[1],
+      screens: g[2].map(s => ({ id: s[0], key: s[1], t: ar ? s[2] : s[3], go: jump(s[1]) })),
+    }));
+
+    return {
+      dir: ar ? 'rtl' : 'ltr',
+      isAr: ar, isEn: !ar,
+      switchLang: (lang) => this.setState({ lang, mode: 'phone' }),
+      setAr: () => this.setState({ lang: 'ar' }),
+      setEn: () => this.setState({ lang: 'en' }),
+      tabArBg: seg(ar), tabArC: segC(ar),
+      tabEnBg: seg(!ar), tabEnC: segC(!ar),
+      brandMain: ar ? 'رفادة' : 'Rifada',
+      brandAccent: ar ? 'RIFADA' : 'رفادة',
+      subtitle: ar ? 'نموذج تفاعلي ثنائي اللغة · تطبيق الساكن' : 'Bilingual interactive prototype · Resident app',
+      tPhone: ar ? 'الجوال التفاعلي' : 'Interactive phone',
+      tMap: ar ? 'معرض الشاشات' : 'Screen gallery',
+      mapHint: ar ? 'كل شاشة معروضة كاملة وحيّة — اضغط على أي شاشة لفتحها في الجوال التفاعلي.' : 'Every screen is rendered live — click any screen to open it in the interactive phone.',
+      scaleOrigin: ar ? 'top right' : 'top left',
+      isPhone: st.mode === 'phone', isMap: st.mode === 'map',
+      setPhone: () => this.setState({ mode: 'phone' }),
+      setMap: () => this.setState({ mode: 'map' }),
+      tabPhoneBg: seg(st.mode === 'phone'), tabPhoneC: segC(st.mode === 'phone'),
+      tabMapBg: seg(st.mode === 'map'), tabMapC: segC(st.mode === 'map'),
+      mapGroups,
+      initialScreen: st.initialScreen,
+    };
+  }
+}
+</script>
+</body>
+</html>

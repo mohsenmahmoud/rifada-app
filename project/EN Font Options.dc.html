@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700;9..40,800&family=Figtree:wght@400;600;700;800&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700;6..12,800&family=Albert+Sans:wght@400;600;700;800&family=Outfit:wght@400;600;700;800&family=Sora:wght@400;600;700;800&family=IBM+Plex+Sans:wght@400;600;700&family=Cairo:wght@700;900&display=swap" rel="stylesheet">
+  <style>body{margin:0;background:#E9E4D9;font-family:'Cairo',sans-serif} a{color:#1F3B57}</style>
+</helmet>
+<div style="padding:30px;max-width:1200px;margin:0 auto">
+  <div style="font-size:22px;font-weight:900;color:#1F3B57;margin-bottom:4px">English font options — pick one</div>
+  <div style="font-size:12.5px;color:#6B7280;margin-bottom:20px">Same app card rendered in 6 fonts — قل لي رقم الخط اللي يعجبك وأطبّقه على النسخة الإنجليزية كلها.</div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+    <sc-for list="{{ fonts }}" as="f" hint-placeholder-count="6">
+      <div style="background:#F7F4EE;border-radius:20px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,0.06)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+          <span style="background:#1F3B57;color:#fff;border-radius:999px;padding:3px 13px;font-size:12px;font-weight:800">{{ f.n }}</span>
+          <span style="font-size:13px;font-weight:800;color:#1F3B57">{{ f.name }}</span>
+        </div>
+        <div style="{{ f.sty }}">
+          <div style="background:linear-gradient(160deg,#27496F,#1F3B57);border-radius:16px;padding:14px 16px">
+            <div style="font-size:10px;color:rgba(255,255,255,0.65)">Due by July 25</div>
+            <div style="display:flex;align-items:baseline;gap:5px;margin-top:2px">
+              <span style="font-family:'IBM Plex Sans',sans-serif;font-size:24px;font-weight:700;color:#fff">7,400</span>
+              <span style="font-size:11px;color:rgba(255,255,255,0.65)">SAR</span>
+            </div>
+            <span style="display:inline-block;background:#C79A3C;color:#fff;border-radius:999px;padding:5px 16px;font-size:11.5px;font-weight:800;margin-top:10px">Pay now</span>
+          </div>
+          <div style="background:#fff;border-radius:16px;padding:13px 15px;margin-top:10px">
+            <div style="font-size:14px;font-weight:800;color:#1F3B57">Water leak in the master bathroom</div>
+            <div style="font-size:11px;color:#6B7280;margin-top:3px">Plumbing · Ticket #1042 · In progress</div>
+            <div style="font-size:12px;color:#4B5563;margin-top:8px;line-height:1.65">The technician is on his way — expected within 20 minutes. Payment is held under the Rifada guarantee.</div>
+            <div style="display:flex;gap:7px;margin-top:10px">
+              <span style="background:rgba(199,154,60,0.16);color:#A87F2C;border-radius:999px;padding:4px 13px;font-size:10px;font-weight:800">In progress</span>
+              <span style="background:rgba(63,166,107,0.13);color:#2E7D51;border-radius:999px;padding:4px 13px;font-size:10px;font-weight:800">Verified resident</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1200,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  renderVals() {
+    const defs = [
+      ['1', 'DM Sans', 'DM Sans'],
+      ['2', 'Figtree', 'Figtree'],
+      ['3', 'Nunito Sans', 'Nunito Sans'],
+      ['4', 'Albert Sans', 'Albert Sans'],
+      ['5', 'Outfit', 'Outfit'],
+      ['6', 'Sora', 'Sora'],
+    ];
+    return { fonts: defs.map(d => ({ n: d[0], name: d[1], sty: { fontFamily: "'" + d[2] + "', sans-serif" } })) };
+  }
+}
+</script>
+</body>
+</html>
