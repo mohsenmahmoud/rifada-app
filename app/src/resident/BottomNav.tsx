@@ -3,6 +3,7 @@ import { Icon } from '@/ui/Icon';
 import { icons } from './data/icons';
 import { useResident } from './store';
 import type { ScreenKey } from './types';
+import { t } from '@/i18n/lang';
 
 /** Screens that keep the bottom bar visible. */
 const NAV_HIDDEN: ScreenKey[] = ['splash', 'otp', 'setup'];
@@ -70,7 +71,7 @@ export function BottomNav() {
             }}
           >
             <Icon path={it.icon} size={22} stroke={c} width={1.7} />
-            <span style={{ fontSize: 10, fontWeight: 800, color: c }}>{it.label}</span>
+            <span style={{ fontSize: 10, fontWeight: 800, color: c }}>{t(it.label)}</span>
           </button>
         );
       })}

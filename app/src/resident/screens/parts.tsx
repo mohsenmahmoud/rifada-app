@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import { color, font, radius, shadow } from '@/theme/tokens';
+import { t } from '@/i18n/lang';
 
 /**
  * Vertical progress timeline — used by the ticket detail, live job, order
@@ -25,7 +26,7 @@ export function Timeline({
         const current = i === currentIndex;
         const last = i === steps.length - 1;
         return (
-          <div key={s.label} style={{ display: 'flex', gap: 12 }}>
+          <div key={t(s.label)} style={{ display: 'flex', gap: 12 }}>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
               <span
                 style={{
@@ -57,10 +58,10 @@ export function Timeline({
                   lineHeight: 1.4,
                 }}
               >
-                {s.label}
+                {t(s.label)}
               </div>
               {s.sub && done && (
-                <div style={{ fontSize: 11, color: color.slateLight, lineHeight: 1.6 }}>{s.sub}</div>
+                <div style={{ fontSize: 11, color: color.slateLight, lineHeight: 1.6 }}>{t(s.sub)}</div>
               )}
             </div>
           </div>
@@ -88,7 +89,7 @@ export function Stars({
         <button
           key={n}
           onClick={() => onPick?.(n)}
-          aria-label={`${n} نجوم`}
+          aria-label={`${n} ${t('نجوم')}`}
           disabled={!onPick}
           style={{
             border: 'none',
@@ -157,7 +158,7 @@ export function ChipRow<T extends string>({
               whiteSpace: 'nowrap',
             }}
           >
-            {c.label}
+            {t(c.label)}
           </button>
         );
       })}
@@ -292,12 +293,12 @@ export function TabStrip<T extends string>({
         ...style,
       }}
     >
-      {tabs.map((t) => {
-        const on = t.key === value;
+      {tabs.map((tab) => {
+        const on = tab.key === value;
         return (
           <button
-            key={t.key}
-            onClick={() => onChange(t.key)}
+            key={tab.key}
+            onClick={() => onChange(tab.key)}
             style={{
               flex: 1,
               border: 'none',
@@ -312,7 +313,7 @@ export function TabStrip<T extends string>({
               whiteSpace: 'nowrap',
             }}
           >
-            {t.label}
+            {t(tab.label)}
           </button>
         );
       })}

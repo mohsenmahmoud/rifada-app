@@ -25,7 +25,7 @@ export function Splash() {
     >
       <Wordmark size={66} onDark />
       <div style={{ fontSize: 46, fontWeight: 900, color: '#fff', marginTop: 10, lineHeight: 1.2 }}>
-        رفادة
+        {t('رفادة')}
       </div>
       <div
         style={{
@@ -40,7 +40,7 @@ export function Splash() {
         RIFADA
       </div>
       <div style={{ fontSize: 14.5, color: 'rgba(255,255,255,0.75)', marginTop: 14 }}>
-        سندك في حيّك.. وكل ما تحتاجه أقرب
+        {t('سندك في حيّك.. وكل ما تحتاجه أقرب')}
       </div>
 
       <div style={{ flex: 1 }} />
@@ -56,7 +56,7 @@ export function Splash() {
         }}
       >
         <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 10 }}>
-          أدخل كود الدعوة الخاص بوحدتك
+          {t('أدخل كود الدعوة الخاص بوحدتك')}
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           <input
@@ -111,11 +111,11 @@ export function Splash() {
             fontFamily: font.sans,
           }}
         >
-          متابعة
+          {t('متابعة')}
         </button>
       </div>
       <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.55)', marginTop: 12 }}>
-        الكود موجود في رسالة الترحيب من إدارة الكمبوند
+        {t('الكود موجود في رسالة الترحيب من إدارة الكمبوند')}
       </div>
     </div>
   );
@@ -153,10 +153,10 @@ export function Otp() {
           <Icon path={icons.phone} size={30} stroke={color.gold} />
         </div>
         <div style={{ fontSize: 21, fontWeight: 800, color: color.navy, marginTop: 16 }}>
-          تحقق من رقم جوالك
+          {t('تحقق من رقم جوالك')}
         </div>
         <div style={{ fontSize: 13, color: color.slate, marginTop: 6 }}>
-          تم إرسال كود التحقق إلى{' '}
+          {t('تم إرسال كود التحقق إلى')}{' '}
           <span dir="ltr" style={{ fontFamily: font.mono, fontWeight: 600 }}>
             050 123 4567
           </span>
@@ -190,7 +190,7 @@ export function Otp() {
           })}
         </div>
         <div style={{ fontSize: 12.5, color: color.slate, marginTop: 18 }}>
-          لم يصلك الكود؟{' '}
+          {t('لم يصلك الكود؟')}{' '}
           <span style={{ color: color.gold, fontWeight: 700 }}>{t('إعادة الإرسال خلال 00:24')}</span>
         </div>
       </div>
@@ -210,7 +210,7 @@ export function Otp() {
           fontFamily: font.sans,
         }}
       >
-        تحقق ومتابعة
+        {t('تحقق ومتابعة')}
       </button>
     </div>
   );
@@ -277,7 +277,7 @@ export function Setup() {
             gap: 8,
           }}
         >
-          <span style={{ flex: 1, fontSize: 14.5, fontWeight: 700, color: color.navy }}>{UNIT}</span>
+          <span style={{ flex: 1, fontSize: 14.5, fontWeight: 700, color: color.navy }}>{t(UNIT)}</span>
           <span
             style={{
               fontSize: 10.5,
@@ -289,7 +289,7 @@ export function Setup() {
               whiteSpace: 'nowrap',
             }}
           >
-            من كود الدعوة
+            {t('من كود الدعوة')}
           </span>
         </div>
 
@@ -332,7 +332,7 @@ export function Setup() {
             fontFamily: font.sans,
           }}
         >
-          إنشاء الحساب والدخول
+          {t('إنشاء الحساب والدخول')}
         </button>
       </div>
     </div>

@@ -38,7 +38,7 @@ function seatState(idx: number, going: boolean) {
     taken,
     pct,
     full,
-    label: full ? t('مكتملة') : `${e.seats - taken} مكان متاح`,
+    label: full ? t('مكتملة') : `${e.seats - taken} ${t('مكان متاح')}`,
     fillC: full ? color.coral : pct > 75 ? color.gold : color.green,
   };
 }
@@ -87,7 +87,7 @@ function Feed() {
               textOverflow: 'ellipsis',
             }}
           >
-            ما يحدث في {cfg.compoundName}
+            ما يحدث في {t(cfg.compoundName)}
           </span>
         </div>
         {/* One smart header action — becomes «أنشئ مجموعة» on the groups tab. */}
@@ -149,7 +149,7 @@ function Feed() {
                 color: on ? '#fff' : color.slate,
               }}
             >
-              {item.l}
+              {t(item.l)}
             </button>
           );
         })}
@@ -212,7 +212,7 @@ function Feed() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    بعد 3 أيام
+                    {t('بعد 3 أيام')}
                   </span>
                   <span
                     style={{
@@ -222,11 +222,11 @@ function Feed() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {hero.day} {hero.month} · {hero.time}
+                    {hero.day} {t(hero.month)} · {t(hero.time)}
                   </span>
                 </span>
                 <span style={{ fontSize: 19, fontWeight: 900, color: '#fff', marginTop: 9, lineHeight: 1.4 }}>
-                  {hero.title}
+                  {t(hero.title)}
                 </span>
                 <span
                   style={{
@@ -238,7 +238,7 @@ function Feed() {
                     textOverflow: 'ellipsis',
                   }}
                 >
-                  {hero.place}
+                  {t(hero.place)}
                 </span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 9, marginTop: 14 }}>
                   <span style={{ display: 'flex' }}>
@@ -304,7 +304,7 @@ function Feed() {
                 const tm = evTagMeta[e.kind];
                 return (
                   <button
-                    key={e.title}
+                    key={t(e.title)}
                     onClick={() => go('eventDetail', { evSelIdx: e.i })}
                     style={{
                       width: '100%',
@@ -350,7 +350,7 @@ function Feed() {
                             color: going ? color.greenDeep : color.navy,
                           }}
                         >
-                          {e.month}
+                          {t(e.month)}
                         </span>
                       </span>
                       <span
@@ -365,10 +365,10 @@ function Feed() {
                       >
                         <span style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
                           <StatusPill bg={tm.bg} c={tm.c} style={{ fontSize: 9, padding: '2px 10px', fontWeight: 800 }}>
-                            {tm.label}
+                            {t(tm.label)}
                           </StatusPill>
                           <span style={{ fontSize: 9.5, color: color.slateLight, whiteSpace: 'nowrap' }}>
-                            {e.time}
+                            {t(e.time)}
                           </span>
                         </span>
                         <span
@@ -381,7 +381,7 @@ function Feed() {
                             textOverflow: 'ellipsis',
                           }}
                         >
-                          {e.title}
+                          {t(e.title)}
                         </span>
                         <span
                           style={{
@@ -392,7 +392,7 @@ function Feed() {
                             textOverflow: 'ellipsis',
                           }}
                         >
-                          {e.place} · {e.host}
+                          {t(e.place)} · {t(e.host)}
                         </span>
                         <span style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 5 }}>
                           <span
@@ -423,7 +423,7 @@ function Feed() {
                               whiteSpace: 'nowrap',
                             }}
                           >
-                            {seats.label}
+                            {t(seats.label)}
                           </span>
                           <span
                             style={{
@@ -434,7 +434,7 @@ function Feed() {
                               whiteSpace: 'nowrap',
                             }}
                           >
-                            {e.price === 0 ? t('مجانًا') : `${e.price} ر.س`}
+                            {e.price === 0 ? t('مجانًا') : `${e.price} ${t('ر.س')}`}
                           </span>
                         </span>
                       </span>
@@ -474,7 +474,7 @@ function Feed() {
               .filter((e) => st.evRsvp[e.i])
               .map((e) => (
                 <Card
-                  key={e.title}
+                  key={t(e.title)}
                   pad="14px 16px"
                   style={{ borderRadius: 18, marginBottom: 9, display: 'flex', alignItems: 'center', gap: 12 }}
                 >
@@ -494,7 +494,7 @@ function Feed() {
                     <span style={{ ...numeric, fontSize: 15, fontWeight: 700, color: color.navy }}>
                       {e.day}
                     </span>
-                    <span style={{ fontSize: 8, fontWeight: 800, color: color.slate }}>{e.month}</span>
+                    <span style={{ fontSize: 8, fontWeight: 800, color: color.slate }}>{t(e.month)}</span>
                   </span>
                   <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
                     <span
@@ -507,22 +507,22 @@ function Feed() {
                         textOverflow: 'ellipsis',
                       }}
                     >
-                      {e.title}
+                      {t(e.title)}
                     </span>
                     <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-                      {e.time} · {e.place}
+                      {t(e.time)} · {t(e.place)}
                     </span>
                   </span>
                   <span
                     style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 5, flex: 'none' }}
                   >
                     <StatusPill tone="green" style={{ fontSize: 9, padding: '2px 10px', fontWeight: 800 }}>
-                      مؤكد ✓
+                      {t('مؤكد ✓')}
                     </StatusPill>
                     <button
                       onClick={() => {
                         set((s) => ({ evRsvp: { ...s.evRsvp, [e.i]: false } }));
-                        showToast(`أُلغي تسجيلك في ${e.title}`);
+                        showToast(`${t('أُلغي تسجيلك في')} ${t(e.title)}`);
                       }}
                       style={{
                         border: 'none',
@@ -535,7 +535,7 @@ function Feed() {
                         fontFamily: font.sans,
                       }}
                     >
-                      إلغاء
+                      {t('إلغاء')}
                     </button>
                   </span>
                 </Card>
@@ -552,17 +552,17 @@ function Feed() {
                   lineHeight: 1.9,
                 }}
               >
-                لم تسجّل في أي فعالية بعد — تصفّح «قادمة» واحجز مكانك.
+                {t('لم تسجّل في أي فعالية بعد — تصفّح «قادمة» واحجز مكانك.')}
               </Card>
             )}
 
             <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy, margin: '18px 2px 8px' }}>
-              فعاليات حضرتها
+              {t('فعاليات حضرتها')}
             </div>
             {pastEventDefs.map((p, i) => {
               const rated = st.pastRating[i] ?? 0;
               return (
-                <Card key={p.title} pad="14px 16px" style={{ borderRadius: 18, marginBottom: 9 }}>
+                <Card key={t(p.title)} pad="14px 16px" style={{ borderRadius: 18, marginBottom: 9 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
                     <span
                       style={{
@@ -589,16 +589,16 @@ function Feed() {
                           textOverflow: 'ellipsis',
                         }}
                       >
-                        {p.title}
+                        {t(p.title)}
                       </span>
                       <span style={{ fontSize: 10, color: color.slate, whiteSpace: 'nowrap' }}>
-                        {p.when} · {p.photos} صورة في الألبوم
+                        {t(p.when)} · {p.photos} صورة في الألبوم
                       </span>
                     </span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 7, marginTop: 11 }}>
                     <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-                      {rated ? `تقييمك: ${rated} من 5` : t('قيّم الفعالية')}
+                      {rated ? `${t('تقييمك:')} ${rated} ${t('من 5')}` : t('قيّم الفعالية')}
                     </span>
                     <span style={{ flex: 1 }} />
                     <Stars
@@ -610,7 +610,7 @@ function Feed() {
                       }}
                     />
                     <button
-                      onClick={() => showToast(`ألبوم ${p.title} — ${p.photos} صورة شاركها الحضور`)}
+                      onClick={() => showToast(`${t('ألبوم')} ${t(p.title)} — ${p.photos} ${t('صورة شاركها الحضور')}`)}
                       style={{
                         border: '1.5px solid rgba(31,59,87,0.2)',
                         background: 'transparent',
@@ -625,7 +625,7 @@ function Feed() {
                         fontFamily: font.sans,
                       }}
                     >
-                      الألبوم
+                      {t('الألبوم')}
                     </button>
                   </div>
                 </Card>
@@ -637,14 +637,14 @@ function Feed() {
         {isGroupsTab && (
           <>
             <div style={{ fontSize: 12, color: color.slate, margin: '0 2px 10px', lineHeight: 1.8 }}>
-              مجموعات اهتمام دائمة يديرها السكان — تلتقي بشكل دوري ولها محادثتها الخاصة.
+              {t('مجموعات اهتمام دائمة يديرها السكان — تلتقي بشكل دوري ولها محادثتها الخاصة.')}
             </div>
             {allGroups.map((c, i) => {
               const joined = !!st.clubJoined[i];
               const mine = !!c.mine;
               return (
                 <Card
-                  key={c.name}
+                  key={t(c.name)}
                   pad="14px 16px"
                   style={{ borderRadius: 18, marginBottom: 9, display: 'flex', alignItems: 'center', gap: 12 }}
                 >
@@ -673,10 +673,10 @@ function Feed() {
                         textOverflow: 'ellipsis',
                       }}
                     >
-                      {c.name}
+                      {t(c.name)}
                     </span>
                     <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-                      {c.members + (joined || mine ? 1 : 0)} عضوًا · {c.meets}
+                      {c.members + (joined || mine ? 1 : 0)} عضوًا · {t(c.meets)}
                     </span>
                   </span>
                   <span
@@ -688,8 +688,8 @@ function Feed() {
                         set((s) => ({ clubJoined: { ...s.clubJoined, [i]: !joined } }));
                         showToast(
                           joined
-                            ? `غادرت ${c.name}`
-                            : `انضممت إلى ${c.name} — ستصلك مواعيد اللقاءات`,
+                            ? `${t('غادرت')} ${t(c.name)}`
+                            : `${t('انضممت إلى')} ${t(c.name)} ${t('— ستصلك مواعيد اللقاءات')}`,
                         );
                       }}
                       style={{
@@ -755,17 +755,17 @@ function Detail() {
         <Card pad={18}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <StatusPill bg={tm.bg} c={tm.c} style={{ fontSize: 10, padding: '3px 12px', fontWeight: 800 }}>
-              {tm.label}
+              {t(tm.label)}
             </StatusPill>
             <span style={{ fontSize: 10.5, color: color.slateLight, whiteSpace: 'nowrap' }}>
-              {e.day} {e.month} · {e.time}
+              {e.day} {t(e.month)} · {t(e.time)}
             </span>
           </div>
           <div style={{ fontSize: 17, fontWeight: 900, color: color.navy, marginTop: 10, lineHeight: 1.5 }}>
-            {e.title}
+            {t(e.title)}
           </div>
           <div style={{ fontSize: 12.5, color: color.slateDark, marginTop: 8, lineHeight: 1.9 }}>
-            {e.desc}
+            {t(e.desc)}
           </div>
         </Card>
 
@@ -773,11 +773,11 @@ function Detail() {
           pad={16}
           style={{ borderRadius: 18, marginTop: 10, display: 'flex', flexDirection: 'column', gap: 12 }}
         >
-          <InfoRow icon={icons.pin} text={e.place} />
-          <InfoRow icon={icons.people} text={`ينظّمها ${e.host}`} />
+          <InfoRow icon={icons.pin} text={t(e.place)} />
+          <InfoRow icon={icons.people} text={`${t('ينظّمها')} ${t(e.host)}`} />
           <InfoRow
             icon="M3 7h18v13H3zM3 11h18M8 3v4M16 3v4"
-            text={`${seats.label} · ${e.price === 0 ? t('مجانًا') : `${e.price} ر.س`}`}
+            text={`${t(seats.label)} · ${e.price === 0 ? t('مجانًا') : `${e.price} ${t('ر.س')}`}`}
           />
         </Card>
 
@@ -841,10 +841,10 @@ function Detail() {
             </span>
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 5, minWidth: 0 }}>
               <span style={{ fontSize: 12.5, fontWeight: 900, color: '#fff' }}>
-                تصريح دخولك للفعالية
+                {t('تصريح دخولك للفعالية')}
               </span>
               <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.6)', lineHeight: 1.7 }}>
-                اعرض الكود عند باب المرفق — بلا كشوف ورقية
+                {t('اعرض الكود عند باب المرفق — بلا كشوف ورقية')}
               </span>
               <span
                 dir="ltr"
@@ -868,14 +868,14 @@ function Detail() {
                   fontFamily: font.sans,
                 }}
               >
-                أضف للتقويم
+                {t('أضف للتقويم')}
               </button>
             </span>
           </div>
         ) : (
           <div style={{ marginTop: 10 }}>
             <Note tone="green">
-              تصريح دخولك للفعالية يصلك فورًا بعد التسجيل — بلا كشوف ورقية عند الباب
+              {t('تصريح دخولك للفعالية يصلك فورًا بعد التسجيل — بلا كشوف ورقية عند الباب')}
             </Note>
           </div>
         )}
@@ -932,7 +932,7 @@ function Create() {
             return (
               <KindTile
                 key={k.key}
-                label={k.label}
+                label={t(k.label)}
                 icon={evIcons[k.key]}
                 on={on}
                 onClick={() => set({ evKind: k.key })}
@@ -979,8 +979,7 @@ function Create() {
 
         <div style={{ marginTop: 14 }}>
           <Note tone="navy">
-            تُرسل فعاليتك لمكتب الإدارة للاعتماد وحجز المرفق — يصلك الرد خلال 24 ساعة، ثم تُنشر لكل
-            السكان.
+            {t('تُرسل فعاليتك لمكتب الإدارة للاعتماد وحجز المرفق — يصلك الرد خلال 24 ساعة، ثم تُنشر لكل السكان.')}
           </Note>
         </div>
       </div>
@@ -994,7 +993,7 @@ function Create() {
             showToast('أُرسلت فعاليتك لمكتب الإدارة — يصلك الرد خلال 24 ساعة');
           }}
         >
-          أرسل للاعتماد
+          {t('أرسل للاعتماد')}
         </PillButton>
       </div>
     </div>
@@ -1061,10 +1060,10 @@ function GroupDetail() {
               textOverflow: 'ellipsis',
             }}
           >
-            {g.name}
+            {t(g.name)}
           </span>
           <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-            {g.members} عضوًا · {g.meets}
+            {g.members} عضوًا · {t(g.meets)}
           </span>
         </div>
       </div>
@@ -1079,7 +1078,7 @@ function GroupDetail() {
             <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t('اللقاء القادم')}</span>
             <span style={{ flex: 1 }} />
             <StatusPill tone="gold" style={{ fontSize: 9.5, padding: '3px 11px', fontWeight: 800 }}>
-              {next.when}
+              {t(next.when)}
             </StatusPill>
           </div>
           <div
@@ -1092,7 +1091,7 @@ function GroupDetail() {
               textOverflow: 'ellipsis',
             }}
           >
-            {next.place}
+            {t(next.place)}
           </div>
           <PillButton
             tone={joinedMeet ? 'green' : 'navy'}
@@ -1108,10 +1107,10 @@ function GroupDetail() {
         </Card>
 
         <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy, margin: '16px 2px 8px' }}>
-          لوحة المجموعة
+          {t('لوحة المجموعة')}
         </div>
         {posts.map((gp, k) => (
-          <Card key={`${gp.who}-${k}`} pad="14px 16px" style={{ borderRadius: 18, marginBottom: 9 }}>
+          <Card key={`${t(gp.who)}-${k}`} pad="14px 16px" style={{ borderRadius: 18, marginBottom: 9 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
               <span
                 style={{
@@ -1131,7 +1130,7 @@ function GroupDetail() {
                 {gp.who[0]}
               </span>
               <span style={{ fontSize: 12, fontWeight: 800, color: color.navy, whiteSpace: 'nowrap' }}>
-                {gp.who}
+                {t(gp.who)}
               </span>
               <span style={{ flex: 1 }} />
               <span style={{ fontSize: 9.5, color: color.slateLight, whiteSpace: 'nowrap' }}>
@@ -1139,7 +1138,7 @@ function GroupDetail() {
               </span>
             </div>
             <div style={{ fontSize: 12, color: color.slateDark, marginTop: 8, lineHeight: 1.9 }}>
-              {gp.text}
+              {t(gp.text)}
             </div>
           </Card>
         ))}
@@ -1166,10 +1165,10 @@ function GroupDetail() {
                   whiteSpace: 'nowrap',
                 }}
               >
-                أنت المنظّم
+                {t('أنت المنظّم')}
               </span>
               <span style={{ fontSize: 10.5, color: color.goldDeep, fontWeight: 800 }}>
-                تُرسل إعلاناتك لكل الأعضاء
+                {t('تُرسل إعلاناتك لكل الأعضاء')}
               </span>
             </div>
             <input
@@ -1195,7 +1194,7 @@ function GroupDetail() {
                         ...(s.gdExtraPosts[i] ?? []),
                         {
                           who: t('عبدالله العتيبي'),
-                          text: `اللقاء القادم: ${s.gdMeetWhen || t('قريبًا')} — ${s.gdMeetPlace || t('يُحدد لاحقًا')}`,
+                          text: `${t('اللقاء القادم:')} ${s.gdMeetWhen || t('قريبًا')} — ${s.gdMeetPlace || t('يُحدد لاحقًا')}`,
                           time: t('الآن'),
                         },
                       ],
@@ -1205,14 +1204,14 @@ function GroupDetail() {
                 }}
                 style={{ flex: 1, padding: 11, fontSize: 12 }}
               >
-                أعلن اللقاء وأشعر الأعضاء
+                {t('أعلن اللقاء وأشعر الأعضاء')}
               </PillButton>
               <PillButton
                 tone="outline"
                 onClick={() => go('eventCreate')}
                 style={{ flex: 1, padding: 11, fontSize: 12 }}
               >
-                حوّلها لفعالية رسمية
+                {t('حوّلها لفعالية رسمية')}
               </PillButton>
             </div>
           </div>
@@ -1282,7 +1281,7 @@ function GroupCreate() {
           {gcKindDefs.map((k) => (
             <KindTile
               key={k.key}
-              label={k.label}
+              label={t(k.label)}
               icon={groupIcon[k.key]}
               on={st.gcKind === k.key}
               onClick={() => set({ gcKind: k.key })}
@@ -1332,8 +1331,7 @@ function GroupCreate() {
 
         <div style={{ marginTop: 14 }}>
           <Note tone="navy">
-            تُنشأ المجموعة فورًا وتصبح أنت منظّمها — تنشر اللقاءات وتُشعر الأعضاء بنفسك. حجز المرافق
-            فقط يحتاج اعتماد الإدارة.
+            {t('تُنشأ المجموعة فورًا وتصبح أنت منظّمها — تنشر اللقاءات وتُشعر الأعضاء بنفسك. حجز المرافق فقط يحتاج اعتماد الإدارة.')}
           </Note>
         </div>
       </div>
@@ -1355,7 +1353,7 @@ function GroupCreate() {
                   meets: s.gcFreq,
                   mine: true,
                   organizer: t('عبدالله العتيبي'),
-                  about: s.gcAbout.trim() || `مجموعة أنشأها ساكن في ${cfg.compoundName}.`,
+                  about: s.gcAbout.trim() || `${t('مجموعة أنشأها ساكن في')} ${t(cfg.compoundName)}.`,
                 },
               ],
               screen: 'feed',
@@ -1363,10 +1361,10 @@ function GroupCreate() {
               gcName: '',
               gcAbout: '',
             }));
-            showToast(`أُنشئت «${name}» — أنت منظّمها، انشر أول لقاء`);
+            showToast(`${t('أُنشئت «')}${name}${t('» — أنت منظّمها، انشر أول لقاء')}`);
           }}
         >
-          أنشئ المجموعة
+          {t('أنشئ المجموعة')}
         </PillButton>
       </div>
     </div>

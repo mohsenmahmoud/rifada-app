@@ -18,7 +18,7 @@ import { ChipRow, Note } from './parts';
 import { Radio } from './Marketplace';
 import { t } from '@/i18n/lang';
 
-const priceLabel = (p: number) => (p === 0 ? t('مجانًا') : `${p} ر.س`);
+const priceLabel = (p: number) => (p === 0 ? t('مجانًا') : `${p} ${t('ر.س')}`);
 
 /** R67 — Browse what neighbours are sharing, plus your own listings. */
 function Browse() {
@@ -45,7 +45,7 @@ function Browse() {
               textOverflow: 'ellipsis',
             }}
           >
-            جيران يتشاركون ما لديهم — بالساعة أو مجانًا، وكل حجز موثّق بالوحدة
+            {t('جيران يتشاركون ما لديهم — بالساعة أو مجانًا، وكل حجز موثّق بالوحدة')}
           </span>
         </div>
       </div>
@@ -63,12 +63,12 @@ function Browse() {
         {[
           { k: 'browse' as const, l: t('معروض للمشاركة') },
           { k: 'mine' as const, l: t('مشاركاتي') },
-        ].map((t) => {
-          const on = st.shareTab === t.k;
+        ].map((tab) => {
+          const on = st.shareTab === tab.k;
           return (
             <button
-              key={t.k}
-              onClick={() => set({ shareTab: t.k })}
+              key={tab.k}
+              onClick={() => set({ shareTab: tab.k })}
               style={{
                 flex: 1,
                 border: 'none',
@@ -82,7 +82,7 @@ function Browse() {
                 color: on ? '#fff' : color.slate,
               }}
             >
-              {t.l}
+              {t(tab.l)}
             </button>
           );
         })}
@@ -125,7 +125,7 @@ function Browse() {
                 </span>
               </div>
               <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 9, lineHeight: 1.8 }}>
-                تعرض ما لديك بالوقت الذي يناسبك، والدفع يصلك بضمان رفادة بعد انتهاء الموعد.
+                {t('تعرض ما لديك بالوقت الذي يناسبك، والدفع يصلك بضمان رفادة بعد انتهاء الموعد.')}
               </div>
               <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
                 <Stat value={String(mine.length)} label="مشاركة منشورة" />
@@ -136,7 +136,7 @@ function Browse() {
 
             {mine.map((ms) => (
               <Card
-                key={ms.title}
+                key={t(ms.title)}
                 pad="14px 16px"
                 style={{ borderRadius: 18, marginBottom: 9, display: 'flex', alignItems: 'center', gap: 12 }}
               >
@@ -155,15 +155,15 @@ function Browse() {
                         textOverflow: 'ellipsis',
                       }}
                     >
-                      {ms.title}
+                      {t(ms.title)}
                     </span>
                     <StatusPill tone="green" style={{ fontSize: 9, padding: '2px 9px', fontWeight: 800 }}>
-                      منشور
+                      {t('منشور')}
                     </StatusPill>
                   </span>
                   <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
                     {ms.slots.length} موعد متاح ·{' '}
-                    <b style={{ color: color.goldDeep, ...numeric }}>{priceLabel(ms.price)}</b> {ms.unit}
+                    <b style={{ color: color.goldDeep, ...numeric }}>{priceLabel(ms.price)}</b> {t(ms.unit)}
                   </span>
                   <span style={{ display: 'flex', gap: 6, marginTop: 5 }}>
                     <span style={chipStyle(color.navy)}>{ms.slots[0]?.[0] ?? '—'}</span>
@@ -185,7 +185,7 @@ function Browse() {
                       fontFamily: font.sans,
                     }}
                   >
-                    تعديل
+                    {t('تعديل')}
                   </button>
                   <button
                     onClick={() => {
@@ -203,7 +203,7 @@ function Browse() {
                       fontFamily: font.sans,
                     }}
                   >
-                    إيقاف
+                    {t('إيقاف')}
                   </button>
                 </span>
               </Card>
@@ -228,7 +228,7 @@ function Browse() {
                   <Icon path={icons.neighbors} size={26} width={1.6} />
                 </span>
                 <div style={{ fontSize: 13.5, fontWeight: 800, color: color.navy, marginTop: 14 }}>
-                  لم تشارك شيئًا بعد
+                  {t('لم تشارك شيئًا بعد')}
                 </div>
                 <div
                   style={{
@@ -239,8 +239,7 @@ function Browse() {
                     textAlign: 'center',
                   }}
                 >
-                  عندك قاعة، ملعب، شنطة عدد، نطاطية أطفال، أو مكان انتظار زائد؟ اعرضه بالساعة أو
-                  مجانًا لجيرانك.
+                  {t('عندك قاعة، ملعب، شنطة عدد، نطاطية أطفال، أو مكان انتظار زائد؟ اعرضه بالساعة أو مجانًا لجيرانك.')}
                 </div>
                 <div
                   style={{
@@ -285,7 +284,7 @@ function Browse() {
         ) : (
           browseItems.map((si) => (
             <button
-              key={si.title}
+              key={t(si.title)}
               onClick={() => go('shareDetail', { shareSelIdx: si.i, shareSlotIdx: null })}
               style={{
                 width: '100%',
@@ -317,11 +316,11 @@ function Browse() {
                       textOverflow: 'ellipsis',
                     }}
                   >
-                    {si.title}
+                    {t(si.title)}
                   </span>
                   {si.price === 0 && (
                     <StatusPill tone="green" style={{ fontSize: 9, padding: '2px 9px', fontWeight: 800 }}>
-                      مجانًا
+                      {t('مجانًا')}
                     </StatusPill>
                   )}
                 </span>
@@ -334,7 +333,7 @@ function Browse() {
                     textOverflow: 'ellipsis',
                   }}
                 >
-                  {si.owner} · {si.slots.filter((s) => s[2] === 'متاح').length} مواعيد متاحة
+                  {t(si.owner)} · {si.slots.filter((s) => s[2] === 'متاح').length} {t('مواعيد متاحة')}
                 </span>
               </span>
               <span
@@ -343,7 +342,7 @@ function Browse() {
                 <span style={{ ...numeric, fontSize: 13, fontWeight: 700, color: color.goldDeep }}>
                   {priceLabel(si.price)}
                 </span>
-                <span style={{ fontSize: 9.5, color: color.slateLight }}>{si.unit}</span>
+                <span style={{ fontSize: 9.5, color: color.slateLight }}>{t(si.unit)}</span>
               </span>
             </button>
           ))
@@ -358,7 +357,7 @@ function Browse() {
           onClick={() => go('shareCreate')}
           style={{ boxShadow: '0 8px 24px rgba(199,154,60,0.38)', fontSize: 14 }}
         >
-          + شارك شيئًا لديك مع جيرانك
+          {t('+ شارك شيئًا لديك مع جيرانك')}
         </PillButton>
       </div>
     </div>
@@ -375,12 +374,12 @@ function Create() {
     set({
       sharePublished: {
         kind: st.shKind,
-        title: st.shTitle.trim() || `${kindLabel} — مشاركة جديدة`,
-        owner: `عبدالله العتيبي — ${UNIT_SHORT}`,
+        title: st.shTitle.trim() || `${kindLabel} ${t('— مشاركة جديدة')}`,
+        owner: `${t('عبدالله العتيبي —')} ${t(UNIT_SHORT)}`,
         rating: '—',
         price,
         unit: st.shUnit === 'مجانًا' ? 'مجانًا بين الجيران' : st.shUnit,
-        desc: `مشاركة جديدة من وحدتك الموثّقة — متاحة يوم ${st.shDay} من ${st.shHour}.`,
+        desc: `${t('مشاركة جديدة من وحدتك الموثّقة — متاحة يوم')} ${st.shDay} ${t('من')} ${st.shHour}.`,
         slots: [[st.shDay, st.shHour, t('متاح')]],
       },
       screen: 'share',
@@ -425,7 +424,7 @@ function Create() {
                     fontFamily: font.sans,
                   }}
                 >
-                  {k.label}
+                  {t(k.label)}
                 </span>
               </button>
             );
@@ -527,7 +526,7 @@ function Create() {
 
         <div style={{ marginTop: 12 }}>
           <Note tone="navy">
-            وحدتك موثّقة تلقائيًا مع الإعلان ({UNIT_SHORT}) — والحجز والدفع يمران بضمان رفادة حتى
+            وحدتك موثّقة تلقائيًا مع الإعلان ({t(UNIT_SHORT)}) — والحجز والدفع يمران بضمان رفادة حتى
             انتهاء الموعد.
           </Note>
         </div>
@@ -535,7 +534,7 @@ function Create() {
 
       <div style={{ padding: '0 20px 34px' }}>
         <PillButton tone="gold" size="lg" full onClick={publish}>
-          نشر المشاركة
+          {t('نشر المشاركة')}
         </PillButton>
       </div>
     </div>
@@ -555,7 +554,7 @@ function Detail() {
     }
     const sl = sel.slots[st.shareSlotIdx];
     set({ screen: 'share', shareSlotIdx: null });
-    showToast(`تم الحجز: ${sel.title} — ${sl[0]} ${sl[1]}`);
+    showToast(`${t('تم الحجز:')} ${t(sel.title)} — ${sl[0]} ${sl[1]}`);
   };
 
   return (
@@ -587,7 +586,7 @@ function Detail() {
               textOverflow: 'ellipsis',
             }}
           >
-            {sel.title}
+            {t(sel.title)}
           </span>
           <span
             style={{
@@ -598,26 +597,26 @@ function Detail() {
               textOverflow: 'ellipsis',
             }}
           >
-            {sel.owner} · ★ {sel.rating}
+            {t(sel.owner)} · ★ {sel.rating}
           </span>
         </div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <Card pad={16} style={{ borderRadius: 18 }}>
-          <div style={{ fontSize: 12.5, color: color.slateDark, lineHeight: 1.9 }}>{sel.desc}</div>
+          <div style={{ fontSize: 12.5, color: color.slateDark, lineHeight: 1.9 }}>{t(sel.desc)}</div>
           <div style={{ display: 'flex', alignItems: 'center', marginTop: 14 }}>
             <span style={{ fontSize: 12, color: color.slate }}>{t('التكلفة')}</span>
             <span style={{ flex: 1 }} />
             <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: color.goldDeep }}>
               {priceLabel(sel.price)}
             </span>
-            <span style={{ fontSize: 11, color: color.slate, marginRight: 5 }}>{sel.unit}</span>
+            <span style={{ fontSize: 11, color: color.slate, marginRight: 5 }}>{t(sel.unit)}</span>
           </div>
         </Card>
 
         <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy, margin: '16px 2px 8px' }}>
-          المواعيد المتاحة
+          {t('المواعيد المتاحة')}
         </div>
         {sel.slots.map(([day, time, status], i) => {
           const free = status === 'متاح';
@@ -668,7 +667,7 @@ function Detail() {
         >
           <Icon path={icons.shield} size={15} stroke={color.greenDeep} width={1.6} style={{ flex: 'none' }} />
           <span style={{ fontSize: 10.5, fontWeight: 800, color: color.greenDeep, lineHeight: 1.7 }}>
-            المبلغ محجوز بضمان رفادة ولا يُحوَّل لجارك إلا بعد انتهاء الموعد
+            {t('المبلغ محجوز بضمان رفادة ولا يُحوَّل لجارك إلا بعد انتهاء الموعد')}
           </span>
         </div>
       </div>

@@ -20,11 +20,11 @@ export function Home() {
       ? t('المستحق حتى 25 يوليو')
       : t('القسط القادم — 1 سبتمبر');
   const total = statementTotal(isRent);
-  const heroAmount = paid ? t('0 ريال') : `${fmt(total)} ريال`;
+  const heroAmount = paid ? t('0 ريال') : `${fmt(total)} ${t('ريال')}`;
   const heroSub = paid
     ? t('شكرًا لالتزامك بالسداد')
     : isRent
-      ? `إيجار شهري · ${UNIT_SHORT}`
+      ? `${t('إيجار شهري ·')} ${t(UNIT_SHORT)}`
       : t('تقسيط تمليك · سنة 3 من 8');
 
   // move-in completion, computed off the receive checklist only
@@ -45,9 +45,9 @@ export function Home() {
         <Wordmark size={28} />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{ fontSize: 16, fontWeight: 900, color: color.navy, lineHeight: 1.3 }}>
-            {cfg.compoundName}
+            {t(cfg.compoundName)}
           </span>
-          <span style={{ fontSize: 10.5, color: color.slate }}>صباح الخير، {firstName}</span>
+          <span style={{ fontSize: 10.5, color: color.slate }}>{t('صباح الخير،')} {t(firstName)}</span>
         </div>
         <div style={{ flex: 1 }} />
         <button
@@ -100,7 +100,7 @@ export function Home() {
             justifyContent: 'center',
           }}
         >
-          {initials}
+          {t(initials)}
         </button>
       </div>
 
@@ -149,7 +149,7 @@ export function Home() {
               color: color.navy,
             }}
           >
-            {UNIT_NO}
+            {t(UNIT_NO)}
           </div>
           <div
             style={{
@@ -229,7 +229,7 @@ export function Home() {
             const ok = can(s.perm);
             return (
               <button
-                key={s.label}
+                key={t(s.label)}
                 onClick={() => (ok ? go(s.dest) : lockToast())}
                 style={{
                   display: 'flex',
@@ -266,7 +266,7 @@ export function Home() {
                     color: ok ? color.navy : color.slateLight,
                   }}
                 >
-                  {s.label}
+                  {t(s.label)}
                 </span>
                 {!ok && <LockBadge />}
               </button>
@@ -293,10 +293,10 @@ export function Home() {
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
             <span style={{ fontSize: 13.5, fontWeight: 800, color: '#fff' }}>
-              قائمة الاستلام — {UNIT_SHORT}
+              {t('قائمة الاستلام —')} {t(UNIT_SHORT)}
             </span>
             <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>
-              متبقي 3 أيام على الاستلام · {movePct}% مكتمل
+              {t('متبقي 3 أيام على الاستلام ·')} {movePct}{t('% مكتمل')}
             </span>
           </div>
           <div style={{ flex: 1 }} />
@@ -311,7 +311,7 @@ export function Home() {
               whiteSpace: 'nowrap',
             }}
           >
-            متابعة
+            {t('متابعة')}
           </span>
         </button>
 
@@ -348,10 +348,10 @@ export function Home() {
             <Icon path={icons.bell} size={17} stroke={color.coral} width={1.6} />
           </span>
           <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, color: color.navy, lineHeight: 1.5 }}>
-            انقطاع مياه مؤقت يوم الخميس من 10 صباحًا حتى 2 ظهرًا
+            {t('انقطاع مياه مؤقت يوم الخميس من 10 صباحًا حتى 2 ظهرًا')}
           </span>
           <span style={{ fontSize: 11.5, fontWeight: 800, color: color.gold, whiteSpace: 'nowrap' }}>
-            عرض الكل
+            {t('عرض الكل')}
           </span>
         </button>
       </div>
@@ -435,7 +435,7 @@ export function ServicesList() {
           const ok = can(s.perm);
           return (
             <button
-              key={s.label}
+              key={t(s.label)}
               onClick={() => (ok ? go(s.dest) : lockToast())}
               style={{
                 display: 'flex',
@@ -466,10 +466,10 @@ export function ServicesList() {
               </span>
               <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
                 <span style={{ fontSize: 14.5, fontWeight: 800, color: ok ? color.navy : color.slateLight }}>
-                  {s.label}
+                  {t(s.label)}
                 </span>
                 <span style={{ fontSize: 11, fontWeight: 600, color: ok ? '#8A9199' : '#B4B0A6' }}>
-                  {s.sub}
+                  {t(s.sub)}
                 </span>
               </span>
               {!ok && <LockBadge inline />}
@@ -553,8 +553,7 @@ export function ServiceHub() {
           </span>
           <span style={{ fontSize: 16.5, fontWeight: 900, color: '#fff' }}>{t('اطلب مقدم خدمة')}</span>
           <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', lineHeight: 1.8 }}>
-            مطابقة فورية مع أقرب فني متاح — سباكة، كهرباء، تنظيف وغيرها. تدفع بضمان رفادة ولا يُحوَّل
-            المبلغ إلا بعد رضاك.
+            {t('مطابقة فورية مع أقرب فني متاح — سباكة، كهرباء، تنظيف وغيرها. تدفع بضمان رفادة ولا يُحوَّل المبلغ إلا بعد رضاك.')}
           </span>
           <span
             style={{
@@ -567,7 +566,7 @@ export function ServiceHub() {
               alignSelf: 'flex-start',
             }}
           >
-            يصلك خلال دقائق ⚡
+            {t('يصلك خلال دقائق ⚡')}
           </span>
         </button>
 
@@ -600,11 +599,10 @@ export function ServiceHub() {
             <Icon path={icons.file} size={24} />
           </span>
           <span style={{ fontSize: 16.5, fontWeight: 900, color: color.navy }}>
-            ارفع بلاغ للإدارة وتابعه
+            {t('ارفع بلاغ للإدارة وتابعه')}
           </span>
           <span style={{ fontSize: 12, color: color.slate, lineHeight: 1.8 }}>
-            بلاغات الصيانة والمناطق المشتركة تذهب لمكتب إدارة الكمبوند — تابع حالتها خطوة بخطوة وقيّم
-            الحل.
+            {t('بلاغات الصيانة والمناطق المشتركة تذهب لمكتب إدارة الكمبوند — تابع حالتها خطوة بخطوة وقيّم الحل.')}
           </span>
           <span
             style={{
@@ -617,7 +615,7 @@ export function ServiceHub() {
               alignSelf: 'flex-start',
             }}
           >
-            {open > 0 ? `${open} بلاغات مفتوحة` : t('لا توجد بلاغات مفتوحة')}
+            {open > 0 ? `${open} ${t('بلاغات مفتوحة')}` : t('لا توجد بلاغات مفتوحة')}
           </span>
         </button>
       </div>

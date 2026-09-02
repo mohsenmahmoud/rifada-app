@@ -1,4 +1,5 @@
 import { color, font } from '@/theme/tokens';
+import { t } from '@/i18n/lang';
 
 /**
  * The Rifada mark — two interlocking roofs, gold over navy.
@@ -32,7 +33,7 @@ export function BrandLockup({ caption }: { caption?: string }) {
       <Wordmark />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ fontSize: 17, fontWeight: 900, color: color.navy, lineHeight: 1.2 }}>
-          رفادة{' '}
+          {t('رفادة')}{' '}
           <span
             style={{
               fontFamily: font.mono,

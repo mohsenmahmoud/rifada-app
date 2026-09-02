@@ -126,7 +126,7 @@ function Profile() {
                 flex: 'none',
               }}
             >
-              {initials}
+              {t(initials)}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 18, fontWeight: 900, color: '#fff' }}>{cfg.residentName}</div>
@@ -138,9 +138,9 @@ function Profile() {
                   lineHeight: 1.6,
                 }}
               >
-                {UNIT}
+                {t(UNIT)}
                 <br />
-                {cfg.compoundName}
+                {t(cfg.compoundName)}
               </div>
               <span
                 style={{
@@ -171,7 +171,7 @@ function Profile() {
                     strokeLinejoin="round"
                   />
                 </svg>
-                ساكن موثّق
+                {t('ساكن موثّق')}
               </span>
             </div>
             <button
@@ -228,7 +228,7 @@ function Profile() {
                   fontWeight: 800,
                 }}
               >
-                العربية
+                {t('العربية')}
               </span>
               <span
                 style={{
@@ -246,7 +246,7 @@ function Profile() {
           <div style={{ display: 'flex', alignItems: 'center', padding: '15px 0' }}>
             <PrefIcon path={icons.bell} />
             <span style={{ flex: 1, fontSize: 13.5, fontWeight: 700, color: color.navy }}>
-              الإشعارات
+              {t('الإشعارات')}
             </span>
             <span
               style={{
@@ -274,14 +274,14 @@ function Profile() {
         </Card>
 
         {groups.map((g) => (
-          <div key={g.title}>
+          <div key={t(g.title)}>
             <div style={{ fontSize: 11.5, fontWeight: 800, color: color.slateLight, margin: '18px 6px 8px' }}>
-              {g.title}
+              {t(g.title)}
             </div>
             <Card pad="4px 16px">
               {g.items.map((it, i) => (
                 <button
-                  key={it.label}
+                  key={t(it.label)}
                   onClick={it.act}
                   style={{
                     width: '100%',
@@ -297,7 +297,7 @@ function Profile() {
                 >
                   <PrefIcon path={it.icon} />
                   <span style={{ flex: 1, fontSize: 13.5, fontWeight: 700, color: color.navy }}>
-                    {it.label}
+                    {t(it.label)}
                   </span>
                   <Icon path="M15 5l-7 7 7 7" size={13} stroke={color.slateLight} width={2} />
                 </button>
@@ -372,7 +372,7 @@ function Notifications() {
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {notifDefs.map((n, i) => (
           <div
-            key={n.title}
+            key={t(n.title)}
             style={{
               background: '#fff',
               borderRadius: 18,
@@ -401,12 +401,12 @@ function Notifications() {
             </span>
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
               <span style={{ fontSize: 13, fontWeight: 800, color: color.navy, lineHeight: 1.5 }}>
-                {i === 0 ? `${n.title} ${fmt(statementTotal(isRent))} ر.س` : n.title}
+                {i === 0 ? `${t(n.title)} ${fmt(statementTotal(isRent))} ${t('ر.س')}` : n.title}
               </span>
-              <span style={{ fontSize: 11.5, color: color.slate }}>{n.sub}</span>
+              <span style={{ fontSize: 11.5, color: color.slate }}>{t(n.sub)}</span>
             </span>
             <span style={{ fontSize: 10.5, color: color.slateLight, whiteSpace: 'nowrap' }}>
-              {n.time}
+              {t(n.time)}
             </span>
           </div>
         ))}
@@ -472,7 +472,7 @@ function Chat() {
         <span style={{ display: 'flex', flexDirection: 'column' }}>
           <span style={{ fontSize: 15, fontWeight: 900, color: color.navy }}>{t('إدارة الكمبوند')}</span>
           <span style={{ fontSize: 10.5, color: color.green, fontWeight: 700 }}>
-            متصل الآن · يرد خلال دقائق
+            {t('متصل الآن · يرد خلال دقائق')}
           </span>
         </span>
       </div>
@@ -502,7 +502,7 @@ function Chat() {
                 boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
               }}
             >
-              <span style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.7 }}>{c.text}</span>
+              <span style={{ fontSize: 13, fontWeight: 600, lineHeight: 1.7 }}>{t(c.text)}</span>
               <span
                 style={{
                   fontSize: 9.5,
@@ -510,7 +510,7 @@ function Chat() {
                   alignSelf: 'flex-end',
                 }}
               >
-                {c.time} {c.me ? '✓✓' : ''}
+                {t(c.time)} {c.me ? '✓✓' : ''}
               </span>
             </div>
           </div>
@@ -579,7 +579,7 @@ function Rewards() {
       return;
     }
     set((s) => ({ points: s.points - r.pts, redeemOpen: false }));
-    showToast(`تم الاستبدال: ${r.cash} — خُصمت ${r.pts.toLocaleString('en-US')} نقطة`);
+    showToast(`${t('تم الاستبدال:')} ${r.cash} ${t('— خُصمت')} ${r.pts.toLocaleString('en-US')} ${t('نقطة')}`);
   };
 
   return (
@@ -602,7 +602,7 @@ function Rewards() {
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <Icon path={icons.gem} size={26} stroke={color.gold} width={1.5} />
             <span style={{ fontSize: 13, fontWeight: 700, color: 'rgba(255,255,255,0.8)' }}>
-              نقاط المكافآت
+              {t('نقاط المكافآت')}
             </span>
           </div>
           <div style={{ ...numeric, fontSize: 38, fontWeight: 700, color: '#fff', marginTop: 6 }}>
@@ -615,11 +615,11 @@ function Rewards() {
                 color: 'rgba(255,255,255,0.7)',
               }}
             >
-              نقطة
+              {t('نقطة')}
             </span>
           </div>
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 4 }}>
-            تكسب نقاطًا مع كل سداد في موعده، وتقييم بلاغ، ومشاركة في الفعاليات
+            {t('تكسب نقاطًا مع كل سداد في موعده، وتقييم بلاغ، ومشاركة في الفعاليات')}
           </div>
         </div>
 
@@ -659,19 +659,19 @@ function Rewards() {
               نقاط الثقة: {TRUST_SCORE} — مستوى ذهبي
             </span>
             <span style={{ fontSize: 11, color: color.slate }}>
-              سجل سداد إيجابي يفيدك في عقود مستقبلية
+              {t('سجل سداد إيجابي يفيدك في عقود مستقبلية')}
             </span>
           </span>
           <Icon path="M15 5l-7 7 7 7" size={13} stroke={color.slateLight} width={2} />
         </button>
 
         <div style={{ fontSize: 15, fontWeight: 800, color: color.navy, margin: '18px 2px 10px' }}>
-          استبدال
+          {t('استبدال')}
         </div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           {redeemTiles.map((item) => (
             <button
-              key={item.label}
+              key={t(item.label)}
               onClick={() => set({ redeemOpen: true, redeemTitle: item.label, redeemSel: 1 })}
               style={{
                 border: 'none',
@@ -688,7 +688,7 @@ function Rewards() {
             >
               <Icon path={item.icon} size={22} stroke={color.gold} width={1.6} />
               <span style={{ fontSize: 13, fontWeight: 800, color: '#fff', lineHeight: 1.5 }}>
-                {item.label}
+                {t(item.label)}
               </span>
             </button>
           ))}
@@ -782,7 +782,7 @@ function Rewards() {
               onClick={doRedeem}
               style={{ marginTop: 14, padding: 13, fontSize: 14.5 }}
             >
-              استبدال الآن
+              {t('استبدال الآن')}
             </PillButton>
           </div>
         </div>
@@ -838,7 +838,7 @@ function Score() {
             </div>
           </div>
           <StatusPill tone="gold" style={{ fontSize: 12, padding: '5px 18px', fontWeight: 800, marginTop: 12 }}>
-            مستوى ذهبي
+            {t('مستوى ذهبي')}
           </StatusPill>
           <div
             style={{
@@ -849,17 +849,17 @@ function Score() {
               lineHeight: 1.8,
             }}
           >
-            سجل السداد الإيجابي يفيدك عند التقدم لعقود إيجار أو تقسيط مستقبلية
+            {t('سجل السداد الإيجابي يفيدك عند التقدم لعقود إيجار أو تقسيط مستقبلية')}
           </div>
         </Card>
 
         <Card pad="6px 16px" style={{ marginTop: 12 }}>
           <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, padding: '12px 0 4px' }}>
-            كيف تكوّنت نقاطك
+            {t('كيف تكوّنت نقاطك')}
           </div>
           {scoreItems.map((si, i) => (
             <div
-              key={si.label}
+              key={t(si.label)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -867,7 +867,7 @@ function Score() {
                 borderBottom: i === scoreItems.length - 1 ? undefined : '1px solid rgba(0,0,0,0.05)',
               }}
             >
-              <span style={{ fontSize: 12.5, color: color.slateDark }}>{si.label}</span>
+              <span style={{ fontSize: 12.5, color: color.slateDark }}>{t(si.label)}</span>
               <span style={{ flex: 1 }} />
               <span
                 style={{
@@ -962,7 +962,7 @@ function MoveIn() {
                   color: on ? '#fff' : color.slate,
                 }}
               >
-                {item.label}
+                {t(item.label)}
               </button>
             );
           })}
@@ -978,7 +978,7 @@ function MoveIn() {
         >
           <div style={{ fontSize: 16, fontWeight: 900, color: '#fff' }}>{t('متبقي 3 أيام على الاستلام!')}</div>
           <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.7)', marginTop: 3 }}>
-            موعد الاستلام: الأحد 13 يوليو — 11 صباحًا
+            {t('موعد الاستلام: الأحد 13 يوليو — 11 صباحًا')}
           </div>
           <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
             {[t('دليل الترحيب'), t('فيديو تعريفي')].map((p) => (
@@ -1027,7 +1027,7 @@ function MoveIn() {
                 lineHeight: 1.8,
               }}
             >
-              تُفعَّل قائمة التسليم عند تقديم طلب إخلاء الوحدة من إدارة الكمبوند
+              {t('تُفعَّل قائمة التسليم عند تقديم طلب إخلاء الوحدة من إدارة الكمبوند')}
             </span>
           </Card>
         ) : (
@@ -1039,7 +1039,7 @@ function MoveIn() {
                 </span>
                 <span style={{ flex: 1 }} />
                 <StatusPill tone="gold" style={{ fontSize: 10.5, padding: '3px 12px', fontWeight: 800 }}>
-                  قيد التنفيذ
+                  {t('قيد التنفيذ')}
                 </StatusPill>
               </div>
               <div
@@ -1065,18 +1065,18 @@ function MoveIn() {
             </Card>
 
             {rooms.map((room, ri) => (
-              <Card key={room.name} pad="14px 16px" style={{ borderRadius: 18, marginTop: 10 }}>
+              <Card key={t(room.name)} pad="14px 16px" style={{ borderRadius: 18, marginTop: 10 }}>
                 <div style={{ fontSize: 13.5, fontWeight: 800, color: color.navy, marginBottom: 4 }}>
-                  {room.name}
+                  {t(room.name)}
                 </div>
                 {room.items.map((it, ii) => (
                   <div
-                    key={it.label}
+                    key={t(it.label)}
                     style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0' }}
                   >
                     <button
                       onClick={() => toggle(ri, ii)}
-                      aria-label={it.label}
+                      aria-label={t(it.label)}
                       style={{
                         width: 23,
                         height: 23,
@@ -1107,7 +1107,7 @@ function MoveIn() {
                         color: it.done ? color.slateLight : color.navy,
                       }}
                     >
-                      {it.label}
+                      {t(it.label)}
                     </span>
                     <span
                       style={{
@@ -1145,11 +1145,11 @@ function GatePass() {
       <ScreenHeader title="سياراتك والزوار" onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '6px 2px 8px' }}>
-          مركباتك المسجلة
+          {t('مركباتك المسجلة')}
         </div>
         {vehicleDefs.map((v) => (
           <Card
-            key={v.plate}
+            key={t(v.plate)}
             pad="13px 16px"
             style={{ borderRadius: 18, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}
           >
@@ -1168,18 +1168,18 @@ function GatePass() {
               <Icon path={icons.cars} size={20} width={1.6} />
             </span>
             <span style={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{v.name}</span>
-              <span style={{ fontSize: 11, color: color.slate }}>لوحة: {v.plate}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(v.name)}</span>
+              <span style={{ fontSize: 11, color: color.slate }}>لوحة: {t(v.plate)}</span>
             </span>
             <span style={{ flex: 1 }} />
             <StatusPill tone="green" style={{ fontSize: 10.5, padding: '3px 12px', fontWeight: 800 }}>
-              دخول آلي مفعّل
+              {t('دخول آلي مفعّل')}
             </StatusPill>
           </Card>
         ))}
 
         <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '16px 2px 8px' }}>
-          تصريح زائر جديد
+          {t('تصريح زائر جديد')}
         </div>
         <Card pad={16} style={{ borderRadius: 18 }}>
           <input
@@ -1260,10 +1260,10 @@ function GatePass() {
                 زيارة متوقعة: {st.passName}
               </span>
               <span style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.75)' }}>
-                غدًا — 5 مساءً · بوابة رئيسية
+                {t('غدًا — 5 مساءً · بوابة رئيسية')}
               </span>
               <span style={{ fontSize: 11, fontWeight: 800, color: color.gold }}>
-                تمت مشاركة التصريح مع الأمن
+                {t('تمت مشاركة التصريح مع الأمن')}
               </span>
             </span>
           </div>
@@ -1286,14 +1286,14 @@ function LostBrowse() {
         <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('المفقودات')}</div>
         <div style={{ flex: 1 }} />
         <PillButton tone="gold" size="sm" onClick={() => go('lostReport')}>
-          + إبلاغ
+          {t('+ إبلاغ')}
         </PillButton>
       </div>
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           {st.lostItems.map((li, i) => (
             <div
-              key={`${li.title}-${i}`}
+              key={`${t(li.title)}-${i}`}
               style={{
                 background: '#fff',
                 borderRadius: 18,
@@ -1326,9 +1326,9 @@ function LostBrowse() {
                 >
                   {li.kind === 'found' ? t('وُجد') : t('مفقود')}
                 </StatusPill>
-                <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{li.title}</span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t(li.title)}</span>
                 <span style={{ fontSize: 10.5, color: color.slate, lineHeight: 1.6 }}>
-                  {li.loc} · {li.date}
+                  {t(li.loc)} · {t(li.date)}
                 </span>
               </div>
             </div>
@@ -1390,7 +1390,7 @@ function LostReport() {
                   color: on ? '#fff' : color.slate,
                 }}
               >
-                {item.l}
+                {t(item.l)}
               </button>
             );
           })}
@@ -1431,7 +1431,7 @@ function LostReport() {
       </div>
       <div style={{ padding: '0 20px 34px' }}>
         <PillButton tone="gold" size="lg" full onClick={submit}>
-          نشر البلاغ
+          {t('نشر البلاغ')}
         </PillButton>
       </div>
     </div>
@@ -1450,7 +1450,7 @@ function MarketBrowse() {
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {marketDefs.map((m, i) => (
           <button
-            key={m.name}
+            key={t(m.name)}
             onClick={() => go('marketDetail', { mdIdx: i })}
             style={{
               width: '100%',
@@ -1482,13 +1482,13 @@ function MarketBrowse() {
               <Icon path={m.icon} size={20} width={1.6} />
             </span>
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{m.name}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(m.name)}</span>
               <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-                {m.vendor} · ★ {m.rating}
+                {t(m.vendor)} · ★ {m.rating}
               </span>
             </span>
             <span style={{ ...numeric, fontSize: 13, fontWeight: 700, color: color.goldDeep }}>
-              {m.price} ر.س
+              {t(m.price)} ر.س
             </span>
           </button>
         ))}
@@ -1505,27 +1505,27 @@ function MarketDetail() {
       <ScreenHeader title="تفاصيل الخدمة" onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 30px' }}>
         <Card pad={18}>
-          <div style={{ fontSize: 17, fontWeight: 900, color: color.navy }}>{m.name}</div>
+          <div style={{ fontSize: 17, fontWeight: 900, color: color.navy }}>{t(m.name)}</div>
           <div style={{ fontSize: 12, color: color.slate, marginTop: 3 }}>
-            {m.vendor} · ★ {m.rating} ({m.reviews} تقييمًا)
+            {t(m.vendor)} · ★ {m.rating} ({m.reviews} تقييمًا)
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 12 }}>
             <span style={{ ...numeric, fontSize: 26, fontWeight: 700, color: color.navy }}>
-              {m.price}
+              {t(m.price)}
             </span>
-            <span style={{ fontSize: 12.5, color: color.slate }}>ر.س {m.unit}</span>
+            <span style={{ fontSize: 12.5, color: color.slate }}>ر.س {t(m.unit)}</span>
           </div>
           <div style={{ fontSize: 12.5, color: color.slateDark, marginTop: 10, lineHeight: 1.9 }}>
-            {m.desc}
+            {t(m.desc)}
           </div>
         </Card>
         <Card pad="14px 16px" style={{ borderRadius: 18, marginTop: 10 }}>
           <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t('آخر التقييمات')}</div>
           <div style={{ fontSize: 12, color: color.slateDark, marginTop: 8, lineHeight: 1.8 }}>
-            «خدمة ممتازة وفي الموعد» — نورة، فيلا 88
+            {t('«خدمة ممتازة وفي الموعد» — نورة، فيلا 88')}
           </div>
           <div style={{ fontSize: 12, color: color.slateDark, marginTop: 4, lineHeight: 1.8 }}>
-            «تعامل محترم وسعر مناسب» — فهد، فيلا 152
+            {t('«تعامل محترم وسعر مناسب» — فهد، فيلا 152')}
           </div>
         </Card>
       </div>
@@ -1537,7 +1537,7 @@ function MarketDetail() {
           onClick={() => go('reqService')}
           style={{ boxShadow: '0 6px 18px rgba(199,154,60,0.35)' }}
         >
-          احجز الخدمة
+          {t('احجز الخدمة')}
         </PillButton>
       </div>
     </div>
@@ -1563,10 +1563,10 @@ function Survey() {
       }}
     >
       <div style={{ fontSize: 20, fontWeight: 900, color: color.navy, lineHeight: 1.6 }}>
-        كيف كانت تجربتك بشكل عام هذا الشهر؟
+        {t('كيف كانت تجربتك بشكل عام هذا الشهر؟')}
       </div>
       <div style={{ fontSize: 12.5, color: color.slate, marginTop: 6 }}>
-        استبيان سريع — إجابتك تصل مباشرة لإدارة الكمبوند
+        {t('استبيان سريع — إجابتك تصل مباشرة لإدارة الكمبوند')}
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 26 }}>
@@ -1603,7 +1603,7 @@ function Survey() {
       </div>
 
       <div style={{ fontSize: 12.5, fontWeight: 700, color: color.navy, margin: '24px 0 8px' }}>
-        ما أكثر ما يحتاج تحسينًا؟
+        {t('ما أكثر ما يحتاج تحسينًا؟')}
       </div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
         {surveyChipDefs.map((label) => {
@@ -1646,7 +1646,7 @@ function Survey() {
           showToast('شكرًا! تم إرسال تقييمك لإدارة الكمبوند');
         }}
       >
-        إرسال
+        {t('إرسال')}
       </PillButton>
       <button
         onClick={back}
@@ -1663,7 +1663,7 @@ function Survey() {
           fontFamily: font.sans,
         }}
       >
-        تخطي
+        {t('تخطي')}
       </button>
     </div>
   );
@@ -1681,14 +1681,13 @@ function Consent() {
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <Card pad={18}>
           <div style={{ fontSize: 14.5, fontWeight: 800, color: color.navy, lineHeight: 1.7 }}>
-            انقل سجلك معك عند الانتقال بين الكمبوندات المدعومة برفادة
+            {t('انقل سجلك معك عند الانتقال بين الكمبوندات المدعومة برفادة')}
           </div>
           <div style={{ fontSize: 12.5, color: color.slateDark, marginTop: 10, lineHeight: 2 }}>
-            عند موافقتك، يُشارك سجل السداد ونقاط الثقة الخاصة بك مع إدارة الكمبوند الجديد فقط — ما
-            يسهّل قبول طلبك ويمنحك مزايا الساكن الموثّق من اليوم الأول.
+            {t('عند موافقتك، يُشارك سجل السداد ونقاط الثقة الخاصة بك مع إدارة الكمبوند الجديد فقط — ما يسهّل قبول طلبك ويمنحك مزايا الساكن الموثّق من اليوم الأول.')}
           </div>
           <div style={{ fontSize: 12.5, color: color.slateDark, marginTop: 8, lineHeight: 2 }}>
-            لا تُشارك بياناتك مع أي طرف ثالث، ويمكنك سحب الموافقة في أي وقت من الإعدادات.
+            {t('لا تُشارك بياناتك مع أي طرف ثالث، ويمكنك سحب الموافقة في أي وقت من الإعدادات.')}
           </div>
         </Card>
 
@@ -1697,7 +1696,7 @@ function Consent() {
           style={{ borderRadius: 18, marginTop: 12, display: 'flex', alignItems: 'center' }}
         >
           <span style={{ flex: 1, fontSize: 13.5, fontWeight: 800, color: color.navy }}>
-            أوافق على مشاركة سجلي
+            {t('أوافق على مشاركة سجلي')}
           </span>
           <button
             onClick={() => set({ consentOn: !st.consentOn })}
@@ -1737,7 +1736,7 @@ function Consent() {
             showToast(st.consentOn ? t('حُفظ تفضيلك — المشاركة مفعّلة') : t('حُفظ تفضيلك — المشاركة متوقفة'));
           }}
         >
-          حفظ التفضيل
+          {t('حفظ التفضيل')}
         </PillButton>
       </div>
     </div>
@@ -1766,21 +1765,21 @@ function Pets() {
             <Icon path={icons.pets} size={26} width={1.6} />
           </span>
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-            <span style={{ fontSize: 15, fontWeight: 900, color: color.navy }}>{petDef.name}</span>
-            <span style={{ fontSize: 11.5, color: color.slate }}>{petDef.sub}</span>
+            <span style={{ fontSize: 15, fontWeight: 900, color: color.navy }}>{t(petDef.name)}</span>
+            <span style={{ fontSize: 11.5, color: color.slate }}>{t(petDef.sub)}</span>
           </span>
           <StatusPill tone="green" style={{ fontSize: 10.5, padding: '3px 12px', fontWeight: 800 }}>
-            تطعيمات سارية
+            {t('تطعيمات سارية')}
           </StatusPill>
         </Card>
 
         <Card pad="6px 16px" style={{ marginTop: 12 }}>
           <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, padding: '12px 0 4px' }}>
-            سجل التطعيمات
+            {t('سجل التطعيمات')}
           </div>
           {petDef.vaccines.map((v, i) => (
             <div
-              key={v.label}
+              key={t(v.label)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -1788,9 +1787,9 @@ function Pets() {
                 borderBottom: i === petDef.vaccines.length - 1 ? undefined : '1px solid rgba(0,0,0,0.05)',
               }}
             >
-              <span style={{ fontSize: 12.5, color: color.slateDark }}>{v.label}</span>
+              <span style={{ fontSize: 12.5, color: color.slateDark }}>{t(v.label)}</span>
               <span style={{ flex: 1 }} />
-              <span style={{ fontSize: 11.5, fontWeight: 700, color: color.greenDeep }}>{v.until}</span>
+              <span style={{ fontSize: 11.5, fontWeight: 700, color: color.greenDeep }}>{t(v.until)}</span>
             </div>
           ))}
         </Card>
@@ -1815,7 +1814,7 @@ function Pets() {
           onClick={() => showToast('نموذج تسجيل حيوان أليف جديد')}
           style={{ marginTop: 12, padding: 12, fontSize: 13.5 }}
         >
-          + تسجيل حيوان أليف جديد
+          {t('+ تسجيل حيوان أليف جديد')}
         </PillButton>
       </div>
     </div>
@@ -1845,10 +1844,10 @@ function Docs() {
         >
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
             <span style={{ fontSize: 13.5, fontWeight: 800, color: '#fff' }}>
-              عقد الصيانة السنوي ينتهي بعد 5 أشهر
+              {t('عقد الصيانة السنوي ينتهي بعد 5 أشهر')}
             </span>
             <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>
-              جدّد الآن واختر عرضًا حصريًا
+              {t('جدّد الآن واختر عرضًا حصريًا')}
             </span>
           </span>
           <span
@@ -1862,13 +1861,13 @@ function Docs() {
               whiteSpace: 'nowrap',
             }}
           >
-            التجديد
+            {t('التجديد')}
           </span>
         </button>
 
         {docDefs.map((d) => (
           <Card
-            key={d.name}
+            key={t(d.name)}
             pad="14px 16px"
             style={{ borderRadius: 18, marginTop: 10, display: 'flex', alignItems: 'center', gap: 12 }}
           >
@@ -1887,11 +1886,11 @@ function Docs() {
               <Icon path={icons.docs} size={18} width={1.6} />
             </span>
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{d.name}</span>
-              <span style={{ fontSize: 11, color: color.slate }}>{d.sub}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(d.name)}</span>
+              <span style={{ fontSize: 11, color: color.slate }}>{t(d.sub)}</span>
             </span>
             <button
-              onClick={() => showToast(`جارٍ تحميل ${d.name}…`)}
+              onClick={() => showToast(`${t('جارٍ تحميل')} ${t(d.name)}…`)}
               style={{
                 border: 'none',
                 background: 'transparent',
@@ -1902,7 +1901,7 @@ function Docs() {
                 fontFamily: font.sans,
               }}
             >
-              تحميل
+              {t('تحميل')}
             </button>
           </Card>
         ))}
@@ -1919,21 +1918,21 @@ function Renew() {
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 30px' }}>
         <Card pad={16}>
           <div style={{ fontSize: 14.5, fontWeight: 800, color: color.navy }}>
-            عقد الخدمات والصيانة السنوي
+            {t('عقد الخدمات والصيانة السنوي')}
           </div>
           <div style={{ fontSize: 11.5, color: color.slate, marginTop: 3 }}>
-            {UNIT_SHORT} · ينتهي 31 ديسمبر 2026
+            {t(UNIT_SHORT)} · ينتهي 31 ديسمبر 2026
           </div>
         </Card>
 
         <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '16px 2px 8px' }}>
-          اختر عرض التجديد
+          {t('اختر عرض التجديد')}
         </div>
         {renewDefs.map((r, i) => {
           const on = st.renewSel === i;
           return (
             <button
-              key={r.title}
+              key={t(r.title)}
               onClick={() => set({ renewSel: i })}
               style={{
                 width: '100%',
@@ -1971,8 +1970,8 @@ function Renew() {
                 />
               </span>
               <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{r.title}</span>
-                <span style={{ fontSize: 11, color: color.slate }}>{r.sub}</span>
+                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(r.title)}</span>
+                <span style={{ fontSize: 11, color: color.slate }}>{t(r.sub)}</span>
               </span>
             </button>
           );
@@ -1987,14 +1986,14 @@ function Renew() {
           }}
           style={{ flex: 1, padding: 13, fontSize: 14 }}
         >
-          اختر العرض
+          {t('اختر العرض')}
         </PillButton>
         <PillButton
           tone="outline"
           onClick={() => showToast('تفاصيل العقد الكاملة')}
           style={{ flex: 1, padding: 13, fontSize: 14 }}
         >
-          التفاصيل
+          {t('التفاصيل')}
         </PillButton>
       </div>
     </div>
@@ -2009,17 +2008,17 @@ function Contacts() {
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {contactDefs.map((ct) => (
           <Card
-            key={ct.name}
+            key={t(ct.name)}
             pad="14px 16px"
             style={{ borderRadius: 18, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}
           >
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{ct.name}</span>
-              <span style={{ fontSize: 11, color: color.slate }}>{ct.sub}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(ct.name)}</span>
+              <span style={{ fontSize: 11, color: color.slate }}>{t(ct.sub)}</span>
             </span>
             <button
-              onClick={() => showToast(`جارٍ الاتصال بـ${ct.name}…`)}
-              aria-label={`اتصال بـ${ct.name}`}
+              onClick={() => showToast(`${t('جارٍ الاتصال بـ')}${t(ct.name)}…`)}
+              aria-label={`${t('اتصال بـ')}${t(ct.name)}`}
               style={{
                 width: 40,
                 height: 40,
@@ -2050,8 +2049,8 @@ function Links() {
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {linkDefs.map((lk) => (
           <button
-            key={lk.name}
-            onClick={() => showToast(`فتح ${lk.name}`)}
+            key={t(lk.name)}
+            onClick={() => showToast(`${t('فتح')} ${t(lk.name)}`)}
             style={{
               width: '100%',
               textAlign: 'right',
@@ -2082,8 +2081,8 @@ function Links() {
               <Icon path={icons.links} size={17} width={1.6} />
             </span>
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{lk.name}</span>
-              <span style={{ fontSize: 11, color: color.slate }}>{lk.sub}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(lk.name)}</span>
+              <span style={{ fontSize: 11, color: color.slate }}>{t(lk.sub)}</span>
             </span>
             <Icon path="M15 5l-7 7 7 7" size={13} stroke={color.slateLight} width={2} />
           </button>
@@ -2145,10 +2144,10 @@ function ComingSoon() {
           lineHeight: 1.8,
         }}
       >
-        هذه الخدمة قادمة قريبًا في رفادة — التنقّل جاهز لها منذ الآن.
+        {t('هذه الخدمة قادمة قريبًا في رفادة — التنقّل جاهز لها منذ الآن.')}
       </div>
       <PillButton tone="outline" onClick={back} style={{ marginTop: 22, padding: '10px 34px', fontSize: 13.5 }}>
-        العودة
+        {t('العودة')}
       </PillButton>
     </div>
   );

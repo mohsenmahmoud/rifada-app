@@ -66,7 +66,7 @@ function Statement() {
                   color: on ? '#fff' : color.slate,
                 }}
               >
-                {m.l}
+                {t(m.l)}
               </button>
             );
           })}
@@ -116,7 +116,7 @@ function Statement() {
             >
               <Icon path={icons.events} size={13} width={1.6} />
               <span style={{ fontSize: 11, fontWeight: 700, color: color.navy }}>
-                يتجدد الاستحقاق في 25 من كل شهر
+                {t('يتجدد الاستحقاق في 25 من كل شهر')}
               </span>
             </div>
           )}
@@ -124,11 +124,11 @@ function Statement() {
 
         <Card pad="6px 16px" style={{ marginTop: 12 }}>
           <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, padding: '12px 0 4px' }}>
-            تفاصيل الرصيد
+            {t('تفاصيل الرصيد')}
           </div>
           {items.map((li) => (
             <div
-              key={li.label}
+              key={t(li.label)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -136,7 +136,7 @@ function Statement() {
                 borderBottom: '1px solid rgba(0,0,0,0.05)',
               }}
             >
-              <span style={{ fontSize: 13, color: color.slateDark }}>{li.label}</span>
+              <span style={{ fontSize: 13, color: color.slateDark }}>{t(li.label)}</span>
               <span style={{ flex: 1 }} />
               <span style={{ ...numeric, fontSize: 13, fontWeight: 600, color: color.navy }}>
                 {li.amount} ر.س
@@ -159,7 +159,7 @@ function Statement() {
             { label: t('إدارة الدفع التلقائي'), to: 'autopay' as const },
           ].map((pl) => (
             <button
-              key={pl.label}
+              key={t(pl.label)}
               onClick={() => go(pl.to)}
               style={{
                 width: '100%',
@@ -174,7 +174,7 @@ function Statement() {
               }}
             >
               <span style={{ flex: 1, fontSize: 13, fontWeight: 700, color: color.navy }}>
-                {pl.label}
+                {t(pl.label)}
               </span>
               <Icon path="M15 5l-7 7 7 7" size={13} stroke={color.slateLight} width={2} />
             </button>
@@ -188,7 +188,7 @@ function Statement() {
           onClick={() => (paid ? go('payHistory') : go('payNow'))}
           style={{ marginTop: 16, boxShadow: '0 6px 18px rgba(199,154,60,0.35)' }}
         >
-          {paid ? t('تم السداد ✓ — عرض الإيصال') : `ادفع ${fmt(total)} ر.س`}
+          {paid ? t('تم السداد ✓ — عرض الإيصال') : `${t('ادفع')} ${fmt(total)} ${t('ر.س')}`}
         </PillButton>
       </div>
     </div>
@@ -233,7 +233,7 @@ function PayNow() {
         </div>
 
         <div style={{ fontSize: 12.5, fontWeight: 700, color: color.navy, margin: '16px 0 8px' }}>
-          اختر طريقة الدفع
+          {t('اختر طريقة الدفع')}
         </div>
         {methodDefs.map((m) => {
           const on = st.method === m.key;
@@ -257,8 +257,8 @@ function PayNow() {
             >
               <Radio on={on} />
               <span style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{m.name}</span>
-                <span style={{ fontSize: 11, color: color.slate }}>{m.sub}</span>
+                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(m.name)}</span>
+                <span style={{ fontSize: 11, color: color.slate }}>{t(m.sub)}</span>
               </span>
             </button>
           );
@@ -315,7 +315,7 @@ function PaySuccess() {
     >
       <SuccessMark />
       <div style={{ fontSize: 22, fontWeight: 900, color: color.navy, marginTop: 18 }}>
-        تم الدفع بنجاح
+        {t('تم الدفع بنجاح')}
       </div>
       <div style={{ fontSize: 13.5, color: color.slate, marginTop: 6 }}>
         <span style={{ ...numeric, fontWeight: 600 }}>{amount}</span> ر.س — {method}
@@ -324,7 +324,7 @@ function PaySuccess() {
       <Card pad="6px 18px" style={{ width: '100%', marginTop: 22 }}>
         <DetailRow label="رقم الإيصال" value={<span style={numeric}>#88412</span>} />
         <DetailRow label="التاريخ" value="10 يوليو 2026" />
-        <DetailRow label="الوحدة" value={UNIT} last />
+        <DetailRow label="الوحدة" value={t(UNIT)} last />
       </Card>
 
       <button
@@ -343,7 +343,7 @@ function PaySuccess() {
         تحميل الإيصال (PDF)
       </button>
       <PillButton size="lg" full onClick={() => go('home')} style={{ marginTop: 14 }}>
-        العودة للرئيسية
+        {t('العودة للرئيسية')}
       </PillButton>
     </div>
   );
@@ -391,9 +391,9 @@ function History() {
               <Icon path={icons.check} size={18} stroke={color.green} width={2.2} />
             </span>
             <span style={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{rc.label}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(rc.label)}</span>
               <span style={{ fontSize: 11, color: color.slate }}>
-                {rc.date} · إيصال <span style={numeric}>#{rc.no}</span>
+                {t(rc.date)} · إيصال <span style={numeric}>#{rc.no}</span>
               </span>
             </span>
             <span style={{ flex: 1 }} />
@@ -436,7 +436,7 @@ function Autopay() {
     // The last stage genuinely settles the balance, so the home hero flips.
     if (next === autopaySteps.length - 1) {
       set(isRent ? { rentPaid: true } : { instPaid: true });
-      showToast(`تم خصم ${fmt(total)} ر.س تلقائيًا`);
+      showToast(`${t('تم خصم')} ${fmt(total)} ${t('ر.س تلقائيًا')}`);
     }
   };
 
@@ -495,7 +495,7 @@ function Autopay() {
               {st.autoPayOn ? t('الدفع التلقائي مفعّل') : t('الدفع التلقائي متوقف')}
             </span>
             <span style={{ fontSize: 11, color: color.slate }}>
-              يُخصم المستحق تلقائيًا يوم 25 من كل شهر
+              {t('يُخصم المستحق تلقائيًا يوم 25 من كل شهر')}
             </span>
           </span>
         </button>
@@ -528,13 +528,13 @@ function Autopay() {
         </Card>
 
         <div style={{ fontSize: 13.5, fontWeight: 800, color: color.navy, margin: '18px 2px 10px' }}>
-          كيف تعمل دورة الخصم الشهرية
+          {t('كيف تعمل دورة الخصم الشهرية')}
         </div>
         <Card pad="18px 16px 8px" style={{ borderRadius: 18 }}>
           <Timeline
             steps={autopaySteps.map((s, i) => ({
               label: s.label,
-              sub: i === 1 ? `يُخصم ${fmt(total)} ر.س من بطاقتك •••• 4821 دون أي خطوة منك` : s.sub,
+              sub: i === 1 ? `${t('يُخصم')} ${fmt(total)} ${t('ر.س من بطاقتك •••• 4821 دون أي خطوة منك')}` : s.sub,
             }))}
             doneCount={st.apStage + 1}
             currentIndex={st.apStage}
@@ -577,15 +577,14 @@ function Autopay() {
                 fontFamily: font.sans,
               }}
             >
-              إعادة
+              {t('إعادة')}
             </button>
           </div>
         )}
 
         <div style={{ marginTop: 12 }}>
           <Note tone="navy">
-            إذا فشل الخصم (رصيد غير كافٍ)، نعيد المحاولة تلقائيًا بعد 24 ساعة ونرسل لك إشعارًا — دون
-            أي رسوم تأخير خلال فترة السماح (5 أيام).
+            {t('إذا فشل الخصم (رصيد غير كافٍ)، نعيد المحاولة تلقائيًا بعد 24 ساعة ونرسل لك إشعارًا — دون أي رسوم تأخير خلال فترة السماح (5 أيام).')}
           </Note>
         </div>
       </div>
@@ -661,10 +660,10 @@ function Financial() {
             }}
           >
             <div style={{ fontSize: 11, fontWeight: 700, color: 'rgba(255,255,255,0.7)' }}>
-              تأمين الوحدة
+              {t('تأمين الوحدة')}
             </div>
             <div style={{ fontSize: 16, fontWeight: 900, color: '#fff', marginTop: 2 }}>
-              فيلا 214 — مؤمّنة
+              {t('فيلا 214 — مؤمّنة')}
             </div>
             <div
               style={{
@@ -678,14 +677,14 @@ function Financial() {
               POLICY RFD-214-2026
             </div>
             <div style={{ fontSize: 10.5, color: color.gold, fontWeight: 800, marginTop: 4 }}>
-              سارية حتى 31 ديسمبر 2026
+              {t('سارية حتى 31 ديسمبر 2026')}
             </div>
           </div>
         </div>
 
         {finItems.map((f) => (
           <Card
-            key={f.title}
+            key={t(f.title)}
             pad="14px 16px"
             style={{ borderRadius: 18, marginTop: 10, display: 'flex', alignItems: 'flex-start', gap: 12 }}
           >
@@ -700,8 +699,8 @@ function Financial() {
               }}
             />
             <span style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{f.title}</span>
-              <span style={{ fontSize: 11.5, color: color.slate, lineHeight: 1.8 }}>{f.sub}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(f.title)}</span>
+              <span style={{ fontSize: 11.5, color: color.slate, lineHeight: 1.8 }}>{t(f.sub)}</span>
             </span>
           </Card>
         ))}

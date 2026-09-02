@@ -37,10 +37,10 @@ function Browse() {
             textOverflow: 'ellipsis',
           }}
         >
-          سوق العقارات
+          {t('سوق العقارات')}
         </div>
         <PillButton tone="gold" size="sm" onClick={() => go('reCreate')} style={{ padding: '8px 16px', fontSize: 11.5 }}>
-          + أعلن عن وحدتك
+          {t('+ أعلن عن وحدتك')}
         </PillButton>
       </div>
 
@@ -48,12 +48,12 @@ function Browse() {
         {[
           { k: 'sale' as const, l: t('للبيع') },
           { k: 'rent' as const, l: t('للإيجار') },
-        ].map((t) => {
-          const on = st.reTab === t.k;
+        ].map((tab) => {
+          const on = st.reTab === tab.k;
           return (
             <button
-              key={t.k}
-              onClick={() => set({ reTab: t.k })}
+              key={tab.k}
+              onClick={() => set({ reTab: tab.k })}
               style={{
                 flex: 1,
                 border: 'none',
@@ -68,7 +68,7 @@ function Browse() {
                 boxShadow: on ? undefined : shadow.card,
               }}
             >
-              {t.l}
+              {t(tab.l)}
             </button>
           );
         })}
@@ -97,7 +97,7 @@ function Browse() {
       <div style={{ flex: 1, overflowY: 'auto', padding: '10px 18px 40px' }}>
         {list.map((l) => (
           <button
-            key={l.title}
+            key={t(l.title)}
             onClick={() => go('reDetail', { selReIdx: l.i })}
             style={{
               width: '100%',
@@ -140,14 +140,14 @@ function Browse() {
             <div style={{ padding: '13px 15px 15px' }}>
               <div style={{ display: 'flex', alignItems: 'baseline' }}>
                 <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: color.navy }}>
-                  {l.price}
+                  {t(l.price)}
                 </span>
-                <span style={{ fontSize: 11, color: color.slate, marginRight: 5 }}>{l.priceUnit}</span>
+                <span style={{ fontSize: 11, color: color.slate, marginRight: 5 }}>{t(l.priceUnit)}</span>
                 <span style={{ flex: 1 }} />
-                <span style={{ fontSize: 11, color: color.slateLight }}>{l.ago}</span>
+                <span style={{ fontSize: 11, color: color.slateLight }}>{t(l.ago)}</span>
               </div>
               <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, marginTop: 4 }}>
-                {l.title}
+                {t(l.title)}
               </div>
               <div style={{ fontSize: 11, color: color.slate, marginTop: 3 }}>
                 {l.rooms} غرف · {l.area} م² · {l.zone}
@@ -157,8 +157,7 @@ function Browse() {
         ))}
 
         <Note tone="navy">
-          رفادة يتيح الاكتشاف والتواصل بين الجيران فقط — إتمام البيع أو الإيجار يتم خارج التطبيق
-          بالقنوات القانونية المعتادة.
+          {t('رفادة يتيح الاكتشاف والتواصل بين الجيران فقط — إتمام البيع أو الإيجار يتم خارج التطبيق بالقنوات القانونية المعتادة.')}
         </Note>
       </div>
     </div>
@@ -191,12 +190,12 @@ function Create() {
           {[
             { k: 'sale' as const, l: t('بيع') },
             { k: 'rent' as const, l: t('إيجار') },
-          ].map((t) => {
-            const on = st.crType === t.k;
+          ].map((tab) => {
+            const on = st.crType === tab.k;
             return (
               <button
-                key={t.k}
-                onClick={() => set({ crType: t.k })}
+                key={tab.k}
+                onClick={() => set({ crType: tab.k })}
                 style={{
                   flex: 1,
                   border: 'none',
@@ -210,7 +209,7 @@ function Create() {
                   color: on ? '#fff' : color.slate,
                 }}
               >
-                {t.l}
+                {t(tab.l)}
               </button>
             );
           })}
@@ -250,7 +249,7 @@ function Create() {
         </button>
 
         <div style={{ fontSize: 12.5, fontWeight: 700, color: color.navy, margin: '14px 0 8px' }}>
-          طريقة التواصل المفضلة
+          {t('طريقة التواصل المفضلة')}
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           {[
@@ -275,7 +274,7 @@ function Create() {
                   fontFamily: font.sans,
                 }}
               >
-                {c.l}
+                {t(c.l)}
               </button>
             );
           })}
@@ -292,7 +291,7 @@ function Create() {
             showToast('تم إرسال إعلانك لمراجعة الإدارة — يُنشر خلال 24 ساعة');
           }}
         >
-          نشر الإعلان — بعد مراجعة الإدارة
+          {t('نشر الإعلان — بعد مراجعة الإدارة')}
         </PillButton>
       </div>
     </div>
@@ -364,19 +363,19 @@ function Detail() {
             fontWeight: 700,
           }}
         >
-          1 / 6 صور
+          {t('1 / 6 صور')}
         </span>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '16px 20px 30px' }}>
         <div style={{ display: 'flex', alignItems: 'baseline' }}>
-          <span style={{ ...numeric, fontSize: 24, fontWeight: 700, color: color.navy }}>{l.price}</span>
-          <span style={{ fontSize: 12, color: color.slate, marginRight: 6 }}>{l.priceUnit}</span>
+          <span style={{ ...numeric, fontSize: 24, fontWeight: 700, color: color.navy }}>{t(l.price)}</span>
+          <span style={{ fontSize: 12, color: color.slate, marginRight: 6 }}>{t(l.priceUnit)}</span>
         </div>
-        <div style={{ fontSize: 15, fontWeight: 900, color: color.navy, marginTop: 6 }}>{l.title}</div>
+        <div style={{ fontSize: 15, fontWeight: 900, color: color.navy, marginTop: 6 }}>{t(l.title)}</div>
 
         <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
-          {[`${l.rooms} غرف`, `${l.area} م²`, l.zone].map((f) => (
+          {[`${l.rooms} ${t('غرف')}`, `${l.area} ${t('م²')}`, l.zone].map((f) => (
             <span
               key={f}
               style={{
@@ -399,20 +398,20 @@ function Detail() {
           pad="15px 16px"
           style={{ borderRadius: 18, marginTop: 12, fontSize: 12.5, color: color.slateDark, lineHeight: 2 }}
         >
-          {l.desc}
+          {t(l.desc)}
         </Card>
 
         <Card
           pad="14px 16px"
           style={{ borderRadius: 18, marginTop: 10, display: 'flex', alignItems: 'center', gap: 11 }}
         >
-          <Avatar name={l.owner} size={40} />
+          <Avatar name={t(l.owner)} size={40} />
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
-            <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{l.owner}</span>
-            <span style={{ fontSize: 10.5, color: color.slate }}>جار موثّق · {l.ownerUnit}</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t(l.owner)}</span>
+            <span style={{ fontSize: 10.5, color: color.slate }}>جار موثّق · {t(l.ownerUnit)}</span>
           </span>
           <StatusPill tone="green" style={{ fontSize: 10, padding: '3px 12px', fontWeight: 800 }}>
-            موثّق ✓
+            {t('موثّق ✓')}
           </StatusPill>
         </Card>
       </div>
@@ -423,10 +422,10 @@ function Detail() {
           onClick={() => showToast('سجّلنا اهتمامك — سيصل إشعار للمالك')}
           style={{ flex: 1, padding: 13, fontSize: 13.5 }}
         >
-          أنا مهتم
+          {t('أنا مهتم')}
         </PillButton>
         <PillButton onClick={() => go('chat')} style={{ flex: 1.3, padding: 13, fontSize: 13.5 }}>
-          تواصل مع المالك
+          {t('تواصل مع المالك')}
         </PillButton>
       </div>
     </div>
@@ -442,7 +441,7 @@ function Mine() {
         <BackButton onClick={back} />
         <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>{t('إعلاناتي')}</div>
         <PillButton tone="gold" size="sm" onClick={() => go('reCreate')} style={{ padding: '8px 16px', fontSize: 11.5 }}>
-          + إعلان جديد
+          {t('+ إعلان جديد')}
         </PillButton>
       </div>
 
@@ -451,16 +450,16 @@ function Mine() {
           const state = st.myListingsState[i] ?? 'active';
           const meta = listingStateMeta[state];
           return (
-            <Card key={m.title} pad="15px 16px" style={{ borderRadius: 18, marginBottom: 10 }}>
+            <Card key={t(m.title)} pad="15px 16px" style={{ borderRadius: 18, marginBottom: 10 }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{m.title}</span>
+                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(m.title)}</span>
                 <span style={{ flex: 1 }} />
                 <StatusPill bg={meta.bg} c={meta.c} style={{ fontSize: 10, padding: '3px 12px', fontWeight: 800 }}>
-                  {meta.label}
+                  {t(meta.label)}
                 </StatusPill>
               </div>
               <div style={{ fontSize: 11.5, color: color.slate, marginTop: 4 }}>
-                {m.price} · {m.views} مشاهدة · {m.interested} مهتم
+                {t(m.price)} · {m.views} مشاهدة · {m.interested} مهتم
               </div>
               <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
                 <SmallAction
@@ -483,7 +482,7 @@ function Mine() {
                     showToast('ألف مبروك! تم وضع علامة «تم التأجير» — سيُخفى الإعلان من السوق');
                   }}
                 >
-                  تم التأجير ✓
+                  {t('تم التأجير ✓')}
                 </SmallAction>
               </div>
             </Card>

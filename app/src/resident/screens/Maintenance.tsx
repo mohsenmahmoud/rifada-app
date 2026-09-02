@@ -13,7 +13,7 @@ export function MaintNew() {
 
   const submit = () => {
     const cat = st.cat ?? t('أخرى');
-    const title = st.desc.trim() ? st.desc.trim() : `بلاغ ${cat} جديد`;
+    const title = st.desc.trim() ? st.desc.trim() : `${t('بلاغ')} ${cat} ${t('جديد')}`;
 
     // The auto-assign switch reroutes to instant matching instead of the
     // management queue — that's the whole point of the toggle.
@@ -33,7 +33,7 @@ export function MaintNew() {
       screen: 'maintList',
       hist: [...s.hist, 'maintNew'],
     }));
-    showToast(`تم استلام بلاغك — رقم #${id}`);
+    showToast(`${t('تم استلام بلاغك — رقم #')}${id}`);
   };
 
   return (
@@ -47,7 +47,7 @@ export function MaintNew() {
             const on = st.cat === c.label;
             return (
               <button
-                key={c.label}
+                key={t(c.label)}
                 onClick={() => set({ cat: c.label })}
                 style={{
                   borderRadius: radius.inner,
@@ -70,7 +70,7 @@ export function MaintNew() {
                     fontFamily: font.sans,
                   }}
                 >
-                  {c.label}
+                  {t(c.label)}
                 </span>
               </button>
             );
@@ -79,7 +79,7 @@ export function MaintNew() {
 
         <Label style={{ marginTop: 16 }}>{t('وصف المشكلة')}</Label>
         <textarea
-          value={st.desc}
+          value={t(st.desc)}
           onChange={(e) => set({ desc: e.target.value })}
           rows={4}
           placeholder="مثال: تسريب مياه أسفل حوض المطبخ منذ يومين…"
@@ -116,7 +116,7 @@ export function MaintNew() {
         >
           <Icon path={icons.camera} size={18} stroke={color.slate} width={1.5} />
           <span style={{ fontSize: 12.5, fontWeight: 700, color: color.slate }}>
-            إضافة صور أو فيديو
+            {t('إضافة صور أو فيديو')}
           </span>
         </button>
 
@@ -152,7 +152,7 @@ export function MaintNew() {
                   color: on ? '#fff' : color.slate,
                 }}
               >
-                {p.l}
+                {t(p.l)}
               </button>
             );
           })}
@@ -178,10 +178,10 @@ export function MaintNew() {
           <Switch on={st.autoMatch} />
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
             <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>
-              إسناد تلقائي لأقرب مقدم خدمة متاح
+              {t('إسناد تلقائي لأقرب مقدم خدمة متاح')}
             </span>
             <span style={{ fontSize: 10.5, color: color.slate }}>
-              بدل الانتظار في طابور مكتب الإدارة
+              {t('بدل الانتظار في طابور مكتب الإدارة')}
             </span>
           </span>
         </button>
@@ -206,16 +206,16 @@ export function MaintList() {
         <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('بلاغاتي')}</div>
         <div style={{ flex: 1 }} />
         <PillButton tone="gold" size="sm" onClick={() => go('maintNew')}>
-          + بلاغ جديد
+          {t('+ بلاغ جديد')}
         </PillButton>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
-        {st.tickets.map((t, i) => {
-          const m = ticketMeta[t.status];
+        {st.tickets.map((tk, i) => {
+          const m = ticketMeta[tk.status];
           return (
             <button
-              key={t.id}
+              key={tk.id}
               onClick={() => go('maintDetail', { selIdx: i, starSel: 0 })}
               style={{
                 width: '100%',
@@ -234,18 +234,18 @@ export function MaintList() {
             >
               <span style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                 <span style={{ ...numeric, fontSize: 11.5, fontWeight: 600, color: color.slate }}>
-                  بلاغ #{t.id}
+                  بلاغ #{tk.id}
                 </span>
                 <span style={{ flex: 1 }} />
                 <StatusPill bg={m.bg} c={m.c} style={{ fontSize: 11, padding: '3px 12px', fontWeight: 800 }}>
-                  {m.label}
+                  {t(m.label)}
                 </StatusPill>
               </span>
               <span style={{ fontSize: 14, fontWeight: 800, color: color.navy, lineHeight: 1.5 }}>
-                {t.title}
+                {t(tk.title)}
               </span>
               <span style={{ fontSize: 11.5, color: color.slate }}>
-                {t.cat} · {t.date}
+                {t(tk.cat)} · {t(tk.date)}
               </span>
             </button>
           );
@@ -284,15 +284,15 @@ export function MaintDetail() {
         <Card pad={16} style={{ borderRadius: 18 }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <StatusPill bg={m.bg} c={m.c} style={{ fontSize: 11.5, padding: '4px 14px', fontWeight: 800 }}>
-              {m.label}
+              {t(m.label)}
             </StatusPill>
             <span style={{ flex: 1 }} />
             <span style={{ fontSize: 11.5, color: color.slate }}>
-              {sel.cat} · {sel.date}
+              {t(sel.cat)} · {t(sel.date)}
             </span>
           </div>
           <div style={{ fontSize: 15.5, fontWeight: 800, color: color.navy, marginTop: 10, lineHeight: 1.6 }}>
-            {sel.title}
+            {t(sel.title)}
           </div>
         </Card>
 
@@ -302,7 +302,7 @@ export function MaintDetail() {
             const current = i === stepsDone - 1 && !isResolved;
             const last = i === ticketSteps.length - 1;
             return (
-              <div key={s.label} style={{ display: 'flex', gap: 12 }}>
+              <div key={t(s.label)} style={{ display: 'flex', gap: 12 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                   <span
                     style={{
@@ -334,10 +334,10 @@ export function MaintDetail() {
                       lineHeight: 1.4,
                     }}
                   >
-                    {s.label}
+                    {t(s.label)}
                   </div>
                   <div style={{ fontSize: 11, color: color.slateLight }}>
-                    {done ? (s.time ? `${sel.date} — ${s.time}` : (s.sub ?? '')) : ''}
+                    {done ? (s.time ? `${t(sel.date)} — ${t(s.time)}` : (s.sub ?? '')) : ''}
                   </div>
                 </div>
               </div>
@@ -348,10 +348,10 @@ export function MaintDetail() {
         {sel.note && (
           <div style={{ background: color.tile, borderRadius: radius.inner, padding: '13px 16px', marginTop: 12 }}>
             <div style={{ fontSize: 11.5, fontWeight: 800, color: color.goldDeep }}>
-              ملاحظة الفني — محمد الغامدي
+              {t('ملاحظة الفني — محمد الغامدي')}
             </div>
             <div style={{ fontSize: 12.5, color: color.slateDark, marginTop: 4, lineHeight: 1.7 }}>
-              {sel.note}
+              {t(sel.note)}
             </div>
           </div>
         )}
@@ -364,7 +364,7 @@ export function MaintDetail() {
                 <button
                   key={n}
                   onClick={() => set({ starSel: n })}
-                  aria-label={`${n} نجوم`}
+                  aria-label={`${n} ${t('نجوم')}`}
                   style={{ border: 'none', background: 'transparent', cursor: 'pointer', padding: 2 }}
                 >
                   <svg width="30" height="30" viewBox="0 0 24 24">
@@ -397,7 +397,7 @@ export function MaintDetail() {
               }}
             />
             <PillButton full onClick={sendRating} style={{ marginTop: 10, padding: 11, fontSize: 13.5 }}>
-              إرسال التقييم
+              {t('إرسال التقييم')}
             </PillButton>
           </Card>
         )}
@@ -416,7 +416,7 @@ export function MaintDetail() {
           >
             <Icon path={icons.check} size={22} stroke={color.green} width={2.4} />
             <span style={{ fontSize: 13, fontWeight: 800, color: color.greenDeep }}>
-              شكرًا! تقييمك يساعدنا في تحسين الخدمة
+              {t('شكرًا! تقييمك يساعدنا في تحسين الخدمة')}
             </span>
           </div>
         )}

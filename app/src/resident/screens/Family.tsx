@@ -31,7 +31,7 @@ function Members() {
       nfName: '',
       nfPhone: '',
     });
-    showToast(`تم إنشاء حساب ${name} بـ${count} صلاحيات — الدعوة في الطريق`);
+    showToast(`${t('تم إنشاء حساب')} ${name} ${t('بـ')}${count} ${t('صلاحيات — الدعوة في الطريق')}`);
   };
 
   return (
@@ -45,13 +45,13 @@ function Members() {
           onClick={() => set((s) => ({ famInviteShown: !s.famInviteShown, nfDone: null }))}
           style={{ padding: '8px 16px', fontSize: 11.5 }}
         >
-          + دعوة فرد جديد
+          {t('+ دعوة فرد جديد')}
         </PillButton>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <div style={{ fontSize: 11.5, color: color.slate, margin: '4px 2px 10px' }}>
-          أنت مالك الوحدة — تتحكم في صلاحيات كل فرد مرتبط بـ{UNIT_SHORT}
+          أنت مالك الوحدة — تتحكم في صلاحيات كل فرد مرتبط بـ{t(UNIT_SHORT)}
         </div>
 
         {famDefs.map((f, i) => {
@@ -63,7 +63,7 @@ function Members() {
                 : 3;
           return (
             <button
-              key={f.name}
+              key={t(f.name)}
               onClick={() => go('famPerms', { selFamIdx: i })}
               style={{
                 width: '100%',
@@ -98,9 +98,9 @@ function Members() {
                 {f.name[0]}
               </span>
               <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{f.name}</span>
+                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(f.name)}</span>
                 <span style={{ fontSize: 11, color: color.slate }}>
-                  {f.rel} · {f.full ? t('كل الصلاحيات') : `${granted} من 6 صلاحيات`}
+                  {t(f.rel)} · {f.full ? t('كل الصلاحيات') : `${granted} ${t('من 6 صلاحيات')}`}
                 </span>
               </span>
               <Icon path="M15 5l-7 7 7 7" size={14} stroke={color.slateLight} width={2} />
@@ -111,10 +111,10 @@ function Members() {
         {st.famInviteShown && (
           <Card pad={18} style={{ marginTop: 6 }}>
             <div style={{ fontSize: 13.5, fontWeight: 900, color: color.navy }}>
-              إنشاء حساب لفرد جديد
+              {t('إنشاء حساب لفرد جديد')}
             </div>
             <div style={{ fontSize: 10.5, color: color.slate, marginTop: 3 }}>
-              أنت من ينشئ الحساب ويحدد صلاحياته — الفرد يستلم دعوة جاهزة فقط
+              {t('أنت من ينشئ الحساب ويحدد صلاحياته — الفرد يستلم دعوة جاهزة فقط')}
             </div>
 
             <input
@@ -157,7 +157,7 @@ function Members() {
             </div>
 
             <div style={{ fontSize: 12, fontWeight: 800, color: color.navy, margin: '14px 0 4px' }}>
-              صلاحيات الحساب من البداية
+              {t('صلاحيات الحساب من البداية')}
             </div>
             {newAccountPermDefs.map((p) => {
               const on = st.nfPerms[p.key];
@@ -180,7 +180,7 @@ function Members() {
                 >
                   <SmallSwitch on={on} />
                   <span style={{ flex: 1, fontSize: 11.5, fontWeight: 700, color: color.navy }}>
-                    {p.label}
+                    {t(p.label)}
                   </span>
                 </button>
               );
@@ -192,7 +192,7 @@ function Members() {
               onClick={createAccount}
               style={{ marginTop: 14, padding: 13, fontSize: 13.5 }}
             >
-              إنشاء الحساب وإرسال الدعوة
+              {t('إنشاء الحساب وإرسال الدعوة')}
             </PillButton>
           </Card>
         )}
@@ -210,7 +210,7 @@ function Members() {
             }}
           >
             <div style={{ fontSize: 12.5, fontWeight: 800, color: '#fff' }}>
-              تم إنشاء حساب {st.nfDone.name} ✓
+              تم إنشاء حساب {t(st.nfDone.name)} ✓
             </div>
             <div
               dir="ltr"
@@ -259,7 +259,7 @@ function Permissions() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={back} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>صلاحيات {member.name}</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>صلاحيات {t(member.name)}</div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
@@ -315,8 +315,8 @@ function Permissions() {
                   />
                 </span>
                 <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                  <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{p.label}</span>
-                  <span style={{ fontSize: 10.5, color: color.slateLight }}>{p.sub}</span>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t(p.label)}</span>
+                  <span style={{ fontSize: 10.5, color: color.slateLight }}>{t(p.sub)}</span>
                 </span>
               </button>
             );
@@ -325,7 +325,7 @@ function Permissions() {
 
         <div style={{ marginTop: 12 }}>
           <Note tone="navy">
-            المزايا الممنوعة تظهر لـ{member.name} رمادية مع أيقونة قفل — لا تختفي، حتى يعرف أنها
+            المزايا الممنوعة تظهر لـ{t(member.name)} رمادية مع أيقونة قفل — لا تختفي، حتى يعرف أنها
             تحتاج إذنك.
           </Note>
         </div>
@@ -340,7 +340,7 @@ function Permissions() {
             style={{ marginTop: 12, padding: 13, fontSize: 13 }}
           >
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7 }}>
-              عاين التطبيق بعين {member.name}
+              عاين التطبيق بعين {t(member.name)}
               <Icon path={icons.lock} size={14} stroke="#fff" width={1.8} />
             </span>
           </PillButton>

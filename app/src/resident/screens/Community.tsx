@@ -9,7 +9,7 @@ import type { Comment, CommunityPost, PostAttachment } from '../types';
 import { ChipRow } from './parts';
 import { t } from '@/i18n/lang';
 
-const ME = t('عبدالله العتيبي');
+const ME = 'عبدالله العتيبي';
 
 type FullPost = CommunityPost & { comments: Comment[] };
 
@@ -84,7 +84,7 @@ function Attachment({ att, onOpen }: { att: PostAttachment; onOpen: () => void }
               textOverflow: 'ellipsis',
             }}
           >
-            {att.name}
+            {t(att.name)}
           </span>
           <span dir="ltr" style={{ ...numeric, fontSize: 10, color: color.slateLight, textAlign: 'right' }}>
             PDF · {att.size}
@@ -137,7 +137,7 @@ function Attachment({ att, onOpen }: { att: PostAttachment; onOpen: () => void }
             textOverflow: 'ellipsis',
           }}
         >
-          {att.title}
+          {t(att.title)}
         </span>
         <span
           dir="ltr"
@@ -234,7 +234,7 @@ function Feed() {
         <BackButton onClick={() => go('home')} />
         <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>{t('اسأل جيرانك')}</div>
         <StatusPill tone="green" style={{ fontSize: 10, padding: '5px 13px', fontWeight: 800 }}>
-          {ACTIVE_NEIGHBOURS} جارًا نشطًا
+          {ACTIVE_NEIGHBOURS} {t('جارًا نشطًا')}
         </StatusPill>
       </div>
 
@@ -269,10 +269,10 @@ function Feed() {
             flex: 'none',
           }}
         >
-          ع
+          {t('ع')}
         </span>
         <span style={{ flex: 1, fontSize: 12.5, color: color.slateLight }}>
-          عندك سؤال لجيرانك؟ اكتبه هنا…
+          {t('عندك سؤال لجيرانك؟ اكتبه هنا…')}
         </span>
         <Icon
           path="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"
@@ -297,7 +297,7 @@ function Feed() {
           const menuOpen = st.cmMenuOpen === p.i;
           return (
             <div
-              key={`${p.who}-${p.i}`}
+              key={`${t(p.who)}-${p.i}`}
               style={{
                 background: '#fff',
                 borderRadius: radius.card,
@@ -307,13 +307,13 @@ function Feed() {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <AuthorLine who={p.who} unit={p.unit} avBg={p.avBg} time={p.time} />
+                <AuthorLine who={t(p.who)} unit={t(p.unit)} avBg={p.avBg} time={t(p.time)} />
                 <StatusPill
                   bg={tm.bg}
                   c={tm.c}
                   style={{ fontSize: 9.5, padding: '3px 12px', fontWeight: 800 }}
                 >
-                  {p.tag}
+                  {t(p.tag)}
                 </StatusPill>
                 {isMine && (
                   <button
@@ -366,7 +366,7 @@ function Feed() {
                       size={13}
                       width={1.7}
                     />
-                    تعديل المنشور
+                    {t('تعديل المنشور')}
                   </button>
                   <button
                     onClick={() => {
@@ -388,7 +388,7 @@ function Feed() {
                       stroke={color.coralDeep}
                       width={1.7}
                     />
-                    حذف
+                    {t('حذف')}
                   </button>
                 </div>
               )}
@@ -418,7 +418,7 @@ function Feed() {
                   lineHeight: 1.95,
                 }}
               >
-                {p.text}
+                {t(p.text)}
               </button>
 
               <Attachment
@@ -426,8 +426,8 @@ function Feed() {
                 onOpen={() =>
                   showToast(
                     p.att?.type === 'file'
-                      ? `جارٍ تنزيل ${p.att.name}…`
-                      : `فتح الرابط: ${p.att?.type === 'link' ? p.att.url : ''}`,
+                      ? `${t('جارٍ تنزيل')} ${t(p.att.name)}…`
+                      : `${t('فتح الرابط:')} ${p.att?.type === 'link' ? p.att.url : ''}`,
                   )
                 }
               />
@@ -498,7 +498,7 @@ function Feed() {
                     fontFamily: font.sans,
                   }}
                 >
-                  التعليقات ←
+                  {t('التعليقات ←')}
                 </button>
               </div>
             </div>
@@ -559,13 +559,13 @@ function Post() {
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 20px 12px' }}>
         <Card pad={18}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <AuthorLine who={p.who} unit={p.unit} avBg={p.avBg} time={p.time} />
+            <AuthorLine who={t(p.who)} unit={t(p.unit)} avBg={p.avBg} time={t(p.time)} />
             <StatusPill bg={tm.bg} c={tm.c} style={{ fontSize: 9.5, padding: '3px 12px', fontWeight: 800 }}>
-              {p.tag}
+              {t(p.tag)}
             </StatusPill>
           </div>
           <div style={{ marginTop: 12, fontSize: 13.5, color: color.navy, lineHeight: 1.95 }}>
-            {p.text}
+            {t(p.text)}
           </div>
           <Attachment att={p.att} onOpen={() => showToast('فتح المرفق…')} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 14 }}>
@@ -617,15 +617,15 @@ function Post() {
               <Card pad="14px 16px" style={{ borderRadius: 18 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
                   <AuthorLine
-                    who={c.who}
+                    who={t(c.who)}
                     unit={c.unit || unitOf[c.who] || UNIT_SHORT}
                     avBg={c.avBg}
-                    time={c.time}
+                    time={t(c.time)}
                     size={32}
                   />
                 </div>
                 <div style={{ fontSize: 12.5, color: color.slateDark, marginTop: 8, lineHeight: 1.9 }}>
-                  {c.text}
+                  {t(c.text)}
                 </div>
                 <Attachment att={c.att} onOpen={() => showToast('فتح المرفق…')} />
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>
@@ -636,7 +636,7 @@ function Post() {
                     إعجاب ({(c.likes ?? 0) + (cLiked ? 1 : 0)})
                   </button>
                   <button onClick={() => set({ cmReplyTo: ci })} style={inlineAction(color.slate)}>
-                    رد
+                    {t('رد')}
                   </button>
                 </div>
               </Card>
@@ -649,15 +649,15 @@ function Post() {
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <AuthorLine
-                      who={r.who}
+                      who={t(r.who)}
                       unit={r.unit || unitOf[r.who] || UNIT_SHORT}
                       avBg={r.avBg}
-                      time={r.time}
+                      time={t(r.time)}
                       size={28}
                     />
                   </div>
                   <div style={{ fontSize: 12, color: color.slateDark, marginTop: 7, lineHeight: 1.85 }}>
-                    {r.text}
+                    {t(r.text)}
                   </div>
                   <Attachment att={r.att} onOpen={() => showToast('فتح المرفق…')} />
                 </Card>
@@ -869,14 +869,14 @@ function New() {
                 flex: 'none',
               }}
             >
-              ع
+              {t('ع')}
             </span>
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
               <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>
-                {ME} <span style={{ color: color.goldDeep }}>— {UNIT_SHORT}</span>
+                {t(ME)} <span style={{ color: color.goldDeep }}>— {t(UNIT_SHORT)}</span>
               </span>
               <span style={{ fontSize: 10, color: color.greenDeep, fontWeight: 800 }}>
-                حساب موثّق ✓
+                {t('حساب موثّق ✓')}
               </span>
             </span>
           </div>
@@ -918,7 +918,7 @@ function New() {
                   fontFamily: font.sans,
                 }}
               >
-                إزالة المرفق
+                {t('إزالة المرفق')}
               </button>
             </div>
           )}
@@ -989,7 +989,7 @@ function New() {
         </Card>
 
         <div style={{ fontSize: 12.5, fontWeight: 700, color: color.navy, margin: '16px 0 8px' }}>
-          تصنيف المنشور
+          {t('تصنيف المنشور')}
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           {/* The tag values are the state's own type (PostTag), so they stay

@@ -76,7 +76,7 @@ export function App() {
         <Wordmark />
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div style={{ fontSize: 17, fontWeight: 900, color: color.navy, lineHeight: 1.2 }}>
-            رفادة{' '}
+            {t('رفادة')}{' '}
             <span
               style={{
                 fontFamily: font.mono,
@@ -128,7 +128,7 @@ export function App() {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {o.l}
+                {t(o.l)}
               </button>
             );
           })}
@@ -206,7 +206,7 @@ export function App() {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {m.l}
+                {t(m.l)}
               </button>
             );
           })}
@@ -296,7 +296,7 @@ function Gallery<K extends string>({
       <div style={{ fontSize: 13, color: color.slate }}>{intro}</div>
 
       {groups.map((g) => (
-        <div key={g.name} style={{ marginTop: 30 }}>
+        <div key={t(g.name)} style={{ marginTop: 30 }}>
           <div
             style={{
               display: 'flex',
@@ -308,7 +308,7 @@ function Gallery<K extends string>({
             }}
           >
             <span style={{ width: 8, height: 8, borderRadius: 99, background: color.gold }} />
-            {g.name}
+            {t(g.name)}
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, marginTop: 12 }}>
             {g.screens.map((s) => (
@@ -336,7 +336,7 @@ function Gallery<K extends string>({
                       textOverflow: 'ellipsis',
                     }}
                   >
-                    {s.title}
+                    {t(s.title)}
                   </span>
                 </div>
                 <div
@@ -388,7 +388,7 @@ function Gallery<K extends string>({
 function ResidentGallery({ onOpen }: { onOpen: (k: ScreenKey) => void }) {
   return (
     <Gallery
-      intro={`كل شاشة معروضة كاملة وحيّة (${galleryScreenCount} شاشة) — اضغط على أي شاشة لفتحها في الجوال التفاعلي.`}
+      intro={`${t('كل شاشة معروضة كاملة وحيّة (')}${galleryScreenCount} ${t('شاشة) — اضغط على أي شاشة لفتحها في الجوال التفاعلي.')}`}
       groups={galleryGroups}
       onOpen={onOpen}
       // `bare` keeps the status bar (screens reserve 66px for it) but drops the
@@ -407,8 +407,7 @@ function ResidentGallery({ onOpen }: { onOpen: (k: ScreenKey) => void }) {
             lineHeight: 1.8,
           }}
         >
-          كل مراحل المنتج (1–4) مبنية وقابلة للتجربة: الخدمات والسداد والمرافق، المفقودات وتصاريح
-          الزوار، المتجر وسوق العقارات، الفعاليات واسأل جيرانك ورفادتنا، والمكافآت ونقاط الثقة.
+          {t('كل مراحل المنتج (1–4) مبنية وقابلة للتجربة: الخدمات والسداد والمرافق، المفقودات وتصاريح الزوار، المتجر وسوق العقارات، الفعاليات واسأل جيرانك ورفادتنا، والمكافآت ونقاط الثقة.')}
         </div>
       }
     />
@@ -418,7 +417,7 @@ function ResidentGallery({ onOpen }: { onOpen: (k: ScreenKey) => void }) {
 function ProviderGallery({ onOpen }: { onOpen: (k: ProviderScreen) => void }) {
   return (
     <Gallery
-      intro={`واجهتان في تطبيق واحد — الفني والمتجر (${providerScreenCount} شاشات). اضغط على أي شاشة لفتحها في الجوال التفاعلي.`}
+      intro={`${t('واجهتان في تطبيق واحد — الفني والمتجر (')}${providerScreenCount} ${t('شاشات). اضغط على أي شاشة لفتحها في الجوال التفاعلي.')}`}
       groups={providerGallery}
       onOpen={onOpen}
       renderScreen={(k) => <ProviderApp bare fixedScreen={k} width={480} height={1014} />}
@@ -429,7 +428,7 @@ function ProviderGallery({ onOpen }: { onOpen: (k: ProviderScreen) => void }) {
 function AdminGallery({ onOpen }: { onOpen: (k: AdminGalleryKey) => void }) {
   return (
     <Gallery
-      intro={`لوحة الإدارة كاملة (${adminScreenCount} شاشة) بمقاس سطح المكتب 1360×940 — اضغط على أي شاشة لفتحها في اللوحة التفاعلية.`}
+      intro={`${t('لوحة الإدارة كاملة (')}${adminScreenCount} ${t('شاشة) بمقاس سطح المكتب 1360×940 — اضغط على أي شاشة لفتحها في اللوحة التفاعلية.')}`}
       groups={adminGallery}
       onOpen={onOpen}
       // Three laptop tiles per row inside the 1340px shell.
@@ -459,7 +458,7 @@ function AdminGallery({ onOpen }: { onOpen: (k: AdminGalleryKey) => void }) {
             lineHeight: 1.8,
           }}
         >
-          كل قرار مالي أو حسّاس في هذه اللوحة يمرّ عبر سجل التدقيق — من فعل ماذا ومتى، بلا حذف.
+          {t('كل قرار مالي أو حسّاس في هذه اللوحة يمرّ عبر سجل التدقيق — من فعل ماذا ومتى، بلا حذف.')}
         </div>
       }
     />

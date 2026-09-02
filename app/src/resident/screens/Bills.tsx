@@ -59,7 +59,7 @@ function Home() {
             whiteSpace: 'nowrap',
           }}
         >
-          سجل السداد
+          {t('سجل السداد')}
         </button>
       </div>
 
@@ -72,19 +72,19 @@ function Home() {
           }}
         >
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.65)' }}>
-            إجمالي المستحق هذا الشهر — فواتير خارجية
+            {t('إجمالي المستحق هذا الشهر — فواتير خارجية')}
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 4 }}>
             <span style={{ ...numeric, fontSize: 28, fontWeight: 700, color: '#fff' }}>{totalDue}</span>
             <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)' }}>{t('ر.س')}</span>
           </div>
           <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', marginTop: 4 }}>
-            منفصلة تمامًا عن رسوم الوحدة — تُسدد عبر شريك الدفع المعتمد
+            {t('منفصلة تمامًا عن رسوم الوحدة — تُسدد عبر شريك الدفع المعتمد')}
           </div>
         </div>
 
         <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '16px 2px 8px' }}>
-          فواتيرك المربوطة
+          {t('فواتيرك المربوطة')}
         </div>
 
         {billOrder.map((key) => {
@@ -131,7 +131,7 @@ function Home() {
               </span>
               <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
                 <span style={{ fontSize: 13, fontWeight: 800, color: color.navy, whiteSpace: 'nowrap' }}>
-                  {d.cat}
+                  {t(d.cat)}
                 </span>
                 <span
                   style={{
@@ -151,7 +151,7 @@ function Home() {
                     {d.amount} <span style={{ fontSize: 9.5, color: color.slate }}>{t('ر.س')}</span>
                   </span>
                   <StatusPill bg={m.bg} c={m.c} style={{ fontSize: 9.5, padding: '2px 10px', fontWeight: 800 }}>
-                    {m.label}
+                    {t(m.label)}
                   </StatusPill>
                 </span>
               ) : (
@@ -167,7 +167,7 @@ function Home() {
                     flex: 'none',
                   }}
                 >
-                  + ربط فاتورة
+                  {t('+ ربط فاتورة')}
                 </span>
               )}
             </button>
@@ -190,7 +190,7 @@ function Home() {
             fontFamily: font.sans,
           }}
         >
-          + ربط فاتورة جديدة — كهرباء، إنترنت، أو غيرها
+          {t('+ ربط فاتورة جديدة — كهرباء، إنترنت، أو غيرها')}
         </button>
       </div>
     </div>
@@ -209,7 +209,7 @@ function Link() {
       screen: 'bills',
       hist: s.hist.slice(0, -1),
     }));
-    showToast(`تم ربط فاتورة ${billCatDefs[cat].cat} — سيظهر المستحق فور صدوره`);
+    showToast(`${t('تم ربط فاتورة')} ${billCatDefs[cat].cat} ${t('— سيظهر المستحق فور صدوره')}`);
   };
 
   return (
@@ -291,13 +291,13 @@ function Link() {
         />
         <div style={{ marginTop: 12 }}>
           <Note tone="navy">
-            يتم الربط والاستعلام عبر شريك الدفع المعتمد — لا يشارك رفادة بياناتك مع أي طرف آخر.
+            {t('يتم الربط والاستعلام عبر شريك الدفع المعتمد — لا يشارك رفادة بياناتك مع أي طرف آخر.')}
           </Note>
         </div>
       </div>
       <div style={{ padding: '0 20px 34px' }}>
         <PillButton tone="gold" size="lg" full onClick={confirm}>
-          ربط الفاتورة
+          {t('ربط الفاتورة')}
         </PillButton>
       </div>
     </div>
@@ -317,7 +317,7 @@ function Detail() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={back} />
-        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>{d.cat}</div>
+        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>{t(d.cat)}</div>
         <button
           onClick={() => go('billAutopay')}
           style={{
@@ -334,14 +334,14 @@ function Detail() {
             whiteSpace: 'nowrap',
           }}
         >
-          الدفع التلقائي
+          {t('الدفع التلقائي')}
         </button>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <Card pad={18} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <span style={{ fontSize: 11, color: color.slate }}>
-            {d.provider} · {d.account}
+            {t(d.provider)} · {d.account}
           </span>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 8 }}>
             <span style={{ ...numeric, fontSize: 34, fontWeight: 700, color: color.navy }}>
@@ -350,7 +350,7 @@ function Detail() {
             <span style={{ fontSize: 13, color: color.slate }}>{t('ر.س')}</span>
           </div>
           <StatusPill bg={m.bg} c={m.c} style={{ fontSize: 10.5, padding: '3px 14px', fontWeight: 800, marginTop: 8 }}>
-            {m.label}
+            {t(m.label)}
           </StatusPill>
         </Card>
 
@@ -358,7 +358,7 @@ function Detail() {
           <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t('تفاصيل الفاتورة')}</div>
           {d.lines.map((bl) => (
             <div
-              key={bl.name}
+              key={t(bl.name)}
               style={{
                 display: 'flex',
                 fontSize: 12,
@@ -367,9 +367,9 @@ function Detail() {
                 borderBottom: '1px solid rgba(0,0,0,0.04)',
               }}
             >
-              <span>{bl.name}</span>
+              <span>{t(bl.name)}</span>
               <span style={{ flex: 1 }} />
-              <span style={{ ...numeric, fontWeight: 700 }}>{bl.val}</span>
+              <span style={{ ...numeric, fontWeight: 700 }}>{t(bl.val)}</span>
             </div>
           ))}
           <div style={{ display: 'flex', fontSize: 11, color: color.slate, paddingTop: 8 }}>
@@ -392,7 +392,7 @@ function Detail() {
               color: color.greenDeep,
             }}
           >
-            تم سداد هذه الفاتورة ✓ — الإيصال في سجل السداد
+            {t('تم سداد هذه الفاتورة ✓ — الإيصال في سجل السداد')}
           </div>
         )}
       </div>
@@ -405,7 +405,7 @@ function Detail() {
             full
             onClick={() => {
               set((s2) => ({ billsSt: { ...s2.billsSt, [key]: 'paid' } }));
-              showToast(`تم سداد فاتورة ${d.cat} بنجاح ✓ — الإيصال في سجل السداد`);
+              showToast(`${t('تم سداد فاتورة')} ${t(d.cat)} ${t('بنجاح ✓ — الإيصال في سجل السداد')}`);
             }}
             style={{ boxShadow: '0 6px 18px rgba(199,154,60,0.35)' }}
           >
@@ -455,16 +455,16 @@ function History() {
             </span>
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
               <span style={{ fontSize: 12, fontWeight: 800, color: color.navy, whiteSpace: 'nowrap' }}>
-                {r.title}
+                {t(r.title)}
               </span>
-              <span style={{ fontSize: 10, color: color.slate, whiteSpace: 'nowrap' }}>{r.date}</span>
+              <span style={{ fontSize: 10, color: color.slate, whiteSpace: 'nowrap' }}>{t(r.date)}</span>
             </span>
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 3 }}>
               <span style={{ ...numeric, fontSize: 12.5, fontWeight: 700, color: color.navy, whiteSpace: 'nowrap' }}>
                 {r.amount} ر.س
               </span>
               <button
-                onClick={() => showToast(`جارٍ تحميل إيصال ${r.title} (PDF)`)}
+                onClick={() => showToast(`${t('جارٍ تحميل إيصال')} ${t(r.title)} (PDF)`)}
                 style={{
                   border: 'none',
                   background: 'transparent',
@@ -494,7 +494,7 @@ function Autopay() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title={`الدفع التلقائي — ${billCatDefs[key].cat}`} onBack={back} />
+      <ScreenHeader title={`${t('الدفع التلقائي —')} ${billCatDefs[key].cat}`} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <button
           onClick={() => set((s) => ({ billAutopay: { ...s.billAutopay, [key]: !on } }))}
@@ -539,7 +539,7 @@ function Autopay() {
               {on ? t('السداد التلقائي مفعّل') : t('السداد التلقائي متوقف')}
             </span>
             <span style={{ fontSize: 10.5, color: color.slate }}>
-              تُسدد تلقائيًا في تاريخ الاستحقاق من بطاقتك المحفوظة
+              {t('تُسدد تلقائيًا في تاريخ الاستحقاق من بطاقتك المحفوظة')}
             </span>
           </span>
         </button>
@@ -547,7 +547,7 @@ function Autopay() {
         <Card pad={16} style={{ borderRadius: 18, marginTop: 12 }}>
           <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t('حد التنبيه')}</div>
           <div style={{ fontSize: 10.5, color: color.slate, marginTop: 2 }}>
-            نبهك قبل السداد إذا تجاوزت الفاتورة هذا المبلغ
+            {t('نبهك قبل السداد إذا تجاوزت الفاتورة هذا المبلغ')}
           </div>
           <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
             {autopayCaps.map((v) => {

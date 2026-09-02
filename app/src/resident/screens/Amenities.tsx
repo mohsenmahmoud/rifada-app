@@ -18,7 +18,7 @@ export function Amenities() {
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {amenDefs.map((a) => (
-          <Card key={a.name} pad={16} style={{ borderRadius: 18, marginBottom: 12 }}>
+          <Card key={t(a.name)} pad={16} style={{ borderRadius: 18, marginBottom: 12 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span
                 style={{
@@ -35,8 +35,8 @@ export function Amenities() {
                 <Icon path={a.icon} size={22} width={1.6} />
               </span>
               <span style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ fontSize: 15, fontWeight: 800, color: color.navy }}>{a.name}</span>
-                <span style={{ fontSize: 11.5, color: color.slate }}>{a.sub}</span>
+                <span style={{ fontSize: 15, fontWeight: 800, color: color.navy }}>{t(a.name)}</span>
+                <span style={{ fontSize: 11.5, color: color.slate }}>{t(a.sub)}</span>
               </span>
               <span style={{ flex: 1 }} />
               <StatusPill tone="green">{t('متاح اليوم')}</StatusPill>
@@ -84,7 +84,7 @@ export function Amenities() {
                   color: color.goldDeep,
                 }}
               >
-                احجز مدرب شخصي — عبر المطابقة الفورية
+                {t('احجز مدرب شخصي — عبر المطابقة الفورية')}
               </button>
             )}
           </Card>
@@ -126,7 +126,7 @@ export function AmenConfirm() {
           </div>
         </Card>
         <div style={{ fontSize: 11.5, color: color.slate, textAlign: 'center', marginTop: 12, lineHeight: 1.8 }}>
-          يمكنك إلغاء الحجز حتى ساعتين قبل الموعد دون أي رسوم.
+          {t('يمكنك إلغاء الحجز حتى ساعتين قبل الموعد دون أي رسوم.')}
         </div>
       </div>
 
@@ -136,13 +136,13 @@ export function AmenConfirm() {
           full
           onClick={() => {
             go('amenDone');
-            showToast(`تم تأكيد حجز ${st.bookAmen}`);
+            showToast(`${t('تم تأكيد حجز')} ${st.bookAmen}`);
           }}
         >
-          تأكيد الحجز
+          {t('تأكيد الحجز')}
         </PillButton>
         <PillButton tone="outline" full onClick={back} style={{ padding: 12, fontSize: 14 }}>
-          إلغاء
+          {t('إلغاء')}
         </PillButton>
       </div>
     </div>
@@ -179,7 +179,7 @@ export function AmenDone() {
         <Icon path={icons.check} size={42} stroke={color.green} width={2.6} />
       </div>
       <div style={{ fontSize: 21, fontWeight: 900, color: color.navy, marginTop: 18 }}>
-        تم تأكيد حجزك
+        {t('تم تأكيد حجزك')}
       </div>
       <div style={{ fontSize: 13.5, color: color.slate, marginTop: 6 }}>
         {st.bookAmen} — اليوم، {st.bookSlot}
@@ -201,7 +201,7 @@ export function AmenDone() {
         <span style={{ fontSize: 11.5, color: color.slate }}>{t('أظهر هذا الرمز عند الدخول')}</span>
       </div>
       <PillButton size="lg" full onClick={() => go('home')} style={{ marginTop: 26 }}>
-        العودة للرئيسية
+        {t('العودة للرئيسية')}
       </PillButton>
     </div>
   );

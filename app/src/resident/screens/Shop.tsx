@@ -52,7 +52,7 @@ function Browse() {
             whiteSpace: 'nowrap',
           }}
         >
-          طلباتي
+          {t('طلباتي')}
         </button>
       </div>
 
@@ -105,7 +105,7 @@ function Browse() {
         >
           <Icon path={icons.pin} size={13} stroke={color.gold} width={1.5} />
           <span style={{ fontSize: 10.5, fontWeight: 800, color: color.navy, whiteSpace: 'nowrap' }}>
-            {UNIT_NO}
+            {t(UNIT_NO)}
           </span>
         </div>
       </div>
@@ -158,7 +158,7 @@ function Browse() {
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  {c.label}
+                  {t(c.label)}
                 </span>
               </button>
             );
@@ -175,11 +175,11 @@ function Browse() {
 
         {list.map((s) => (
           <button
-            key={s.name}
+            key={t(s.name)}
             onClick={() =>
               s.open
                 ? go('foodMenu', { selStoreIdx: s.i, cart: {} })
-                : showToast(`${s.name} مغلق الآن — يفتح غدًا 10 صباحًا`)
+                : showToast(`${t(s.name)} ${t('مغلق الآن — يفتح غدًا 10 صباحًا')}`)
             }
             style={{
               width: '100%',
@@ -223,16 +223,16 @@ function Browse() {
                     textOverflow: 'ellipsis',
                   }}
                 >
-                  {s.name}
+                  {t(s.name)}
                 </span>
                 {s.promo && (
                   <StatusPill tone="gold" style={{ fontSize: 9, padding: '2px 10px', fontWeight: 800 }}>
-                    {s.promo}
+                    {t(s.promo)}
                   </StatusPill>
                 )}
               </span>
               <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-                ★ {s.rating} · {s.eta} · توصيل {s.deliv === 0 ? t('مجاني') : `${s.deliv} ر.س`}
+                ★ {s.rating} · {t(s.eta)} · توصيل {s.deliv === 0 ? t('مجاني') : `${s.deliv} ${t('ر.س')}`}
               </span>
             </span>
             <StatusPill
@@ -246,7 +246,7 @@ function Browse() {
 
         {list.length === 0 && (
           <div style={{ textAlign: 'center', padding: '36px 20px', fontSize: 12.5, color: color.slateLight }}>
-            لا توجد نتائج — جرّب بحثًا أو فئة أخرى
+            {t('لا توجد نتائج — جرّب بحثًا أو فئة أخرى')}
           </div>
         )}
       </div>
@@ -317,10 +317,10 @@ function Menu() {
               textOverflow: 'ellipsis',
             }}
           >
-            {store.name}
+            {t(store.name)}
           </span>
           <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-            ★ {store.rating} · {store.eta} · توصيل {store.deliv === 0 ? t('مجاني') : `${store.deliv} ر.س`}
+            ★ {store.rating} · {t(store.eta)} · توصيل {store.deliv === 0 ? t('مجاني') : `${store.deliv} ${t('ر.س')}`}
           </span>
         </div>
       </div>
@@ -354,7 +354,7 @@ function Menu() {
             const qty = st.cart[i] ?? 0;
             return (
               <Card
-                key={mi.name}
+                key={t(mi.name)}
                 pad="14px 16px"
                 style={{ borderRadius: 18, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 12 }}
               >
@@ -373,7 +373,7 @@ function Menu() {
                   <Icon path={storeIcon(store.kind)} size={20} stroke={color.slate} width={1.5} />
                 </span>
                 <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-                  <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{mi.name}</span>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t(mi.name)}</span>
                   <span style={{ ...numeric, fontSize: 12, fontWeight: 700, color: color.goldDeep }}>
                     {mi.price} ر.س
                   </span>
@@ -450,7 +450,7 @@ function Menu() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    + أضف
+                    {t('+ أضف')}
                   </button>
                 )}
               </Card>
@@ -513,7 +513,7 @@ function Cart() {
         <Card pad="6px 16px" style={{ borderRadius: 18 }}>
           {lines.map((cl) => (
             <div
-              key={cl.name}
+              key={t(cl.name)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -522,7 +522,7 @@ function Cart() {
               }}
             >
               <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>
-                {cl.name} × {cl.qty}
+                {t(cl.name)} × {cl.qty}
               </span>
               <span style={{ flex: 1 }} />
               <span style={{ ...numeric, fontSize: 12.5, fontWeight: 700, color: color.navy }}>
@@ -532,7 +532,7 @@ function Cart() {
           ))}
           <div style={{ display: 'flex', alignItems: 'center', padding: '12px 0' }}>
             <span style={{ fontSize: 12, fontWeight: 900, color: color.navy, whiteSpace: 'nowrap' }}>
-              الإجمالي + التوصيل ({subtotal >= 200 ? t('مجاني 🎉') : `${delivery} ر.س`})
+              الإجمالي + التوصيل ({subtotal >= 200 ? t('مجاني 🎉') : `${delivery} ${t('ر.س')}`})
             </span>
             <span style={{ flex: 1 }} />
             <span style={{ ...numeric, fontSize: 15, fontWeight: 700, color: color.navy, whiteSpace: 'nowrap' }}>
@@ -547,7 +547,7 @@ function Cart() {
         >
           <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{t('التوصيل إلى')}</span>
           <span style={{ flex: 1 }} />
-          <span style={{ fontSize: 12.5, color: color.slate }}>{UNIT}</span>
+          <span style={{ fontSize: 12.5, color: color.slate }}>{t(UNIT)}</span>
         </Card>
 
         <input
@@ -593,7 +593,7 @@ function Cart() {
         >
           <Icon path="M6 11V8a6 6 0 0 1 12 0v3M5 11h14v10H5z" size={14} stroke={color.goldDeep} width={1.6} />
           <span style={{ fontSize: 11, fontWeight: 700, color: color.goldDeep, lineHeight: 1.7 }}>
-            المبلغ محجوز حتى تأكيد الاستلام — نفس ضمان رفادة في كل الخدمات
+            {t('المبلغ محجوز حتى تأكيد الاستلام — نفس ضمان رفادة في كل الخدمات')}
           </span>
         </div>
       </div>
@@ -690,7 +690,7 @@ function Track() {
             <Avatar name="مشعل الرشيدي" size={44} />
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
               <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>
-                مشعل الرشيدي — مندوب التوصيل
+                {t('مشعل الرشيدي — مندوب التوصيل')}
               </span>
               <span style={{ fontSize: 10.5, color: color.slate }}>★ 4.9 · دراجة نارية</span>
             </span>
@@ -751,7 +751,7 @@ function Track() {
             <Icon path={storeIcon(store.kind)} size={20} width={1.5} />
           </span>
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-            <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{store.name}</span>
+            <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t(store.name)}</span>
             <span style={{ fontSize: 10.5, color: color.slate }}>
               طلب #2841 · {grand} ر.س · الدفع محجوز بضمان رفادة
             </span>
@@ -773,7 +773,7 @@ function Track() {
             }}
           >
             <div style={{ fontSize: 13.5, fontWeight: 900, color: color.greenDeep }}>
-              وصل طلبك ✓ — تم تحويل المبلغ للمتجر
+              {t('وصل طلبك ✓ — تم تحويل المبلغ للمتجر')}
             </div>
             <PillButton
               tone="green"
@@ -781,7 +781,7 @@ function Track() {
               onClick={() => go('home')}
               style={{ marginTop: 10, padding: '10px 26px', fontSize: 12.5 }}
             >
-              العودة للرئيسية
+              {t('العودة للرئيسية')}
             </PillButton>
           </div>
         )}
@@ -815,7 +815,7 @@ function History() {
                 <Icon path={storeIcon(storeDefs[o.storeIdx].kind)} size={18} width={1.5} />
               </span>
               <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
-                <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{o.store}</span>
+                <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t(o.store)}</span>
                 <span
                   style={{
                     fontSize: 10.5,
@@ -825,7 +825,7 @@ function History() {
                     textOverflow: 'ellipsis',
                   }}
                 >
-                  {o.items} · {o.date}
+                  {o.items} · {t(o.date)}
                 </span>
               </span>
               <span style={{ ...numeric, fontSize: 12.5, fontWeight: 700, color: color.navy, whiteSpace: 'nowrap' }}>
@@ -851,7 +851,7 @@ function History() {
                 fontFamily: font.sans,
               }}
             >
-              اطلب نفس الطلب مرة أخرى
+              {t('اطلب نفس الطلب مرة أخرى')}
             </button>
           </Card>
         ))}

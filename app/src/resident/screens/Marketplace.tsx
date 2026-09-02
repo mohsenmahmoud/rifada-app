@@ -26,7 +26,7 @@ function Request() {
             const on = st.reqKind === k.label;
             return (
               <button
-                key={k.label}
+                key={t(k.label)}
                 onClick={() => set({ reqKind: k.label })}
                 style={{
                   borderRadius: radius.inner,
@@ -49,7 +49,7 @@ function Request() {
                     fontFamily: font.sans,
                   }}
                 >
-                  {k.label}
+                  {t(k.label)}
                 </span>
               </button>
             );
@@ -81,12 +81,12 @@ function Request() {
         <Card pad="13px 16px" style={{ borderRadius: radius.inner, marginTop: 12, display: 'flex', alignItems: 'center' }}>
           <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{t('الوحدة')}</span>
           <span style={{ flex: 1 }} />
-          <span style={{ fontSize: 12.5, color: color.slate }}>{UNIT}</span>
+          <span style={{ fontSize: 12.5, color: color.slate }}>{t(UNIT)}</span>
         </Card>
       </div>
       <div style={{ padding: '0 20px 34px' }}>
         <PillButton tone="gold" size="lg" full onClick={() => go('matching')}>
-          ابحث عن مقدمي خدمة متاحين
+          {t('ابحث عن مقدمي خدمة متاحين')}
         </PillButton>
       </div>
     </div>
@@ -105,7 +105,7 @@ function Matching() {
         </div>
         {providerDefs.map((p, i) => (
           <Card
-            key={p.name}
+            key={t(p.name)}
             pad="15px 16px"
             style={{ borderRadius: 18, marginBottom: 10, display: 'flex', alignItems: 'center', gap: 12 }}
           >
@@ -127,9 +127,9 @@ function Matching() {
               {p.name[0]}
             </span>
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-              <span style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{p.name}</span>
+              <span style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{t(p.name)}</span>
               <span style={{ fontSize: 11, color: color.slate }}>
-                ★ {p.rating} · يصل خلال {p.eta}
+                ★ {p.rating} · يصل خلال {t(p.eta)}
               </span>
             </span>
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
@@ -148,7 +148,7 @@ function Matching() {
                 }
                 style={{ padding: '6px 16px', fontSize: 11.5 }}
               >
-                قبول
+                {t('قبول')}
               </PillButton>
             </span>
           </Card>
@@ -189,7 +189,7 @@ function Escrow() {
           <Icon path="M6 11V8a6 6 0 0 1 12 0v3M5 11h14v10H5zM12 15v3" size={32} stroke={color.gold} />
         </span>
         <div style={{ fontSize: 19, fontWeight: 900, color: color.navy, marginTop: 16 }}>
-          تم حجز المبلغ بأمان
+          {t('تم حجز المبلغ بأمان')}
         </div>
         <Card pad={18} style={{ marginTop: 18, width: '100%' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'center', gap: 6 }}>
@@ -207,7 +207,7 @@ function Escrow() {
               lineHeight: 2,
             }}
           >
-            سيتم تحويل المبلغ إلى <b style={{ color: color.navy }}>{prov.name}</b> بعد أن تؤكد اكتمال
+            سيتم تحويل المبلغ إلى <b style={{ color: color.navy }}>{t(prov.name)}</b> بعد أن تؤكد اكتمال
             المهمة — لن يصله شيء قبل ذلك.
           </div>
         </Card>
@@ -224,13 +224,13 @@ function Escrow() {
         >
           <Icon path={icons.shield} size={14} stroke={color.greenDeep} width={1.6} />
           <span style={{ fontSize: 11.5, fontWeight: 800, color: color.greenDeep }}>
-            رفادة يضمن معاملتك حتى رضاك الكامل
+            {t('رفادة يضمن معاملتك حتى رضاك الكامل')}
           </span>
         </div>
       </div>
       <div style={{ flex: 1 }} />
       <PillButton size="lg" full onClick={() => go('liveJob')}>
-        متابعة
+        {t('متابعة')}
       </PillButton>
     </div>
   );
@@ -279,7 +279,7 @@ function LiveJob() {
             {prov.name[0]}
           </span>
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
-            <span style={{ fontSize: 14.5, fontWeight: 800, color: color.navy }}>{prov.name}</span>
+            <span style={{ fontSize: 14.5, fontWeight: 800, color: color.navy }}>{t(prov.name)}</span>
             <span style={{ fontSize: 11, color: color.slate }}>
               ★ {prov.rating} · {st.reqKind}
             </span>
@@ -347,7 +347,7 @@ function LiveJob() {
             fontFamily: font.sans,
           }}
         >
-          الإبلاغ عن مشكلة في الطلب
+          {t('الإبلاغ عن مشكلة في الطلب')}
         </button>
       </div>
     </div>
@@ -385,10 +385,10 @@ function Rate() {
           <Icon path={icons.check} size={28} stroke={color.green} width={2.4} />
         </span>
         <div style={{ fontSize: 18, fontWeight: 900, color: color.navy, marginTop: 12 }}>
-          تم إنهاء الخدمة
+          {t('تم إنهاء الخدمة')}
         </div>
         <div style={{ fontSize: 13, color: color.slate, marginTop: 4 }}>
-          قيّم تجربتك مع {prov.name}
+          قيّم تجربتك مع {t(prov.name)}
         </div>
         <Stars
           value={st.provRating}
@@ -421,10 +421,10 @@ function Rate() {
         full
         onClick={() => {
           set({ screen: 'home', hist: [] });
-          showToast(`تم تحويل ${prov.price} ر.س لـ${prov.name} — شكرًا لتقييمك`);
+          showToast(`${t('تم تحويل')} ${prov.price} ${t('ر.س لـ')}${t(prov.name)} ${t('— شكرًا لتقييمك')}`);
         }}
       >
-        إرسال والعودة للرئيسية
+        {t('إرسال والعودة للرئيسية')}
       </PillButton>
       <button
         onClick={() => go('dispute')}
@@ -441,7 +441,7 @@ function Rate() {
           fontFamily: font.sans,
         }}
       >
-        لم تكتمل الخدمة كما ينبغي؟ أبلغ عن مشكلة
+        {t('لم تكتمل الخدمة كما ينبغي؟ أبلغ عن مشكلة')}
       </button>
     </div>
   );
@@ -546,7 +546,7 @@ function Dispute() {
             showToast('تم إرسال البلاغ — المبلغ مجمّد حتى قرار الإدارة');
           }}
         >
-          إرسال البلاغ
+          {t('إرسال البلاغ')}
         </PillButton>
       </div>
     </div>
