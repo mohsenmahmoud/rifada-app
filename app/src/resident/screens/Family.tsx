@@ -51,7 +51,7 @@ function Members() {
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <div style={{ fontSize: 11.5, color: color.slate, margin: '4px 2px 10px' }}>
-          أنت مالك الوحدة — تتحكم في صلاحيات كل فرد مرتبط بـ{t(UNIT_SHORT)}
+          {t('أنت مالك الوحدة — تتحكم في صلاحيات كل فرد مرتبط بـ')}{t(UNIT_SHORT)}
         </div>
 
         {famDefs.map((f, i) => {
@@ -120,14 +120,14 @@ function Members() {
             <input
               value={st.nfName}
               onChange={(e) => set({ nfName: e.target.value })}
-              placeholder="اسم الفرد"
+              placeholder={t('اسم الفرد')}
               style={{ ...wellInput, marginTop: 12 }}
             />
             <input
               dir="ltr"
               value={st.nfPhone}
               onChange={(e) => set({ nfPhone: e.target.value })}
-              placeholder="رقم الجوال"
+              placeholder={t('رقم الجوال')}
               style={{ ...wellInput, marginTop: 8, fontSize: 12.5 }}
             />
 
@@ -150,7 +150,7 @@ function Members() {
                       fontFamily: font.sans,
                     }}
                   >
-                    {r}
+                    {t(r)}
                   </button>
                 );
               })}
@@ -223,7 +223,7 @@ function Members() {
                 marginTop: 10,
               }}
             >
-              {st.nfDone.code}
+              {t(st.nfDone.code)}
             </div>
             <div
               style={{
@@ -235,7 +235,7 @@ function Members() {
               }}
             >
               أُرسلت الدعوة برسالة SMS إلى {st.nfDone.phone} — يدخل بالكود ويجد الصلاحيات التي حددتها
-              مفعّلة
+              {t('مفعّلة')}
             </div>
           </div>
         )}
@@ -259,7 +259,7 @@ function Permissions() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={back} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>صلاحيات {t(member.name)}</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('صلاحيات')} {t(member.name)}</div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
@@ -326,7 +326,7 @@ function Permissions() {
         <div style={{ marginTop: 12 }}>
           <Note tone="navy">
             المزايا الممنوعة تظهر لـ{t(member.name)} رمادية مع أيقونة قفل — لا تختفي، حتى يعرف أنها
-            تحتاج إذنك.
+            {t('تحتاج إذنك.')}
           </Note>
         </div>
 
@@ -340,7 +340,7 @@ function Permissions() {
             style={{ marginTop: 12, padding: 13, fontSize: 13 }}
           >
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7 }}>
-              عاين التطبيق بعين {t(member.name)}
+              {t('عاين التطبيق بعين')} {t(member.name)}
               <Icon path={icons.lock} size={14} stroke="#fff" width={1.8} />
             </span>
           </PillButton>

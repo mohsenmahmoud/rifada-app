@@ -213,7 +213,7 @@ function PayNow() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="إتمام الدفع" onBack={back} />
+      <ScreenHeader title={t('إتمام الدفع')} onBack={back} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <div
@@ -318,13 +318,13 @@ function PaySuccess() {
         {t('تم الدفع بنجاح')}
       </div>
       <div style={{ fontSize: 13.5, color: color.slate, marginTop: 6 }}>
-        <span style={{ ...numeric, fontWeight: 600 }}>{amount}</span> ر.س — {method}
+        <span style={{ ...numeric, fontWeight: 600 }}>{t(amount)}</span> {t('ر.س —')} {method}
       </div>
 
       <Card pad="6px 18px" style={{ width: '100%', marginTop: 22 }}>
-        <DetailRow label="رقم الإيصال" value={<span style={numeric}>#88412</span>} />
-        <DetailRow label="التاريخ" value="10 يوليو 2026" />
-        <DetailRow label="الوحدة" value={t(UNIT)} last />
+        <DetailRow label={t('رقم الإيصال')} value={<span style={numeric}>#88412</span>} />
+        <DetailRow label={t('التاريخ')} value={t('10 يوليو 2026')} />
+        <DetailRow label={t('الوحدة')} value={t(UNIT)} last />
       </Card>
 
       <button
@@ -340,7 +340,7 @@ function PaySuccess() {
           fontFamily: font.sans,
         }}
       >
-        تحميل الإيصال (PDF)
+        {t('تحميل الإيصال (PDF)')}
       </button>
       <PillButton size="lg" full onClick={() => go('home')} style={{ marginTop: 14 }}>
         {t('العودة للرئيسية')}
@@ -368,7 +368,7 @@ function History() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="سجل السداد" onBack={back} />
+      <ScreenHeader title={t('سجل السداد')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {receipts.map((rc) => (
           <Card
@@ -393,7 +393,7 @@ function History() {
             <span style={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
               <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(rc.label)}</span>
               <span style={{ fontSize: 11, color: color.slate }}>
-                {t(rc.date)} · إيصال <span style={numeric}>#{rc.no}</span>
+                {t(rc.date)} {t('· إيصال')} <span style={numeric}>#{rc.no}</span>
               </span>
             </span>
             <span style={{ flex: 1 }} />
@@ -414,7 +414,7 @@ function History() {
                   fontFamily: font.sans,
                 }}
               >
-                تحميل PDF
+                {t('تحميل PDF')}
               </button>
             </span>
           </Card>
@@ -442,7 +442,7 @@ function Autopay() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="الدفع التلقائي" onBack={back} />
+      <ScreenHeader title={t('الدفع التلقائي')} onBack={back} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <button
@@ -604,7 +604,7 @@ function Financial() {
     {
       dot: color.green,
       title: t('تقييم السداد'),
-      sub: t('سجل سداد إيجابي يفيدك عند التقدم لعقود إيجار أو تقسيط مستقبلية.'),
+      sub: t('سجل سداد إيجابي 12 شهرًا متتالية — يفيدك عند التقدم لعقود إيجار أو تقسيط مستقبلية.'),
     },
     {
       dot: color.navy,
@@ -615,7 +615,7 @@ function Financial() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="الخدمات المالية" onBack={back} />
+      <ScreenHeader title={t('الخدمات المالية')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {/* fanned card stack */}
         <div style={{ position: 'relative', height: 170, margin: '14px 8px 6px' }}>

@@ -188,7 +188,7 @@ export function DetailRow({
         borderBottom: last ? undefined : '1px solid rgba(0,0,0,0.05)',
       }}
     >
-      <span style={{ fontSize: 12.5, color: color.slate, whiteSpace: 'nowrap' }}>{label}</span>
+      <span style={{ fontSize: 12.5, color: color.slate, whiteSpace: 'nowrap' }}>{t(label)}</span>
       <span style={{ flex: 1 }} />
       <span
         style={{

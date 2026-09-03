@@ -12,7 +12,7 @@ export const notifDefs = [
   {
     icon: icons.maint,
     title: 'تحديث بلاغ #1042',
-    sub: 'الفني محمد الغامدي في الطريق إليك الآن',
+    sub: 'الفني محمد في الطريق إليك الآن',
     time: '9:03 ص',
     bar: '#3FA66B',
   },

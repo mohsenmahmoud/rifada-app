@@ -34,7 +34,7 @@ export const galleryGroups: GalleryGroup[] = [
       { id: 'R73', key: 'groupDetail', title: 'مجموعة اهتمام — اللوحة واللقاء' },
       { id: 'R74', key: 'groupCreate', title: 'أنشئ مجموعة' },
       { id: 'R75', key: 'community', title: 'اسأل جيرانك — المنشورات' },
-      { id: 'R76', key: 'communityPost', title: 'المنشور والتعليقات والردود' },
+      { id: 'R76', key: 'communityPost', title: 'المنشور والتعليقات' },
       { id: 'R77', key: 'communityNew', title: 'منشور جديد' },
       { id: 'R14', key: 'profile', title: 'الملف الشخصي' },
       { id: 'R22', key: 'notifs', title: 'الإشعارات' },

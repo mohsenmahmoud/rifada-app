@@ -80,7 +80,7 @@ export function Splash() {
             }}
           />
           <button
-            title="مسح QR"
+            title={t('مسح QR')}
             style={{
               width: 48,
               border: '1px solid rgba(255,255,255,0.25)',
@@ -184,7 +184,7 @@ export function Otp() {
                   color: last ? color.gold : color.navy,
                 }}
               >
-                {d}
+                {t(d)}
               </div>
             );
           })}
@@ -293,7 +293,7 @@ export function Setup() {
           </span>
         </div>
 
-        <FieldLabel style={{ marginTop: 16 }}>الرقم السري (PIN)</FieldLabel>
+        <FieldLabel style={{ marginTop: 16 }}>{t('الرقم السري (PIN)')}</FieldLabel>
         <input
           type="password"
           defaultValue="1234"

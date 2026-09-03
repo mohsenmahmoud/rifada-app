@@ -89,7 +89,7 @@ function Browse() {
               whiteSpace: 'nowrap',
             }}
           >
-            {f}
+            {t(f)}
           </span>
         ))}
       </div>
@@ -150,7 +150,7 @@ function Browse() {
                 {t(l.title)}
               </div>
               <div style={{ fontSize: 11, color: color.slate, marginTop: 3 }}>
-                {l.rooms} غرف · {l.area} م² · {l.zone}
+                {l.rooms} {t('غرف ·')} {l.area} م² · {l.zone}
               </div>
             </div>
           </button>
@@ -169,12 +169,12 @@ function Create() {
   const { st, set, back, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="أعلن عن وحدتك" onBack={back} />
+      <ScreenHeader title={t('أعلن عن وحدتك')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <Card pad="13px 16px" style={{ borderRadius: radius.inner, display: 'flex', alignItems: 'center' }}>
           <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{t('الوحدة')}</span>
           <span style={{ flex: 1 }} />
-          <span style={{ fontSize: 12.5, color: color.slate }}>فيلا 214 — حي الياسمين (موثّقة)</span>
+          <span style={{ fontSize: 12.5, color: color.slate }}>{t('فيلا 214 — حي الياسمين (موثّقة)')}</span>
         </Card>
 
         <div
@@ -225,7 +225,7 @@ function Create() {
           value={st.crDesc}
           onChange={(e) => set({ crDesc: e.target.value })}
           rows={3}
-          placeholder="وصف الوحدة (التشطيب، الإطلالة، المميزات…)"
+          placeholder={t('وصف الوحدة (التشطيب، الإطلالة، المميزات…)')}
           style={{ ...inputStyle, fontSize: 13, resize: 'none', lineHeight: 1.7 }}
         />
 
@@ -389,7 +389,7 @@ function Detail() {
                 whiteSpace: 'nowrap',
               }}
             >
-              {f}
+              {t(f)}
             </span>
           ))}
         </div>
@@ -408,7 +408,7 @@ function Detail() {
           <Avatar name={t(l.owner)} size={40} />
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
             <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t(l.owner)}</span>
-            <span style={{ fontSize: 10.5, color: color.slate }}>جار موثّق · {t(l.ownerUnit)}</span>
+            <span style={{ fontSize: 10.5, color: color.slate }}>{t('جار موثّق ·')} {t(l.ownerUnit)}</span>
           </span>
           <StatusPill tone="green" style={{ fontSize: 10, padding: '3px 12px', fontWeight: 800 }}>
             {t('موثّق ✓')}
@@ -422,7 +422,7 @@ function Detail() {
           onClick={() => showToast('سجّلنا اهتمامك — سيصل إشعار للمالك')}
           style={{ flex: 1, padding: 13, fontSize: 13.5 }}
         >
-          {t('أنا مهتم')}
+          {t('أنا مهتم 🤝')}
         </PillButton>
         <PillButton onClick={() => go('chat')} style={{ flex: 1.3, padding: 13, fontSize: 13.5 }}>
           {t('تواصل مع المالك')}
@@ -459,7 +459,7 @@ function Mine() {
                 </StatusPill>
               </div>
               <div style={{ fontSize: 11.5, color: color.slate, marginTop: 4 }}>
-                {t(m.price)} · {m.views} مشاهدة · {m.interested} مهتم
+                {t(m.price)} · {m.views} {t('مشاهدة ·')} {m.interested} مهتم
               </div>
               <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
                 <SmallAction

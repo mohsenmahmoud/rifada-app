@@ -46,7 +46,7 @@ export function BrandLockup({ caption }: { caption?: string }) {
             RIFADA
           </span>
         </div>
-        {caption && <div style={{ fontSize: 11.5, color: color.slate }}>{caption}</div>}
+        {caption && <div style={{ fontSize: 11.5, color: color.slate }}>{t(caption)}</div>}
       </div>
     </div>
   );

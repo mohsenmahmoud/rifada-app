@@ -60,7 +60,7 @@ export function Amenities() {
                     border: '1.5px solid rgba(31,59,87,0.15)',
                   }}
                 >
-                  {sl}
+                  {t(sl)}
                 </button>
               ))}
             </div>
@@ -84,7 +84,7 @@ export function Amenities() {
                   color: color.goldDeep,
                 }}
               >
-                {t('احجز مدرب شخصي — عبر المطابقة الفورية')}
+                {t('🏋️ احجز مدرب شخصي — عبر المطابقة الفورية')}
               </button>
             )}
           </Card>
@@ -99,7 +99,7 @@ export function AmenConfirm() {
   const { st, back, go, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="تأكيد الحجز" onBack={back} />
+      <ScreenHeader title={t('تأكيد الحجز')} onBack={back} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '14px 20px 30px' }}>
         <Card pad="22px 18px" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -120,9 +120,9 @@ export function AmenConfirm() {
             {st.bookAmen}
           </div>
           <div style={{ width: '100%', marginTop: 16 }}>
-            <Row label="التاريخ" value="اليوم — الجمعة 10 يوليو" />
-            <Row label="الوقت" value={st.bookSlot ?? ''} />
-            <Row label="المدة" value="ساعة واحدة" last />
+            <Row label={t('التاريخ')} value={t('اليوم — الجمعة 10 يوليو')} />
+            <Row label={t('الوقت')} value={st.bookSlot ?? ''} />
+            <Row label={t('المدة')} value={t('ساعة واحدة')} last />
           </div>
         </Card>
         <div style={{ fontSize: 11.5, color: color.slate, textAlign: 'center', marginTop: 12, lineHeight: 1.8 }}>
@@ -182,7 +182,7 @@ export function AmenDone() {
         {t('تم تأكيد حجزك')}
       </div>
       <div style={{ fontSize: 13.5, color: color.slate, marginTop: 6 }}>
-        {st.bookAmen} — اليوم، {st.bookSlot}
+        {st.bookAmen} {t('— اليوم،')} {st.bookSlot}
       </div>
       <div
         style={{
@@ -216,9 +216,9 @@ function Row({ label, value, last = false }: { label: string; value: string; las
         borderBottom: last ? undefined : '1px solid rgba(0,0,0,0.05)',
       }}
     >
-      <span style={{ fontSize: 12.5, color: color.slate }}>{label}</span>
+      <span style={{ fontSize: 12.5, color: color.slate }}>{t(label)}</span>
       <span style={{ flex: 1 }} />
-      <span style={{ fontSize: 13, fontWeight: 700, color: color.navy }}>{value}</span>
+      <span style={{ fontSize: 13, fontWeight: 700, color: color.navy }}>{t(value)}</span>
     </div>
   );
 }

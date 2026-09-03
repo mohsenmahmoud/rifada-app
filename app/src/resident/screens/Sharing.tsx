@@ -128,9 +128,9 @@ function Browse() {
                 {t('تعرض ما لديك بالوقت الذي يناسبك، والدفع يصلك بضمان رفادة بعد انتهاء الموعد.')}
               </div>
               <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
-                <Stat value={String(mine.length)} label="مشاركة منشورة" />
-                <Stat value={mine.length ? '38' : '0'} label="مشاهدة من الجيران" tone={color.greenBright} />
-                <Stat value={mine.length ? '450' : '0'} label="ر.س هذا الشهر" tone={color.goldSoft} />
+                <Stat value={String(mine.length)} label={t('مشاركة منشورة')} />
+                <Stat value={mine.length ? '38' : '0'} label={t('مشاهدة من الجيران')} tone={color.greenBright} />
+                <Stat value={mine.length ? '450' : '0'} label={t('ر.س هذا الشهر')} tone={color.goldSoft} />
               </div>
             </div>
 
@@ -162,7 +162,7 @@ function Browse() {
                     </StatusPill>
                   </span>
                   <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-                    {ms.slots.length} موعد متاح ·{' '}
+                    {ms.slots.length} {t('موعد متاح ·')}{' '}
                     <b style={{ color: color.goldDeep, ...numeric }}>{priceLabel(ms.price)}</b> {t(ms.unit)}
                   </span>
                   <span style={{ display: 'flex', gap: 6, marginTop: 5 }}>
@@ -274,7 +274,7 @@ function Browse() {
                       }}
                     >
                       <Icon path={shareIcons[k]} size={13} width={1.6} />
-                      {label}
+                      {t(label)}
                     </span>
                   ))}
                 </div>
@@ -392,7 +392,7 @@ function Create() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="شارك شيئًا لديك" onBack={back} />
+      <ScreenHeader title={t('شارك شيئًا لديك')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <Label>{t('النوع')}</Label>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
@@ -434,7 +434,7 @@ function Create() {
         <input
           value={st.shTitle}
           onChange={(e) => set({ shTitle: e.target.value })}
-          placeholder="مثال: قاعة استقبال بالفيلا — تتسع 20 فردًا"
+          placeholder={t('مثال: قاعة استقبال بالفيلا — تتسع 20 فردًا')}
           style={{ ...inputStyle, marginTop: 16, fontSize: 13 }}
         />
 
@@ -444,7 +444,7 @@ function Create() {
             const on = st.shDay === d;
             return (
               <button key={d} onClick={() => set({ shDay: d })} style={selectableChip(on)}>
-                {d}
+                {t(d)}
               </button>
             );
           })}
@@ -465,7 +465,7 @@ function Create() {
                   padding: '11px 4px',
                 }}
               >
-                {h}
+                {t(h)}
               </button>
             );
           })}
@@ -499,7 +499,7 @@ function Create() {
                   fontFamily: font.sans,
                 }}
               >
-                {u}
+                {t(u)}
               </button>
             );
           })}
@@ -527,7 +527,7 @@ function Create() {
         <div style={{ marginTop: 12 }}>
           <Note tone="navy">
             وحدتك موثّقة تلقائيًا مع الإعلان ({t(UNIT_SHORT)}) — والحجز والدفع يمران بضمان رفادة حتى
-            انتهاء الموعد.
+            {t('انتهاء الموعد.')}
           </Note>
         </div>
       </div>
@@ -644,11 +644,11 @@ function Detail() {
             >
               <Radio on={on} />
               <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{day}</span>
-                <span style={{ fontSize: 10.5, color: color.slate }}>{time}</span>
+                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(day)}</span>
+                <span style={{ fontSize: 10.5, color: color.slate }}>{t(time)}</span>
               </span>
               <StatusPill tone={free ? 'green' : 'gray'} style={{ fontSize: 9.5, padding: '3px 11px', fontWeight: 800 }}>
-                {status}
+                {t(status)}
               </StatusPill>
             </button>
           );
@@ -694,8 +694,8 @@ function Stat({ value, label, tone = '#fff' }: { value: string; label: string; t
         gap: 2,
       }}
     >
-      <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: tone }}>{value}</span>
-      <span style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.55)' }}>{label}</span>
+      <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: tone }}>{t(value)}</span>
+      <span style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.55)' }}>{t(label)}</span>
     </span>
   );
 }

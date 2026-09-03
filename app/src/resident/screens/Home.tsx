@@ -172,7 +172,7 @@ export function Home() {
                   textShadow: '0 1px 4px rgba(0,0,0,0.5)',
                 }}
               >
-                {heroLabel}
+                {t(heroLabel)}
               </span>
               <span
                 style={{
@@ -184,7 +184,7 @@ export function Home() {
                   textShadow: '0 1px 5px rgba(0,0,0,0.4)',
                 }}
               >
-                {heroAmount}
+                {t(heroAmount)}
               </span>
               <span
                 style={{
@@ -194,7 +194,7 @@ export function Home() {
                   textShadow: '0 1px 4px rgba(0,0,0,0.5)',
                 }}
               >
-                {heroSub}
+                {t(heroSub)}
               </span>
             </div>
             <div style={{ flex: 1 }} />

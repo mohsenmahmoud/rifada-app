@@ -78,7 +78,7 @@ function Browse() {
           <input
             value={st.shopQuery}
             onChange={(e) => set({ shopQuery: e.target.value })}
-            placeholder="ابحث عن متجر…"
+            placeholder={t('ابحث عن متجر…')}
             style={{
               flex: 1,
               border: 'none',
@@ -168,9 +168,9 @@ function Browse() {
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '4px 18px 40px' }}>
         <div style={{ display: 'flex', alignItems: 'center', margin: '10px 2px' }}>
-          <span style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{header}</span>
+          <span style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{t(header)}</span>
           <span style={{ flex: 1 }} />
-          <span style={{ fontSize: 10.5, color: color.slate }}>{list.length} متجر</span>
+          <span style={{ fontSize: 10.5, color: color.slate }}>{list.length} {t('متجر')}</span>
         </div>
 
         {list.map((s) => (
@@ -232,7 +232,7 @@ function Browse() {
                 )}
               </span>
               <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-                ★ {s.rating} · {t(s.eta)} · توصيل {s.deliv === 0 ? t('مجاني') : `${s.deliv} ${t('ر.س')}`}
+                ★ {s.rating} · {t(s.eta)} {t('· توصيل')} {s.deliv === 0 ? t('مجاني') : `${s.deliv} ${t('ر.س')}`}
               </span>
             </span>
             <StatusPill
@@ -320,7 +320,7 @@ function Menu() {
             {t(store.name)}
           </span>
           <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-            ★ {store.rating} · {t(store.eta)} · توصيل {store.deliv === 0 ? t('مجاني') : `${store.deliv} ${t('ر.س')}`}
+            ★ {store.rating} · {t(store.eta)} {t('· توصيل')} {store.deliv === 0 ? t('مجاني') : `${store.deliv} ${t('ر.س')}`}
           </span>
         </div>
       </div>
@@ -346,7 +346,7 @@ function Menu() {
         <div style={{ display: 'flex', alignItems: 'center', margin: '14px 20px 8px' }}>
           <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t('القائمة')}</span>
           <span style={{ flex: 1 }} />
-          <span style={{ fontSize: 10.5, color: color.slate }}>{menu.length} صنف</span>
+          <span style={{ fontSize: 10.5, color: color.slate }}>{menu.length} {t('صنف')}</span>
         </div>
 
         <div style={{ padding: '0 18px' }}>
@@ -492,7 +492,7 @@ function Menu() {
               {count}
             </span>
             <span style={{ flex: 1, textAlign: 'center' }}>{t('عرض السلة')}</span>
-            <span style={{ ...numeric, fontSize: 13, fontWeight: 700 }}>{subtotal} ر.س</span>
+            <span style={{ ...numeric, fontSize: 13, fontWeight: 700 }}>{subtotal} {t('ر.س')}</span>
           </button>
         </div>
       )}
@@ -507,7 +507,7 @@ function Cart() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="السلة والدفع" onBack={back} />
+      <ScreenHeader title={t('السلة والدفع')} onBack={back} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 30px' }}>
         <Card pad="6px 16px" style={{ borderRadius: 18 }}>
@@ -553,7 +553,7 @@ function Cart() {
         <input
           value={st.foodNotes}
           onChange={(e) => set({ foodNotes: e.target.value })}
-          placeholder="ملاحظات التوصيل (اختياري)"
+          placeholder={t('ملاحظات التوصيل (اختياري)')}
           style={{
             width: '100%',
             marginTop: 10,
@@ -687,7 +687,7 @@ function Track() {
             pad="14px 16px"
             style={{ borderRadius: 18, marginTop: 12, display: 'flex', alignItems: 'center', gap: 12 }}
           >
-            <Avatar name="مشعل الرشيدي" size={44} />
+            <Avatar name={t('مشعل الرشيدي')} size={44} />
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
               <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>
                 {t('مشعل الرشيدي — مندوب التوصيل')}
@@ -795,7 +795,7 @@ function History() {
   const { set, back, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="طلباتي السابقة" onBack={back} />
+      <ScreenHeader title={t('طلباتي السابقة')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {pastOrderDefs.map((o) => (
           <Card key={o.store + o.date} pad="15px 16px" style={{ borderRadius: 18, marginBottom: 10 }}>
@@ -851,7 +851,7 @@ function History() {
                 fontFamily: font.sans,
               }}
             >
-              {t('اطلب نفس الطلب مرة أخرى')}
+              {t('🔄 اطلب نفس الطلب مرة أخرى')}
             </button>
           </Card>
         ))}

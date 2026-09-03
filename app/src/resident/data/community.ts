@@ -40,7 +40,7 @@ export const cmPostDefs: (CommunityPost & { comments: Comment[] })[] = [
     avBg: avatarBg.tarek,
     time: 'منذ 30 دقيقة',
     tag: 'عام',
-    text: 'صورة الكمبوند من الدرون بعد انتهاء مبادرة التشجير — شكرًا لكل جار شارك معنا',
+    text: 'صورة الكمبوند من الدرون بعد انتهاء مبادرة التشجير — شكرًا لكل جار شارك معنا 🌳',
     att: { type: 'image', name: 'الكمبوند بعد التشجير', bg: HERO },
     likes: 34,
     comments: [
@@ -135,7 +135,7 @@ export const cmPostDefs: (CommunityPost & { comments: Comment[] })[] = [
         avBg: avatarBg.karim,
         time: 'أمس',
         likes: 4,
-        text: 'أخذنا منهم طقم جلسة خارجية — فعلًا ممتاز',
+        text: 'أخذنا منهم طقم جلسة خارجية — فعلًا ممتاز 👍',
         att: {
           type: 'link',
           title: 'جاردن هاوس — كتالوج المعروضات',

@@ -87,7 +87,7 @@ function Feed() {
               textOverflow: 'ellipsis',
             }}
           >
-            ما يحدث في {t(cfg.compoundName)}
+            {t('ما يحدث في')} {t(cfg.compoundName)}
           </span>
         </div>
         {/* One smart header action — becomes «أنشئ مجموعة» on the groups tab. */}
@@ -260,7 +260,7 @@ function Feed() {
                           marginLeft: -8,
                         }}
                       >
-                        {f.i}
+                        {t(f.i)}
                       </span>
                     ))}
                   </span>
@@ -341,7 +341,7 @@ function Feed() {
                             color: going ? color.greenDeep : color.navy,
                           }}
                         >
-                          {e.day}
+                          {t(e.day)}
                         </span>
                         <span
                           style={{
@@ -459,11 +459,11 @@ function Feed() {
               <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
                 <MiniStat
                   value={String(Object.values(st.evRsvp).filter(Boolean).length)}
-                  label="فعالية مسجّل بها"
+                  label={t('فعالية مسجّل بها')}
                 />
                 <MiniStat
                   value={String(Object.values(st.evRsvp).filter(Boolean).length * 50)}
-                  label="نقطة مجتمع مكتسبة"
+                  label={t('نقطة مجتمع مكتسبة')}
                   tone={color.greenBright}
                 />
               </div>
@@ -492,7 +492,7 @@ function Feed() {
                     }}
                   >
                     <span style={{ ...numeric, fontSize: 15, fontWeight: 700, color: color.navy }}>
-                      {e.day}
+                      {t(e.day)}
                     </span>
                     <span style={{ fontSize: 8, fontWeight: 800, color: color.slate }}>{t(e.month)}</span>
                   </span>
@@ -676,7 +676,7 @@ function Feed() {
                       {t(c.name)}
                     </span>
                     <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-                      {c.members + (joined || mine ? 1 : 0)} عضوًا · {t(c.meets)}
+                      {c.members + (joined || mine ? 1 : 0)} {t('عضوًا ·')} {t(c.meets)}
                     </span>
                   </span>
                   <span
@@ -749,7 +749,7 @@ function Detail() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="تفاصيل الفعالية" onBack={back} />
+      <ScreenHeader title={t('تفاصيل الفعالية')} onBack={back} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <Card pad={18}>
@@ -802,7 +802,7 @@ function Detail() {
                   border: '2px solid #fff',
                 }}
               >
-                {at.i}
+                {t(at.i)}
               </span>
             ))}
             <span style={{ fontSize: 11, color: color.slate, marginRight: 14 }}>
@@ -911,7 +911,7 @@ function Detail() {
           }}
           style={{ flex: 1, fontSize: 14.5 }}
         >
-          {going ? t('أنت مسجّل ✓ — إلغاء') : seats.full ? t('قائمة الانتظار') : t('احجز مكانك')}
+          {going ? t('أنت مسجّل ✓ — إلغاء التسجيل') : seats.full ? t('قائمة الانتظار') : t('احجز مكانك')}
         </PillButton>
       </div>
     </div>
@@ -923,7 +923,7 @@ function Create() {
   const { st, set, back, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="اقترح فعالية" onBack={back} />
+      <ScreenHeader title={t('اقترح فعالية')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <Label>{t('نوع الفعالية')}</Label>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
@@ -944,28 +944,28 @@ function Create() {
         <input
           value={st.evTitle}
           onChange={(e) => set({ evTitle: e.target.value })}
-          placeholder="اسم الفعالية — مثال: ماراثون صباحي لسكان الأندلس"
+          placeholder={t('اسم الفعالية — مثال: ماراثون صباحي لسكان الأندلس')}
           style={{ ...inputStyle, marginTop: 16, fontSize: 13 }}
         />
         <textarea
           value={st.evDesc}
           onChange={(e) => set({ evDesc: e.target.value })}
           rows={3}
-          placeholder="وصف مختصر لما سيحدث"
+          placeholder={t('وصف مختصر لما سيحدث')}
           style={{ ...inputStyle, marginTop: 8, fontSize: 12.5, resize: 'none', lineHeight: 1.7 }}
         />
         <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
           <input
             value={st.evWhen}
             onChange={(e) => set({ evWhen: e.target.value })}
-            placeholder="اليوم والوقت"
+            placeholder={t('اليوم والوقت')}
             style={{ ...inputStyle, marginTop: 0, flex: 1, fontSize: 12.5 }}
           />
           <input
             value={st.evSeats}
             onChange={(e) => set({ evSeats: e.target.value })}
             dir="ltr"
-            placeholder="عدد الأماكن"
+            placeholder={t('عدد الأماكن')}
             style={{ ...inputStyle, marginTop: 0, width: 120, flex: 'none', ...numeric, fontSize: 13 }}
           />
         </div>
@@ -1063,14 +1063,14 @@ function GroupDetail() {
             {t(g.name)}
           </span>
           <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-            {g.members} عضوًا · {t(g.meets)}
+            {g.members} {t('عضوًا ·')} {t(g.meets)}
           </span>
         </div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <Card pad={16} style={{ borderRadius: 18, fontSize: 12.5, color: color.slateDark, lineHeight: 1.9 }}>
-          {about}
+          {t(about)}
         </Card>
 
         <Card pad={16} style={{ borderRadius: 18, marginTop: 10 }}>
@@ -1098,7 +1098,7 @@ function GroupDetail() {
             full
             onClick={() => {
               set((s) => ({ gdMeetJoined: { ...s.gdMeetJoined, [i]: !joinedMeet } }));
-              showToast(joinedMeet ? t('ألغيت حضورك') : t('سجّلنا حضورك — سيصلك تذكير قبل اللقاء'));
+              showToast(joinedMeet ? t('ألغيت حضورك') : t('سجّلنا حضورك — يصلك تذكير قبل اللقاء'));
             }}
             style={{ marginTop: 12, padding: 12, fontSize: 13 }}
           >
@@ -1174,13 +1174,13 @@ function GroupDetail() {
             <input
               value={st.gdMeetWhen}
               onChange={(e) => set({ gdMeetWhen: e.target.value })}
-              placeholder="موعد اللقاء القادم — مثال: السبت 6 ص"
+              placeholder={t('موعد اللقاء القادم — مثال: السبت 6 ص')}
               style={{ ...plainInput, marginTop: 10 }}
             />
             <input
               value={st.gdMeetPlace}
               onChange={(e) => set({ gdMeetPlace: e.target.value })}
-              placeholder="المكان"
+              placeholder={t('المكان')}
               style={{ ...plainInput, marginTop: 7 }}
             />
             <div style={{ display: 'flex', gap: 8, marginTop: 9 }}>
@@ -1233,7 +1233,7 @@ function GroupDetail() {
             value={st.gdDraft}
             onChange={(e) => set({ gdDraft: e.target.value })}
             onKeyDown={(e) => e.key === 'Enter' && send()}
-            placeholder="اكتب لأعضاء المجموعة…"
+            placeholder={t('اكتب لأعضاء المجموعة…')}
             style={{
               flex: 1,
               border: 'none',
@@ -1274,7 +1274,7 @@ function GroupCreate() {
   const { st, set, back, showToast, cfg } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="أنشئ مجموعة" onBack={back} />
+      <ScreenHeader title={t('أنشئ مجموعة')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <Label>{t('نوع المجموعة')}</Label>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
@@ -1292,14 +1292,14 @@ function GroupCreate() {
         <input
           value={st.gcName}
           onChange={(e) => set({ gcName: e.target.value })}
-          placeholder="اسم المجموعة — مثال: نادي دراجات الأندلس"
+          placeholder={t('اسم المجموعة — مثال: نادي دراجات الأندلس')}
           style={{ ...inputStyle, marginTop: 16, fontSize: 13 }}
         />
         <textarea
           value={st.gcAbout}
           onChange={(e) => set({ gcAbout: e.target.value })}
           rows={3}
-          placeholder="نبذة عن المجموعة وما تفعلونه معًا"
+          placeholder={t('نبذة عن المجموعة وما تفعلونه معًا')}
           style={{ ...inputStyle, marginTop: 8, fontSize: 12.5, resize: 'none', lineHeight: 1.7 }}
         />
 
@@ -1385,7 +1385,7 @@ function InfoRow({ icon, text }: { icon: string; text: string }) {
           minWidth: 0,
         }}
       >
-        {text}
+        {t(text)}
       </span>
     </div>
   );
@@ -1427,7 +1427,7 @@ function KindTile({
           fontFamily: font.sans,
         }}
       >
-        {label}
+        {t(label)}
       </span>
     </button>
   );
@@ -1461,7 +1461,7 @@ function Chip({
         ...style,
       }}
     >
-      {label}
+      {t(label)}
     </button>
   );
 }
@@ -1479,8 +1479,8 @@ function MiniStat({ value, label, tone = '#fff' }: { value: string; label: strin
         gap: 2,
       }}
     >
-      <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: tone }}>{value}</span>
-      <span style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.55)' }}>{label}</span>
+      <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: tone }}>{t(value)}</span>
+      <span style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.55)' }}>{t(label)}</span>
     </span>
   );
 }

@@ -18,7 +18,7 @@ function Request() {
   const { st, set, back, go } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="اطلب خدمة فورية" onBack={back} />
+      <ScreenHeader title={t('اطلب خدمة فورية')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <FieldLabel>{t('نوع الخدمة')}</FieldLabel>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
@@ -61,7 +61,7 @@ function Request() {
           value={st.reqNotes}
           onChange={(e) => set({ reqNotes: e.target.value })}
           rows={3}
-          placeholder="اكتب تفاصيل ما تحتاجه…"
+          placeholder={t('اكتب تفاصيل ما تحتاجه…')}
           style={{
             width: '100%',
             background: '#fff',
@@ -98,7 +98,7 @@ function Matching() {
   const { st, back, set } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="مقدمو الخدمة المتاحون" onBack={back} />
+      <ScreenHeader title={t('مقدمو الخدمة المتاحون')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <div style={{ fontSize: 12, color: color.slate, margin: '4px 2px 12px' }}>
           {st.reqKind} · مرتّبة حسب الأقرب والأعلى تقييمًا
@@ -129,7 +129,7 @@ function Matching() {
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
               <span style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{t(p.name)}</span>
               <span style={{ fontSize: 11, color: color.slate }}>
-                ★ {p.rating} · يصل خلال {t(p.eta)}
+                ★ {p.rating} {t('· يصل خلال')} {t(p.eta)}
               </span>
             </span>
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
@@ -208,7 +208,7 @@ function Escrow() {
             }}
           >
             سيتم تحويل المبلغ إلى <b style={{ color: color.navy }}>{t(prov.name)}</b> بعد أن تؤكد اكتمال
-            المهمة — لن يصله شيء قبل ذلك.
+            {t('المهمة — لن يصله شيء قبل ذلك.')}
           </div>
         </Card>
         <div
@@ -388,7 +388,7 @@ function Rate() {
           {t('تم إنهاء الخدمة')}
         </div>
         <div style={{ fontSize: 13, color: color.slate, marginTop: 4 }}>
-          قيّم تجربتك مع {t(prov.name)}
+          {t('قيّم تجربتك مع')} {t(prov.name)}
         </div>
         <Stars
           value={st.provRating}
@@ -398,7 +398,7 @@ function Rate() {
         />
         <textarea
           rows={3}
-          placeholder="أضف تعليقًا (اختياري)"
+          placeholder={t('أضف تعليقًا (اختياري)')}
           style={{
             width: '100%',
             marginTop: 16,
@@ -453,7 +453,7 @@ function Dispute() {
   const prov = providerDefs[st.selProvIdx] ?? providerDefs[0];
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="الإبلاغ عن مشكلة" onBack={back} />
+      <ScreenHeader title={t('الإبلاغ عن مشكلة')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <FieldLabel>{t('ما المشكلة؟')}</FieldLabel>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -476,7 +476,7 @@ function Dispute() {
                 }}
               >
                 <Radio on={on} tone={color.coral} />
-                <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{label}</span>
+                <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{t(label)}</span>
               </button>
             );
           })}
@@ -487,7 +487,7 @@ function Dispute() {
           value={st.disputeNotes}
           onChange={(e) => set({ disputeNotes: e.target.value })}
           rows={4}
-          placeholder="اشرح ما حدث…"
+          placeholder={t('اشرح ما حدث…')}
           style={{
             width: '100%',
             background: '#fff',

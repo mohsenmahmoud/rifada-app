@@ -214,7 +214,7 @@ function Link() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="ربط فاتورة جديدة" onBack={back} />
+      <ScreenHeader title={t('ربط فاتورة جديدة')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <Label>{t('نوع الفاتورة')}</Label>
         <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap', marginBottom: 16 }}>
@@ -242,7 +242,7 @@ function Link() {
           })}
         </div>
 
-        <Label>اختر مقدم الخدمة — {billCatDefs[cat].cat}</Label>
+        <Label>{t('اختر مقدم الخدمة —')} {billCatDefs[cat].cat}</Label>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {providers.map((label, i) => {
             const on = st.linkProviderIdx === i;
@@ -263,7 +263,7 @@ function Link() {
                 }}
               >
                 <Radio on={on} />
-                <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{label}</span>
+                <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{t(label)}</span>
               </button>
             );
           })}
@@ -274,7 +274,7 @@ function Link() {
           dir="ltr"
           value={st.linkAccountNo}
           onChange={(e) => set({ linkAccountNo: e.target.value })}
-          placeholder="مثال: 0442 1187 3390"
+          placeholder={t('مثال: 0442 1187 3390')}
           style={{
             width: '100%',
             background: '#fff',
@@ -375,7 +375,7 @@ function Detail() {
           <div style={{ display: 'flex', fontSize: 11, color: color.slate, paddingTop: 8 }}>
             <span>{t('رسوم خدمة رفادة')}</span>
             <span style={{ flex: 1 }} />
-            <span style={{ ...numeric, fontWeight: 700 }}>{BILL_SERVICE_FEE} ر.س</span>
+            <span style={{ ...numeric, fontWeight: 700 }}>{BILL_SERVICE_FEE} {t('ر.س')}</span>
           </div>
         </Card>
 
@@ -424,7 +424,7 @@ function History() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="سجل سداد الفواتير" onBack={back} />
+      <ScreenHeader title={t('سجل سداد الفواتير')} onBack={back} />
       <div style={{ padding: '6px 20px 4px' }}>
         <ChipRow
           chips={billHistoryFilters}
@@ -536,7 +536,7 @@ function Autopay() {
           </span>
           <span style={{ flex: 1, textAlign: 'right', display: 'flex', flexDirection: 'column', gap: 1 }}>
             <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>
-              {on ? t('السداد التلقائي مفعّل') : t('السداد التلقائي متوقف')}
+              {on ? t('الخصم التلقائي مفعّل') : t('الخصم التلقائي متوقف')}
             </span>
             <span style={{ fontSize: 10.5, color: color.slate }}>
               {t('تُسدد تلقائيًا في تاريخ الاستحقاق من بطاقتك المحفوظة')}

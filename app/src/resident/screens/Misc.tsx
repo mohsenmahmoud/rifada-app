@@ -21,6 +21,7 @@ import {
   vehicleDefs,
 } from '../data/misc';
 import { fmt, statementTotal } from '../data/payments';
+import { useLang } from '@/i18n/lang';
 import { UNIT, UNIT_SHORT } from '../data/seed';
 import { useResident } from '../store';
 import { Radio } from './Marketplace';
@@ -32,6 +33,7 @@ import { t } from '@/i18n/lang';
 
 function Profile() {
   const { cfg, go, initials, isFam, can, lockToast, showToast } = useResident();
+  const { lang, setLang } = useLang();
 
   const groups = [
     {
@@ -129,7 +131,7 @@ function Profile() {
               {t(initials)}
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 18, fontWeight: 900, color: '#fff' }}>{cfg.residentName}</div>
+              <div style={{ fontSize: 18, fontWeight: 900, color: '#fff' }}>{t(cfg.residentName)}</div>
               <div
                 style={{
                   fontSize: 11.5,
@@ -200,8 +202,8 @@ function Profile() {
           </div>
 
           <div style={{ position: 'relative', display: 'flex', gap: 10, marginTop: 18 }}>
-            <HeroStat value={String(TRUST_SCORE)} label="نقاط الثقة · ذهبي" />
-            <HeroStat value="5,724" label="نقاط المكافآت" />
+            <HeroStat value={String(TRUST_SCORE)} label={t('نقاط الثقة · ذهبي')} />
+            <HeroStat value="5,724" label={t('نقاط المكافآت')} />
           </div>
         </div>
 
@@ -217,30 +219,38 @@ function Profile() {
           >
             <PrefIcon path="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" />
             <span style={{ flex: 1, fontSize: 13.5, fontWeight: 700, color: color.navy }}>{t('اللغة')}</span>
+            {/* A live switch, per the design's `switchToEn` handler — the
+                prototype turned this chip from a label into a real button. */}
             <span style={{ display: 'flex', background: color.tile, borderRadius: radius.pill, padding: 3 }}>
-              <span
-                style={{
-                  background: color.navy,
-                  color: '#fff',
-                  borderRadius: radius.pill,
-                  padding: '4px 13px',
-                  fontSize: 11,
-                  fontWeight: 800,
-                }}
-              >
-                {t('العربية')}
-              </span>
-              <span
-                style={{
-                  color: color.slate,
-                  borderRadius: radius.pill,
-                  padding: '4px 13px',
-                  fontSize: 11,
-                  fontWeight: 800,
-                }}
-              >
-                EN
-              </span>
+              {([
+                { k: 'ar' as const, l: 'العربية' },
+                { k: 'en' as const, l: 'English' },
+              ]).map((o) => {
+                const on = lang === o.k;
+                return (
+                  <button
+                    key={o.k}
+                    onClick={() => {
+                      if (on) return;
+                      setLang(o.k);
+                      showToast(o.k === 'en' ? 'Language switched to English' : 'تم التبديل إلى العربية');
+                    }}
+                    style={{
+                      border: 'none',
+                      cursor: on ? 'default' : 'pointer',
+                      background: on ? color.navy : 'transparent',
+                      color: on ? '#fff' : color.slate,
+                      borderRadius: radius.pill,
+                      padding: '4px 13px',
+                      fontSize: 11,
+                      fontWeight: 800,
+                      fontFamily: font.sans,
+                    }}
+                  >
+                    {t(o.l)}
+                  </button>
+                );
+              })}
             </span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', padding: '15px 0' }}>
@@ -334,8 +344,8 @@ function Profile() {
 function HeroStat({ value, label }: { value: string; label: string }) {
   return (
     <div style={{ flex: 1, background: 'rgba(255,255,255,0.1)', borderRadius: 14, padding: '11px 13px' }}>
-      <div style={{ ...numeric, fontSize: 19, fontWeight: 700, color: '#fff' }}>{value}</div>
-      <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.65)', marginTop: 1 }}>{label}</div>
+      <div style={{ ...numeric, fontSize: 19, fontWeight: 700, color: '#fff' }}>{t(value)}</div>
+      <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.65)', marginTop: 1 }}>{t(label)}</div>
     </div>
   );
 }
@@ -368,7 +378,7 @@ function Notifications() {
   const { back, isRent } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="الإشعارات" onBack={back} />
+      <ScreenHeader title={t('الإشعارات')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {notifDefs.map((n, i) => (
           <div
@@ -522,7 +532,7 @@ function Chat() {
           value={st.chatInput}
           onChange={(e) => set({ chatInput: e.target.value })}
           onKeyDown={(e) => e.key === 'Enter' && send()}
-          placeholder="اكتب رسالتك…"
+          placeholder={t('اكتب رسالتك…')}
           style={{
             flex: 1,
             minWidth: 0,
@@ -739,7 +749,7 @@ function Rewards() {
                 margin: '0 auto 14px',
               }}
             />
-            <div style={{ fontSize: 16.5, fontWeight: 900, color: color.navy }}>{st.redeemTitle}</div>
+            <div style={{ fontSize: 16.5, fontWeight: 900, color: color.navy }}>{t(st.redeemTitle)}</div>
             <div style={{ fontSize: 11.5, color: color.slate, marginTop: 2 }}>
               رصيدك: {st.points.toLocaleString('en-US')} نقطة
             </div>
@@ -767,7 +777,7 @@ function Rewards() {
                     }}
                   >
                     <Radio on={on} />
-                    <span style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{r.cash}</span>
+                    <span style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{t(r.cash)}</span>
                     <span style={{ flex: 1 }} />
                     <span style={{ ...numeric, fontSize: 12.5, fontWeight: 600, color: color.slate }}>
                       {r.pts.toLocaleString('en-US')} نقطة
@@ -803,7 +813,7 @@ function Score() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="نقاط الثقة" onBack={back} />
+      <ScreenHeader title={t('نقاط الثقة')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <Card pad={22} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
           <div style={{ position: 'relative', width: 130, height: 130 }}>
@@ -834,7 +844,7 @@ function Score() {
               <span style={{ ...numeric, fontSize: 30, fontWeight: 700, color: color.navy }}>
                 {TRUST_SCORE}
               </span>
-              <span style={{ fontSize: 10.5, color: color.slate }}>من {TRUST_MAX}</span>
+              <span style={{ fontSize: 10.5, color: color.slate }}>{t('من')} {TRUST_MAX}</span>
             </div>
           </div>
           <StatusPill tone="gold" style={{ fontSize: 12, padding: '5px 18px', fontWeight: 800, marginTop: 12 }}>
@@ -877,7 +887,7 @@ function Score() {
                   color: si.positive ? color.green : color.coral,
                 }}
               >
-                {si.pts}
+                {t(si.pts)}
               </span>
             </div>
           ))}
@@ -994,7 +1004,7 @@ function MoveIn() {
                   fontWeight: 700,
                 }}
               >
-                {p}
+                {t(p)}
               </span>
             ))}
           </div>
@@ -1061,7 +1071,7 @@ function MoveIn() {
                   }}
                 />
               </div>
-              <div style={{ fontSize: 11.5, color: color.slate, marginTop: 6 }}>{pct}% مكتمل</div>
+              <div style={{ fontSize: 11.5, color: color.slate, marginTop: 6 }}>{pct}{t('% مكتمل')}</div>
             </Card>
 
             {rooms.map((room, ri) => (
@@ -1142,7 +1152,7 @@ function GatePass() {
   const { st, set, back, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="سياراتك والزوار" onBack={back} />
+      <ScreenHeader title={t('سياراتك والزوار')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '6px 2px 8px' }}>
           {t('مركباتك المسجلة')}
@@ -1169,7 +1179,7 @@ function GatePass() {
             </span>
             <span style={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
               <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(v.name)}</span>
-              <span style={{ fontSize: 11, color: color.slate }}>لوحة: {t(v.plate)}</span>
+              <span style={{ fontSize: 11, color: color.slate }}>{t('لوحة:')} {t(v.plate)}</span>
             </span>
             <span style={{ flex: 1 }} />
             <StatusPill tone="green" style={{ fontSize: 10.5, padding: '3px 12px', fontWeight: 800 }}>
@@ -1185,7 +1195,7 @@ function GatePass() {
           <input
             value={st.visitorName}
             onChange={(e) => set({ visitorName: e.target.value })}
-            placeholder="اسم الزائر"
+            placeholder={t('اسم الزائر')}
             style={{
               width: '100%',
               background: color.bg,
@@ -1213,7 +1223,7 @@ function GatePass() {
                   color: color.navy,
                 }}
               >
-                {v}
+                {t(v)}
               </div>
             ))}
           </div>
@@ -1225,7 +1235,7 @@ function GatePass() {
             }}
             style={{ marginTop: 10, padding: 12, fontSize: 13.5 }}
           >
-            إصدار تصريح QR
+            {t('إصدار تصريح QR')}
           </PillButton>
         </Card>
 
@@ -1257,7 +1267,7 @@ function GatePass() {
             </span>
             <span style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0 }}>
               <span style={{ fontSize: 14, fontWeight: 900, color: '#fff' }}>
-                زيارة متوقعة: {st.passName}
+                {t('زيارة متوقعة:')} {st.passName}
               </span>
               <span style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.75)' }}>
                 {t('غدًا — 5 مساءً · بوابة رئيسية')}
@@ -1357,7 +1367,7 @@ function LostReport() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="الإبلاغ عن غرض" onBack={back} />
+      <ScreenHeader title={t('الإبلاغ عن غرض')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <div
           style={{
@@ -1400,14 +1410,14 @@ function LostReport() {
         <input
           value={st.lostTitle}
           onChange={(e) => set({ lostTitle: e.target.value })}
-          placeholder="مثال: مفتاح سيارة"
+          placeholder={t('مثال: مفتاح سيارة')}
           style={inputStyle}
         />
         <FieldLabel style={{ marginTop: 14 }}>{t('أين؟')}</FieldLabel>
         <input
           value={st.lostLoc}
           onChange={(e) => set({ lostLoc: e.target.value })}
-          placeholder="مثال: بجوار البوابة الرئيسية"
+          placeholder={t('مثال: بجوار البوابة الرئيسية')}
           style={inputStyle}
         />
         <button
@@ -1446,7 +1456,7 @@ function MarketBrowse() {
   const { back, go } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="خدمات معتمدة" onBack={back} />
+      <ScreenHeader title={t('خدمات معتمدة')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {marketDefs.map((m, i) => (
           <button
@@ -1502,7 +1512,7 @@ function MarketDetail() {
   const m = marketDefs[st.mdIdx] ?? marketDefs[0];
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="تفاصيل الخدمة" onBack={back} />
+      <ScreenHeader title={t('تفاصيل الخدمة')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 30px' }}>
         <Card pad={18}>
           <div style={{ fontSize: 17, fontWeight: 900, color: color.navy }}>{t(m.name)}</div>
@@ -1513,7 +1523,7 @@ function MarketDetail() {
             <span style={{ ...numeric, fontSize: 26, fontWeight: 700, color: color.navy }}>
               {t(m.price)}
             </span>
-            <span style={{ fontSize: 12.5, color: color.slate }}>ر.س {t(m.unit)}</span>
+            <span style={{ fontSize: 12.5, color: color.slate }}>{t('ر.س')} {t(m.unit)}</span>
           </div>
           <div style={{ fontSize: 12.5, color: color.slateDark, marginTop: 10, lineHeight: 1.9 }}>
             {t(m.desc)}
@@ -1631,7 +1641,7 @@ function Survey() {
                 fontFamily: font.sans,
               }}
             >
-              {label}
+              {t(label)}
             </button>
           );
         })}
@@ -1677,7 +1687,7 @@ function Consent() {
   const { st, set, back, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="مشاركة البيانات" onBack={back} />
+      <ScreenHeader title={t('مشاركة البيانات')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <Card pad={18}>
           <div style={{ fontSize: 14.5, fontWeight: 800, color: color.navy, lineHeight: 1.7 }}>
@@ -1747,7 +1757,7 @@ function Pets() {
   const { back, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="الحيوانات الأليفة" onBack={back} />
+      <ScreenHeader title={t('الحيوانات الأليفة')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <Card pad={16} style={{ display: 'flex', alignItems: 'center', gap: 13 }}>
           <span
@@ -1805,7 +1815,7 @@ function Pets() {
             lineHeight: 1.9,
           }}
         >
-          {petDef.policy}
+          {t(petDef.policy)}
         </div>
 
         <PillButton
@@ -1825,7 +1835,7 @@ function Docs() {
   const { back, go, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="الوثائق" onBack={back} />
+      <ScreenHeader title={t('الوثائق')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <button
           onClick={() => go('renew')}
@@ -1914,7 +1924,7 @@ function Renew() {
   const { st, set, back, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="تجديد العقد" onBack={back} />
+      <ScreenHeader title={t('تجديد العقد')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 30px' }}>
         <Card pad={16}>
           <div style={{ fontSize: 14.5, fontWeight: 800, color: color.navy }}>
@@ -2004,7 +2014,7 @@ function Contacts() {
   const { back, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="أرقام مهمة" onBack={back} />
+      <ScreenHeader title={t('أرقام مهمة')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {contactDefs.map((ct) => (
           <Card
@@ -2045,7 +2055,7 @@ function Links() {
   const { back, showToast } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="روابط سريعة" onBack={back} />
+      <ScreenHeader title={t('روابط سريعة')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {linkDefs.map((lk) => (
           <button
@@ -2133,7 +2143,7 @@ function ComingSoon() {
         {st.soonTitle || t('قريبًا')}
       </div>
       <StatusPill tone="gold" style={{ fontSize: 11.5, padding: '4px 16px', fontWeight: 800, marginTop: 10 }}>
-        ضمن المرحلة {st.soonCycle}
+        {t('ضمن المرحلة')} {st.soonCycle}
       </StatusPill>
       <div
         style={{

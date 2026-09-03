@@ -38,7 +38,7 @@ export function MaintNew() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="بلاغ جديد" onBack={back} />
+      <ScreenHeader title={t('بلاغ جديد')} onBack={back} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <Label>{t('نوع المشكلة')}</Label>
@@ -82,7 +82,7 @@ export function MaintNew() {
           value={t(st.desc)}
           onChange={(e) => set({ desc: e.target.value })}
           rows={4}
-          placeholder="مثال: تسريب مياه أسفل حوض المطبخ منذ يومين…"
+          placeholder={t('مثال: تسريب مياه أسفل حوض المطبخ منذ يومين…')}
           style={{
             width: '100%',
             background: '#fff',
@@ -381,7 +381,7 @@ export function MaintDetail() {
             </div>
             <textarea
               rows={2}
-              placeholder="أضف تعليقًا (اختياري)"
+              placeholder={t('أضف تعليقًا (اختياري)')}
               style={{
                 width: '100%',
                 marginTop: 10,

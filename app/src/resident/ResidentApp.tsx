@@ -4,6 +4,7 @@ import { BottomNav } from './BottomNav';
 import { ResidentProvider, useResident, type ResidentConfig } from './store';
 import { ScreenRouter } from './screens';
 import type { ScreenKey } from './types';
+import { t } from '@/i18n/lang';
 
 /** Floating toast — the app's single feedback channel. */
 function Toast() {
@@ -30,7 +31,7 @@ function Toast() {
         textOverflow: 'ellipsis',
       }}
     >
-      {st.toast}
+      {t(st.toast)}
     </div>
   );
 }

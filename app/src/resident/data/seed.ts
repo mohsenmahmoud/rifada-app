@@ -39,7 +39,7 @@ export const initialMoveRooms: Record<'before' | 'receive', ChecklistRoom[]> = {
     {
       name: 'إجراءات ما قبل الانتقال',
       items: [
-        { label: 'توثيق العقد وتسليم صورة الهوية', done: true },
+        { label: 'توثيق العقد وتسليم صورة البطاقة', done: true },
         { label: 'نقل عداد الكهرباء باسمك', done: false },
         { label: 'تسجيل بيانات السيارة لبوابة الكمبوند', done: false },
       ],

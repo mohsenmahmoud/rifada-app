@@ -151,7 +151,7 @@ function Attachment({ att, onOpen }: { att: PostAttachment; onOpen: () => void }
             textOverflow: 'ellipsis',
           }}
         >
-          {att.url}
+          {t(att.url)}
         </span>
       </span>
     </button>
@@ -202,9 +202,9 @@ function AuthorLine({
             textOverflow: 'ellipsis',
           }}
         >
-          {who} <span style={{ color: color.goldDeep, fontWeight: 800 }}>— {unit}</span>
+          {t(who)} <span style={{ color: color.goldDeep, fontWeight: 800 }}>— {unit}</span>
         </span>
-        <span style={{ fontSize: 10, color: color.slateLight, whiteSpace: 'nowrap' }}>{time}</span>
+        <span style={{ fontSize: 10, color: color.slateLight, whiteSpace: 'nowrap' }}>{t(time)}</span>
       </span>
     </>
   );
@@ -554,7 +554,7 @@ function Post() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title="المنشور" onBack={back} />
+      <ScreenHeader title={t('المنشور')} onBack={back} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 20px 12px' }}>
         <Card pad={18}>
@@ -682,7 +682,7 @@ function Post() {
             }}
           >
             <span style={{ fontSize: 10.5, fontWeight: 800, color: color.goldDeep, flex: 1 }}>
-              ترد على {comments[st.cmReplyTo]?.who}
+              {t('ترد على')} {comments[st.cmReplyTo]?.who}
             </span>
             <button
               onClick={() => set({ cmReplyTo: null })}
@@ -760,7 +760,7 @@ function Post() {
             value={st.cmComment}
             onChange={(e) => set({ cmComment: e.target.value })}
             onKeyDown={(e) => e.key === 'Enter' && send()}
-            placeholder={st.cmReplyTo !== null ? t('اكتب ردك…') : t('اكتب تعليقك…')}
+            placeholder={st.cmReplyTo !== null ? t('اكتب ردك…') : t('اكتب تعليقًا…')}
             style={{
               flex: 1,
               border: 'none',
@@ -885,7 +885,7 @@ function New() {
             value={st.cmDraft}
             onChange={(e) => set({ cmDraft: e.target.value })}
             rows={5}
-            placeholder="عندك سؤال أو توصية لجيرانك؟ اكتبها هنا…"
+            placeholder={t('عندك سؤال أو توصية لجيرانك؟ اكتبها هنا…')}
             style={{
               width: '100%',
               marginTop: 12,
@@ -918,7 +918,7 @@ function New() {
                   fontFamily: font.sans,
                 }}
               >
-                {t('إزالة المرفق')}
+                {t('إزالة المرفق ✕')}
               </button>
             </div>
           )}
@@ -962,7 +962,7 @@ function New() {
           >
             <AttachBtn
               icon={icons.image}
-              label="صورة"
+              label={t('صورة')}
               onClick={() =>
                 set({
                   cmNewAtt: { type: 'image', name: t('صورة من جوالك'), bg: avatarBg.karim },
@@ -972,7 +972,7 @@ function New() {
             />
             <AttachBtn
               icon={icons.file}
-              label="ملف"
+              label={t('ملف')}
               onClick={() =>
                 set({
                   cmNewAtt: { type: 'file', name: t('مرفق.pdf'), size: '0.8 MB' },
@@ -982,7 +982,7 @@ function New() {
             />
             <AttachBtn
               icon={icons.link}
-              label="رابط"
+              label={t('رابط')}
               onClick={() => set({ cmNewLinkOpen: true, cmNewAtt: null })}
             />
           </div>
@@ -1051,7 +1051,7 @@ function AttachBtn({ icon, label, onClick }: { icon: string; label: string; onCl
       }}
     >
       <Icon path={icon} size={15} width={1.6} />
-      {label}
+      {t(label)}
     </button>
   );
 }
