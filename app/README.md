@@ -118,3 +118,15 @@ Each is commented at the site of the change:
 `public/img/rephoto{0..3}.jpg` are the real-estate photos, extracted from the
 base64 blobs embedded in `Jiwar App (offline).html`. `hero-compound.webp` is the
 compound hero — 212px tall, matching the design's only image slot.
+
+All of them come from that one bundle, and that matters: the standalone
+`project/hero-compound.webp` and `Jiwar Resident App (offline).html` carry an
+older hero (a classical villa, 650×400). The current one is the modern villa at
+600×375, embedded in `Jiwar App (offline).html` — the same bundle the `rephoto`
+files hash-match, which is what identifies it as the live side. Comparing only
+the loose files misses this, since the design's newer assets live base64-encoded
+inside the HTML.
+
+The hero is shared by three call sites — the home screen, the events header, and
+the drone-photo attachment in `data/community.ts` — mirroring the prototype,
+where all three read `window.__resources.heroCompound`.
