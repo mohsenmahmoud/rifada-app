@@ -23,6 +23,7 @@ import {
   Stat,
   CHECK,
 } from '../ui';
+import { t } from '@/i18n/lang';
 
 /* ==================== A27 — per-category sourcing model ==================== */
 
@@ -32,8 +33,7 @@ export function Sourcing() {
   return (
     <>
       <Note>
-        لكل فئة خدمة، اختر إن كانت تُدار داخليًا بفريق المجمع أو متاحة عبر سوق مقدمي الخدمة الفوري —
-        يمكن التوسع تدريجيًا فئة بفئة.
+        {t('لكل فئة خدمة، اختر إن كانت تُدار داخليًا بفريق المجمع أو متاحة عبر سوق مقدمي الخدمة الفوري — يمكن التوسع تدريجيًا فئة بفئة.')}
       </Note>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         {sourcingCats.map((cat) => {
@@ -53,11 +53,11 @@ export function Sourcing() {
               style={{ display: 'flex', alignItems: 'center', gap: 14 }}
             >
               <span style={{ flex: 1, fontSize: 13.5, fontWeight: 800, color: color.navy }}>
-                {cat}
+                {t(cat)}
               </span>
-              <ChipToggle label="تدار داخليًا" on={mode === 'in'} onClick={() => pick('in')} />
+              <ChipToggle label={t('تدار داخليًا')} on={mode === 'in'} onClick={() => pick('in')} />
               <ChipToggle
-                label="سوق مقدمي الخدمة 🟩"
+                label={t('سوق مقدمي الخدمة 🟩')}
                 on={mode === 'out'}
                 onClick={() => pick('out')}
                 tone={color.green}
@@ -77,40 +77,40 @@ export function Revenue() {
     <>
       <Grid cols="repeat(3,1fr)">
         <NavyCard>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>إجمالي العمولة — يوليو</div>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>{t('إجمالي العمولة — يوليو')}</div>
           <div style={{ ...numeric, fontSize: 32, fontWeight: 700, color: '#fff', marginTop: 6 }}>
-            18,420 <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>ر.س</span>
+            18,420 <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>{t('ر.س')}</span>
           </div>
           <div style={{ fontSize: 11, color: color.greenBright, marginTop: 6, fontWeight: 800 }}>
             ↑ 22% عن يونيو
           </div>
         </NavyCard>
-        <Stat label="عدد المهام المكتملة" value="312" sub="متوسط قيمة المهمة 162 ر.س" />
+        <Stat label={t('عدد المهام المكتملة')} value="312" sub={t('متوسط قيمة المهمة 162 ر.س')} />
         <Stat
-          label="حصة الكمبوند من العمولة"
+          label={t('حصة الكمبوند من العمولة')}
           value="2,763"
-          unit="ر.س"
-          sub="15% من عمولة رفادة — إيراد جديد للإدارة"
+          unit={t('ر.س')}
+          sub={t('15% من عمولة رفادة — إيراد جديد للإدارة')}
         />
       </Grid>
 
       <Card style={{ marginTop: 14 }} pad={20}>
         <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>
-          العمولة حسب فئة الخدمة
+          {t('العمولة حسب فئة الخدمة')}
         </div>
         {revenueByCat.map((r) => (
           <div
-            key={r.cat}
+            key={t(r.cat)}
             style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 14 }}
           >
             <span style={{ fontSize: 12, fontWeight: 700, color: color.navy, width: 120 }}>
-              {r.cat}
+              {t(r.cat)}
             </span>
             <Bar w={r.w} />
             <span
               style={{ ...numeric, fontSize: 12, fontWeight: 700, color: color.navy, width: 80 }}
             >
-              {r.val} ر.س
+              {t(r.val)} ر.س
             </span>
           </div>
         ))}
@@ -130,25 +130,25 @@ export function Verification() {
         const active = st.vettingState[i] === 'active';
         const ready = v.id && v.cert;
         return (
-          <Card key={v.name} pad={18}>
+          <Card key={t(v.name)} pad={18}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <Avatar name={v.name} size={38} />
+              <Avatar name={t(v.name)} size={38} />
               <span style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{v.name}</span>
-                <span style={{ fontSize: 11, color: color.slate }}>{v.cat}</span>
+                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(v.name)}</span>
+                <span style={{ fontSize: 11, color: color.slate }}>{t(v.cat)}</span>
               </span>
             </div>
             <div style={{ marginTop: 14, display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <CheckLine on={v.id} label="تحقق الهوية" />
-              <CheckLine on={v.cert} label="الشهادات والتراخيص" />
-              <CheckLine on={v.bg} label="الفحص الأمني (اختياري)" />
+              <CheckLine on={v.id} label={t('تحقق الهوية')} />
+              <CheckLine on={v.cert} label={t('الشهادات والتراخيص')} />
+              <CheckLine on={v.bg} label={t('الفحص الأمني (اختياري)')} />
             </div>
             <Btn
               tone={active ? 'green' : ready ? 'navy' : 'ghost'}
               onClick={() => {
                 if (active || !ready) return;
                 set((s) => ({ vettingState: { ...s.vettingState, [i]: 'active' } }));
-                showToast(`فُعّل حساب ${v.name} — أُصدرت بيانات الدخول`);
+                showToast(`فُعّل حساب ${t(v.name)} — أُصدرت بيانات الدخول`);
               }}
               style={{
                 width: '100%',
@@ -190,7 +190,7 @@ function CheckLine({ on, label }: { on: boolean; label: string }) {
       >
         <Icon path={CHECK} size={10} stroke="#fff" width={3} />
       </span>
-      <span style={{ fontSize: 11.5, color: color.slateDark }}>{label}</span>
+      <span style={{ fontSize: 11.5, color: color.slateDark }}>{t(label)}</span>
     </div>
   );
 }
@@ -208,35 +208,34 @@ export function Disputes() {
   return (
     <>
       <Note>
-        كل مبلغ محجوز في الإسكرو حتى يؤكد الساكن اكتمال الخدمة — عند الاعتراض يُجمَّد ويُحسم من هنا،
-        وكل قرار يُسجَّل في سجل التدقيق.
+        {t('كل مبلغ محجوز في الإسكرو حتى يؤكد الساكن اكتمال الخدمة — عند الاعتراض يُجمَّد ويُحسم من هنا، وكل قرار يُسجَّل في سجل التدقيق.')}
       </Note>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {disputeDefs.map((d, i) => {
           const state = st.disputesState[i];
           const open = state === 'open';
           return (
-            <Card key={d.title} pad={18}>
+            <Card key={t(d.title)} pad={18}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{d.title}</span>
+                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(d.title)}</span>
                 <Spacer />
                 <Pill bg="rgba(199,154,60,0.16)" c={color.goldDeep} style={{ fontSize: 10.5 }}>
-                  المبلغ محجوز: {d.amount} ر.س
+                  {t('المبلغ محجوز:')} {t(d.amount)} {t('ر.س')}
                 </Pill>
               </div>
               <div style={{ fontSize: 11.5, color: color.slate, marginTop: 4 }}>
-                {d.by} · {d.reason} · {d.date}
+                {t(d.by)} · {t(d.reason)} · {t(d.date)}
               </div>
               {open ? (
                 <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
                   <Btn
                     tone="coral"
                     onClick={() =>
-                      resolve(i, 'refund', `استُرد ${d.amount} ر.س كاملًا للساكن`)
+                      resolve(i, 'refund', `استُرد ${t(d.amount)} ر.س كاملًا للساكن`)
                     }
                     style={{ flex: 1, padding: 9, fontSize: 11.5 }}
                   >
-                    استرداد كامل للساكن
+                    {t('استرداد كامل للساكن')}
                   </Btn>
                   <Btn
                     tone="ghost"
@@ -249,12 +248,12 @@ export function Disputes() {
                       border: `1.5px solid ${color.gold}`,
                     }}
                   >
-                    دفع جزئي
+                    {t('دفع جزئي')}
                   </Btn>
                   <Btn
                     tone="ghost"
                     onClick={() =>
-                      resolve(i, 'release', `حُرّر ${d.amount} ر.س لمقدم الخدمة`)
+                      resolve(i, 'release', `حُرّر ${t(d.amount)} ر.س لمقدم الخدمة`)
                     }
                     style={{
                       flex: 1,
@@ -264,7 +263,7 @@ export function Disputes() {
                       border: `1.5px solid ${color.green}`,
                     }}
                   >
-                    دفع كامل للمقدم
+                    {t('دفع كامل للمقدم')}
                   </Btn>
                 </div>
               ) : (
@@ -280,7 +279,7 @@ export function Disputes() {
                     color: color.greenDeep,
                   }}
                 >
-                  تم الحل: {disputeResolutions[state]}
+                  {t('تم الحل:')} {t(disputeResolutions[state])}
                 </div>
               )}
             </Card>
@@ -288,11 +287,11 @@ export function Disputes() {
         })}
       </div>
       <Card style={{ marginTop: 14 }}>
-        <CardTitle>ملخّص الإسكرو</CardTitle>
+        <CardTitle>{t('ملخّص الإسكرو')}</CardTitle>
         <div style={{ fontSize: 11.5, color: color.slate, marginTop: 6, lineHeight: 1.9 }}>
-          {disputeDefs.length} نزاع في السجل ·{' '}
-          {Object.values(st.disputesState).filter((s) => s === 'open').length} مفتوح الآن · القرارات
-          المالية كلها مقيّدة في سجل التدقيق ولا تُحذف.
+          {disputeDefs.length} {t('نزاع في السجل ·')}{' '}
+          {Object.values(st.disputesState).filter((s) => s === 'open').length} {t('مفتوح الآن · القرارات')}
+          {t('المالية كلها مقيّدة في سجل التدقيق ولا تُحذف.')}
         </div>
       </Card>
     </>

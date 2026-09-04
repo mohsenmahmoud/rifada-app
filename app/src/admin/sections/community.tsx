@@ -24,20 +24,21 @@ import {
   TableRow,
   initialOf,
 } from '../ui';
+import { t } from '@/i18n/lang';
 
 /* ============================= A5 — residents ============================= */
 
 export function Residents() {
   const { st, set } = useAdmin();
   const q = st.resQuery.trim();
-  const rows = q ? resDefs.filter((r) => `${r.name} ${r.unit}`.includes(q)) : resDefs;
+  const rows = q ? resDefs.filter((r) => `${t(r.name)} ${t(r.unit)}`.includes(q)) : resDefs;
 
   return (
     <>
       <input
         value={st.resQuery}
         onChange={(e) => set({ resQuery: e.target.value })}
-        placeholder="ابحث بالاسم أو رقم الوحدة…"
+        placeholder={t('ابحث بالاسم أو رقم الوحدة…')}
         style={{
           width: 340,
           background: '#fff',
@@ -53,23 +54,23 @@ export function Residents() {
       />
       <TableCard>
         <TableHead>
-          <span style={{ width: 100 }}>الوحدة</span>
-          <span style={{ flex: 1 }}>الساكن (المالك)</span>
-          <span style={{ width: 110 }}>أفراد العائلة</span>
-          <span style={{ width: 130 }}>الهاتف</span>
-          <span style={{ width: 110 }}>نموذج الدفع</span>
-          <span style={{ width: 110 }}>حالة السداد</span>
+          <span style={{ width: 100 }}>{t('الوحدة')}</span>
+          <span style={{ flex: 1 }}>{t('الساكن (المالك)')}</span>
+          <span style={{ width: 110 }}>{t('أفراد العائلة')}</span>
+          <span style={{ width: 130 }}>{t('الهاتف')}</span>
+          <span style={{ width: 110 }}>{t('نموذج الدفع')}</span>
+          <span style={{ width: 110 }}>{t('حالة السداد')}</span>
         </TableHead>
         {rows.map((r, i) => {
           const famOpen = st.openFamRow === i;
           const famCount = r.fam?.length ?? 0;
           return (
-            <div key={r.unit} style={{ borderBottom: '1px solid rgba(0,0,0,0.04)' }}>
+            <div key={t(r.unit)} style={{ borderBottom: '1px solid rgba(0,0,0,0.04)' }}>
               <div
                 style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '13px 18px' }}
               >
                 <button
-                  onClick={() => set({ sec: 'unit360', u360Unit: r.unit })}
+                  onClick={() => set({ sec: 'unit360', u360Unit: t(r.unit) })}
                   style={{
                     width: 100,
                     border: 'none',
@@ -86,12 +87,12 @@ export function Residents() {
                     textUnderlineOffset: 3,
                   }}
                 >
-                  {r.unit}
+                  {t(r.unit)}
                 </button>
                 <span style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 9 }}>
-                  <Avatar name={r.name} />
+                  <Avatar name={t(r.name)} />
                   <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>
-                    {r.name}
+                    {t(r.name)}
                   </span>
                 </span>
                 <span style={{ width: 110 }}>
@@ -109,7 +110,7 @@ export function Residents() {
                       fontFamily: font.sans,
                     }}
                   >
-                    {famCount ? `${famCount} أفراد ${famOpen ? '▴' : '▾'}` : 'لا أحد'}
+                    {famCount ? `${famCount} ${t('أفراد')} ${famOpen ? '▴' : '▾'}` : t('لا أحد')}
                   </button>
                 </span>
                 <span
@@ -122,15 +123,15 @@ export function Residents() {
                     textAlign: 'right',
                   }}
                 >
-                  {r.phone}
+                  {t(r.phone)}
                 </span>
-                <span style={{ width: 110, fontSize: 11.5, color: color.slateDark }}>{r.model}</span>
+                <span style={{ width: 110, fontSize: 11.5, color: color.slateDark }}>{t(r.model)}</span>
                 <span style={{ width: 110 }}>
                   <Pill
                     bg={r.ok ? 'rgba(63,166,107,0.13)' : 'rgba(228,103,90,0.13)'}
                     c={r.ok ? color.greenDeep : color.coralDeep}
                   >
-                    {r.pay}
+                    {t(r.pay)}
                   </Pill>
                 </span>
               </div>
@@ -138,7 +139,7 @@ export function Residents() {
                 <div style={{ background: '#FAF8F3', padding: '6px 18px 12px' }}>
                   {r.fam.map((fm) => (
                     <div
-                      key={fm.name}
+                      key={t(fm.name)}
                       style={{
                         display: 'flex',
                         alignItems: 'center',
@@ -148,14 +149,14 @@ export function Residents() {
                         borderBottom: '1px dashed rgba(0,0,0,0.05)',
                       }}
                     >
-                      <Avatar name={fm.name} size={24} bg={fm.avBg} />
+                      <Avatar name={t(fm.name)} size={24} bg={fm.avBg} />
                       <span style={{ fontSize: 11.5, fontWeight: 700, color: color.navy }}>
-                        {fm.name}
+                        {t(fm.name)}
                       </span>
-                      <span style={{ fontSize: 10.5, color: color.slate }}>{fm.rel}</span>
+                      <span style={{ fontSize: 10.5, color: color.slate }}>{t(fm.rel)}</span>
                       <Spacer />
                       <Pill bg="rgba(31,59,87,0.07)" c={color.navy} style={{ fontSize: 9.5 }}>
-                        {fm.perms}
+                        {t(fm.perms)}
                       </Pill>
                     </div>
                   ))}
@@ -166,7 +167,7 @@ export function Residents() {
         })}
         {rows.length === 0 && (
           <div style={{ padding: 30, textAlign: 'center', fontSize: 12.5, color: color.slateLight }}>
-            لا سكان مطابقون للبحث.
+            {t('لا سكان مطابقون للبحث.')}
           </div>
         )}
       </TableCard>
@@ -205,12 +206,12 @@ export function Broadcast() {
   return (
     <Grid cols="1.4fr 1fr">
       <Card pad={22}>
-        <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>إعلان جديد</div>
+        <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{t('إعلان جديد')}</div>
         <div style={{ marginTop: 12 }}>
           <Field
             value={st.bcTitle}
             onChange={(v) => set({ bcTitle: v })}
-            placeholder="عنوان الإعلان"
+            placeholder={t('عنوان الإعلان')}
             style={{ fontSize: 13.5, fontWeight: 700, padding: '13px 16px' }}
           />
         </div>
@@ -218,19 +219,19 @@ export function Broadcast() {
           <Field
             value={st.bcBody}
             onChange={(v) => set({ bcBody: v })}
-            placeholder="نص الإعلان…"
+            placeholder={t('نص الإعلان…')}
             rows={4}
             style={{ padding: '13px 16px' }}
           />
         </div>
         <div style={{ fontSize: 12, fontWeight: 800, color: color.navy, margin: '14px 0 8px' }}>
-          الجمهور المستهدف
+          {t('الجمهور المستهدف')}
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
-          {broadcastTargets.map((t, i) => (
+          {broadcastTargets.map((tg, i) => (
             <ChipToggle
-              key={t}
-              label={t}
+              key={tg}
+              label={t(tg)}
               on={st.bcTarget === i}
               onClick={() => set({ bcTarget: i })}
             />
@@ -238,7 +239,7 @@ export function Broadcast() {
         </div>
         <div style={{ display: 'flex', gap: 10, marginTop: 18 }}>
           <Btn tone="gold" size="lg" onClick={() => send(false)} style={{ flex: 1 }}>
-            إرسال الآن
+            {t('إرسال الآن')}
           </Btn>
           <Btn
             tone="outline"
@@ -246,25 +247,25 @@ export function Broadcast() {
             onClick={() => send(true)}
             style={{ flex: 1, border: `1.5px solid ${color.navy}` }}
           >
-            جدولة لاحقًا
+            {t('جدولة لاحقًا')}
           </Btn>
         </div>
       </Card>
 
       <Card pad={22}>
-        <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>المرسلة مؤخرًا</div>
+        <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{t('المرسلة مؤخرًا')}</div>
         {st.bcSent.map((b, i) => (
           <div
-            key={`${b.title}-${i}`}
+            key={`${t(b.title)}-${i}`}
             style={{ padding: '11px 0', borderBottom: '1px solid rgba(0,0,0,0.05)' }}
           >
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{b.title}</span>
+              <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(b.title)}</span>
               <Spacer />
-              <span style={{ fontSize: 10, color: color.slateLight }}>{b.time}</span>
+              <span style={{ fontSize: 10, color: color.slateLight }}>{t(b.time)}</span>
             </div>
             <div style={{ fontSize: 11, color: color.slate, marginTop: 2 }}>
-              {b.target} · وصل إلى {b.reach} ساكن
+              {b.target} {t('· وصل إلى')} {b.reach} ساكن
             </div>
           </div>
         ))}
@@ -307,7 +308,7 @@ export function MessagesInbox() {
           const last = list[list.length - 1];
           return (
             <button
-              key={th.name}
+              key={t(th.name)}
               onClick={() => set({ threadIdx: i })}
               style={{
                 width: '100%',
@@ -322,11 +323,11 @@ export function MessagesInbox() {
                 padding: 12,
               }}
             >
-              <Avatar name={th.name} size={36} />
+              <Avatar name={t(th.name)} size={36} />
               <span
                 style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}
               >
-                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{th.name}</span>
+                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(th.name)}</span>
                 <span
                   style={{
                     fontSize: 10.5,
@@ -336,7 +337,7 @@ export function MessagesInbox() {
                     textOverflow: 'ellipsis',
                   }}
                 >
-                  {last?.text ?? th.unit}
+                  {last?.text ?? t(th.unit)}
                 </span>
               </span>
               {th.unread && st.threadIdx !== i && (
@@ -374,15 +375,15 @@ export function MessagesInbox() {
             gap: 10,
           }}
         >
-          <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{thread.name}</span>
-          <span style={{ fontSize: 11, color: color.slate }}>· {thread.unit}</span>
+          <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(thread.name)}</span>
+          <span style={{ fontSize: 11, color: color.slate }}>· {t(thread.unit)}</span>
           <Spacer />
           <Btn
             tone="outline"
             size="sm"
             onClick={() => showToast('أُسندت المحادثة إلى ماجد البقمي (مشرف صيانة)')}
           >
-            تعيين لموظف
+            {t('تعيين لموظف')}
           </Btn>
         </div>
 
@@ -411,7 +412,7 @@ export function MessagesInbox() {
                   boxShadow: '0 1px 6px rgba(0,0,0,0.05)',
                 }}
               >
-                {m.text}
+                {t(m.text)}
               </div>
             </div>
           ))}
@@ -435,7 +436,7 @@ export function MessagesInbox() {
                   fontFamily: font.sans,
                 }}
               >
-                {c}
+                {t(c)}
               </button>
             ))}
           </div>
@@ -443,11 +444,11 @@ export function MessagesInbox() {
             <Field
               value={st.inboxDraft}
               onChange={(v) => set({ inboxDraft: v })}
-              placeholder="اكتب ردك…"
+              placeholder={t('اكتب ردك…')}
               style={{ borderRadius: 999, padding: '11px 16px', fontSize: 12.5 }}
             />
             <Btn onClick={() => push(st.inboxDraft)} style={{ padding: '0 22px' }}>
-              إرسال
+              {t('إرسال')}
             </Btn>
           </div>
         </div>
@@ -471,35 +472,35 @@ export function LostModeration() {
       {st.lostMod
         .filter((l) => l.state !== 'removed')
         .map((l, i) => (
-          <Card key={l.title} pad={18}>
+          <Card key={t(l.title)} pad={18}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <Pill
                 bg={l.kind === 'found' ? 'rgba(63,166,107,0.13)' : 'rgba(228,103,90,0.13)'}
                 c={l.kind === 'found' ? color.greenDeep : color.coralDeep}
               >
-                {l.kind === 'found' ? 'عُثر عليه' : 'مفقود'}
+                {l.kind === 'found' ? t('عُثر عليه') : t('مفقود')}
               </Pill>
               <Spacer />
-              <span style={{ fontSize: 10.5, color: color.slateLight }}>{l.date}</span>
+              <span style={{ fontSize: 10.5, color: color.slateLight }}>{t(l.date)}</span>
             </div>
             <div style={{ fontSize: 14, fontWeight: 800, color: color.navy, marginTop: 10 }}>
-              {l.title}
+              {t(l.title)}
             </div>
             <div style={{ fontSize: 11.5, color: color.slate, marginTop: 3 }}>
-              {l.loc} · أبلغ عنه {l.by}
+              {t(l.loc)} {t('· أبلغ عنه')} {t(l.by)}
             </div>
             {l.state === 'pending' ? (
               <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
                 <Btn
                   tone="green"
-                  onClick={() => setState(i, 'approved', `نُشر «${l.title}» لكل السكان`)}
+                  onClick={() => setState(i, 'approved', `نُشر «${t(l.title)}» لكل السكان`)}
                   style={{ flex: 1, padding: 8, fontSize: 11.5 }}
                 >
-                  اعتماد ونشر
+                  {t('اعتماد ونشر')}
                 </Btn>
                 <Btn
                   tone="ghost"
-                  onClick={() => setState(i, 'removed', `أُزيل «${l.title}» مع إخطار المُبلِّغ`)}
+                  onClick={() => setState(i, 'removed', `أُزيل «${t(l.title)}» مع إخطار المُبلِّغ`)}
                   style={{
                     flex: 1,
                     padding: 8,
@@ -508,7 +509,7 @@ export function LostModeration() {
                     border: `1.5px solid ${color.coral}`,
                   }}
                 >
-                  إزالة
+                  {t('إزالة')}
                 </Btn>
               </div>
             ) : (
@@ -524,7 +525,7 @@ export function LostModeration() {
                   color: color.greenDeep,
                 }}
               >
-                منشور للسكان ✓
+                {t('منشور للسكان ✓')}
               </div>
             )}
           </Card>
@@ -539,26 +540,26 @@ export function GateLog() {
   return (
     <TableCard>
       <TableHead>
-        <span style={{ flex: 1 }}>الزائر</span>
-        <span style={{ width: 110 }}>الوحدة المضيفة</span>
-        <span style={{ width: 110 }}>الدخول</span>
-        <span style={{ width: 110 }}>الخروج</span>
-        <span style={{ width: 110 }}>الحالة</span>
+        <span style={{ flex: 1 }}>{t('الزائر')}</span>
+        <span style={{ width: 110 }}>{t('الوحدة المضيفة')}</span>
+        <span style={{ width: 110 }}>{t('الدخول')}</span>
+        <span style={{ width: 110 }}>{t('الخروج')}</span>
+        <span style={{ width: 110 }}>{t('الحالة')}</span>
       </TableHead>
       {gateLog.map((g) => (
-        <TableRow key={g.name}>
+        <TableRow key={t(g.name)}>
           <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, color: color.navy }}>
-            {g.name}
+            {t(g.name)}
           </span>
-          <span style={{ width: 110, fontSize: 12, color: color.slateDark }}>{g.unit}</span>
-          <span style={{ width: 110, fontSize: 11.5, color: color.slate }}>{g.in}</span>
-          <span style={{ width: 110, fontSize: 11.5, color: color.slate }}>{g.out}</span>
+          <span style={{ width: 110, fontSize: 12, color: color.slateDark }}>{t(g.unit)}</span>
+          <span style={{ width: 110, fontSize: 11.5, color: color.slate }}>{t(g.in)}</span>
+          <span style={{ width: 110, fontSize: 11.5, color: color.slate }}>{t(g.out)}</span>
           <span style={{ width: 110 }}>
             <Pill
               bg={g.inside ? 'rgba(63,166,107,0.13)' : 'rgba(107,114,128,0.12)'}
               c={g.inside ? color.greenDeep : color.slate}
             >
-              {g.status}
+              {t(g.status)}
             </Pill>
           </span>
         </TableRow>
@@ -583,12 +584,12 @@ export function Amenities() {
         return (
           <Card key={a.key} pad={20}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span style={{ fontSize: 14.5, fontWeight: 800, color: color.navy }}>{a.name}</span>
+              <span style={{ fontSize: 14.5, fontWeight: 800, color: color.navy }}>{t(a.name)}</span>
               <Spacer />
-              <span style={{ fontSize: 11, color: color.slate }}>ساعات العمل: {a.hours}</span>
+              <span style={{ fontSize: 11, color: color.slate }}>{t('ساعات العمل:')} {a.hours}</span>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 14 }}>
-              <span style={{ fontSize: 12, color: color.slate }}>السعة لكل ساعة</span>
+              <span style={{ fontSize: 12, color: color.slate }}>{t('السعة لكل ساعة')}</span>
               <Stepper label="−" onClick={() => bump(-1)} />
               <span
                 style={{
@@ -606,7 +607,7 @@ export function Amenities() {
             </div>
             <div style={{ marginTop: 14 }}>
               <div style={{ display: 'flex' }}>
-                <span style={{ fontSize: 11, color: color.slate }}>حجوزات اليوم</span>
+                <span style={{ fontSize: 11, color: color.slate }}>{t('حجوزات اليوم')}</span>
                 <Spacer />
                 <span style={{ ...numeric, fontSize: 11, fontWeight: 600, color: color.navy }}>
                   {a.booked} / {total}
@@ -639,7 +640,7 @@ function Stepper({ label, onClick }: { label: string; onClick: () => void }) {
         color: color.navy,
       }}
     >
-      {label}
+      {t(label)}
     </button>
   );
 }

@@ -45,6 +45,7 @@ import {
   TableHead,
   TableRow,
 } from '../ui';
+import { t } from '@/i18n/lang';
 
 /* ============================== A9 — collection ============================== */
 
@@ -63,7 +64,7 @@ export function Collection() {
     <>
       <Grid cols="1fr 1fr 1fr">
         <NavyCard>
-          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>معدل التحصيل — يوليو</div>
+          <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>{t('معدل التحصيل — يوليو')}</div>
           <div style={{ ...numeric, fontSize: 38, fontWeight: 700, color: '#fff', marginTop: 6 }}>
             87%
           </div>
@@ -71,21 +72,21 @@ export function Collection() {
             <Bar w="87%" h={9} track="rgba(255,255,255,0.15)" />
           </div>
           <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 8 }}>
-            ↑ 4% عن يونيو · المستهدف 92%
+            {t('↑ 4% عن يونيو · المستهدف 92%')}
           </div>
         </NavyCard>
         <Stat
-          label="إجمالي المحصّل"
+          label={t('إجمالي المحصّل')}
           value="2.86M"
-          unit="ر.س"
-          sub="618 وحدة سدّدت من 712"
+          unit={t('ر.س')}
+          sub={t('618 وحدة سدّدت من 712')}
           subC={color.greenDeep}
         />
         <Stat
-          label="حسابات متأخرة"
+          label={t('حسابات متأخرة')}
           value="14"
           valueC={color.coral}
-          sub="متوسط التأخير: 9 أيام"
+          sub={t('متوسط التأخير: 9 أيام')}
         />
       </Grid>
 
@@ -112,7 +113,7 @@ export function Collection() {
             onClick={() => bulk(`أُرسل تذكير سداد إلى ${selected.length} ساكن`)}
             style={{ fontSize: 11.5, padding: '9px 18px' }}
           >
-            أرسل تذكيرًا للكل
+            {t('أرسل تذكيرًا للكل')}
           </Btn>
           <Btn
             tone="ghost"
@@ -124,7 +125,7 @@ export function Collection() {
               padding: '9px 18px',
             }}
           >
-            اعرض خطة تقسيط
+            {t('اعرض خطة تقسيط')}
           </Btn>
           <Btn
             tone="ghost"
@@ -136,14 +137,14 @@ export function Collection() {
               padding: '9px 18px',
             }}
           >
-            صعّد قانونيًا
+            {t('صعّد قانونيًا')}
           </Btn>
           <Btn
             tone="ghost"
             onClick={() => set({ bulkSel: {} })}
             style={{ color: 'rgba(255,255,255,0.55)', fontSize: 11.5 }}
           >
-            إلغاء
+            {t('إلغاء')}
           </Btn>
         </NavyCard>
       )}
@@ -161,20 +162,20 @@ export function Collection() {
                 })
               }
             />
-            <span style={{ width: 96 }}>الوحدة</span>
-            <span style={{ flex: 1 }}>الساكن</span>
-            <span style={{ width: 110 }}>المبلغ</span>
-            <span style={{ width: 100 }}>أيام التأخير</span>
-            <span style={{ width: 120 }}>الإجراء</span>
+            <span style={{ width: 96 }}>{t('الوحدة')}</span>
+            <span style={{ flex: 1 }}>{t('الساكن')}</span>
+            <span style={{ width: 110 }}>{t('المبلغ')}</span>
+            <span style={{ width: 100 }}>{t('أيام التأخير')}</span>
+            <span style={{ width: 120 }}>{t('الإجراء')}</span>
           </TableHead>
           {overdueDefs.map((o, i) => (
-            <TableRow key={o.unit}>
+            <TableRow key={t(o.unit)}>
               <CheckBox
                 on={!!st.bulkSel[i]}
                 onClick={() => set((s) => ({ bulkSel: { ...s.bulkSel, [i]: !s.bulkSel[i] } }))}
               />
               <button
-                onClick={() => set({ sec: 'unit360', u360Unit: o.unit })}
+                onClick={() => set({ sec: 'unit360', u360Unit: t(o.unit) })}
                 style={{
                   width: 96,
                   border: 'none',
@@ -191,13 +192,13 @@ export function Collection() {
                   textUnderlineOffset: 3,
                 }}
               >
-                {o.unit}
+                {t(o.unit)}
               </button>
-              <span style={{ flex: 1, fontSize: 12.5, color: color.slateDark }}>{o.name}</span>
+              <span style={{ flex: 1, fontSize: 12.5, color: color.slateDark }}>{t(o.name)}</span>
               <span
                 style={{ width: 110, ...numeric, fontSize: 12.5, fontWeight: 600, color: color.navy }}
               >
-                {o.amount} ر.س
+                {t(o.amount)} ر.س
               </span>
               <span style={{ width: 100 }}>
                 <Pill
@@ -205,17 +206,17 @@ export function Collection() {
                   c={o.days > 10 ? color.coralDeep : color.goldDeep}
                   style={{ fontSize: 10.5 }}
                 >
-                  {o.days} يوم
+                  {o.days} {t('يوم')}
                 </Pill>
               </span>
               <span style={{ width: 120 }}>
                 <Btn
                   tone="outline"
                   size="sm"
-                  onClick={() => showToast(`أُرسل تذكير سداد إلى ${o.name}`)}
+                  onClick={() => showToast(`أُرسل تذكير سداد إلى ${t(o.name)}`)}
                   style={{ border: `1.5px solid ${color.navy}` }}
                 >
-                  إرسال تذكير
+                  {t('إرسال تذكير')}
                 </Btn>
               </span>
             </TableRow>
@@ -232,25 +233,25 @@ export function Sla() {
   return (
     <Card pad={22}>
       <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>
-        وقت الحل الفعلي مقابل مستهدف SLA — بالساعات
+        {t('وقت الحل الفعلي مقابل مستهدف SLA — بالساعات')}
       </div>
       {slaDefs.map((s) => {
         const breach = s.actual > s.target;
         return (
-          <div key={s.cat} style={{ marginTop: 18 }}>
+          <div key={t(s.cat)} style={{ marginTop: 18 }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy, width: 110 }}>
-                {s.cat}
+                {t(s.cat)}
               </span>
               <span style={{ fontSize: 11, color: color.slate }}>
-                فعلي {s.actual} س · مستهدف {s.target} س
+                فعلي {s.actual} {t('س · مستهدف')} {s.target} س
               </span>
               <Spacer />
               <Pill
                 bg={breach ? 'rgba(228,103,90,0.13)' : 'rgba(63,166,107,0.13)'}
                 c={breach ? color.coral : color.greenDeep}
               >
-                {breach ? 'تجاوز SLA' : 'ضمن الهدف'}
+                {breach ? t('تجاوز SLA') : t('ضمن الهدف')}
               </Pill>
             </div>
             <div
@@ -307,13 +308,13 @@ export function Sentiment() {
           flexDirection: 'column',
         }}
       >
-        <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.7)' }}>رضا السكان العام</div>
+        <div style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.7)' }}>{t('رضا السكان العام')}</div>
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 8 }}>
           <span style={{ ...numeric, fontSize: 52, fontWeight: 700, color: '#fff' }}>4.2</span>
           <span style={{ fontSize: 16, color: 'rgba(255,255,255,0.6)' }}>/ 5</span>
         </div>
         <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.6)', marginTop: 4 }}>
-          من الاستبيان العام — يوليو 2026 · 214 ردًا
+          {t('من الاستبيان العام — يوليو 2026 · 214 ردًا')}
         </div>
         <div
           style={{
@@ -329,14 +330,14 @@ export function Sentiment() {
         >
           <Icon path="M12 19V5M6 11l6-6 6 6" size={13} stroke={color.greenBright} width={2} />
           <span style={{ fontSize: 11.5, fontWeight: 800, color: color.greenBright }}>
-            0.3 عن الشهر الماضي
+            {t('0.3 عن الشهر الماضي')}
           </span>
         </div>
         <Spacer />
         <div
           style={{ fontSize: 10.5, color: 'rgba(255,255,255,0.45)', lineHeight: 1.8, marginTop: 18 }}
         >
-          يُجمع تلقائيًا من استبيانات ما بعد البلاغات والاستبيان الشهري داخل التطبيق.
+          {t('يُجمع تلقائيًا من استبيانات ما بعد البلاغات والاستبيان الشهري داخل التطبيق.')}
         </div>
       </div>
 
@@ -349,20 +350,20 @@ export function Sentiment() {
         }}
       >
         {sentimentDefs.map((s) => (
-          <Card key={s.cat} pad="16px 18px" style={{ borderRadius: 16 }}>
+          <Card key={t(s.cat)} pad="16px 18px" style={{ borderRadius: 16 }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{s.cat}</span>
+              <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(s.cat)}</span>
               <Spacer />
               <Pill
                 bg={s.pos ? 'rgba(63,166,107,0.13)' : 'rgba(228,103,90,0.13)'}
                 c={s.pos ? color.greenDeep : color.coralDeep}
                 style={{ fontSize: 10.5, padding: '3px 13px' }}
               >
-                {s.pos ? 'إيجابي' : 'سلبي'}
+                {s.pos ? t('إيجابي') : t('سلبي')}
               </Pill>
             </div>
             <div style={{ fontSize: 11, color: color.slate, marginTop: 6 }}>
-              {s.count} ردًا · {s.note}
+              {s.count} {t('ردًا ·')} {t(s.note)}
             </div>
             <div style={{ display: 'flex', marginTop: 10 }}>
               <Bar w={`${s.pct}%`} h={7} c={s.pos ? color.green : color.coral} />
@@ -388,11 +389,11 @@ export function Scoring() {
     <Grid cols="1.2fr 1fr">
       <Card pad={22}>
         <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>
-          قواعد احتساب نقاط الثقة
+          {t('قواعد احتساب نقاط الثقة')}
         </div>
         {st.scoreRules.map((sr, i) => (
           <div
-            key={sr.label}
+            key={t(sr.label)}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -401,7 +402,7 @@ export function Scoring() {
               borderBottom: '1px solid rgba(0,0,0,0.05)',
             }}
           >
-            <span style={{ flex: 1, fontSize: 12.5, color: color.slateDark }}>{sr.label}</span>
+            <span style={{ flex: 1, fontSize: 12.5, color: color.slateDark }}>{t(sr.label)}</span>
             <MiniStep label="−" onClick={() => bump(i, -5)} />
             <span
               style={{
@@ -419,18 +420,18 @@ export function Scoring() {
           </div>
         ))}
         <div style={{ fontSize: 10.5, color: color.slateLight, marginTop: 12 }}>
-          تسري التغييرات على دورة الاحتساب القادمة (أول الشهر).
+          {t('تسري التغييرات على دورة الاحتساب القادمة (أول الشهر).')}
         </div>
       </Card>
 
       <Card pad={22}>
         <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>
-          توزيع السكان حسب المستوى
+          {t('توزيع السكان حسب المستوى')}
         </div>
         {scoreDist.map((sd) => (
-          <div key={sd.label} style={{ marginTop: 16 }}>
+          <div key={t(sd.label)} style={{ marginTop: 16 }}>
             <div style={{ display: 'flex' }}>
-              <span style={{ fontSize: 12, fontWeight: 700, color: color.navy }}>{sd.label}</span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: color.navy }}>{t(sd.label)}</span>
               <Spacer />
               <span style={{ ...numeric, fontSize: 11.5, fontWeight: 600, color: color.slate }}>
                 {sd.count} ساكن
@@ -462,7 +463,7 @@ function MiniStep({ label, onClick }: { label: string; onClick: () => void }) {
         color: color.navy,
       }}
     >
-      {label}
+      {t(label)}
     </button>
   );
 }
@@ -478,24 +479,24 @@ export function Automation() {
       <Grid cols="repeat(3,1fr)" style={{ marginBottom: 14 }}>
         <NavyCard>
           <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>
-            إجراءات نفّذتها القواعد — يوليو
+            {t('إجراءات نفّذتها القواعد — يوليو')}
           </div>
           <div style={{ ...numeric, fontSize: 30, fontWeight: 700, color: '#fff', marginTop: 5 }}>
             {AUTOMATED_ACTIONS}
           </div>
           <div style={{ fontSize: 11, color: color.greenBright, marginTop: 5, fontWeight: 800 }}>
-            بلا تدخل بشري
+            {t('بلا تدخل بشري')}
           </div>
         </NavyCard>
-        <Stat label="ساعات عمل مُوفَّرة" value={HOURS_SAVED} unit="ساعة" sub="≈ موظف بدوام جزئي" size={30} />
+        <Stat label={t('ساعات عمل مُوفَّرة')} value={HOURS_SAVED} unit={t('ساعة')} sub={t('≈ موظف بدوام جزئي')} size={30} />
         <Card pad={20}>
-          <div style={{ fontSize: 12, color: color.slate }}>قواعد مفعّلة</div>
+          <div style={{ fontSize: 12, color: color.slate }}>{t('قواعد مفعّلة')}</div>
           <div
             style={{ ...numeric, fontSize: 30, fontWeight: 700, color: color.greenDeep, marginTop: 5 }}
           >
-            {onCount} <span style={{ fontSize: 12, color: color.slate }}>من {ruleDefs.length}</span>
+            {onCount} <span style={{ fontSize: 12, color: color.slate }}>{t('من')} {ruleDefs.length}</span>
           </div>
-          <div style={{ fontSize: 11, color: color.slate, marginTop: 5 }}>تعمل على مدار الساعة</div>
+          <div style={{ fontSize: 11, color: color.slate, marginTop: 5 }}>{t('تعمل على مدار الساعة')}</div>
         </Card>
       </Grid>
 
@@ -503,12 +504,12 @@ export function Automation() {
         {ruleDefs.map((r, i) => {
           const on = st.autoRules[i];
           return (
-            <Card key={r.when} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+            <Card key={t(r.when)} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
               <Switch
                 on={on}
                 onClick={() => {
                   set((s) => ({ autoRules: { ...s.autoRules, [i]: !on } }));
-                  showToast(on ? `أُوقفت القاعدة: ${r.then}` : `فُعّلت القاعدة: ${r.then}`);
+                  showToast(on ? `أُوقفت القاعدة: ${t(r.then)}` : `فُعّلت القاعدة: ${t(r.then)}`);
                 }}
               />
               <span
@@ -527,7 +528,7 @@ export function Automation() {
                       fontWeight: 800,
                     }}
                   >
-                    إذا {r.when}
+                    {t('إذا')} {t(r.when)}
                   </span>
                   <Icon path="M15 5l-7 7 7 7" size={15} stroke={color.gold} width={2.2} />
                   <span
@@ -540,17 +541,17 @@ export function Automation() {
                       fontWeight: 800,
                     }}
                   >
-                    {r.then}
+                    {t(r.then)}
                   </span>
                 </span>
-                <span style={{ fontSize: 10.5, color: color.slate }}>{r.stat}</span>
+                <span style={{ fontSize: 10.5, color: color.slate }}>{t(r.stat)}</span>
               </span>
               <Pill
                 bg={on ? 'rgba(63,166,107,0.13)' : 'rgba(107,114,128,0.12)'}
                 c={on ? color.greenDeep : color.slate}
                 style={{ fontSize: 10.5, padding: '4px 14px', flex: 'none' }}
               >
-                {on ? 'مفعّلة' : 'معطّلة'}
+                {on ? t('مفعّلة') : t('معطّلة')}
               </Pill>
             </Card>
           );
@@ -569,7 +570,7 @@ export function Automation() {
             fontFamily: font.sans,
           }}
         >
-          + أضف قاعدة جديدة — «إذا … فـ …»
+          {t('+ أضف قاعدة جديدة — «إذا … فـ …»')}
         </button>
       </div>
     </>
@@ -596,19 +597,19 @@ export function Team() {
             }}
           >
             <span style={{ flex: 1, fontSize: 13.5, fontWeight: 800, color: color.navy }}>
-              فريق العمل
+              {t('فريق العمل')}
             </span>
             <Btn
               size="sm"
               onClick={() => showToast('أُرسلت دعوة انضمام بالبريد — تنتهي خلال 48 ساعة')}
               style={{ padding: '7px 16px', fontSize: 11 }}
             >
-              + دعوة موظف
+              {t('+ دعوة موظف')}
             </Btn>
           </div>
           {staffDefs.map((s) => (
             <div
-              key={s.name}
+              key={t(s.name)}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -617,13 +618,13 @@ export function Team() {
                 borderBottom: '1px solid rgba(0,0,0,0.04)',
               }}
             >
-              <Avatar name={s.name} size={34} />
+              <Avatar name={t(s.name)} size={34} />
               <span
                 style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}
               >
-                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{s.name}</span>
+                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(s.name)}</span>
                 <span style={{ fontSize: 10.5, color: color.slate }}>
-                  {s.role} · آخر دخول {s.last}
+                  {t(s.role)} {t('· آخر دخول')} {t(s.last)}
                 </span>
               </span>
               <Pill
@@ -631,14 +632,14 @@ export function Team() {
                 c={s.ok ? color.greenDeep : color.slate}
                 style={{ flex: 'none' }}
               >
-                {s.ok ? 'نشط' : 'غير متصل'}
+                {s.ok ? t('نشط') : t('غير متصل')}
               </Pill>
             </div>
           ))}
         </TableCard>
 
         <Card>
-          <CardTitle>صلاحيات الأدوار</CardTitle>
+          <CardTitle>{t('صلاحيات الأدوار')}</CardTitle>
           <div style={{ display: 'flex', gap: 7, marginTop: 12, flexWrap: 'wrap' }}>
             {roleDefs.map((r, i) => (
               <ChipToggle
@@ -684,7 +685,7 @@ export function Team() {
                     fontWeight: 700,
                   }}
                 >
-                  {p}
+                  {t(p)}
                 </span>
               </div>
             );
@@ -698,10 +699,10 @@ export function Team() {
             style={{ padding: '14px 18px', background: color.tile, display: 'flex', alignItems: 'center' }}
           >
             <span style={{ flex: 1, fontSize: 13.5, fontWeight: 800, color: color.navy }}>
-              سجل التدقيق — من فعل ماذا
+              {t('سجل التدقيق — من فعل ماذا')}
             </span>
             <span style={{ fontSize: 10.5, color: color.slate }}>
-              كل إجراء مالي أو حسّاس مسجّل ولا يُحذف
+              {t('كل إجراء مالي أو حسّاس مسجّل ولا يُحذف')}
             </span>
           </div>
           {auditRows.map((a, i) => (
@@ -716,18 +717,18 @@ export function Team() {
               }}
             >
               <span style={{ width: 70, ...numeric, fontSize: 11, color: color.slateLight, flex: 'none' }}>
-                {a.time}
+                {t(a.time)}
               </span>
               <span
                 style={{ width: 120, fontSize: 12, fontWeight: 800, color: color.navy, flex: 'none' }}
               >
-                {a.who}
+                {t(a.who)}
               </span>
               <span style={{ flex: 1, fontSize: 11.5, color: color.slateDark, lineHeight: 1.6 }}>
-                {a.what}
+                {t(a.what)}
               </span>
               <Pill bg={a.tagBg} c={a.tagC} style={{ fontSize: 9.5, flex: 'none' }}>
-                {a.tag}
+                {t(a.tag)}
               </Pill>
             </div>
           ))}
@@ -749,12 +750,12 @@ export function Reports() {
         style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14 }}
       >
         <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy, whiteSpace: 'nowrap' }}>
-          الفترة
+          {t('الفترة')}
         </span>
         {reportPeriods.map((p) => (
           <ChipToggle
             key={p}
-            label={p}
+            label={t(p)}
             on={st.repPeriod === p}
             onClick={() => set({ repPeriod: p })}
           />
@@ -766,44 +767,44 @@ export function Reports() {
           style={{ padding: '10px 20px', display: 'flex', alignItems: 'center', gap: 8 }}
         >
           <Icon path="M12 3v12M7 11l5 5 5-5M4 20h16" size={15} stroke="#fff" width={1.8} />
-          صدّر تقرير مجلس الملاك
+          {t('صدّر تقرير مجلس الملاك')}
         </Btn>
       </Card>
 
       <Grid cols="repeat(3,1fr)">
         {reportDefs.map((rc) => (
-          <Card key={rc.title} pad={20} style={{ display: 'flex', flexDirection: 'column' }}>
+          <Card key={t(rc.title)} pad={20} style={{ display: 'flex', flexDirection: 'column' }}>
             <IconChip path={rc.icon} bg={rc.iconBg} c={rc.iconC} size={40} icon={19} radius={12} />
             <div style={{ fontSize: 14, fontWeight: 800, color: color.navy, marginTop: 14 }}>
-              {rc.title}
+              {t(rc.title)}
             </div>
             <div style={{ fontSize: 11.5, color: color.slate, marginTop: 5, lineHeight: 1.7 }}>
-              {rc.desc}
+              {t(rc.desc)}
             </div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, marginTop: 12 }}>
               <span style={{ ...numeric, fontSize: 22, fontWeight: 700, color: color.navy }}>
-                {rc.headline}
+                {t(rc.headline)}
               </span>
-              <span style={{ fontSize: 11, color: color.slate }}>{rc.unit}</span>
+              <span style={{ fontSize: 11, color: color.slate }}>{t(rc.unit)}</span>
             </div>
             <Spacer />
             <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
               <Btn
-                onClick={() => showToast(`جارٍ تجهيز ${rc.title} بصيغة PDF — ${st.repPeriod}`)}
+                onClick={() => showToast(`جارٍ تجهيز ${t(rc.title)} بصيغة PDF — ${st.repPeriod}`)}
                 style={{ flex: 1, padding: 9, fontSize: 11 }}
               >
                 PDF
               </Btn>
               <Btn
                 tone="outline"
-                onClick={() => showToast(`صُدّر ${rc.title} بصيغة Excel`)}
+                onClick={() => showToast(`صُدّر ${t(rc.title)} بصيغة Excel`)}
                 style={{ flex: 1, padding: 9, fontSize: 11 }}
               >
                 Excel
               </Btn>
               <Btn
                 tone="ghost"
-                onClick={() => showToast(`جُدولت ${rc.title} — يُرسل تلقائيًا أول كل شهر`)}
+                onClick={() => showToast(`جُدولت ${t(rc.title)} — يُرسل تلقائيًا أول كل شهر`)}
                 style={{
                   flex: 1,
                   padding: 9,
@@ -812,7 +813,7 @@ export function Reports() {
                   color: color.goldDeep,
                 }}
               >
-                جدولة
+                {t('جدولة')}
               </Btn>
             </div>
           </Card>
@@ -836,7 +837,7 @@ export function Portfolio() {
           const subC = active ? 'rgba(255,255,255,0.65)' : color.slate;
           return (
             <div
-              key={p.name}
+              key={t(p.name)}
               style={{
                 background: active
                   ? `linear-gradient(160deg,${color.navyLight},${color.navy})`
@@ -848,28 +849,28 @@ export function Portfolio() {
               }}
             >
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <span style={{ fontSize: 15, fontWeight: 900, color: titleC }}>{p.name}</span>
+                <span style={{ fontSize: 15, fontWeight: 900, color: titleC }}>{t(p.name)}</span>
                 <Spacer />
                 {active && (
                   <Pill bg={color.gold} c="#fff">
-                    الحالي
+                    {t('الحالي')}
                   </Pill>
                 )}
               </div>
               <div style={{ fontSize: 11, color: subC, marginTop: 2 }}>
-                {p.units} وحدة · {p.city}
+                {p.units} {t('وحدة ·')} {p.city}
               </div>
               <div style={{ display: 'flex', gap: 16, marginTop: 16 }}>
-                <PortStat value={p.collection} label="التحصيل" c={titleC} subC={subC} />
-                <PortStat value={p.open} label="تذاكر مفتوحة" c={titleC} subC={subC} />
-                <PortStat value={p.csat} label="الرضا" c={titleC} subC={subC} />
+                <PortStat value={p.collection} label={t('التحصيل')} c={titleC} subC={subC} />
+                <PortStat value={p.open} label={t('تذاكر مفتوحة')} c={titleC} subC={subC} />
+                <PortStat value={p.csat} label={t('الرضا')} c={titleC} subC={subC} />
               </div>
               <button
                 onClick={() => {
                   if (active) return;
                   // Only the first two compounds have a live dataset behind them.
                   set({ compoundIdx: Math.min(i, COMPOUNDS.length - 1) });
-                  showToast(`تم التبديل إلى ${p.name}`);
+                  showToast(`تم التبديل إلى ${t(p.name)}`);
                 }}
                 style={{
                   width: '100%',
@@ -885,7 +886,7 @@ export function Portfolio() {
                   fontFamily: font.sans,
                 }}
               >
-                {active ? 'أنت تديره الآن' : 'التبديل إليه'}
+                {active ? t('أنت تديره الآن') : t('التبديل إليه')}
               </button>
             </div>
           );
@@ -894,16 +895,16 @@ export function Portfolio() {
 
       <Card pad={20} style={{ marginTop: 14 }}>
         <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>
-          مقارنة المحفظة — معدل التحصيل
+          {t('مقارنة المحفظة — معدل التحصيل')}
         </div>
         {portfolioBars.map((pb) => (
-          <div key={pb.name} style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 14 }}>
+          <div key={t(pb.name)} style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 14 }}>
             <span style={{ fontSize: 12, fontWeight: 700, color: color.navy, width: 130 }}>
-              {pb.name}
+              {t(pb.name)}
             </span>
             <Bar w={pb.w} c={pb.c} />
             <span style={{ ...numeric, fontSize: 12, fontWeight: 700, color: color.navy, width: 44 }}>
-              {pb.val}
+              {t(pb.val)}
             </span>
           </div>
         ))}
@@ -925,8 +926,8 @@ function PortStat({
 }) {
   return (
     <span style={{ display: 'flex', flexDirection: 'column' }}>
-      <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: c }}>{value}</span>
-      <span style={{ fontSize: 9.5, color: subC }}>{label}</span>
+      <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: c }}>{t(value)}</span>
+      <span style={{ fontSize: 9.5, color: subC }}>{t(label)}</span>
     </span>
   );
 }
@@ -962,40 +963,40 @@ export function Predictive() {
           stroke={color.goldDeep}
         />
         <span style={{ fontSize: 12.5, fontWeight: 700, color: color.goldDeep }}>
-          حلّل النظام 4,120 تذكرة تاريخية — 3 أصول مرشحة للتعطل خلال 60 يومًا
+          {t('حلّل النظام 4,120 تذكرة تاريخية — 3 أصول مرشحة للتعطل خلال 60 يومًا')}
         </span>
       </div>
 
       <TableCard>
         <TableHead>
-          <span style={{ flex: 1 }}>الأصل</span>
-          <span style={{ width: 130 }}>الموقع</span>
-          <span style={{ width: 130 }}>آخر صيانة</span>
-          <span style={{ width: 120 }}>احتمال العطل</span>
-          <span style={{ width: 130 }}>الإجراء</span>
+          <span style={{ flex: 1 }}>{t('الأصل')}</span>
+          <span style={{ width: 130 }}>{t('الموقع')}</span>
+          <span style={{ width: 130 }}>{t('آخر صيانة')}</span>
+          <span style={{ width: 120 }}>{t('احتمال العطل')}</span>
+          <span style={{ width: 130 }}>{t('الإجراء')}</span>
         </TableHead>
         {assetDefs.map((a) => {
           const tone = riskTone[a.level as keyof typeof riskTone];
           return (
-            <TableRow key={a.name} style={{ padding: '14px 18px' }}>
+            <TableRow key={t(a.name)} style={{ padding: '14px 18px' }}>
               <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, color: color.navy }}>
-                {a.name}
+                {t(a.name)}
               </span>
-              <span style={{ width: 130, fontSize: 11.5, color: color.slate }}>{a.loc}</span>
-              <span style={{ width: 130, fontSize: 11.5, color: color.slate }}>{a.last}</span>
+              <span style={{ width: 130, fontSize: 11.5, color: color.slate }}>{t(a.loc)}</span>
+              <span style={{ width: 130, fontSize: 11.5, color: color.slate }}>{t(a.last)}</span>
               <span style={{ width: 120 }}>
                 <Pill bg={tone.bg} c={tone.c} style={{ fontSize: 10.5, padding: '3px 13px' }}>
-                  {a.risk}
+                  {t(a.risk)}
                 </Pill>
               </span>
               <span style={{ width: 130 }}>
                 <Btn
                   tone="outline"
                   size="sm"
-                  onClick={() => showToast(`جُدولت صيانة وقائية لـ${a.name}`)}
+                  onClick={() => showToast(`جُدولت صيانة وقائية لـ${t(a.name)}`)}
                   style={{ border: `1.5px solid ${color.navy}` }}
                 >
-                  جدولة صيانة
+                  {t('جدولة صيانة')}
                 </Btn>
               </span>
             </TableRow>
@@ -1013,23 +1014,23 @@ export function Iot() {
     <>
       <Grid cols="repeat(3,1fr)">
         <Stat
-          label="استهلاك الكهرباء — يوليو"
+          label={t('استهلاك الكهرباء — يوليو')}
           value="214.6"
-          unit="م.و.س"
-          sub="↓ 6% عن يونيو"
+          unit={t('م.و.س')}
+          sub={t('↓ 6% عن يونيو')}
           subC={color.greenDeep}
           size={26}
         />
         <Stat
-          label="استهلاك المياه — يوليو"
+          label={t('استهلاك المياه — يوليو')}
           value="12,840"
-          unit="م³"
-          sub="↑ 3% عن يونيو"
+          unit={t('م³')}
+          sub={t('↑ 3% عن يونيو')}
           subC={color.coral}
           size={26}
         />
         <Stat
-          label="عدادات متصلة"
+          label={t('عدادات متصلة')}
           value={`${IOT_CONNECTED}`}
           unit={`/ ${IOT_TOTAL}`}
           sub={`${IOT_TOTAL - IOT_CONNECTED} عدادًا غير متصل`}
@@ -1039,20 +1040,20 @@ export function Iot() {
 
       <Card pad={20} style={{ marginTop: 14 }}>
         <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>
-          الاستهلاك حسب الحي — كهرباء
+          {t('الاستهلاك حسب الحي — كهرباء')}
         </div>
         {iotZones.map((z) => (
-          <div key={z.name} style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 14 }}>
+          <div key={t(z.name)} style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 14 }}>
             <span style={{ fontSize: 12, fontWeight: 700, color: color.navy, width: 110 }}>
-              {z.name}
+              {t(z.name)}
             </span>
             <Bar w={z.w} c={z.c} />
             <span style={{ ...numeric, fontSize: 11.5, fontWeight: 600, color: color.slate, width: 80 }}>
-              {z.val}
+              {t(z.val)}
             </span>
             {z.anomaly && (
               <Pill bg="rgba(228,103,90,0.13)" c={color.coral}>
-                استهلاك شاذ
+                {t('استهلاك شاذ')}
               </Pill>
             )}
           </div>

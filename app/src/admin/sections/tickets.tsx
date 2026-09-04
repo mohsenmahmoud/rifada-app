@@ -18,6 +18,7 @@ import {
   TableHead,
   TableRow,
 } from '../ui';
+import { t } from '@/i18n/lang';
 
 const prMeta = {
   urgent: { label: 'عاجلة', c: color.coral },
@@ -46,7 +47,7 @@ export function TicketsQueue() {
         {ticketFilterDefs.map((f) => (
           <ChipToggle
             key={f.key}
-            label={f.label}
+            label={t(f.label)}
             on={st.filter === f.key}
             onClick={() => set({ filter: f.key })}
           />
@@ -71,13 +72,13 @@ export function TicketsQueue() {
           <Btn
             tone="gold"
             onClick={() =>
-              bulk(`أُسندت ${selected.length} تذكرة إلى ${techs[1].name}`, (id) =>
+              bulk(`أُسندت ${selected.length} تذكرة إلى ${t(techs[1].name)}`, (id) =>
                 patchTicket(id, { tech: 1, status: 'inprogress' }),
               )
             }
             style={{ fontSize: 11.5, padding: '9px 18px' }}
           >
-            أسندها لفني واحد
+            {t('أسندها لفني واحد')}
           </Btn>
           <Btn
             tone="ghost"
@@ -91,7 +92,7 @@ export function TicketsQueue() {
               padding: '9px 18px',
             }}
           >
-            ارفع الأولوية
+            {t('ارفع الأولوية')}
           </Btn>
           <Btn
             tone="ghost"
@@ -107,14 +108,14 @@ export function TicketsQueue() {
               padding: '9px 18px',
             }}
           >
-            أغلقها كمحلولة
+            {t('أغلقها كمحلولة')}
           </Btn>
           <Btn
             tone="ghost"
             onClick={clear}
             style={{ color: 'rgba(255,255,255,0.55)', fontSize: 11.5 }}
           >
-            إلغاء
+            {t('إلغاء')}
           </Btn>
         </NavyCard>
       )}
@@ -131,32 +132,32 @@ export function TicketsQueue() {
               })
             }
           />
-          <span style={{ width: 52 }}>الرقم</span>
-          <span style={{ flex: 1.6 }}>البلاغ</span>
-          <span style={{ width: 80 }}>الفئة</span>
-          <span style={{ width: 90 }}>الوحدة</span>
-          <span style={{ width: 70 }}>الأولوية</span>
-          <span style={{ width: 100 }}>الفني</span>
-          <span style={{ width: 100 }}>الحالة</span>
+          <span style={{ width: 52 }}>{t('الرقم')}</span>
+          <span style={{ flex: 1.6 }}>{t('البلاغ')}</span>
+          <span style={{ width: 80 }}>{t('الفئة')}</span>
+          <span style={{ width: 90 }}>{t('الوحدة')}</span>
+          <span style={{ width: 70 }}>{t('الأولوية')}</span>
+          <span style={{ width: 100 }}>{t('الفني')}</span>
+          <span style={{ width: 100 }}>{t('الحالة')}</span>
         </TableHead>
-        {rows.map((t) => {
-          const m = ticketMeta[t.status];
-          const pr = prMeta[t.pr];
+        {rows.map((tk) => {
+          const m = ticketMeta[tk.status];
+          const pr = prMeta[tk.pr];
           return (
-            <TableRow key={t.id}>
+            <TableRow key={tk.id}>
               <CheckBox
-                on={!!st.bulkTixSel[t.id]}
+                on={!!st.bulkTixSel[tk.id]}
                 onClick={() =>
-                  set((s) => ({ bulkTixSel: { ...s.bulkTixSel, [t.id]: !s.bulkTixSel[t.id] } }))
+                  set((s) => ({ bulkTixSel: { ...s.bulkTixSel, [tk.id]: !s.bulkTixSel[tk.id] } }))
                 }
               />
               <span
                 style={{ width: 52, ...numeric, fontSize: 11.5, fontWeight: 600, color: color.slate }}
               >
-                #{t.id}
+                #{tk.id}
               </span>
               <button
-                onClick={() => set({ sec: 'ticketDetail', selId: t.id })}
+                onClick={() => set({ sec: 'ticketDetail', selId: tk.id })}
                 style={{
                   flex: 1.6,
                   border: 'none',
@@ -171,10 +172,10 @@ export function TicketsQueue() {
                   padding: 0,
                 }}
               >
-                {t.title}
+                {t(tk.title)}
               </button>
-              <span style={{ width: 80, fontSize: 11.5, color: color.slate }}>{t.cat}</span>
-              <span style={{ width: 90, fontSize: 11.5, color: color.slate }}>{t.unit}</span>
+              <span style={{ width: 80, fontSize: 11.5, color: color.slate }}>{t(tk.cat)}</span>
+              <span style={{ width: 90, fontSize: 11.5, color: color.slate }}>{t(tk.unit)}</span>
               <span style={{ width: 70 }}>
                 <span
                   style={{
@@ -189,15 +190,15 @@ export function TicketsQueue() {
                   <span
                     style={{ width: 8, height: 8, borderRadius: 99, background: pr.c }}
                   />
-                  {pr.label}
+                  {t(pr.label)}
                 </span>
               </span>
               <span style={{ width: 100, fontSize: 11.5, color: color.slateDark }}>
-                {t.tech === null ? 'غير مُسند' : techs[t.tech].name}
+                {tk.tech === null ? t('غير مُسند') : t(techs[tk.tech].name)}
               </span>
               <span style={{ width: 100 }}>
                 <Pill bg={m.bg} c={m.c}>
-                  {m.label}
+                  {t(m.label)}
                 </Pill>
               </span>
             </TableRow>
@@ -205,7 +206,7 @@ export function TicketsQueue() {
         })}
         {rows.length === 0 && (
           <div style={{ padding: 30, textAlign: 'center', fontSize: 12.5, color: color.slateLight }}>
-            لا تذاكر في هذه الحالة.
+            {t('لا تذاكر في هذه الحالة.')}
           </div>
         )}
       </TableCard>
@@ -228,7 +229,7 @@ export function TicketDetail() {
 
   return (
     <>
-      <BackLink label="العودة لطابور التذاكر" onClick={() => go('tickets')} />
+      <BackLink label={t('العودة لطابور التذاكر')} onClick={() => go('tickets')} />
       <Grid cols="1.6fr 1fr">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <Card pad={20}>
@@ -237,7 +238,7 @@ export function TicketDetail() {
                 #{ticket.id}
               </span>
               <Pill bg={m.bg} c={m.c} style={{ fontSize: 11, padding: '3px 13px' }}>
-                {m.label}
+                {t(m.label)}
               </Pill>
               <span
                 style={{
@@ -250,10 +251,10 @@ export function TicketDetail() {
                 }}
               >
                 <span style={{ width: 8, height: 8, borderRadius: 99, background: pr.c }} />
-                {pr.label}
+                {t(pr.label)}
               </span>
               <Spacer />
-              <span style={{ fontSize: 11.5, color: color.slateLight }}>{ticket.date}</span>
+              <span style={{ fontSize: 11.5, color: color.slateLight }}>{t(ticket.date)}</span>
             </div>
             <div
               style={{
@@ -264,10 +265,10 @@ export function TicketDetail() {
                 lineHeight: 1.6,
               }}
             >
-              {ticket.title}
+              {t(ticket.title)}
             </div>
             <div style={{ fontSize: 12.5, color: color.slate, marginTop: 4 }}>
-              {ticket.cat} · {ticket.unit} · {ticket.resident}
+              {t(ticket.cat)} · {t(ticket.unit)} · {ticket.resident}
             </div>
             <div
               style={{
@@ -280,12 +281,12 @@ export function TicketDetail() {
                 lineHeight: 1.9,
               }}
             >
-              {ticket.desc}
+              {t(ticket.desc)}
             </div>
           </Card>
 
           <Card pad={20}>
-            <CardTitle>ملاحظات داخلية</CardTitle>
+            <CardTitle>{t('ملاحظات داخلية')}</CardTitle>
             {ticket.notes.map((n, i) => (
               <div
                 key={i}
@@ -297,7 +298,7 @@ export function TicketDetail() {
                 }}
               >
                 <div style={{ fontSize: 10.5, fontWeight: 800, color: color.goldDeep }}>
-                  {n.by} · {n.time}
+                  {t(n.by)} · {t(n.time)}
                 </div>
                 <div
                   style={{
@@ -307,7 +308,7 @@ export function TicketDetail() {
                     lineHeight: 1.8,
                   }}
                 >
-                  {n.text}
+                  {t(n.text)}
                 </div>
               </div>
             ))}
@@ -315,7 +316,7 @@ export function TicketDetail() {
               <Field
                 value={st.noteDraft}
                 onChange={(v) => set({ noteDraft: v })}
-                placeholder="أضف ملاحظة للفريق…"
+                placeholder={t('أضف ملاحظة للفريق…')}
                 style={{ borderRadius: 12, padding: '11px 14px', fontSize: 12.5 }}
               />
               <Btn
@@ -330,7 +331,7 @@ export function TicketDetail() {
                 }}
                 style={{ borderRadius: 12, padding: '0 20px' }}
               >
-                إضافة
+                {t('إضافة')}
               </Btn>
             </div>
           </Card>
@@ -338,15 +339,15 @@ export function TicketDetail() {
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
           <Card pad={20}>
-            <CardTitle>تعيين فني</CardTitle>
+            <CardTitle>{t('تعيين فني')}</CardTitle>
             {techs.map((tp, i) => {
               const on = ticket.tech === i;
               return (
                 <button
-                  key={tp.name}
+                  key={t(tp.name)}
                   onClick={() => {
                     patchTicket(ticket.id, { tech: i });
-                    showToast(`أُسندت التذكرة #${ticket.id} إلى ${tp.name}`);
+                    showToast(`أُسندت التذكرة #${ticket.id} إلى ${t(tp.name)}`);
                   }}
                   style={{
                     width: '100%',
@@ -362,13 +363,13 @@ export function TicketDetail() {
                     textAlign: 'right',
                   }}
                 >
-                  <Avatar name={tp.name} size={34} />
+                  <Avatar name={t(tp.name)} size={34} />
                   <span style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
                     <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>
-                      {tp.name}
+                      {t(tp.name)}
                     </span>
                     <span style={{ fontSize: 10.5, color: color.slate }}>
-                      {tp.spec} · {tp.load} تذاكر نشطة
+                      {t(tp.spec)} · {tp.load} تذاكر نشطة
                     </span>
                   </span>
                   <span
@@ -376,7 +377,7 @@ export function TicketDetail() {
                       width: 17,
                       height: 17,
                       borderRadius: 99,
-                      border: `2px solid ${on ? color.gold : color.line}`,
+                      border: `2px solid ${on ? color.gold : t(color.line)}`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
@@ -398,7 +399,7 @@ export function TicketDetail() {
           </Card>
 
           <Card pad={20}>
-            <CardTitle>تحديث الحالة</CardTitle>
+            <CardTitle>{t('تحديث الحالة')}</CardTitle>
             <div
               style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 10 }}
             >
@@ -410,7 +411,7 @@ export function TicketDetail() {
                     key={b.key}
                     onClick={() => {
                       setStatus(ticket.id, b.key);
-                      showToast(`تحدّثت الحالة إلى «${tone.label}» — أُخطر الساكن`);
+                      showToast(`تحدّثت الحالة إلى «${t(tone.label)}» — أُخطر الساكن`);
                     }}
                     style={{
                       borderRadius: 12,
@@ -424,7 +425,7 @@ export function TicketDetail() {
                       border: `1.5px solid ${on ? tone.c : 'rgba(31,59,87,0.12)'}`,
                     }}
                   >
-                    {b.label}
+                    {t(b.label)}
                   </button>
                 );
               })}
@@ -432,7 +433,7 @@ export function TicketDetail() {
             <div
               style={{ fontSize: 10.5, color: color.slateLight, marginTop: 10, lineHeight: 1.7 }}
             >
-              يصل إشعار فوري للساكن مع كل تغيير في الحالة.
+              {t('يصل إشعار فوري للساكن مع كل تغيير في الحالة.')}
             </div>
           </Card>
         </div>

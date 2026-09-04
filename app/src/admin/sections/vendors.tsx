@@ -31,6 +31,7 @@ import {
   TableRow,
   initialOf,
 } from '../ui';
+import { t } from '@/i18n/lang';
 
 /* ===================== A7 / A12 / A21 — vendors & providers ===================== */
 
@@ -47,12 +48,12 @@ export function Vendors() {
   return (
     <>
       <div style={{ display: 'flex', gap: 8, marginBottom: 14 }}>
-        {vendorTabs.map((t) => (
+        {vendorTabs.map((tab) => (
           <ChipToggle
-            key={t.key}
-            label={t.label}
-            on={st.vendorTab === t.key}
-            onClick={() => set({ vendorTab: t.key })}
+            key={tab.key}
+            label={t(tab.label)}
+            on={st.vendorTab === tab.key}
+            onClick={() => set({ vendorTab: tab.key })}
           />
         ))}
       </div>
@@ -61,30 +62,30 @@ export function Vendors() {
         <>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
             <div style={{ fontSize: 12, color: color.slate }}>
-              مطابقة فورية على غرار أوبر — كل مقدم لديه تطبيقه الخاص (P1–P4)
+              {t('مطابقة فورية على غرار أوبر — كل مقدم لديه تطبيقه الخاص (P1–P4)')}
             </div>
             <Spacer />
-            <Btn onClick={() => go('onboard')}>+ تعيين مقدم خدمة جديد</Btn>
+            <Btn onClick={() => go('onboard')}>{t('+ تعيين مقدم خدمة جديد')}</Btn>
           </div>
           <TableCard>
             <TableHead>
-              <span style={{ flex: 1 }}>المقدم</span>
-              <span style={{ width: 120 }}>الفئة</span>
-              <span style={{ width: 100 }}>المنطقة</span>
-              <span style={{ width: 90 }}>التقييم</span>
-              <span style={{ width: 90 }}>مهام منجزة</span>
-              <span style={{ width: 100 }}>الحالة</span>
+              <span style={{ flex: 1 }}>{t('المقدم')}</span>
+              <span style={{ width: 120 }}>{t('الفئة')}</span>
+              <span style={{ width: 100 }}>{t('المنطقة')}</span>
+              <span style={{ width: 90 }}>{t('التقييم')}</span>
+              <span style={{ width: 90 }}>{t('مهام منجزة')}</span>
+              <span style={{ width: 100 }}>{t('الحالة')}</span>
             </TableHead>
             {providerDirDefs.map((p) => (
-              <TableRow key={p.name}>
+              <TableRow key={t(p.name)}>
                 <span style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 9 }}>
-                  <Avatar name={p.name} />
+                  <Avatar name={t(p.name)} />
                   <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>
-                    {p.name}
+                    {t(p.name)}
                   </span>
                 </span>
-                <span style={{ width: 120, fontSize: 11.5, color: color.slateDark }}>{p.cat}</span>
-                <span style={{ width: 100, fontSize: 11.5, color: color.slate }}>{p.zone}</span>
+                <span style={{ width: 120, fontSize: 11.5, color: color.slateDark }}>{t(p.cat)}</span>
+                <span style={{ width: 100, fontSize: 11.5, color: color.slate }}>{t(p.zone)}</span>
                 <span style={{ width: 90, ...numeric, fontSize: 12, fontWeight: 700, color: color.navy }}>
                   ★ {p.rating}
                 </span>
@@ -96,7 +97,7 @@ export function Vendors() {
                     bg={p.ok ? 'rgba(63,166,107,0.13)' : 'rgba(199,154,60,0.16)'}
                     c={p.ok ? color.greenDeep : color.goldDeep}
                   >
-                    {p.ok ? 'نشط' : 'قيد الاعتماد'}
+                    {p.ok ? t('نشط') : t('قيد الاعتماد')}
                   </Pill>
                 </span>
               </TableRow>
@@ -106,7 +107,7 @@ export function Vendors() {
       ) : (
         <Grid cols="repeat(3,1fr)">
           {cards.map((v) => (
-            <Card key={v.name} pad={18}>
+            <Card key={t(v.name)} pad={18}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span
                   style={{
@@ -126,26 +127,26 @@ export function Vendors() {
                 </span>
                 <span style={{ display: 'flex', flexDirection: 'column' }}>
                   <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>
-                    {v.name}
+                    {t(v.name)}
                   </span>
-                  <span style={{ fontSize: 11, color: color.slate }}>{v.spec}</span>
+                  <span style={{ fontSize: 11, color: color.slate }}>{t(v.spec)}</span>
                 </span>
               </div>
               <div style={{ display: 'flex', gap: 14, marginTop: 14 }}>
-                <VendorStat value={`★ ${v.rating}`} label="التقييم" />
+                <VendorStat value={`★ ${v.rating}`} label={t('التقييم')} />
                 <VendorStat value={v.jobs} label={v.jobsLabel} />
-                <VendorStat value={v.commission} label="العمولة" c={color.goldDeep} />
+                <VendorStat value={v.commission} label={t('العمولة')} c={color.goldDeep} />
               </div>
               <div style={{ display: 'flex', alignItems: 'center', marginTop: 14 }}>
                 <Pill
                   bg={v.ok ? 'rgba(63,166,107,0.13)' : 'rgba(199,154,60,0.16)'}
                   c={v.ok ? color.greenDeep : color.goldDeep}
                 >
-                  {v.ok ? 'نشط' : 'قيد المراجعة'}
+                  {v.ok ? t('نشط') : t('قيد المراجعة')}
                 </Pill>
                 <Spacer />
                 <span dir="ltr" style={{ ...numeric, fontSize: 11, color: color.slate }}>
-                  {v.phone}
+                  {t(v.phone)}
                 </span>
               </div>
             </Card>
@@ -159,8 +160,8 @@ export function Vendors() {
 function VendorStat({ value, label, c = color.navy }: { value: string; label: string; c?: string }) {
   return (
     <span style={{ display: 'flex', flexDirection: 'column' }}>
-      <span style={{ ...numeric, fontSize: 15, fontWeight: 700, color: c }}>{value}</span>
-      <span style={{ fontSize: 9.5, color: color.slateLight }}>{label}</span>
+      <span style={{ ...numeric, fontSize: 15, fontWeight: 700, color: c }}>{t(value)}</span>
+      <span style={{ fontSize: 9.5, color: color.slateLight }}>{t(label)}</span>
     </span>
   );
 }
@@ -172,36 +173,36 @@ export function Onboarding() {
 
   return (
     <>
-      <BackLink label="العودة لدليل الموردين" onClick={() => go('vendors')} />
+      <BackLink label={t('العودة لدليل الموردين')} onClick={() => go('vendors')} />
       <Grid cols="1.3fr 1fr">
         <Card pad={22}>
           <div style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>
-            بيانات مقدم الخدمة الجديد
+            {t('بيانات مقدم الخدمة الجديد')}
           </div>
           <div style={{ marginTop: 12 }}>
             <Field
               value={st.obName}
               onChange={(v) => set({ obName: v })}
-              placeholder="الاسم الكامل"
+              placeholder={t('الاسم الكامل')}
             />
           </div>
           <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
             <Field
               value={st.obPhone}
               onChange={(v) => set({ obPhone: v })}
-              placeholder="رقم الهاتف"
+              placeholder={t('رقم الهاتف')}
               dir="ltr"
               style={{ fontSize: 12.5 }}
             />
             <Field
               value={st.obCommission}
               onChange={(v) => set({ obCommission: v })}
-              placeholder="نسبة العمولة %"
+              placeholder={t('نسبة العمولة %')}
               style={{ fontSize: 12.5 }}
             />
           </div>
           <div style={{ fontSize: 12, fontWeight: 800, color: color.navy, margin: '14px 0 8px' }}>
-            فئة الخدمة
+            {t('فئة الخدمة')}
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
             {onboardCats.map((c, i) => (
@@ -228,7 +229,7 @@ export function Onboarding() {
               color: color.slate,
             }}
           >
-            رفع الوثائق والشهادات
+            {t('رفع الوثائق والشهادات')}
           </button>
           <Btn
             tone="gold"
@@ -243,7 +244,7 @@ export function Onboarding() {
             }}
             style={{ width: '100%', marginTop: 14 }}
           >
-            حفظ وإصدار بيانات الدخول
+            {t('حفظ وإصدار بيانات الدخول')}
           </Btn>
         </Card>
 
@@ -257,17 +258,16 @@ export function Onboarding() {
               شارك رمز QR أو رابط SMS مع {st.obName} لتثبيت تطبيق مقدم الخدمة
             </div>
             <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 8 }}>
-              تم إصدار بيانات الدخول تلقائيًا — الهاتف {st.obPhone}
+              {t('تم إصدار بيانات الدخول تلقائيًا — الهاتف')} {st.obPhone}
             </div>
           </NavyCard>
         ) : (
           <Card pad={22}>
             <div style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>
-              كيف تعمل المطابقة الفورية
+              {t('كيف تعمل المطابقة الفورية')}
             </div>
             <div style={{ fontSize: 11.5, color: color.slate, marginTop: 8, lineHeight: 2 }}>
-              بعد الحفظ، يظهر المقدم في قائمة السكان عند طلب خدمة من فئته — يصله إشعار فوري (على غرار
-              أوبر) مع مهلة للرد.
+              {t('بعد الحفظ، يظهر المقدم في قائمة السكان عند طلب خدمة من فئته — يصله إشعار فوري (على غرار أوبر) مع مهلة للرد.')}
             </div>
           </Card>
         )}
@@ -286,10 +286,10 @@ export function BillAggregator() {
       <Grid cols="repeat(3,1fr)" style={{ marginBottom: 14 }}>
         <NavyCard>
           <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>
-            رسوم خدمة الفواتير — يوليو
+            {t('رسوم خدمة الفواتير — يوليو')}
           </div>
           <div style={{ ...numeric, fontSize: 30, fontWeight: 700, color: '#fff', marginTop: 6 }}>
-            4,215 <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>ر.س</span>
+            4,215 <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.7)' }}>{t('ر.س')}</span>
           </div>
           <div
             style={{ fontSize: 11, color: color.greenBright, marginTop: 6, fontWeight: 800 }}
@@ -297,35 +297,35 @@ export function BillAggregator() {
             1,405 عملية سداد × 3 ر.س
           </div>
         </NavyCard>
-        <Stat label="فواتير مربوطة" value="612" sub="عبر 238 وحدة — 71% من السكان" />
+        <Stat label={t('فواتير مربوطة')} value="612" sub={t('عبر 238 وحدة — 71% من السكان')} />
         <Card pad={20}>
-          <div style={{ fontSize: 12, color: color.slate }}>شريك التجميع</div>
+          <div style={{ fontSize: 12, color: color.slate }}>{t('شريك التجميع')}</div>
           <div style={{ fontSize: 19, fontWeight: 900, color: color.navy, marginTop: 8 }}>
-            مدفوعات مدى
+            {t('مدفوعات مدى')}
           </div>
           <div style={{ fontSize: 11, color: color.slate, marginTop: 6 }}>
-            السعودية — تسوية يومية T+1
+            {t('السعودية — تسوية يومية T+1')}
           </div>
         </Card>
       </Grid>
 
       <TableCard>
         <TableHead>
-          <span style={{ flex: 1 }}>الفئة</span>
-          <span style={{ flex: 1.6 }}>المزودون المتاحون للسكان</span>
-          <span style={{ width: 110 }}>عمليات يوليو</span>
-          <span style={{ width: 100 }}>الحالة</span>
+          <span style={{ flex: 1 }}>{t('الفئة')}</span>
+          <span style={{ flex: 1.6 }}>{t('المزودون المتاحون للسكان')}</span>
+          <span style={{ width: 110 }}>{t('عمليات يوليو')}</span>
+          <span style={{ width: 100 }}>{t('الحالة')}</span>
         </TableHead>
         {billAggDefs.map((ba, i) => {
           const on = st.billAggOn[i];
           return (
-            <TableRow key={ba.cat}>
+            <TableRow key={t(ba.cat)}>
               <span style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 9 }}>
                 <IconChip path={ba.icon} />
-                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{ba.cat}</span>
+                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(ba.cat)}</span>
               </span>
               <span style={{ flex: 1.6, fontSize: 11.5, color: color.slateDark }}>
-                {ba.providers}
+                {t(ba.providers)}
               </span>
               <span style={{ width: 110, ...numeric, fontSize: 12, color: color.slateDark }}>
                 {ba.txns}
@@ -334,7 +334,7 @@ export function BillAggregator() {
                 <button
                   onClick={() => {
                     set((s) => ({ billAggOn: { ...s.billAggOn, [i]: !on } }));
-                    showToast(on ? `أُوقفت فئة ${ba.cat} مؤقتًا` : `فُعّلت فئة ${ba.cat} للسكان`);
+                    showToast(on ? `أُوقفت فئة ${t(ba.cat)} مؤقتًا` : `فُعّلت فئة ${t(ba.cat)} للسكان`);
                   }}
                   style={{
                     border: 'none',
@@ -347,7 +347,7 @@ export function BillAggregator() {
                     fontWeight: 800,
                   }}
                 >
-                  {on ? 'مفعّلة' : 'موقوفة'}
+                  {on ? t('مفعّلة') : t('موقوفة')}
                 </button>
               </span>
             </TableRow>
@@ -366,27 +366,26 @@ export function RealEstateModeration() {
   return (
     <>
       <Note>
-        كل إعلان يتحقق تلقائيًا من أن المعلن ساكن موثّق في الوحدة نفسها — الإدارة تراجع المحتوى فقط.
-        لا معاملات دفع داخل التطبيق.
+        {t('كل إعلان يتحقق تلقائيًا من أن المعلن ساكن موثّق في الوحدة نفسها — الإدارة تراجع المحتوى فقط. لا معاملات دفع داخل التطبيق.')}
       </Note>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {reModDefs.map((r, i) => {
           const state = st.reModState[i];
           const m = reModMeta[state];
           return (
-            <Card key={r.title} pad={18}>
+            <Card key={t(r.title)} pad={18}>
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{r.title}</span>
+                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(r.title)}</span>
                 <Pill bg="rgba(31,59,87,0.08)" c={color.navy} style={{ marginRight: 10 }}>
-                  {r.type === 'rent' ? 'للإيجار' : 'للبيع'}
+                  {r.type === 'rent' ? t('للإيجار') : t('للبيع')}
                 </Pill>
                 <Spacer />
                 <Pill bg={m.bg} c={m.c} style={{ fontSize: 10.5 }}>
-                  {m.label}
+                  {t(m.label)}
                 </Pill>
               </div>
               <div style={{ fontSize: 11.5, color: color.slate, marginTop: 4 }}>
-                {r.owner} · {r.price} · وحدة موثّقة ✓ · {r.date}
+                {r.owner} · {r.price} {t('· وحدة موثّقة ✓ ·')} {t(r.date)}
               </div>
               {state === 'pending' && (
                 <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
@@ -398,7 +397,7 @@ export function RealEstateModeration() {
                     }}
                     style={{ flex: 1, padding: 9, fontSize: 11.5 }}
                   >
-                    اعتماد ونشر
+                    {t('اعتماد ونشر')}
                   </Btn>
                   <Btn
                     tone="ghost"
@@ -414,7 +413,7 @@ export function RealEstateModeration() {
                       border: `1.5px solid ${color.coral}`,
                     }}
                   >
-                    رفض مع إخطار المعلن
+                    {t('رفض مع إخطار المعلن')}
                   </Btn>
                 </div>
               )}
@@ -435,10 +434,10 @@ export function StoresDirectory() {
     <>
       <div style={{ display: 'flex', alignItems: 'center', marginBottom: 12 }}>
         <div style={{ fontSize: 12, color: color.slate }}>
-          متاجر معتمدة داخل الكمبوند وحوله — كل متجر لديه واجهة «متجر» في تطبيق مقدم الخدمة (P9–P11)
+          {t('متاجر معتمدة داخل الكمبوند وحوله — كل متجر لديه واجهة «متجر» في تطبيق مقدم الخدمة (P9–P11)')}
         </div>
         <Spacer />
-        <Btn onClick={() => set({ storeAddedShown: !st.storeAddedShown })}>+ تعيين متجر جديد</Btn>
+        <Btn onClick={() => set({ storeAddedShown: !st.storeAddedShown })}>{t('+ تعيين متجر جديد')}</Btn>
       </div>
 
       {st.storeAddedShown && (
@@ -450,8 +449,8 @@ export function StoresDirectory() {
           <span
             style={{ flex: 1, fontSize: 12.5, fontWeight: 800, color: '#fff', lineHeight: 1.8 }}
           >
-            تدفق التعيين مطابق لمقدمي الخدمة: بيانات المتجر + «نوع مقدم الخدمة» (فئة مفتوحة — مطعم،
-            صيدلية، بقالة، ورد، أو أي فئة جديدة دون تعديل برمجي) + السجل التجاري + نسبة العمولة (12%)
+            {t('تدفق التعيين مطابق لمقدمي الخدمة: بيانات المتجر + «نوع مقدم الخدمة» (فئة مفتوحة — مطعم،')}
+            {t('صيدلية، بقالة، ورد، أو أي فئة جديدة دون تعديل برمجي) + السجل التجاري + نسبة العمولة (12%)')}
             ← إصدار بيانات دخول واجهة المتجر عبر QR / SMS
           </span>
         </NavyCard>
@@ -459,15 +458,15 @@ export function StoresDirectory() {
 
       <TableCard>
         <TableHead>
-          <span style={{ flex: 1 }}>المتجر</span>
-          <span style={{ width: 100 }}>النوع</span>
-          <span style={{ width: 90 }}>التقييم</span>
-          <span style={{ width: 110 }}>طلبات هذا الشهر</span>
-          <span style={{ width: 110 }}>عمولة محصّلة</span>
-          <span style={{ width: 90 }}>الحالة</span>
+          <span style={{ flex: 1 }}>{t('المتجر')}</span>
+          <span style={{ width: 100 }}>{t('النوع')}</span>
+          <span style={{ width: 90 }}>{t('التقييم')}</span>
+          <span style={{ width: 110 }}>{t('طلبات هذا الشهر')}</span>
+          <span style={{ width: 110 }}>{t('عمولة محصّلة')}</span>
+          <span style={{ width: 90 }}>{t('الحالة')}</span>
         </TableHead>
         {storesTableDefs.map((s) => (
-          <TableRow key={s.name}>
+          <TableRow key={t(s.name)}>
             <span style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 9 }}>
               <span
                 style={{
@@ -482,11 +481,11 @@ export function StoresDirectory() {
                   flex: 'none',
                 }}
               >
-                {s.emoji}
+                {t(s.emoji)}
               </span>
-              <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{s.name}</span>
+              <span style={{ fontSize: 12.5, fontWeight: 700, color: color.navy }}>{t(s.name)}</span>
             </span>
-            <span style={{ width: 100, fontSize: 11.5, color: color.slateDark }}>{s.kind}</span>
+            <span style={{ width: 100, fontSize: 11.5, color: color.slateDark }}>{t(s.kind)}</span>
             <span style={{ width: 90, ...numeric, fontSize: 12, fontWeight: 700, color: color.navy }}>
               ★ {s.rating}
             </span>
@@ -503,7 +502,7 @@ export function StoresDirectory() {
                 bg={s.ok ? 'rgba(63,166,107,0.13)' : 'rgba(199,154,60,0.16)'}
                 c={s.ok ? color.greenDeep : color.goldDeep}
               >
-                {s.ok ? 'نشط' : 'قيد الاعتماد'}
+                {s.ok ? t('نشط') : t('قيد الاعتماد')}
               </Pill>
             </span>
           </TableRow>

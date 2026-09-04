@@ -1,6 +1,7 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { color, font, numeric, shadow } from '@/theme/tokens';
 import { Icon } from '@/ui/Icon';
+import { t } from '@/i18n/lang';
 
 /**
  * Desktop-console primitives. The phone apps use `@/ui/primitives`; the admin
@@ -84,12 +85,12 @@ export function Stat({
 }) {
   return (
     <Card pad={20}>
-      <div style={{ fontSize: 12, color: color.slate }}>{label}</div>
+      <div style={{ fontSize: 12, color: color.slate }}>{t(label)}</div>
       <div style={{ ...numeric, fontSize: size, fontWeight: 700, color: valueC, marginTop: 6 }}>
-        {value}
-        {unit && <span style={{ fontSize: 12.5, color: color.slate }}> {unit}</span>}
+        {t(value)}
+        {unit && <span style={{ fontSize: 12.5, color: color.slate }}> {t(unit)}</span>}
       </div>
-      {sub && <div style={{ fontSize: 11, color: subC, marginTop: 6 }}>{sub}</div>}
+      {sub && <div style={{ fontSize: 11, color: subC, marginTop: 6 }}>{t(sub)}</div>}
     </Card>
   );
 }
@@ -462,7 +463,7 @@ export function BackLink({ label, onClick }: { label: string; onClick: () => voi
       }}
     >
       <Icon path={CHEVRON_BACK} size={14} stroke={color.slate} width={2} />
-      {label}
+      {t(label)}
     </button>
   );
 }

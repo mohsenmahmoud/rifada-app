@@ -33,6 +33,7 @@ import {
   Sla,
   Team,
 } from './sections/ops';
+import { t } from '@/i18n/lang';
 
 /**
  * The operator console from `Jiwar Admin.dc.html` — a 1360×940 desktop app, not
@@ -143,7 +144,7 @@ function Toast({ text }: { text: string }) {
         animation: 'toastIn .25s ease',
       }}
     >
-      {text}
+      {t(text)}
     </div>
   );
 }
@@ -192,7 +193,7 @@ function Login() {
           <Mark size={38} secondary={color.navy} />
           <div>
             <div style={{ fontSize: 20, fontWeight: 900, color: color.navy }}>
-              رفادة — لوحة الإدارة
+              {t('رفادة — لوحة الإدارة')}
             </div>
             <div
               style={{
@@ -208,7 +209,7 @@ function Login() {
           </div>
         </div>
 
-        <div style={{ ...label, margin: '26px 0 6px' }}>البريد الإلكتروني</div>
+        <div style={{ ...label, margin: '26px 0 6px' }}>{t('البريد الإلكتروني')}</div>
         <input
           dir="ltr"
           value={email}
@@ -216,7 +217,7 @@ function Login() {
           style={{ ...input, fontFamily: font.mono, fontSize: 13.5, fontWeight: 500 }}
         />
 
-        <div style={{ ...label, margin: '14px 0 6px' }}>كلمة المرور</div>
+        <div style={{ ...label, margin: '14px 0 6px' }}>{t('كلمة المرور')}</div>
         <input
           type="password"
           value={pw}
@@ -224,7 +225,7 @@ function Login() {
           style={{ ...input, fontSize: 14, letterSpacing: 4 }}
         />
 
-        <div style={{ ...label, margin: '14px 0 6px' }}>الكمبوند</div>
+        <div style={{ ...label, margin: '14px 0 6px' }}>{t('الكمبوند')}</div>
         <div style={{ display: 'flex', gap: 8 }}>
           {COMPOUNDS.map((c, i) => {
             const on = compound === i;
@@ -245,7 +246,7 @@ function Login() {
                   border: `1.5px solid ${on ? color.navy : 'rgba(31,59,87,0.15)'}`,
                 }}
               >
-                {c}
+                {t(c)}
               </button>
             );
           })}
@@ -267,7 +268,7 @@ function Login() {
             fontFamily: font.sans,
           }}
         >
-          تسجيل الدخول
+          {t('تسجيل الدخول')}
         </button>
       </div>
     </div>
@@ -327,8 +328,8 @@ function Shell({ scrollable }: { scrollable: boolean }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 20px 18px' }}>
           <Mark />
           <div>
-            <div style={{ fontSize: 15, fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>رفادة</div>
-            <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.55)' }}>لوحة الإدارة</div>
+            <div style={{ fontSize: 15, fontWeight: 900, color: '#fff', lineHeight: 1.2 }}>{t('رفادة')}</div>
+            <div style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.55)' }}>{t('لوحة الإدارة')}</div>
           </div>
         </div>
 
@@ -345,7 +346,7 @@ function Shell({ scrollable }: { scrollable: boolean }) {
                   letterSpacing: 1,
                 }}
               >
-                {n.header}
+                {t(n.header)}
               </div>
             );
           }
@@ -383,7 +384,7 @@ function Shell({ scrollable }: { scrollable: boolean }) {
                   color: on ? '#fff' : 'rgba(255,255,255,0.72)',
                 }}
               >
-                {n.label}
+                {t(n.label)}
               </span>
               {badge && (
                 <span
@@ -397,7 +398,7 @@ function Shell({ scrollable }: { scrollable: boolean }) {
                     fontFamily: font.mono,
                   }}
                 >
-                  {badge}
+                  {t(badge)}
                 </span>
               )}
             </button>
@@ -442,7 +443,7 @@ function TopBar() {
       }}
     >
       <div style={{ fontSize: 17, fontWeight: 900, color: color.navy }}>
-        {sectionTitles[st.sec]}
+        {t(sectionTitles[st.sec])}
       </div>
       <span style={{ flex: 1 }} />
 
@@ -457,7 +458,7 @@ function TopBar() {
             fontWeight: 800,
           }}
         >
-          عربي
+          {t('عربي')}
         </span>
         <button
           onClick={() => showToast('الواجهة الإنجليزية قيد الإعداد — النموذج بالعربية أولًا')}
@@ -479,7 +480,7 @@ function TopBar() {
 
       <button
         onClick={() => go('portfolio')}
-        title="تبديل الكمبوند"
+        title={t('تبديل الكمبوند')}
         style={{
           display: 'flex',
           alignItems: 'center',
@@ -499,7 +500,7 @@ function TopBar() {
           width={1.6}
         />
         <span style={{ fontSize: 12, fontWeight: 800, color: color.navy }}>
-          {COMPOUNDS[st.compoundIdx]}
+          {t(COMPOUNDS[st.compoundIdx])}
         </span>
         <Icon path="M6 9l6 6 6-6" size={11} stroke={color.slate} width={2} />
       </button>
@@ -520,7 +521,7 @@ function TopBar() {
           fontFamily: font.sans,
         }}
       >
-        م س
+        {t('م س')}
       </div>
     </div>
   );
