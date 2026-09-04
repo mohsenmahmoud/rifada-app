@@ -150,7 +150,7 @@ function Browse() {
                 {t(l.title)}
               </div>
               <div style={{ fontSize: 11, color: color.slate, marginTop: 3 }}>
-                {l.rooms} {t('غرف ·')} {l.area} م² · {l.zone}
+                {l.rooms} {t('غرف ·')} {l.area} {t('م² ·')} {l.zone}
               </div>
             </div>
           </button>
@@ -459,7 +459,7 @@ function Mine() {
                 </StatusPill>
               </div>
               <div style={{ fontSize: 11.5, color: color.slate, marginTop: 4 }}>
-                {t(m.price)} · {m.views} {t('مشاهدة ·')} {m.interested} مهتم
+                {t(m.price)} · {m.views} {t('مشاهدة ·')} {m.interested} {t('مهتم')}
               </div>
               <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
                 <SmallAction

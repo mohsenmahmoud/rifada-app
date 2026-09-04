@@ -27,7 +27,7 @@ function Request() {
             return (
               <button
                 key={t(k.label)}
-                onClick={() => set({ reqKind: k.label })}
+                onClick={() => set({ reqKind: t(k.label) })}
                 style={{
                   borderRadius: radius.inner,
                   padding: '12px 6px',
@@ -101,7 +101,7 @@ function Matching() {
       <ScreenHeader title={t('مقدمو الخدمة المتاحون')} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <div style={{ fontSize: 12, color: color.slate, margin: '4px 2px 12px' }}>
-          {st.reqKind} · مرتّبة حسب الأقرب والأعلى تقييمًا
+          {st.reqKind} {t('· مرتّبة حسب الأقرب والأعلى تقييمًا')}
         </div>
         {providerDefs.map((p, i) => (
           <Card
@@ -134,7 +134,7 @@ function Matching() {
             </span>
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 6 }}>
               <span style={{ ...numeric, fontSize: 13, fontWeight: 700, color: color.goldDeep }}>
-                {p.price} ر.س
+                {p.price} {t('ر.س')}
               </span>
               <PillButton
                 size="sm"
@@ -207,7 +207,7 @@ function Escrow() {
               lineHeight: 2,
             }}
           >
-            سيتم تحويل المبلغ إلى <b style={{ color: color.navy }}>{t(prov.name)}</b> بعد أن تؤكد اكتمال
+            {t('سيتم تحويل المبلغ إلى')} <b style={{ color: color.navy }}>{t(prov.name)}</b> {t('بعد أن تؤكد اكتمال')}
             {t('المهمة — لن يصله شيء قبل ذلك.')}
           </div>
         </Card>
@@ -324,12 +324,12 @@ function LiveJob() {
             textAlign: 'center',
           }}
         >
-          المبلغ {prov.price} ر.س محجوز حتى تأكيدك اكتمال المهمة
+          {t('المبلغ')} {prov.price} {t('ر.س محجوز حتى تأكيدك اكتمال المهمة')}
         </div>
 
         {notDone && (
           <PillButton full onClick={advance} style={{ marginTop: 12, padding: 13, fontSize: 13.5 }}>
-            {liveStepDefs[st.liveStage + 1]} (محاكاة)
+            {liveStepDefs[st.liveStage + 1]} {t('(محاكاة)')}
           </PillButton>
         )}
         <button
@@ -533,7 +533,7 @@ function Dispute() {
             lineHeight: 1.9,
           }}
         >
-          سيبقى المبلغ {prov.price} ر.س محجوزًا حتى تراجع إدارة الكمبوند البلاغ وتقرر الإجراء المناسب.
+          {t('سيبقى المبلغ')} {prov.price} {t('ر.س محجوزًا حتى تراجع إدارة الكمبوند البلاغ وتقرر الإجراء المناسب.')}
         </div>
       </div>
       <div style={{ padding: '0 20px 34px' }}>
@@ -560,7 +560,7 @@ export function Radio({ on, tone = color.gold }: { on: boolean; tone?: string })
         width: 17,
         height: 17,
         borderRadius: 99,
-        border: `2px solid ${on ? tone : color.line}`,
+        border: `2px solid ${on ? tone : t(color.line)}`,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

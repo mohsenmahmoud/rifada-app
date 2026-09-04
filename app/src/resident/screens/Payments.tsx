@@ -139,7 +139,7 @@ function Statement() {
               <span style={{ fontSize: 13, color: color.slateDark }}>{t(li.label)}</span>
               <span style={{ flex: 1 }} />
               <span style={{ ...numeric, fontSize: 13, fontWeight: 600, color: color.navy }}>
-                {li.amount} ر.س
+                {t(li.amount)} {t('ر.س')}
               </span>
             </div>
           ))}
@@ -147,7 +147,7 @@ function Statement() {
             <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t('الإجمالي')}</span>
             <span style={{ flex: 1 }} />
             <span style={{ ...numeric, fontSize: 14.5, fontWeight: 700, color: color.navy }}>
-              {fmt(total)} ر.س
+              {fmt(total)} {t('ر.س')}
             </span>
           </div>
         </Card>
@@ -286,7 +286,7 @@ function PayNow() {
           onClick={doPay}
           style={{ boxShadow: '0 6px 18px rgba(199,154,60,0.35)' }}
         >
-          ادفع {fmt(total)} ر.س
+          {t('ادفع')} {fmt(total)} {t('ر.س')}
         </PillButton>
       </div>
     </div>
@@ -399,7 +399,7 @@ function History() {
             <span style={{ flex: 1 }} />
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 3 }}>
               <span style={{ ...numeric, fontSize: 14, fontWeight: 700, color: color.navy, whiteSpace: 'nowrap' }}>
-                {rc.amount} ر.س
+                {t(rc.amount)} {t('ر.س')}
               </span>
               <button
                 onClick={() => showToast('جاري تحميل الإيصال…')}
@@ -520,7 +520,7 @@ function Autopay() {
           </span>
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
             <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>
-              بطاقة بنكية •••• 4821
+              {t('بطاقة بنكية •••• 4821')}
             </span>
             <span style={{ fontSize: 11, color: color.slate }}>{t('مدى — البنك الأهلي السعودي')}</span>
           </span>
@@ -544,7 +544,7 @@ function Autopay() {
 
         {notDone && (
           <PillButton full onClick={advance} style={{ marginTop: 12, padding: 13, fontSize: 13.5 }}>
-            {autopaySteps[st.apStage + 1].label} (محاكاة)
+            {t(autopaySteps[st.apStage + 1].label)} {t('(محاكاة)')}
           </PillButton>
         )}
 

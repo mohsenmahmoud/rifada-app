@@ -339,7 +339,7 @@ function Menu() {
         >
           <Icon path={icons.scooter} size={14} stroke={color.goldDeep} width={1.5} />
           <span style={{ fontSize: 10.5, fontWeight: 800, color: color.goldDeep }}>
-            التوصيل مجاني للطلبات فوق {FREE_DELIVERY_OVER} ر.س
+            {t('التوصيل مجاني للطلبات فوق')} {FREE_DELIVERY_OVER} {t('ر.س')}
           </span>
         </div>
 
@@ -375,7 +375,7 @@ function Menu() {
                 <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
                   <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t(mi.name)}</span>
                   <span style={{ ...numeric, fontSize: 12, fontWeight: 700, color: color.goldDeep }}>
-                    {mi.price} ر.س
+                    {mi.price} {t('ر.س')}
                   </span>
                 </span>
                 {qty > 0 ? (
@@ -526,17 +526,17 @@ function Cart() {
               </span>
               <span style={{ flex: 1 }} />
               <span style={{ ...numeric, fontSize: 12.5, fontWeight: 700, color: color.navy }}>
-                {cl.total} ر.س
+                {cl.total} {t('ر.س')}
               </span>
             </div>
           ))}
           <div style={{ display: 'flex', alignItems: 'center', padding: '12px 0' }}>
             <span style={{ fontSize: 12, fontWeight: 900, color: color.navy, whiteSpace: 'nowrap' }}>
-              الإجمالي + التوصيل ({subtotal >= 200 ? t('مجاني 🎉') : `${delivery} ${t('ر.س')}`})
+              {t('الإجمالي + التوصيل (')}{subtotal >= 200 ? t('مجاني 🎉') : `${delivery} ${t('ر.س')}`})
             </span>
             <span style={{ flex: 1 }} />
             <span style={{ ...numeric, fontSize: 15, fontWeight: 700, color: color.navy, whiteSpace: 'nowrap' }}>
-              {grand} ر.س
+              {grand} {t('ر.س')}
             </span>
           </div>
         </Card>
@@ -575,7 +575,7 @@ function Cart() {
         >
           <Icon path={icons.pay} size={17} width={1.6} />
           <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, color: color.navy }}>
-            بطاقة بنكية •••• 4821
+            {t('بطاقة بنكية •••• 4821')}
           </span>
           <span style={{ fontSize: 11, fontWeight: 800, color: color.gold }}>{t('تغيير')}</span>
         </Card>
@@ -607,7 +607,7 @@ function Cart() {
             showToast('تم تأكيد طلبك #2841 — المبلغ محجوز حتى الاستلام');
           }}
         >
-          تأكيد الطلب — {grand} ر.س
+          {t('تأكيد الطلب —')} {grand} {t('ر.س')}
         </PillButton>
       </div>
     </div>
@@ -651,7 +651,7 @@ function Track() {
             {stage >= orderStepDefs.length - 1 ? t('اكتمل الطلب') : t('الوصول المتوقع خلال')}
           </div>
           <div style={{ fontSize: 24, fontWeight: 900, color: '#fff', marginTop: 2 }}>
-            {trackEtas[Math.max(0, stage)]}
+            {t(trackEtas[Math.max(0, stage)])}
           </div>
           <div style={{ display: 'flex', gap: 5, marginTop: 14 }}>
             {orderStepDefs.map((_, i) => (
@@ -753,14 +753,14 @@ function Track() {
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
             <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t(store.name)}</span>
             <span style={{ fontSize: 10.5, color: color.slate }}>
-              طلب #2841 · {grand} ر.س · الدفع محجوز بضمان رفادة
+              {t('طلب #2841 ·')} {grand} {t('ر.س · الدفع محجوز بضمان رفادة')}
             </span>
           </span>
         </Card>
 
         {notDone ? (
           <PillButton full onClick={advance} style={{ marginTop: 12, padding: 13, fontSize: 13.5 }}>
-            {orderStepDefs[stage + 1]} (محاكاة)
+            {orderStepDefs[stage + 1]} {t('(محاكاة)')}
           </PillButton>
         ) : (
           <div
@@ -825,11 +825,11 @@ function History() {
                     textOverflow: 'ellipsis',
                   }}
                 >
-                  {o.items} · {t(o.date)}
+                  {t(o.items)} · {t(o.date)}
                 </span>
               </span>
               <span style={{ ...numeric, fontSize: 12.5, fontWeight: 700, color: color.navy, whiteSpace: 'nowrap' }}>
-                {o.total} ر.س
+                {o.total} {t('ر.س')}
               </span>
             </div>
             <button

@@ -209,7 +209,7 @@ function Link() {
       screen: 'bills',
       hist: s.hist.slice(0, -1),
     }));
-    showToast(`${t('تم ربط فاتورة')} ${billCatDefs[cat].cat} ${t('— سيظهر المستحق فور صدوره')}`);
+    showToast(`${t('تم ربط فاتورة')} ${t(billCatDefs[cat].cat)} ${t('— سيظهر المستحق فور صدوره')}`);
   };
 
   return (
@@ -236,13 +236,13 @@ function Link() {
                   fontFamily: font.sans,
                 }}
               >
-                {billCatDefs[key].cat}
+                {t(billCatDefs[key].cat)}
               </button>
             );
           })}
         </div>
 
-        <Label>{t('اختر مقدم الخدمة —')} {billCatDefs[cat].cat}</Label>
+        <Label>{t('اختر مقدم الخدمة —')} {t(billCatDefs[cat].cat)}</Label>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {providers.map((label, i) => {
             const on = st.linkProviderIdx === i;
@@ -409,7 +409,7 @@ function Detail() {
             }}
             style={{ boxShadow: '0 6px 18px rgba(199,154,60,0.35)' }}
           >
-            ادفع الآن — {d.amount + BILL_SERVICE_FEE} ر.س
+            {t('ادفع الآن —')} {d.amount + BILL_SERVICE_FEE} {t('ر.س')}
           </PillButton>
         </div>
       )}
@@ -461,7 +461,7 @@ function History() {
             </span>
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 3 }}>
               <span style={{ ...numeric, fontSize: 12.5, fontWeight: 700, color: color.navy, whiteSpace: 'nowrap' }}>
-                {r.amount} ر.س
+                {t(r.amount)} {t('ر.س')}
               </span>
               <button
                 onClick={() => showToast(`${t('جارٍ تحميل إيصال')} ${t(r.title)} (PDF)`)}
@@ -476,7 +476,7 @@ function History() {
                   fontFamily: font.sans,
                 }}
               >
-                تحميل الإيصال ↓
+                {t('تحميل الإيصال ↓')}
               </button>
             </span>
           </Card>
@@ -494,7 +494,7 @@ function Autopay() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title={`${t('الدفع التلقائي —')} ${billCatDefs[key].cat}`} onBack={back} />
+      <ScreenHeader title={`${t('الدفع التلقائي —')} ${t(billCatDefs[key].cat)}`} onBack={back} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <button
           onClick={() => set((s) => ({ billAutopay: { ...s.billAutopay, [key]: !on } }))}
@@ -570,7 +570,7 @@ function Autopay() {
                     whiteSpace: 'nowrap',
                   }}
                 >
-                  {v} ر.س
+                  {v} {t('ر.س')}
                 </button>
               );
             })}

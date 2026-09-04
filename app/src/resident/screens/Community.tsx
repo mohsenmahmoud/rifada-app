@@ -603,7 +603,7 @@ function Post() {
               </span>
             </button>
             <span style={{ fontSize: 11, color: color.slate, whiteSpace: 'nowrap' }}>
-              · {comments.length} تعليق
+              · {comments.length} {t('تعليق')}
             </span>
           </div>
         </Card>
@@ -633,7 +633,7 @@ function Post() {
                     onClick={() => set((s) => ({ cmComLiked: { ...s.cmComLiked, [key]: !cLiked } }))}
                     style={inlineAction(cLiked ? color.goldDeep : color.slate)}
                   >
-                    إعجاب ({(c.likes ?? 0) + (cLiked ? 1 : 0)})
+                    {t('إعجاب (')}{(c.likes ?? 0) + (cLiked ? 1 : 0)})
                   </button>
                   <button onClick={() => set({ cmReplyTo: ci })} style={inlineAction(color.slate)}>
                     {t('رد')}
@@ -714,7 +714,7 @@ function Post() {
               width={1.6}
             />
             <span style={{ flex: 1, fontSize: 11, color: color.navy, fontWeight: 700 }}>
-              {st.cmComAtt.type === 'link' ? st.cmComAtt.title : st.cmComAtt.name}
+              {st.cmComAtt.type === 'link' ? t(st.cmComAtt.title) : st.cmComAtt.name}
             </span>
             <button
               onClick={() => set({ cmComAtt: null })}

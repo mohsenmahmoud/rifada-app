@@ -272,7 +272,7 @@ function Feed() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {heroSeats.taken} من جيرانك سيحضرون
+                    {heroSeats.taken} {t('من جيرانك سيحضرون')}
                   </span>
                   <span
                     style={{
@@ -806,7 +806,7 @@ function Detail() {
               </span>
             ))}
             <span style={{ fontSize: 11, color: color.slate, marginRight: 14 }}>
-              و{seats.taken - 4} آخرون سيحضرون
+              و{seats.taken - 4} {t('آخرون سيحضرون')}
             </span>
           </div>
         </Card>
@@ -1134,7 +1134,7 @@ function GroupDetail() {
               </span>
               <span style={{ flex: 1 }} />
               <span style={{ fontSize: 9.5, color: color.slateLight, whiteSpace: 'nowrap' }}>
-                {'when' in gp ? gp.when : gp.time}
+                {'when' in gp ? gp.when : t(gp.time)}
               </span>
             </div>
             <div style={{ fontSize: 12, color: color.slateDark, marginTop: 8, lineHeight: 1.9 }}>

@@ -411,7 +411,7 @@ function Notifications() {
             </span>
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
               <span style={{ fontSize: 13, fontWeight: 800, color: color.navy, lineHeight: 1.5 }}>
-                {i === 0 ? `${t(n.title)} ${fmt(statementTotal(isRent))} ${t('ر.س')}` : n.title}
+                {i === 0 ? `${t(n.title)} ${fmt(statementTotal(isRent))} ${t('ر.س')}` : t(n.title)}
               </span>
               <span style={{ fontSize: 11.5, color: color.slate }}>{t(n.sub)}</span>
             </span>
@@ -589,7 +589,7 @@ function Rewards() {
       return;
     }
     set((s) => ({ points: s.points - r.pts, redeemOpen: false }));
-    showToast(`${t('تم الاستبدال:')} ${r.cash} ${t('— خُصمت')} ${r.pts.toLocaleString('en-US')} ${t('نقطة')}`);
+    showToast(`${t('تم الاستبدال:')} ${t(r.cash)} ${t('— خُصمت')} ${r.pts.toLocaleString('en-US')} ${t('نقطة')}`);
   };
 
   return (
@@ -666,7 +666,7 @@ function Rewards() {
           </span>
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
             <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>
-              نقاط الثقة: {TRUST_SCORE} — مستوى ذهبي
+              {t('نقاط الثقة:')} {TRUST_SCORE} {t('— مستوى ذهبي')}
             </span>
             <span style={{ fontSize: 11, color: color.slate }}>
               {t('سجل سداد إيجابي يفيدك في عقود مستقبلية')}
@@ -759,7 +759,7 @@ function Rewards() {
                 const on = st.redeemSel === i;
                 return (
                   <button
-                    key={r.cash}
+                    key={t(r.cash)}
                     onClick={() =>
                       afford ? set({ redeemSel: i }) : showToast('نقاطك لا تكفي لهذا الخيار')
                     }
@@ -1091,7 +1091,7 @@ function MoveIn() {
                         width: 23,
                         height: 23,
                         borderRadius: 8,
-                        border: `1.5px solid ${it.done ? color.green : color.line}`,
+                        border: `1.5px solid ${it.done ? color.green : t(color.line)}`,
                         background: it.done ? color.green : '#fff',
                         cursor: 'pointer',
                         display: 'flex',
@@ -1498,7 +1498,7 @@ function MarketBrowse() {
               </span>
             </span>
             <span style={{ ...numeric, fontSize: 13, fontWeight: 700, color: color.goldDeep }}>
-              {t(m.price)} ر.س
+              {t(m.price)} {t('ر.س')}
             </span>
           </button>
         ))}
@@ -1517,7 +1517,7 @@ function MarketDetail() {
         <Card pad={18}>
           <div style={{ fontSize: 17, fontWeight: 900, color: color.navy }}>{t(m.name)}</div>
           <div style={{ fontSize: 12, color: color.slate, marginTop: 3 }}>
-            {t(m.vendor)} · ★ {m.rating} ({m.reviews} تقييمًا)
+            {t(m.vendor)} · ★ {m.rating} ({m.reviews} {t('تقييمًا)')}
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 12 }}>
             <span style={{ ...numeric, fontSize: 26, fontWeight: 700, color: color.navy }}>
@@ -1931,7 +1931,7 @@ function Renew() {
             {t('عقد الخدمات والصيانة السنوي')}
           </div>
           <div style={{ fontSize: 11.5, color: color.slate, marginTop: 3 }}>
-            {t(UNIT_SHORT)} · ينتهي 31 ديسمبر 2026
+            {t(UNIT_SHORT)} {t('· ينتهي 31 ديسمبر 2026')}
           </div>
         </Card>
 
@@ -1963,7 +1963,7 @@ function Renew() {
                   width: 22,
                   height: 22,
                   borderRadius: 7,
-                  border: `1.5px solid ${on ? color.gold : color.line}`,
+                  border: `1.5px solid ${on ? color.gold : t(color.line)}`,
                   background: on ? color.gold : '#fff',
                   display: 'flex',
                   alignItems: 'center',

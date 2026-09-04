@@ -48,7 +48,7 @@ export function MaintNew() {
             return (
               <button
                 key={t(c.label)}
-                onClick={() => set({ cat: c.label })}
+                onClick={() => set({ cat: t(c.label) })}
                 style={{
                   borderRadius: radius.inner,
                   padding: '12px 6px',
@@ -234,7 +234,7 @@ export function MaintList() {
             >
               <span style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
                 <span style={{ ...numeric, fontSize: 11.5, fontWeight: 600, color: color.slate }}>
-                  بلاغ #{tk.id}
+                  {t('بلاغ #')}{tk.id}
                 </span>
                 <span style={{ flex: 1 }} />
                 <StatusPill bg={m.bg} c={m.c} style={{ fontSize: 11, padding: '3px 12px', fontWeight: 800 }}>
@@ -276,7 +276,7 @@ export function MaintDetail() {
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={back} />
         <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>
-          بلاغ <span style={numeric}>#{sel.id}</span>
+          {t('بلاغ')} <span style={numeric}>#{sel.id}</span>
         </div>
       </div>
 
@@ -337,7 +337,7 @@ export function MaintDetail() {
                     {t(s.label)}
                   </div>
                   <div style={{ fontSize: 11, color: color.slateLight }}>
-                    {done ? (s.time ? `${t(sel.date)} — ${t(s.time)}` : (s.sub ?? '')) : ''}
+                    {done ? (s.time ? `${t(sel.date)} — ${t(s.time)}` : (s.sub ? t(s.sub) : '')) : ''}
                   </div>
                 </div>
               </div>

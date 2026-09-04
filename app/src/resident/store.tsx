@@ -13,6 +13,7 @@ import type {
   PostAttachment, PostTag, ScreenKey, ShareKind, ShareListing, Ticket,
 } from './types';
 import { initialChat, initialLost, initialTickets, initialMoveRooms } from './data/seed';
+import { t } from '@/i18n/lang';
 
 /**
  * Mirrors the prototype's single `state = {…}` object. Kept as one flat shape
@@ -265,7 +266,7 @@ export const initialState: ResidentState = {
   lockDoor: true,
   renewSel: 0,
 
-  reqKind: 'صيانة',
+  reqKind: t('صيانة'),
   reqNotes: '',
   selProvIdx: 0,
   liveStage: 0,
