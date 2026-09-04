@@ -108,7 +108,7 @@ function Browse() {
               boxShadow: shadow.card,
               marginBottom: 12,
               overflow: 'hidden',
-              textAlign: 'right',
+              textAlign: 'start',
               padding: 0,
             }}
           >

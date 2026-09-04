@@ -167,7 +167,7 @@ function Feed() {
                 border: 'none',
                 padding: 0,
                 cursor: 'pointer',
-                textAlign: 'right',
+                textAlign: 'start',
                 position: 'relative',
                 borderRadius: 22,
                 overflow: 'hidden',
@@ -308,7 +308,7 @@ function Feed() {
                     onClick={() => go('eventDetail', { evSelIdx: e.i })}
                     style={{
                       width: '100%',
-                      textAlign: 'right',
+                      textAlign: 'start',
                       background: '#fff',
                       border: 'none',
                       borderRadius: radius.card,
@@ -848,7 +848,7 @@ function Detail() {
               </span>
               <span
                 dir="ltr"
-                style={{ ...numeric, fontSize: 11, fontWeight: 700, color: color.goldSoft, textAlign: 'right' }}
+                style={{ ...numeric, fontSize: 11, fontWeight: 700, color: color.goldSoft, textAlign: 'start' }}
               >
                 EVT-2026-{String(i + 1).padStart(2, '0')}-214
               </span>

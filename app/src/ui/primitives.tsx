@@ -33,7 +33,7 @@ export function Card({
         ...base,
         border: 'none',
         cursor: 'pointer',
-        textAlign: 'right',
+        textAlign: 'start',
         font: 'inherit',
         display: 'block',
         width: '100%',

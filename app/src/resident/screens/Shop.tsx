@@ -193,7 +193,7 @@ function Browse() {
               display: 'flex',
               alignItems: 'center',
               gap: 12,
-              textAlign: 'right',
+              textAlign: 'start',
               opacity: s.open ? 1 : 0.55,
             }}
           >

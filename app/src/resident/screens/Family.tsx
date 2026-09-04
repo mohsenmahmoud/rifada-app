@@ -77,7 +77,7 @@ function Members() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 12,
-                textAlign: 'right',
+                textAlign: 'start',
               }}
             >
               <span
@@ -174,7 +174,7 @@ function Members() {
                     alignItems: 'center',
                     gap: 10,
                     padding: '8px 0',
-                    textAlign: 'right',
+                    textAlign: 'start',
                     borderBottom: '1px solid rgba(0,0,0,0.04)',
                   }}
                 >
@@ -288,7 +288,7 @@ function Permissions() {
                   cursor: 'pointer',
                   padding: '14px 0',
                   borderBottom: '1px solid rgba(0,0,0,0.05)',
-                  textAlign: 'right',
+                  textAlign: 'start',
                 }}
               >
                 <span

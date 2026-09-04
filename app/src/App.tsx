@@ -288,9 +288,10 @@ function Gallery<K extends string>({
   footer?: ReactNode;
   tile?: { w: number; h: number; scale: number; frameW: number; frameH: number };
 }) {
+  const { dir } = useLang();
   return (
     <div
-      dir="rtl"
+      dir={dir}
       style={{ width: '100%', maxWidth: 1340, boxSizing: 'border-box', padding: '6px 28px 70px' }}
     >
       <div style={{ fontSize: 13, color: color.slate }}>{intro}</div>

@@ -37,7 +37,7 @@ import type {
   StoreKind,
   WithdrawStage,
 } from './types';
-import { t } from '@/i18n/lang';
+import { t, useLang } from '@/i18n/lang';
 
 type State = {
   logged: boolean;
@@ -95,6 +95,7 @@ export function ProviderApp({
   width,
   height,
 }: ProviderAppProps) {
+  const { dir } = useLang();
   const entry = fixedScreen ?? initialScreen;
   const [st, setSt] = useState<State>(() =>
     entry
@@ -138,7 +139,7 @@ export function ProviderApp({
 
   const body = (
     <div
-      dir="rtl"
+      dir={dir}
       style={{
         position: 'relative',
         height: '100%',
@@ -730,7 +731,7 @@ function Dispute({ st, set, showToast }: Ctx) {
                   borderRadius: radius.tile,
                   padding: '12px 14px',
                   cursor: 'pointer',
-                  textAlign: 'right',
+                  textAlign: 'start',
                 }}
               >
                 <span
@@ -1696,7 +1697,7 @@ function ToggleCard({
       <span
         style={{
           flex: 1,
-          textAlign: 'right',
+          textAlign: 'start',
           fontSize: 13.5,
           fontWeight: 800,
           color: on ? color.greenDeep : color.slate,

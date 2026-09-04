@@ -302,7 +302,7 @@ function Profile() {
                     cursor: 'pointer',
                     padding: '14px 0',
                     borderBottom: i === g.items.length - 1 ? undefined : '1px solid rgba(0,0,0,0.05)',
-                    textAlign: 'right',
+                    textAlign: 'start',
                   }}
                 >
                   <PrefIcon path={it.icon} />
@@ -647,7 +647,7 @@ function Rewards() {
             display: 'flex',
             alignItems: 'center',
             gap: 11,
-            textAlign: 'right',
+            textAlign: 'start',
           }}
         >
           <span
@@ -693,7 +693,7 @@ function Rewards() {
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 gap: 8,
-                textAlign: 'right',
+                textAlign: 'start',
               }}
             >
               <Icon path={item.icon} size={22} stroke={color.gold} width={1.6} />
@@ -773,7 +773,7 @@ function Rewards() {
                       padding: '13px 14px',
                       cursor: afford ? 'pointer' : 'not-allowed',
                       opacity: afford ? 1 : 0.45,
-                      textAlign: 'right',
+                      textAlign: 'start',
                     }}
                   >
                     <Radio on={on} />
@@ -1464,7 +1464,7 @@ function MarketBrowse() {
             onClick={() => go('marketDetail', { mdIdx: i })}
             style={{
               width: '100%',
-              textAlign: 'right',
+              textAlign: 'start',
               background: '#fff',
               border: 'none',
               borderRadius: 18,
@@ -1849,7 +1849,7 @@ function Docs() {
             display: 'flex',
             alignItems: 'center',
             gap: 12,
-            textAlign: 'right',
+            textAlign: 'start',
           }}
         >
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
@@ -1955,7 +1955,7 @@ function Renew() {
                 padding: 14,
                 cursor: 'pointer',
                 marginBottom: 8,
-                textAlign: 'right',
+                textAlign: 'start',
               }}
             >
               <span
@@ -2063,7 +2063,7 @@ function Links() {
             onClick={() => showToast(`${t('فتح')} ${t(lk.name)}`)}
             style={{
               width: '100%',
-              textAlign: 'right',
+              textAlign: 'start',
               background: '#fff',
               border: 'none',
               borderRadius: 18,

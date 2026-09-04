@@ -170,7 +170,7 @@ function Statement() {
                 cursor: 'pointer',
                 padding: '13px 0',
                 borderBottom: '1px solid rgba(0,0,0,0.05)',
-                textAlign: 'right',
+                textAlign: 'start',
               }}
             >
               <span style={{ flex: 1, fontSize: 13, fontWeight: 700, color: color.navy }}>
@@ -252,7 +252,7 @@ function PayNow() {
                 padding: '13px 14px',
                 cursor: 'pointer',
                 marginBottom: 8,
-                textAlign: 'right',
+                textAlign: 'start',
               }}
             >
               <Radio on={on} />
@@ -458,7 +458,7 @@ function Autopay() {
             borderRadius: 18,
             padding: 16,
             boxShadow: shadow.card,
-            textAlign: 'right',
+            textAlign: 'start',
           }}
         >
           <span

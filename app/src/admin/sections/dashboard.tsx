@@ -54,7 +54,7 @@ export function Home() {
             style={{
               border: 'none',
               cursor: 'pointer',
-              textAlign: 'right',
+              textAlign: 'start',
               background: color.card,
               borderRadius: 18,
               padding: 18,
@@ -218,7 +218,7 @@ export function Home() {
                   borderRadius: 13,
                   padding: '11px 13px',
                   cursor: 'pointer',
-                  textAlign: 'right',
+                  textAlign: 'start',
                   marginTop: 9,
                 }}
               >
@@ -418,7 +418,7 @@ function CommandBar() {
                 border: 'none',
                 background: 'transparent',
                 cursor: 'pointer',
-                textAlign: 'right',
+                textAlign: 'start',
                 borderBottom: '1px solid rgba(0,0,0,0.04)',
               }}
             >
@@ -597,7 +597,7 @@ export function Unit360() {
                     border: 'none',
                     background: 'transparent',
                     cursor: 'pointer',
-                    textAlign: 'right',
+                    textAlign: 'start',
                     padding: '11px 0',
                     borderBottom: '1px solid rgba(0,0,0,0.05)',
                   }}

@@ -472,7 +472,7 @@ function Dispute() {
                   borderRadius: radius.tile,
                   padding: '12px 14px',
                   cursor: 'pointer',
-                  textAlign: 'right',
+                  textAlign: 'start',
                 }}
               >
                 <Radio on={on} tone={color.coral} />

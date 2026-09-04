@@ -163,7 +163,7 @@ export function TicketsQueue() {
                   border: 'none',
                   background: 'transparent',
                   cursor: 'pointer',
-                  textAlign: 'right',
+                  textAlign: 'start',
                   fontSize: 12.5,
                   fontWeight: 700,
                   color: color.navy,
@@ -360,7 +360,7 @@ export function TicketDetail() {
                     padding: '11px 13px',
                     cursor: 'pointer',
                     marginTop: 8,
-                    textAlign: 'right',
+                    textAlign: 'start',
                   }}
                 >
                   <Avatar name={t(tp.name)} size={34} />

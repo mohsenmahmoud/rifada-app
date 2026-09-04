@@ -241,7 +241,7 @@ export function Home() {
                   padding: 13,
                   boxShadow: shadow.card,
                   cursor: 'pointer',
-                  textAlign: 'right',
+                  textAlign: 'start',
                   position: 'relative',
                 }}
               >
@@ -288,7 +288,7 @@ export function Home() {
             display: 'flex',
             alignItems: 'center',
             gap: 12,
-            textAlign: 'right',
+            textAlign: 'start',
           }}
         >
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
@@ -330,7 +330,7 @@ export function Home() {
             display: 'flex',
             alignItems: 'center',
             gap: 10,
-            textAlign: 'right',
+            textAlign: 'start',
           }}
         >
           <span
@@ -447,7 +447,7 @@ export function ServicesList() {
                 padding: '13px 16px',
                 boxShadow: shadow.card,
                 cursor: 'pointer',
-                textAlign: 'right',
+                textAlign: 'start',
               }}
             >
               <span
@@ -531,7 +531,7 @@ export function ServiceHub() {
             background: `linear-gradient(160deg,${color.navyLight},${color.navy})`,
             borderRadius: 22,
             padding: '22px 20px',
-            textAlign: 'right',
+            textAlign: 'start',
             display: 'flex',
             flexDirection: 'column',
             gap: 8,
@@ -578,7 +578,7 @@ export function ServiceHub() {
             background: '#fff',
             borderRadius: 22,
             padding: '22px 20px',
-            textAlign: 'right',
+            textAlign: 'start',
             display: 'flex',
             flexDirection: 'column',
             gap: 8,

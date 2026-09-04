@@ -56,7 +56,7 @@ function Attachment({ att, onOpen }: { att: PostAttachment; onOpen: () => void }
           display: 'flex',
           alignItems: 'center',
           gap: 11,
-          textAlign: 'right',
+          textAlign: 'start',
         }}
       >
         <span
@@ -86,7 +86,7 @@ function Attachment({ att, onOpen }: { att: PostAttachment; onOpen: () => void }
           >
             {t(att.name)}
           </span>
-          <span dir="ltr" style={{ ...numeric, fontSize: 10, color: color.slateLight, textAlign: 'right' }}>
+          <span dir="ltr" style={{ ...numeric, fontSize: 10, color: color.slateLight, textAlign: 'start' }}>
             PDF · {att.size}
           </span>
         </span>
@@ -109,7 +109,7 @@ function Attachment({ att, onOpen }: { att: PostAttachment; onOpen: () => void }
         display: 'flex',
         alignItems: 'center',
         gap: 11,
-        textAlign: 'right',
+        textAlign: 'start',
       }}
     >
       <span
@@ -145,7 +145,7 @@ function Attachment({ att, onOpen }: { att: PostAttachment; onOpen: () => void }
             ...numeric,
             fontSize: 10,
             color: color.goldDeep,
-            textAlign: 'right',
+            textAlign: 'start',
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
@@ -251,7 +251,7 @@ function Feed() {
           display: 'flex',
           alignItems: 'center',
           gap: 10,
-          textAlign: 'right',
+          textAlign: 'start',
         }}
       >
         <span
@@ -409,7 +409,7 @@ function Feed() {
                   border: 'none',
                   background: 'transparent',
                   cursor: 'pointer',
-                  textAlign: 'right',
+                  textAlign: 'start',
                   padding: 0,
                   marginTop: 12,
                   fontFamily: font.sans,

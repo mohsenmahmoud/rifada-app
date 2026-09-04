@@ -181,7 +181,7 @@ export function Collection() {
                   border: 'none',
                   background: 'transparent',
                   cursor: 'pointer',
-                  textAlign: 'right',
+                  textAlign: 'start',
                   fontSize: 12.5,
                   fontWeight: 800,
                   color: color.navy,

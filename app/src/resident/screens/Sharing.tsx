@@ -288,7 +288,7 @@ function Browse() {
               onClick={() => go('shareDetail', { shareSelIdx: si.i, shareSlotIdx: null })}
               style={{
                 width: '100%',
-                textAlign: 'right',
+                textAlign: 'start',
                 background: '#fff',
                 border: 'none',
                 borderRadius: 18,
@@ -629,7 +629,7 @@ function Detail() {
               }
               style={{
                 width: '100%',
-                textAlign: 'right',
+                textAlign: 'start',
                 border: `1.5px solid ${on ? color.gold : 'rgba(0,0,0,0.06)'}`,
                 background: on ? 'rgba(199,154,60,0.08)' : '#fff',
                 borderRadius: radius.inner,

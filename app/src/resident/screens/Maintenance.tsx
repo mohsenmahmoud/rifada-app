@@ -172,7 +172,7 @@ export function MaintNew() {
             display: 'flex',
             alignItems: 'center',
             gap: 11,
-            textAlign: 'right',
+            textAlign: 'start',
           }}
         >
           <Switch on={st.autoMatch} />
@@ -219,7 +219,7 @@ export function MaintList() {
               onClick={() => go('maintDetail', { selIdx: i, starSel: 0 })}
               style={{
                 width: '100%',
-                textAlign: 'right',
+                textAlign: 'start',
                 background: '#fff',
                 border: 'none',
                 borderRadius: 18,

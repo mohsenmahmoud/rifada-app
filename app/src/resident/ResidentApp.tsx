@@ -4,7 +4,7 @@ import { BottomNav } from './BottomNav';
 import { ResidentProvider, useResident, type ResidentConfig } from './store';
 import { ScreenRouter } from './screens';
 import type { ScreenKey } from './types';
-import { t } from '@/i18n/lang';
+import { t, useLang } from '@/i18n/lang';
 
 /** Floating toast — the app's single feedback channel. */
 function Toast() {
@@ -74,9 +74,10 @@ function FamilyPreviewBanner() {
 }
 
 function AppBody() {
+  const { dir } = useLang();
   return (
     <div
-      dir="rtl"
+      dir={dir}
       style={{
         position: 'relative',
         height: '100%',

@@ -112,7 +112,7 @@ function Home() {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 12,
-                textAlign: 'right',
+                textAlign: 'start',
               }}
             >
               <span
@@ -259,7 +259,7 @@ function Link() {
                   borderRadius: radius.tile,
                   padding: '13px 15px',
                   cursor: 'pointer',
-                  textAlign: 'right',
+                  textAlign: 'start',
                 }}
               >
                 <Radio on={on} />
@@ -534,7 +534,7 @@ function Autopay() {
               }}
             />
           </span>
-          <span style={{ flex: 1, textAlign: 'right', display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <span style={{ flex: 1, textAlign: 'start', display: 'flex', flexDirection: 'column', gap: 1 }}>
             <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>
               {on ? t('الخصم التلقائي مفعّل') : t('الخصم التلقائي متوقف')}
             </span>

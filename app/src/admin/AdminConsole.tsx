@@ -33,7 +33,7 @@ import {
   Sla,
   Team,
 } from './sections/ops';
-import { t } from '@/i18n/lang';
+import { t, useLang } from '@/i18n/lang';
 
 /**
  * The operator console from `Jiwar Admin.dc.html` — a 1360×940 desktop app, not
@@ -104,10 +104,11 @@ function ConsoleBody({
   scrollable: boolean;
 }) {
   const { st } = useAdmin();
+  const { dir } = useLang();
 
   return (
     <div
-      dir="rtl"
+      dir={dir}
       style={{
         width: width ?? '100%',
         height: height,
@@ -363,7 +364,7 @@ function Shell({ scrollable }: { scrollable: boolean }) {
                 width: '100%',
                 border: 'none',
                 cursor: 'pointer',
-                textAlign: 'right',
+                textAlign: 'start',
                 background: on ? 'rgba(255,255,255,0.1)' : 'transparent',
                 padding: '10px 20px',
                 borderRight: `3px solid ${on ? color.gold : 'transparent'}`,

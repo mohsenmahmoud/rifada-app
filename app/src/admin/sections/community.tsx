@@ -76,7 +76,7 @@ export function Residents() {
                     border: 'none',
                     background: 'transparent',
                     cursor: 'pointer',
-                    textAlign: 'right',
+                    textAlign: 'start',
                     fontSize: 12.5,
                     fontWeight: 800,
                     color: color.navy,
@@ -120,7 +120,7 @@ export function Residents() {
                     ...numeric,
                     fontSize: 11.5,
                     color: color.slate,
-                    textAlign: 'right',
+                    textAlign: 'start',
                   }}
                 >
                   {t(r.phone)}
@@ -317,7 +317,7 @@ export function MessagesInbox() {
                 gap: 10,
                 border: 'none',
                 cursor: 'pointer',
-                textAlign: 'right',
+                textAlign: 'start',
                 background: st.threadIdx === i ? color.tile : 'transparent',
                 borderRadius: 14,
                 padding: 12,
