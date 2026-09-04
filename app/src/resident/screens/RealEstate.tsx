@@ -150,7 +150,7 @@ function Browse() {
                 {t(l.title)}
               </div>
               <div style={{ fontSize: 11, color: color.slate, marginTop: 3 }}>
-                {l.rooms} {t('غرف ·')} {l.area} {t('م² ·')} {l.zone}
+                {l.rooms} {t('غرف ·')} {l.area} {t('م² ·')} {t(l.zone)}
               </div>
             </div>
           </button>
@@ -375,7 +375,7 @@ function Detail() {
         <div style={{ fontSize: 15, fontWeight: 900, color: color.navy, marginTop: 6 }}>{t(l.title)}</div>
 
         <div style={{ display: 'flex', gap: 8, marginTop: 10 }}>
-          {[`${l.rooms} ${t('غرف')}`, `${l.area} ${t('م²')}`, l.zone].map((f) => (
+          {[`${l.rooms} ${t('غرف')}`, `${l.area} ${t('م²')}`, t(l.zone)].map((f) => (
             <span
               key={f}
               style={{

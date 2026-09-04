@@ -73,7 +73,7 @@ function Statement() {
         </div>
 
         <Card pad={18} style={{ marginTop: 12 }}>
-          <div style={{ fontSize: 12.5, color: color.slate }}>{statementLabel(isRent)}</div>
+          <div style={{ fontSize: 12.5, color: color.slate }}>{t(statementLabel(isRent))}</div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginTop: 4 }}>
             <span style={{ ...numeric, fontSize: 34, fontWeight: 700, color: color.navy }}>
               {fmt(total)}
@@ -299,7 +299,7 @@ function PaySuccess() {
   // Falls back to the statement figures when the screen is opened cold from
   // the gallery rather than reached through the pay flow.
   const amount = st.paidAmount || fmt(statementTotal(isRent));
-  const method = st.paidMethod || methodDefs[0].name;
+  const method = t(st.paidMethod || methodDefs[0].name);
   return (
     <div
       style={{

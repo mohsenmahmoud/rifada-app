@@ -189,7 +189,7 @@ function AuthorLine({
           flex: 'none',
         }}
       >
-        {who[0]}
+        {t(who)[0]}
       </span>
       <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
         <span
@@ -618,7 +618,7 @@ function Post() {
                 <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
                   <AuthorLine
                     who={t(c.who)}
-                    unit={c.unit || unitOf[c.who] || UNIT_SHORT}
+                    unit={t(c.unit || unitOf[c.who] || UNIT_SHORT)}
                     avBg={c.avBg}
                     time={t(c.time)}
                     size={32}
@@ -650,7 +650,7 @@ function Post() {
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <AuthorLine
                       who={t(r.who)}
-                      unit={r.unit || unitOf[r.who] || UNIT_SHORT}
+                      unit={t(r.unit || unitOf[r.who] || UNIT_SHORT)}
                       avBg={r.avBg}
                       time={t(r.time)}
                       size={28}

@@ -576,7 +576,7 @@ function Feed() {
                         flex: 'none',
                       }}
                     >
-                      <Icon path={evIcons[p.kind]} size={19} width={1.6} />
+                      <Icon path={t(evIcons[p.kind])} size={19} width={1.6} />
                     </span>
                     <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
                       <span
@@ -660,7 +660,7 @@ function Feed() {
                       flex: 'none',
                     }}
                   >
-                    <Icon path={groupIcon[c.kind]} size={20} width={1.6} />
+                    <Icon path={t(groupIcon[c.kind])} size={20} width={1.6} />
                   </span>
                   <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
                     <span
@@ -933,7 +933,7 @@ function Create() {
               <KindTile
                 key={k.key}
                 label={t(k.label)}
-                icon={evIcons[k.key]}
+                icon={t(evIcons[k.key])}
                 on={on}
                 onClick={() => set({ evKind: k.key })}
               />
@@ -1047,7 +1047,7 @@ function GroupDetail() {
             flex: 'none',
           }}
         >
-          <Icon path={groupIcon[g.kind]} size={20} width={1.6} />
+          <Icon path={t(groupIcon[g.kind])} size={20} width={1.6} />
         </span>
         <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
           <span
@@ -1282,7 +1282,7 @@ function GroupCreate() {
             <KindTile
               key={k.key}
               label={t(k.label)}
-              icon={groupIcon[k.key]}
+              icon={t(groupIcon[k.key])}
               on={st.gcKind === k.key}
               onClick={() => set({ gcKind: k.key })}
             />

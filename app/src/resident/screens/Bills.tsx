@@ -142,7 +142,7 @@ function Home() {
                     textOverflow: 'ellipsis',
                   }}
                 >
-                  {billSubs[key]}
+                  {t(billSubs[key])}
                 </span>
               </span>
               {linked ? (

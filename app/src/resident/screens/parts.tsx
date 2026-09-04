@@ -265,7 +265,7 @@ export function Avatar({
         fontFamily: font.sans,
       }}
     >
-      {name[0]}
+      {t(name)[0]}
     </span>
   );
 }

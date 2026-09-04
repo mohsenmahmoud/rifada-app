@@ -329,7 +329,7 @@ function LiveJob() {
 
         {notDone && (
           <PillButton full onClick={advance} style={{ marginTop: 12, padding: 13, fontSize: 13.5 }}>
-            {liveStepDefs[st.liveStage + 1]} {t('(محاكاة)')}
+            {t(liveStepDefs[st.liveStage + 1])} {t('(محاكاة)')}
           </PillButton>
         )}
         <button

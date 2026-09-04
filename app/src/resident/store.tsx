@@ -466,7 +466,9 @@ export function ResidentProvider({
       showToast('🔒 هذه الميزة تحتاج إذن مالك الوحدة — اطلبها من والدك');
     const model = st.payModelOverride ?? config.paymentModel;
     const isRent = model === 'rent';
-    const parts = config.residentName.split(' ');
+    // Split the translated name, so the initials read as Latin in English
+    // rather than showing the Arabic first letter beside an English name.
+    const parts = t(config.residentName).split(' ');
     return {
       st, cfg: config, set, go, back, showToast,
       screen,

@@ -273,7 +273,7 @@ function Browse() {
                         whiteSpace: 'nowrap',
                       }}
                     >
-                      <Icon path={shareIcons[k]} size={13} width={1.6} />
+                      <Icon path={t(shareIcons[k])} size={13} width={1.6} />
                       {t(label)}
                     </span>
                   ))}
@@ -414,7 +414,7 @@ function Create() {
                   border: `1.5px solid ${on ? color.gold : 'rgba(0,0,0,0.06)'}`,
                 }}
               >
-                <Icon path={shareIcons[k.key]} size={20} stroke={on ? color.goldDeep : color.navy} width={1.6} />
+                <Icon path={t(shareIcons[k.key])} size={20} stroke={on ? color.goldDeep : color.navy} width={1.6} />
                 <span
                   style={{
                     fontSize: 10.5,
@@ -554,7 +554,7 @@ function Detail() {
     }
     const sl = sel.slots[st.shareSlotIdx];
     set({ screen: 'share', shareSlotIdx: null });
-    showToast(`${t('تم الحجز:')} ${t(sel.title)} — ${sl[0]} ${sl[1]}`);
+    showToast(`${t('تم الحجز:')} ${t(sel.title)} — ${t(sl[0])} ${t(sl[1])}`);
   };
 
   return (

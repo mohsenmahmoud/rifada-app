@@ -677,7 +677,7 @@ function Track() {
                 fontWeight: 800,
               }}
             >
-              {orderStepDefs[Math.max(0, stage)]}
+              {t(orderStepDefs[Math.max(0, stage)])}
             </span>
           </div>
         </div>
@@ -760,7 +760,7 @@ function Track() {
 
         {notDone ? (
           <PillButton full onClick={advance} style={{ marginTop: 12, padding: 13, fontSize: 13.5 }}>
-            {orderStepDefs[stage + 1]} {t('(محاكاة)')}
+            {t(orderStepDefs[stage + 1])} {t('(محاكاة)')}
           </PillButton>
         ) : (
           <div

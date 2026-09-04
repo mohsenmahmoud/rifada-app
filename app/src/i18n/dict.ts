@@ -810,6 +810,28 @@ const design: Record<string, string> = {
 
 /** Provider- and admin-console strings, translated for this port. */
 const authored: Record<string, string> = {
+  // Single Arabic letters, so an avatar initial derived from an untranslated
+  // name still reads as a Latin letter beside English text.
+  'إ': 'I',
+  'آ': 'A',
+  'ب': 'B',
+  'ت': 'T',
+  'ث': 'Th',
+  'ج': 'J',
+  'ح': 'H',
+  'خ': 'Kh',
+  'د': 'D',
+  'ذ': 'Dh',
+  'ر': 'R',
+  'ز': 'Z',
+  'ص': 'S',
+  'ض': 'D',
+  'ظ': 'Z',
+  'غ': 'Gh',
+  'ق': 'Q',
+  'ل': 'L',
+  'ة': 'H',
+  'ى': 'A',
   'و': 'W',
   'ف': 'F',
   'ن': 'N',
