@@ -215,7 +215,7 @@ export function Onboarding() {
             ))}
           </div>
           <button
-            onClick={() => showToast('اختر ملفات الهوية والشهادات (محاكاة)')}
+            onClick={() => showToast(t('اختر ملفات الهوية والشهادات (محاكاة)'))}
             style={{
               width: '100%',
               marginTop: 16,
@@ -236,11 +236,11 @@ export function Onboarding() {
             size="lg"
             onClick={() => {
               if (!st.obName.trim() || !st.obPhone.trim()) {
-                showToast('أدخل الاسم ورقم الهاتف أولًا');
+                showToast(t('أدخل الاسم ورقم الهاتف أولًا'));
                 return;
               }
               set({ obDone: true });
-              showToast(`أُصدرت بيانات دخول ${st.obName} — أُرسلت عبر SMS`);
+              showToast(`${t('أُصدرت بيانات دخول')} ${st.obName} ${t('— أُرسلت عبر SMS')}`);
             }}
             style={{ width: '100%', marginTop: 14 }}
           >
@@ -393,7 +393,7 @@ export function RealEstateModeration() {
                     tone="green"
                     onClick={() => {
                       set((s) => ({ reModState: { ...s.reModState, [i]: 'approved' } }));
-                      showToast('نُشر الإعلان في سوق العقارات — وصل إشعار للمعلن');
+                      showToast(t('نُشر الإعلان في سوق العقارات — وصل إشعار للمعلن'));
                     }}
                     style={{ flex: 1, padding: 9, fontSize: 11.5 }}
                   >
@@ -403,7 +403,7 @@ export function RealEstateModeration() {
                     tone="ghost"
                     onClick={() => {
                       set((s) => ({ reModState: { ...s.reModState, [i]: 'rejected' } }));
-                      showToast('رُفض الإعلان مع إخطار المعلن بالسبب');
+                      showToast(t('رُفض الإعلان مع إخطار المعلن بالسبب'));
                     }}
                     style={{
                       flex: 1,

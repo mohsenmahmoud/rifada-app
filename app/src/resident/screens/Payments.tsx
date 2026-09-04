@@ -328,7 +328,7 @@ function PaySuccess() {
       </Card>
 
       <button
-        onClick={() => showToast('جاري تحميل الإيصال…')}
+        onClick={() => showToast(t('جاري تحميل الإيصال…'))}
         style={{
           border: 'none',
           background: 'transparent',
@@ -402,7 +402,7 @@ function History() {
                 {t(rc.amount)} {t('ر.س')}
               </span>
               <button
-                onClick={() => showToast('جاري تحميل الإيصال…')}
+                onClick={() => showToast(t('جاري تحميل الإيصال…'))}
                 style={{
                   border: 'none',
                   background: 'transparent',

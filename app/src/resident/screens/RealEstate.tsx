@@ -288,7 +288,7 @@ function Create() {
           full
           onClick={() => {
             set({ crPrice: '', crDesc: '', screen: 'reMine' });
-            showToast('تم إرسال إعلانك لمراجعة الإدارة — يُنشر خلال 24 ساعة');
+            showToast(t('تم إرسال إعلانك لمراجعة الإدارة — يُنشر خلال 24 ساعة'));
           }}
         >
           {t('نشر الإعلان — بعد مراجعة الإدارة')}
@@ -419,7 +419,7 @@ function Detail() {
       <div style={{ padding: '0 20px 34px', display: 'flex', gap: 10 }}>
         <PillButton
           tone="outline"
-          onClick={() => showToast('سجّلنا اهتمامك — سيصل إشعار للمالك')}
+          onClick={() => showToast(t('سجّلنا اهتمامك — سيصل إشعار للمالك'))}
           style={{ flex: 1, padding: 13, fontSize: 13.5 }}
         >
           {t('أنا مهتم 🤝')}
@@ -479,7 +479,7 @@ function Mine() {
                   tone="green"
                   onClick={() => {
                     set((s) => ({ myListingsState: { ...s.myListingsState, [i]: 'done' } }));
-                    showToast('ألف مبروك! تم وضع علامة «تم التأجير» — سيُخفى الإعلان من السوق');
+                    showToast(t('ألف مبروك! تم وضع علامة «تم التأجير» — سيُخفى الإعلان من السوق'));
                   }}
                 >
                   {t('تم التأجير ✓')}

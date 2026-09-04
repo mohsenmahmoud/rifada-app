@@ -145,7 +145,7 @@ export function Home() {
                     c={color.greenDeep}
                     style={{ fontSize: 10.5, padding: '5px 14px', flex: 'none' }}
                   >
-                    {done === 'ok' ? d.approveLabel : d.rejectLabel} ✓
+                    {done === 'ok' ? t(d.approveLabel) : t(d.rejectLabel)} ✓
                   </Pill>
                 ) : (
                   <span style={{ display: 'flex', gap: 7, flex: 'none' }}>
@@ -455,7 +455,7 @@ export function Unit360() {
       label: 'أرسل تذكير سداد',
       bg: color.gold,
       c: '#fff',
-      act: () => showToast(`أُرسل تذكير سداد لـ${t(owner.name)} — إشعار + رسالة`),
+      act: () => showToast(`${t('أُرسل تذكير سداد لـ')}${t(owner.name)} ${t('— إشعار + رسالة')}`),
     },
     { label: 'افتح محادثة', bg: 'rgba(255,255,255,0.12)', c: '#fff', act: () => go('inbox') },
     { label: 'أنشئ تذكرة', bg: 'rgba(255,255,255,0.12)', c: '#fff', act: () => go('tickets') },

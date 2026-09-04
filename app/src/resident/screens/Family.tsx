@@ -276,7 +276,7 @@ function Permissions() {
                 onClick={() =>
                   editable
                     ? set((s) => ({ famPerms: { ...s.famPerms, [p.key]: !s.famPerms[p.key] } }))
-                    : showToast('هذه نسخة تجريبية — عدّل صلاحيات يوسف لتجربة القفل الحي')
+                    : showToast(t('هذه نسخة تجريبية — عدّل صلاحيات يوسف لتجربة القفل الحي'))
                 }
                 style={{
                   width: '100%',
@@ -335,7 +335,7 @@ function Permissions() {
             full
             onClick={() => {
               set({ actingAs: 'yousef', screen: 'home', hist: [] });
-              showToast('👁 أنت الآن ترى التطبيق بعين يوسف — المزايا الممنوعة مقفلة');
+              showToast(t('👁 أنت الآن ترى التطبيق بعين يوسف — المزايا الممنوعة مقفلة'));
             }}
             style={{ marginTop: 12, padding: 13, fontSize: 13 }}
           >

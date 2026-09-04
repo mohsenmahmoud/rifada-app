@@ -183,7 +183,7 @@ export function Broadcast() {
   const send = (scheduled: boolean) => {
     const title = st.bcTitle.trim();
     if (!title) {
-      showToast('اكتب عنوان الإعلان أولًا');
+      showToast(t('اكتب عنوان الإعلان أولًا'));
       return;
     }
     const target = broadcastTargets[st.bcTarget];
@@ -381,7 +381,7 @@ export function MessagesInbox() {
           <Btn
             tone="outline"
             size="sm"
-            onClick={() => showToast('أُسندت المحادثة إلى ماجد البقمي (مشرف صيانة)')}
+            onClick={() => showToast(t('أُسندت المحادثة إلى ماجد البقمي (مشرف صيانة)'))}
           >
             {t('تعيين لموظف')}
           </Btn>

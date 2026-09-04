@@ -463,7 +463,7 @@ export function ResidentProvider({
     const isFam = st.actingAs !== 'owner';
     const can = (key: PermKey | null) => !isFam || key == null || st.famPerms[key];
     const lockToast = () =>
-      showToast('🔒 هذه الميزة تحتاج إذن مالك الوحدة — اطلبها من والدك');
+      showToast(t('🔒 هذه الميزة تحتاج إذن مالك الوحدة — اطلبها من والدك'));
     const model = st.payModelOverride ?? config.paymentModel;
     const isRent = model === 'rent';
     // Split the translated name, so the initials read as Latin in English

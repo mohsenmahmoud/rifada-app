@@ -543,7 +543,7 @@ function Dispute() {
           full
           onClick={() => {
             set({ screen: 'home', hist: [], disputeNotes: '', disputeReason: null });
-            showToast('تم إرسال البلاغ — المبلغ مجمّد حتى قرار الإدارة');
+            showToast(t('تم إرسال البلاغ — المبلغ مجمّد حتى قرار الإدارة'));
           }}
         >
           {t('إرسال البلاغ')}

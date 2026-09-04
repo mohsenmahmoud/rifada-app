@@ -177,7 +177,7 @@ function Profile() {
               </span>
             </div>
             <button
-              onClick={() => showToast('تعديل الملف الشخصي')}
+              onClick={() => showToast(t('تعديل الملف الشخصي'))}
               aria-label="تعديل"
               style={{
                 width: 34,
@@ -317,7 +317,7 @@ function Profile() {
         ))}
 
         <button
-          onClick={() => showToast('تم تسجيل الخروج')}
+          onClick={() => showToast(t('تم تسجيل الخروج'))}
           style={{
             width: '100%',
             marginTop: 16,
@@ -585,7 +585,7 @@ function Rewards() {
   const doRedeem = () => {
     const r = redeemDefs[st.redeemSel];
     if (st.points < r.pts) {
-      showToast('نقاطك لا تكفي لهذا الخيار');
+      showToast(t('نقاطك لا تكفي لهذا الخيار'));
       return;
     }
     set((s) => ({ points: s.points - r.pts, redeemOpen: false }));
@@ -761,7 +761,7 @@ function Rewards() {
                   <button
                     key={t(r.cash)}
                     onClick={() =>
-                      afford ? set({ redeemSel: i }) : showToast('نقاطك لا تكفي لهذا الخيار')
+                      afford ? set({ redeemSel: i }) : showToast(t('نقاطك لا تكفي لهذا الخيار'))
                     }
                     style={{
                       display: 'flex',
@@ -1231,7 +1231,7 @@ function GatePass() {
             full
             onClick={() => {
               set({ passIssued: true, passName: st.visitorName.trim() || t('زائر') });
-              showToast('صدر تصريح الزائر — شُورك مع الأمن');
+              showToast(t('صدر تصريح الزائر — شُورك مع الأمن'));
             }}
             style={{ marginTop: 10, padding: 12, fontSize: 13.5 }}
           >
@@ -1362,7 +1362,7 @@ function LostReport() {
       screen: 'lost',
       hist: [...s.hist, 'lostReport'],
     }));
-    showToast('تم نشر البلاغ — سيصل إشعار للسكان');
+    showToast(t('تم نشر البلاغ — سيصل إشعار للسكان'));
   };
 
   return (
@@ -1653,7 +1653,7 @@ function Survey() {
         full
         onClick={() => {
           back();
-          showToast('شكرًا! تم إرسال تقييمك لإدارة الكمبوند');
+          showToast(t('شكرًا! تم إرسال تقييمك لإدارة الكمبوند'));
         }}
       >
         {t('إرسال')}
@@ -1821,7 +1821,7 @@ function Pets() {
         <PillButton
           tone="outline"
           full
-          onClick={() => showToast('نموذج تسجيل حيوان أليف جديد')}
+          onClick={() => showToast(t('نموذج تسجيل حيوان أليف جديد'))}
           style={{ marginTop: 12, padding: 12, fontSize: 13.5 }}
         >
           {t('+ تسجيل حيوان أليف جديد')}
@@ -1991,7 +1991,7 @@ function Renew() {
         <PillButton
           tone="gold"
           onClick={() => {
-            showToast('تم إرسال طلب التجديد — ستتواصل معك الإدارة للتوقيع');
+            showToast(t('تم إرسال طلب التجديد — ستتواصل معك الإدارة للتوقيع'));
             back();
           }}
           style={{ flex: 1, padding: 13, fontSize: 14 }}
@@ -2000,7 +2000,7 @@ function Renew() {
         </PillButton>
         <PillButton
           tone="outline"
-          onClick={() => showToast('تفاصيل العقد الكاملة')}
+          onClick={() => showToast(t('تفاصيل العقد الكاملة'))}
           style={{ flex: 1, padding: 13, fontSize: 14 }}
         >
           {t('التفاصيل')}

@@ -327,7 +327,7 @@ export function TicketDetail() {
                     notes: [...ticket.notes, { by: 'أنت (الإدارة)', time: 'الآن', text }],
                   });
                   set({ noteDraft: '' });
-                  showToast('أُضيفت الملاحظة للسجل الداخلي');
+                  showToast(t('أُضيفت الملاحظة للسجل الداخلي'));
                 }}
                 style={{ borderRadius: 12, padding: '0 20px' }}
               >
@@ -347,7 +347,7 @@ export function TicketDetail() {
                   key={t(tp.name)}
                   onClick={() => {
                     patchTicket(ticket.id, { tech: i });
-                    showToast(`أُسندت التذكرة #${ticket.id} إلى ${t(tp.name)}`);
+                    showToast(`${t('أُسندت التذكرة #')}${ticket.id} ${t('إلى')} ${t(tp.name)}`);
                   }}
                   style={{
                     width: '100%',
@@ -411,7 +411,7 @@ export function TicketDetail() {
                     key={b.key}
                     onClick={() => {
                       setStatus(ticket.id, b.key);
-                      showToast(`تحدّثت الحالة إلى «${t(tone.label)}» — أُخطر الساكن`);
+                      showToast(`${t('تحدّثت الحالة إلى «')}${t(tone.label)}${t('» — أُخطر الساكن')}`);
                     }}
                     style={{
                       borderRadius: 12,

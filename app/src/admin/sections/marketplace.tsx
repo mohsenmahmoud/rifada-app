@@ -148,7 +148,7 @@ export function Verification() {
               onClick={() => {
                 if (active || !ready) return;
                 set((s) => ({ vettingState: { ...s.vettingState, [i]: 'active' } }));
-                showToast(`فُعّل حساب ${t(v.name)} — أُصدرت بيانات الدخول`);
+                showToast(`${t('فُعّل حساب')} ${t(v.name)} ${t('— أُصدرت بيانات الدخول')}`);
               }}
               style={{
                 width: '100%',

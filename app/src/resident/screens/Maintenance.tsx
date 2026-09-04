@@ -266,7 +266,7 @@ export function MaintDetail() {
 
   const sendRating = () => {
     set((s) => ({ ratedIds: { ...s.ratedIds, [sel.id]: true } }));
-    showToast('شكرًا لتقييمك');
+    showToast(t('شكرًا لتقييمك'));
     // The post-ticket pulse survey is auto-triggered from here (R28).
     window.setTimeout(() => go('survey'), 700);
   };

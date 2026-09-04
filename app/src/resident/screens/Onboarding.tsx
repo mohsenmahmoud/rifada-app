@@ -317,7 +317,7 @@ export function Setup() {
         <button
           onClick={() => {
             go('home');
-            showToast('أهلًا بك في رفادة — وحدتك جاهزة');
+            showToast(t('أهلًا بك في رفادة — وحدتك جاهزة'));
           }}
           style={{
             width: '100%',

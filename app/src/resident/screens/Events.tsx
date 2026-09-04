@@ -606,7 +606,7 @@ function Feed() {
                       size={17}
                       onPick={(n) => {
                         set((s) => ({ pastRating: { ...s.pastRating, [i]: n } }));
-                        showToast('شكرًا — وصل تقييمك لمنظّم الفعالية');
+                        showToast(t('شكرًا — وصل تقييمك لمنظّم الفعالية'));
                       }}
                     />
                     <button
@@ -853,7 +853,7 @@ function Detail() {
                 EVT-2026-{String(i + 1).padStart(2, '0')}-214
               </span>
               <button
-                onClick={() => showToast('أُضيفت الفعالية لتقويم جوالك')}
+                onClick={() => showToast(t('أُضيفت الفعالية لتقويم جوالك'))}
                 style={{
                   border: 'none',
                   cursor: 'pointer',
@@ -883,7 +883,7 @@ function Detail() {
 
       <div style={{ padding: '0 20px 34px', display: 'flex', gap: 10 }}>
         <button
-          onClick={() => showToast('نُسخ رابط الفعالية — شاركه مع جيرانك')}
+          onClick={() => showToast(t('نُسخ رابط الفعالية — شاركه مع جيرانك'))}
           aria-label="مشاركة"
           style={{
             width: 52,
@@ -990,7 +990,7 @@ function Create() {
           full
           onClick={() => {
             set({ screen: 'feed', evTab: 'up', evTitle: '', evDesc: '', evWhen: '', evSeats: '' });
-            showToast('أُرسلت فعاليتك لمكتب الإدارة — يصلك الرد خلال 24 ساعة');
+            showToast(t('أُرسلت فعاليتك لمكتب الإدارة — يصلك الرد خلال 24 ساعة'));
           }}
         >
           {t('أرسل للاعتماد')}
@@ -1200,7 +1200,7 @@ function GroupDetail() {
                       ],
                     },
                   }));
-                  showToast('أُعلن اللقاء ووصل إشعار لكل الأعضاء');
+                  showToast(t('أُعلن اللقاء ووصل إشعار لكل الأعضاء'));
                 }}
                 style={{ flex: 1, padding: 11, fontSize: 12 }}
               >

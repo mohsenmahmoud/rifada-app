@@ -190,7 +190,7 @@ function Browse() {
                   <button
                     onClick={() => {
                       set({ sharePublished: null });
-                      showToast('أُوقفت المشاركة — لم تعد تظهر لجيرانك');
+                      showToast(t('أُوقفت المشاركة — لم تعد تظهر لجيرانك'));
                     }}
                     style={{
                       border: 'none',
@@ -387,7 +387,7 @@ function Create() {
       shTitle: '',
       shPrice: '',
     });
-    showToast('تم نشر مشاركتك — سيراها جيرانك فورًا');
+    showToast(t('تم نشر مشاركتك — سيراها جيرانك فورًا'));
   };
 
   return (
@@ -549,7 +549,7 @@ function Detail() {
 
   const book = () => {
     if (st.shareSlotIdx === null) {
-      showToast('اختر موعدًا أولًا');
+      showToast(t('اختر موعدًا أولًا'));
       return;
     }
     const sl = sel.slots[st.shareSlotIdx];
@@ -625,7 +625,7 @@ function Detail() {
             <button
               key={`${day}-${time}`}
               onClick={() =>
-                free ? set({ shareSlotIdx: i }) : showToast('هذا الموعد محجوز — اختر موعدًا آخر')
+                free ? set({ shareSlotIdx: i }) : showToast(t('هذا الموعد محجوز — اختر موعدًا آخر'))
               }
               style={{
                 width: '100%',

@@ -462,7 +462,7 @@ function TopBar() {
           {t('عربي')}
         </span>
         <button
-          onClick={() => showToast('الواجهة الإنجليزية قيد الإعداد — النموذج بالعربية أولًا')}
+          onClick={() => showToast(t('الواجهة الإنجليزية قيد الإعداد — النموذج بالعربية أولًا'))}
           style={{
             background: 'transparent',
             border: 'none',

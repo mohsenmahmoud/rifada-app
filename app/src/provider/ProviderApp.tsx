@@ -173,7 +173,7 @@ export function ProviderApp({
         </div>
       )}
 
-      {!st.logged && <Login onLogin={() => { set({ logged: true }); showToast('حياك الله — أكوا فيكس'); }} />}
+      {!st.logged && <Login onLogin={() => { set({ logged: true }); showToast(t('حياك الله — أكوا فيكس')); }} />}
       {st.logged && st.screen === 'home' && <Home st={st} set={set} showToast={showToast} />}
       {st.logged && st.screen === 'job' && <Job st={st} set={set} showToast={showToast} />}
       {st.logged && st.screen === 'disputeP' && <Dispute st={st} set={set} showToast={showToast} />}
@@ -389,7 +389,7 @@ function Home({ st, set, showToast }: Ctx) {
         <button
           onClick={() => {
             set({ screen: 'storeHome' });
-            showToast('واجهة المتجر — نفس الحساب، نوع «متجر» بدل «فني»');
+            showToast(t('واجهة المتجر — نفس الحساب، نوع «متجر» بدل «فني»'));
           }}
           style={{
             width: '100%',
@@ -494,7 +494,7 @@ function IncomingRequest({ st, set, showToast }: Ctx) {
           <button
             onClick={() => {
               set({ incomingShown: false, countdown: RESPONSE_SECONDS });
-              showToast('تم رفض الطلب — أُرسل لأقرب مقدم آخر');
+              showToast(t('تم رفض الطلب — أُرسل لأقرب مقدم آخر'));
             }}
             style={{
               flex: 1,
@@ -515,7 +515,7 @@ function IncomingRequest({ st, set, showToast }: Ctx) {
             tone="green"
             onClick={() => {
               set({ incomingShown: false, screen: 'job', jobStage: 'accepted' });
-              showToast('تم قبول الطلب — تظهر الآن التفاصيل الكاملة');
+              showToast(t('تم قبول الطلب — تظهر الآن التفاصيل الكاملة'));
             }}
             style={{ flex: 1.4, padding: 13, fontSize: 14.5 }}
           >
@@ -557,7 +557,7 @@ function Job({ st, set, showToast }: Ctx) {
         </Card>
 
         <button
-          onClick={() => showToast('فتح محادثة مع الساكن')}
+          onClick={() => showToast(t('فتح محادثة مع الساكن'))}
           style={{
             width: '100%',
             marginTop: 12,
@@ -624,7 +624,7 @@ function Job({ st, set, showToast }: Ctx) {
                 full
                 onClick={() => {
                   set({ jobStage: 'done' });
-                  showToast('تم تسجيل إنجاز المهمة — المبلغ محجوز حتى تأكيد الساكن');
+                  showToast(t('تم تسجيل إنجاز المهمة — المبلغ محجوز حتى تأكيد الساكن'));
                 }}
                 style={{ marginTop: 10, padding: 13, fontSize: 14 }}
               >
@@ -653,7 +653,7 @@ function Job({ st, set, showToast }: Ctx) {
                 full
                 onClick={() => {
                   set({ jobStage: 'paid' });
-                  showToast('أكّد الساكن الاكتمال — تم تحويل المبلغ لك');
+                  showToast(t('أكّد الساكن الاكتمال — تم تحويل المبلغ لك'));
                 }}
                 style={{ marginTop: 10, padding: 12, fontSize: 12.5 }}
               >
@@ -767,7 +767,7 @@ function Dispute({ st, set, showToast }: Ctx) {
           full
           onClick={() => {
             set({ screen: 'job', disputeReason: null });
-            showToast('تم إرسال البلاغ — تم تجميد المبلغ لحين مراجعة الإدارة');
+            showToast(t('تم إرسال البلاغ — تم تجميد المبلغ لحين مراجعة الإدارة'));
           }}
           style={{ padding: 13, fontSize: 14 }}
         >
@@ -899,7 +899,7 @@ function Wallet({ st, set, showToast }: Ctx) {
             full
             onClick={() => {
               set({ wdStage: 1 });
-              showToast(`تم إنشاء طلب السحب — ${WALLET_AVAILABLE} ر.س`);
+              showToast(`${t('تم إنشاء طلب السحب —')} ${WALLET_AVAILABLE} ${t('ر.س')}`);
             }}
             style={{ marginTop: 10, padding: 13, fontSize: 14, boxShadow: '0 6px 18px rgba(199,154,60,0.35)' }}
           >
@@ -926,7 +926,7 @@ function Wallet({ st, set, showToast }: Ctx) {
                 onClick={() => {
                   const next = Math.min(st.wdStage + 1, 3) as WithdrawStage;
                   set({ wdStage: next });
-                  if (next === 3) showToast('وصل الرصيد إلى حسابك البنكي ✓');
+                  if (next === 3) showToast(t('وصل الرصيد إلى حسابك البنكي ✓'));
                 }}
                 style={{ marginTop: 10, padding: 12, fontSize: 12.5 }}
               >
@@ -1277,10 +1277,10 @@ function StoreOrders({ st, set, showToast }: Ctx) {
             }}
             onReject={() => {
               setStage(o.i, 'delivered');
-              showToast('تم رفض الطلب — يُسترد مبلغ الساكن فورًا من الإسكرو');
+              showToast(t('تم رفض الطلب — يُسترد مبلغ الساكن فورًا من الإسكرو'));
             }}
             onViewRx={() =>
-              showToast('روشتة د. أيمن الشهري — باراسيتامول + فيتامين سي — سليمة')
+              showToast(t('روشتة د. أيمن الشهري — باراسيتامول + فيتامين سي — سليمة'))
             }
             onPayout={() => set({ screen: 'storePayout' })}
           />

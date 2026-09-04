@@ -604,7 +604,7 @@ function Cart() {
           full
           onClick={() => {
             set({ orderStage: 0, screen: 'foodTrack' });
-            showToast('تم تأكيد طلبك #2841 — المبلغ محجوز حتى الاستلام');
+            showToast(t('تم تأكيد طلبك #2841 — المبلغ محجوز حتى الاستلام'));
           }}
         >
           {t('تأكيد الطلب —')} {grand} {t('ر.س')}
@@ -626,7 +626,7 @@ function Track() {
     const next = Math.min(stage + 1, orderStepDefs.length - 1);
     set({ orderStage: next });
     if (next === orderStepDefs.length - 1) {
-      showToast('وصل طلبك ✓ — تم تحويل المبلغ للمتجر بعد خصم العمولة');
+      showToast(t('وصل طلبك ✓ — تم تحويل المبلغ للمتجر بعد خصم العمولة'));
     }
   };
 
@@ -835,7 +835,7 @@ function History() {
             <button
               onClick={() => {
                 set({ selStoreIdx: o.storeIdx, cart: { ...o.cart }, screen: 'foodCart' });
-                showToast('تم تجهيز سلتك بنفس الطلب السابق');
+                showToast(t('تم تجهيز سلتك بنفس الطلب السابق'));
               }}
               style={{
                 width: '100%',

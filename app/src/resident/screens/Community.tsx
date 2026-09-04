@@ -378,7 +378,7 @@ function Feed() {
                         cmExtraComments: {},
                         cmExtraReplies: {},
                       }));
-                      showToast('حُذف منشورك نهائيًا');
+                      showToast(t('حُذف منشورك نهائيًا'));
                     }}
                     style={menuBtn(color.coralDeep, 'rgba(228,103,90,0.1)')}
                   >
@@ -538,7 +538,7 @@ function Post() {
         cmReplyTo: null,
         cmComAtt: null,
       }));
-      showToast('نُشر ردك — وصل إشعار لصاحب التعليق');
+      showToast(t('نُشر ردك — وصل إشعار لصاحب التعليق'));
     } else {
       set((s) => ({
         cmExtraComments: {
@@ -548,7 +548,7 @@ function Post() {
         cmComment: '',
         cmComAtt: null,
       }));
-      showToast('نُشر تعليقك — وصل إشعار لصاحب المنشور');
+      showToast(t('نُشر تعليقك — وصل إشعار لصاحب المنشور'));
     }
   };
 
@@ -567,7 +567,7 @@ function Post() {
           <div style={{ marginTop: 12, fontSize: 13.5, color: color.navy, lineHeight: 1.95 }}>
             {t(p.text)}
           </div>
-          <Attachment att={p.att} onOpen={() => showToast('فتح المرفق…')} />
+          <Attachment att={p.att} onOpen={() => showToast(t('فتح المرفق…'))} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 14 }}>
             <button
               onClick={() => set((s) => ({ cmLiked: { ...s.cmLiked, [i]: !liked } }))}
@@ -627,7 +627,7 @@ function Post() {
                 <div style={{ fontSize: 12.5, color: color.slateDark, marginTop: 8, lineHeight: 1.9 }}>
                   {t(c.text)}
                 </div>
-                <Attachment att={c.att} onOpen={() => showToast('فتح المرفق…')} />
+                <Attachment att={c.att} onOpen={() => showToast(t('فتح المرفق…'))} />
                 <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginTop: 10 }}>
                   <button
                     onClick={() => set((s) => ({ cmComLiked: { ...s.cmComLiked, [key]: !cLiked } }))}
@@ -659,7 +659,7 @@ function Post() {
                   <div style={{ fontSize: 12, color: color.slateDark, marginTop: 7, lineHeight: 1.85 }}>
                     {t(r.text)}
                   </div>
-                  <Attachment att={r.att} onOpen={() => showToast('فتح المرفق…')} />
+                  <Attachment att={r.att} onOpen={() => showToast(t('فتح المرفق…'))} />
                 </Card>
               ))}
             </div>
@@ -817,7 +817,7 @@ function New() {
         cmEditIdx: null,
         screen: 'community',
       }));
-      showToast('حُفظت تعديلاتك على المنشور');
+      showToast(t('حُفظت تعديلاتك على المنشور'));
       return;
     }
     set((s) => ({
@@ -844,7 +844,7 @@ function New() {
       cmExtraComments: {},
       cmExtraReplies: {},
     }));
-    showToast('نُشر منشورك — سيصلك إشعار مع كل تعليق');
+    showToast(t('نُشر منشورك — سيصلك إشعار مع كل تعليق'));
   };
 
   return (

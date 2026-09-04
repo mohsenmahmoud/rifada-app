@@ -213,7 +213,7 @@ export function Collection() {
                 <Btn
                   tone="outline"
                   size="sm"
-                  onClick={() => showToast(`أُرسل تذكير سداد إلى ${t(o.name)}`)}
+                  onClick={() => showToast(`${t('أُرسل تذكير سداد إلى')} ${t(o.name)}`)}
                   style={{ border: `1.5px solid ${color.navy}` }}
                 >
                   {t('إرسال تذكير')}
@@ -557,7 +557,7 @@ export function Automation() {
           );
         })}
         <button
-          onClick={() => showToast('محرّر القواعد «إذا … فـ …» — قيد البناء في هذا النموذج')}
+          onClick={() => showToast(t('محرّر القواعد «إذا … فـ …» — قيد البناء في هذا النموذج'))}
           style={{
             border: `1.5px dashed ${color.gold}`,
             background: 'rgba(199,154,60,0.06)',
@@ -601,7 +601,7 @@ export function Team() {
             </span>
             <Btn
               size="sm"
-              onClick={() => showToast('أُرسلت دعوة انضمام بالبريد — تنتهي خلال 48 ساعة')}
+              onClick={() => showToast(t('أُرسلت دعوة انضمام بالبريد — تنتهي خلال 48 ساعة'))}
               style={{ padding: '7px 16px', fontSize: 11 }}
             >
               {t('+ دعوة موظف')}
@@ -763,7 +763,7 @@ export function Reports() {
         <Spacer />
         <Btn
           tone="gold"
-          onClick={() => showToast(`صُدّر تقرير مجلس الملاك — ${st.repPeriod} (PDF، 9 صفحات)`)}
+          onClick={() => showToast(`${t('صُدّر تقرير مجلس الملاك —')} ${st.repPeriod} ${t('(PDF، 9 صفحات)')}`)}
           style={{ padding: '10px 20px', display: 'flex', alignItems: 'center', gap: 8 }}
         >
           <Icon path="M12 3v12M7 11l5 5 5-5M4 20h16" size={15} stroke="#fff" width={1.8} />
@@ -790,21 +790,21 @@ export function Reports() {
             <Spacer />
             <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
               <Btn
-                onClick={() => showToast(`جارٍ تجهيز ${t(rc.title)} بصيغة PDF — ${st.repPeriod}`)}
+                onClick={() => showToast(`${t('جارٍ تجهيز')} ${t(rc.title)} ${t('بصيغة PDF —')} ${st.repPeriod}`)}
                 style={{ flex: 1, padding: 9, fontSize: 11 }}
               >
                 PDF
               </Btn>
               <Btn
                 tone="outline"
-                onClick={() => showToast(`صُدّر ${t(rc.title)} بصيغة Excel`)}
+                onClick={() => showToast(`${t('صُدّر')} ${t(rc.title)} ${t('بصيغة Excel')}`)}
                 style={{ flex: 1, padding: 9, fontSize: 11 }}
               >
                 Excel
               </Btn>
               <Btn
                 tone="ghost"
-                onClick={() => showToast(`جُدولت ${t(rc.title)} — يُرسل تلقائيًا أول كل شهر`)}
+                onClick={() => showToast(`${t('جُدولت')} ${t(rc.title)} ${t('— يُرسل تلقائيًا أول كل شهر')}`)}
                 style={{
                   flex: 1,
                   padding: 9,
@@ -870,7 +870,7 @@ export function Portfolio() {
                   if (active) return;
                   // Only the first two compounds have a live dataset behind them.
                   set({ compoundIdx: Math.min(i, COMPOUNDS.length - 1) });
-                  showToast(`تم التبديل إلى ${t(p.name)}`);
+                  showToast(`${t('تم التبديل إلى')} ${t(p.name)}`);
                 }}
                 style={{
                   width: '100%',
@@ -993,7 +993,7 @@ export function Predictive() {
                 <Btn
                   tone="outline"
                   size="sm"
-                  onClick={() => showToast(`جُدولت صيانة وقائية لـ${t(a.name)}`)}
+                  onClick={() => showToast(`${t('جُدولت صيانة وقائية لـ')}${t(a.name)}`)}
                   style={{ border: `1.5px solid ${color.navy}` }}
                 >
                   {t('جدولة صيانة')}

@@ -47,7 +47,7 @@ function FamilyPreviewBanner() {
     <button
       onClick={() => {
         set({ actingAs: 'owner', screen: 'family', hist: ['home'] });
-        showToast('عدت لحساب مالك الوحدة');
+        showToast(t('عدت لحساب مالك الوحدة'));
       }}
       style={{
         position: 'absolute',
