@@ -37,6 +37,7 @@ import type {
   StoreKind,
   WithdrawStage,
 } from './types';
+import { t } from '@/i18n/lang';
 
 type State = {
   logged: boolean;
@@ -167,7 +168,7 @@ export function ProviderApp({
             textOverflow: 'ellipsis',
           }}
         >
-          {st.toast}
+          {t(st.toast)}
         </div>
       )}
 
@@ -233,10 +234,10 @@ function Login({ onLogin }: { onLogin: () => void }) {
         />
       </svg>
       <div style={{ fontSize: 15, fontWeight: 800, color: '#fff', marginTop: 14 }}>
-        تطبيق مقدمي الخدمة
+        {t('تطبيق مقدمي الخدمة')}
       </div>
       <div style={{ fontSize: 12, color: 'rgba(255,255,255,0.6)', marginTop: 4 }}>
-        بيانات الدخول من مكتب إدارة الكمبوند
+        {t('بيانات الدخول من مكتب إدارة الكمبوند')}
       </div>
       <div style={{ flex: 1 }} />
       <div
@@ -249,10 +250,10 @@ function Login({ onLogin }: { onLogin: () => void }) {
           boxSizing: 'border-box',
         }}
       >
-        <div style={{ fontSize: 12, fontWeight: 700, color: '#fff', marginBottom: 6 }}>رقم الجوال</div>
+        <div style={{ fontSize: 12, fontWeight: 700, color: '#fff', marginBottom: 6 }}>{t('رقم الجوال')}</div>
         <input
           dir="ltr"
-          defaultValue={TECHNICIAN.phone}
+          defaultValue={t(TECHNICIAN.phone)}
           style={{
             width: '100%',
             background: '#fff',
@@ -267,11 +268,11 @@ function Login({ onLogin }: { onLogin: () => void }) {
           }}
         />
         <div style={{ fontSize: 12, fontWeight: 700, color: '#fff', margin: '12px 0 6px' }}>
-          رمز PIN
+          {t('رمز PIN')}
         </div>
         <input
           type="password"
-          defaultValue={TECHNICIAN.pin}
+          defaultValue={t(TECHNICIAN.pin)}
           style={{
             width: '100%',
             background: '#fff',
@@ -286,7 +287,7 @@ function Login({ onLogin }: { onLogin: () => void }) {
           }}
         />
         <PillButton tone="green" size="lg" full onClick={onLogin} style={{ marginTop: 14 }}>
-          تسجيل الدخول
+          {t('تسجيل الدخول')}
         </PillButton>
       </div>
     </div>
@@ -316,37 +317,37 @@ function Home({ st, set, showToast }: Ctx) {
             flex: 'none',
           }}
         >
-          {TECHNICIAN.initials}
+          {t(TECHNICIAN.initials)}
         </span>
         <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
           <span style={{ fontSize: 14.5, fontWeight: 800, color: color.navy }}>
-            {TECHNICIAN.name}
+            {t(TECHNICIAN.name)}
           </span>
-          <span style={{ fontSize: 11, color: color.slate }}>{TECHNICIAN.company}</span>
+          <span style={{ fontSize: 11, color: color.slate }}>{t(TECHNICIAN.company)}</span>
         </div>
       </div>
 
       <div style={{ padding: '6px 20px 0' }}>
         <ToggleCard
           on={st.available}
-          onLabel="متاح لاستقبال الطلبات"
-          offLabel="غير متاح حاليًا"
+          onLabel={t('متاح لاستقبال الطلبات')}
+          offLabel={t('غير متاح حاليًا')}
           onClick={() => set((s) => ({ available: !s.available }))}
         />
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '14px 20px 30px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-          <MetricCard label="مهام اليوم" value="3" />
-          <MetricCard label="أرباح اليوم" value="410" unit="ر.س" />
+          <MetricCard label={t('مهام اليوم')} value="3" />
+          <MetricCard label={t('أرباح اليوم')} value="410" unit={t('ر.س')} />
         </div>
 
         <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '18px 2px 8px' }}>
-          مهامك القادمة
+          {t('مهامك القادمة')}
         </div>
         {upcomingJobs.map((j) => (
           <Card
-            key={j.title}
+            key={t(j.title)}
             pad="13px 15px"
             style={{ borderRadius: radius.inner, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 10 }}
           >
@@ -365,9 +366,9 @@ function Home({ st, set, showToast }: Ctx) {
               <Icon path="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z" size={17} width={1.6} />
             </span>
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
-              <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{j.title}</span>
+              <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(j.title)}</span>
               <span style={{ fontSize: 10.5, color: color.slate }}>
-                {j.area} · {j.time}
+                {t(j.area)} · {t(j.time)}
               </span>
             </span>
             <span style={{ ...numeric, fontSize: 12, fontWeight: 700, color: color.goldDeep }}>
@@ -382,7 +383,7 @@ function Home({ st, set, showToast }: Ctx) {
           onClick={() => set({ screen: 'wallet' })}
           style={{ marginTop: 14, padding: 11, fontSize: 12.5 }}
         >
-          المحفظة والأرباح
+          {t('المحفظة والأرباح')}
         </PillButton>
         <button
           onClick={() => {
@@ -403,7 +404,7 @@ function Home({ st, set, showToast }: Ctx) {
             fontFamily: font.sans,
           }}
         >
-          جرّب واجهة حساب «متجر» — مطعم بيت الجيران
+          {t('جرّب واجهة حساب «متجر» — مطعم بيت الجيران')}
         </button>
       </div>
     </div>
@@ -460,9 +461,9 @@ function IncomingRequest({ st, set, showToast }: Ctx) {
           </span>
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
             <span style={{ fontSize: 15, fontWeight: 900, color: color.navy }}>
-              {incomingJob.title}
+              {t(incomingJob.title)}
             </span>
-            <span style={{ fontSize: 11.5, color: color.slate }}>{incomingJob.area}</span>
+            <span style={{ fontSize: 11.5, color: color.slate }}>{t(incomingJob.area)}</span>
           </span>
         </div>
 
@@ -477,11 +478,11 @@ function IncomingRequest({ st, set, showToast }: Ctx) {
             lineHeight: 1.8,
           }}
         >
-          {incomingJob.note}
+          {t(incomingJob.note)}
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', marginTop: 14 }}>
-          <span style={{ fontSize: 12, color: color.slate }}>العائد المتوقع</span>
+          <span style={{ fontSize: 12, color: color.slate }}>{t('العائد المتوقع')}</span>
           <span style={{ flex: 1 }} />
           <span style={{ ...numeric, fontSize: 18, fontWeight: 700, color: color.greenDeep }}>
             {incomingJob.pay} ر.س
@@ -507,7 +508,7 @@ function IncomingRequest({ st, set, showToast }: Ctx) {
               fontFamily: font.sans,
             }}
           >
-            رفض
+            {t('رفض')}
           </button>
           <PillButton
             tone="green"
@@ -517,7 +518,7 @@ function IncomingRequest({ st, set, showToast }: Ctx) {
             }}
             style={{ flex: 1.4, padding: 13, fontSize: 14.5 }}
           >
-            قبول الطلب
+            {t('قبول الطلب')}
           </PillButton>
         </div>
       </div>
@@ -539,14 +540,14 @@ function Job({ st, set, showToast }: Ctx) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <Header title="تفاصيل المهمة" onBack={() => set({ screen: 'home' })} />
+      <Header title={t('تفاصيل المهمة')} onBack={() => set({ screen: 'home' })} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <Card pad={16} style={{ borderRadius: 18 }}>
-          <div style={{ fontSize: 15, fontWeight: 900, color: color.navy }}>{incomingJob.title}</div>
-          <div style={{ fontSize: 12, color: color.slate, marginTop: 4 }}>{incomingJob.unit}</div>
+          <div style={{ fontSize: 15, fontWeight: 900, color: color.navy }}>{t(incomingJob.title)}</div>
+          <div style={{ fontSize: 12, color: color.slate, marginTop: 4 }}>{t(incomingJob.unit)}</div>
           <div style={{ display: 'flex', alignItems: 'center', marginTop: 12 }}>
-            <span style={{ fontSize: 12, color: color.slate }}>العائد</span>
+            <span style={{ fontSize: 12, color: color.slate }}>{t('العائد')}</span>
             <span style={{ flex: 1 }} />
             <span style={{ ...numeric, fontSize: 15, fontWeight: 700, color: color.greenDeep }}>
               {incomingJob.pay} ر.س
@@ -575,13 +576,13 @@ function Job({ st, set, showToast }: Ctx) {
           }}
         >
           <Icon path={icons.chat} size={16} stroke="#fff" width={1.6} />
-          تواصل مع الساكن
+          {t('تواصل مع الساكن')}
         </button>
 
         <Card pad={16} style={{ borderRadius: 18, marginTop: 12 }}>
-          <div style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>حالة المهمة</div>
+          <div style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t('حالة المهمة')}</div>
           <div style={{ fontSize: 12.5, color: color.goldDeep, fontWeight: 800, marginTop: 8 }}>
-            {stageLabel}
+            {t(stageLabel)}
           </div>
 
           {st.jobStage === 'accepted' && (
@@ -591,7 +592,7 @@ function Job({ st, set, showToast }: Ctx) {
               onClick={() => set({ jobStage: 'started' })}
               style={{ marginTop: 12, padding: 13, fontSize: 14 }}
             >
-              بدء التنفيذ
+              {t('بدء التنفيذ')}
             </PillButton>
           )}
 
@@ -614,7 +615,7 @@ function Job({ st, set, showToast }: Ctx) {
               >
                 <Icon path={icons.camera} size={16} stroke={color.slate} width={1.5} />
                 <span style={{ fontSize: 12, fontWeight: 700, color: color.slate }}>
-                  إثبات إنجاز العمل (صورة)
+                  {t('إثبات إنجاز العمل (صورة)')}
                 </span>
               </button>
               <PillButton
@@ -626,7 +627,7 @@ function Job({ st, set, showToast }: Ctx) {
                 }}
                 style={{ marginTop: 10, padding: 13, fontSize: 14 }}
               >
-                تم الانتهاء
+                {t('تم الانتهاء')}
               </PillButton>
             </>
           )}
@@ -645,7 +646,7 @@ function Job({ st, set, showToast }: Ctx) {
                   color: color.goldDeep,
                 }}
               >
-                بانتظار تأكيد الساكن
+                {t('بانتظار تأكيد الساكن')}
               </div>
               <PillButton
                 full
@@ -655,7 +656,7 @@ function Job({ st, set, showToast }: Ctx) {
                 }}
                 style={{ marginTop: 10, padding: 12, fontSize: 12.5 }}
               >
-                محاكاة تأكيد الساكن
+                {t('محاكاة تأكيد الساكن')}
               </PillButton>
             </>
           )}
@@ -673,7 +674,7 @@ function Job({ st, set, showToast }: Ctx) {
                 تم التحويل — {JOB_PAYOUT_NET} ر.س
               </div>
               <div style={{ fontSize: 10.5, color: color.slate, textAlign: 'center', marginTop: 4 }}>
-                بعد خصم عمولة رفادة {JOB_COMMISSION_PCT}% من أصل {incomingJob.pay} ر.س
+                بعد خصم عمولة رفادة {JOB_COMMISSION_PCT}{t('% من أصل')} {incomingJob.pay} ر.س
               </div>
             </div>
           )}
@@ -693,7 +694,7 @@ function Job({ st, set, showToast }: Ctx) {
               fontFamily: font.sans,
             }}
           >
-            الإبلاغ عن مشكلة في هذه المهمة
+            {t('الإبلاغ عن مشكلة في هذه المهمة')}
           </button>
         </Card>
       </div>
@@ -708,10 +709,10 @@ function Job({ st, set, showToast }: Ctx) {
 function Dispute({ st, set, showToast }: Ctx) {
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <Header title="الإبلاغ عن مشكلة" onBack={() => set({ screen: 'job' })} />
+      <Header title={t('الإبلاغ عن مشكلة')} onBack={() => set({ screen: 'job' })} />
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <div style={{ fontSize: 12, fontWeight: 700, color: color.navy, marginBottom: 8 }}>
-          نوع المشكلة
+          {t('نوع المشكلة')}
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {disputeReasonDefs.map((label) => {
@@ -737,7 +738,7 @@ function Dispute({ st, set, showToast }: Ctx) {
                     width: 16,
                     height: 16,
                     borderRadius: 99,
-                    border: `2px solid ${on ? color.coral : color.line}`,
+                    border: `2px solid ${on ? color.coral : t(color.line)}`,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -753,7 +754,7 @@ function Dispute({ st, set, showToast }: Ctx) {
                     }}
                   />
                 </span>
-                <span style={{ fontSize: 12, fontWeight: 700, color: color.navy }}>{label}</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: color.navy }}>{t(label)}</span>
               </button>
             );
           })}
@@ -769,7 +770,7 @@ function Dispute({ st, set, showToast }: Ctx) {
           }}
           style={{ padding: 13, fontSize: 14 }}
         >
-          إرسال لمكتب الإدارة
+          {t('إرسال لمكتب الإدارة')}
         </PillButton>
       </div>
     </div>
@@ -783,7 +784,7 @@ function Dispute({ st, set, showToast }: Ctx) {
 function Wallet({ st, set, showToast }: Ctx) {
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <Header title="المحفظة والأرباح" onBack={() => set({ screen: 'home' })} />
+      <Header title={t('المحفظة والأرباح')} onBack={() => set({ screen: 'home' })} />
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
         <div
@@ -793,10 +794,10 @@ function Wallet({ st, set, showToast }: Ctx) {
             padding: 16,
           }}
         >
-          <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.7)' }}>الرصيد المتاح للسحب</div>
+          <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.7)' }}>{t('الرصيد المتاح للسحب')}</div>
           <div style={{ ...numeric, fontSize: 30, fontWeight: 700, color: '#fff', marginTop: 4 }}>
             {WALLET_AVAILABLE}{' '}
-            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>ر.س</span>
+            <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.7)' }}>{t('ر.س')}</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 8 }}>
             <Icon
@@ -831,9 +832,9 @@ function Wallet({ st, set, showToast }: Ctx) {
           </span>
           <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
             <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{BANK_ACCOUNT}</span>
-            <span style={{ fontSize: 10.5, color: color.slate }}>حساب الصرف المعتمد</span>
+            <span style={{ fontSize: 10.5, color: color.slate }}>{t('حساب الصرف المعتمد')}</span>
           </span>
-          <span style={{ fontSize: 11, fontWeight: 800, color: color.gold }}>تغيير</span>
+          <span style={{ fontSize: 11, fontWeight: 800, color: color.gold }}>{t('تغيير')}</span>
         </Card>
 
         <div
@@ -868,7 +869,7 @@ function Wallet({ st, set, showToast }: Ctx) {
                   color: on ? '#fff' : color.slate,
                 }}
               >
-                {m.l}
+                {t(m.l)}
               </button>
             );
           })}
@@ -887,7 +888,7 @@ function Wallet({ st, set, showToast }: Ctx) {
               lineHeight: 1.8,
             }}
           >
-            يُحوَّل رصيدك تلقائيًا كل خميس إلى حسابك البنكي — التحويل القادم: الخميس 16 يوليو
+            {t('يُحوَّل رصيدك تلقائيًا كل خميس إلى حسابك البنكي — التحويل القادم: الخميس 16 يوليو')}
           </div>
         )}
 
@@ -928,7 +929,7 @@ function Wallet({ st, set, showToast }: Ctx) {
                 }}
                 style={{ marginTop: 10, padding: 12, fontSize: 12.5 }}
               >
-                الخطوة التالية (محاكاة)
+                {t('الخطوة التالية (محاكاة)')}
               </PillButton>
             ) : (
               <div
@@ -959,7 +960,7 @@ function Wallet({ st, set, showToast }: Ctx) {
                     fontFamily: font.sans,
                   }}
                 >
-                  إعادة
+                  {t('إعادة')}
                 </button>
               </div>
             )}
@@ -967,17 +968,17 @@ function Wallet({ st, set, showToast }: Ctx) {
         )}
 
         <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy, margin: '16px 2px 0' }}>
-          مهام مكتملة — تفاصيل الأرباح
+          {t('مهام مكتملة — تفاصيل الأرباح')}
         </div>
         {pastJobs.map((pj) => (
           <Card
-            key={pj.title}
+            key={t(pj.title)}
             pad="13px 15px"
             style={{ borderRadius: radius.inner, marginTop: 10, display: 'flex', alignItems: 'center', gap: 10 }}
           >
             <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
-              <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{pj.title}</span>
-              <span style={{ fontSize: 10.5, color: color.slate }}>{pj.date}</span>
+              <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(pj.title)}</span>
+              <span style={{ fontSize: 10.5, color: color.slate }}>{t(pj.date)}</span>
             </span>
             <span style={{ ...numeric, fontSize: 12.5, fontWeight: 700, color: color.greenDeep }}>
               {pj.pay} ر.س
@@ -1016,8 +1017,8 @@ function StoreHome({ st, set, showToast }: Ctx) {
           <Icon path={identity.icon} size={20} width={1.5} />
         </span>
         <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
-          <span style={{ fontSize: 14.5, fontWeight: 800, color: color.navy }}>{identity.name}</span>
-          <span style={{ fontSize: 11, color: color.slate }}>حساب متجر · حدائق الأندلس</span>
+          <span style={{ fontSize: 14.5, fontWeight: 800, color: color.navy }}>{t(identity.name)}</span>
+          <span style={{ fontSize: 11, color: color.slate }}>{t('حساب متجر · حدائق الأندلس')}</span>
         </div>
         <button
           onClick={() => set({ screen: 'home' })}
@@ -1035,7 +1036,7 @@ function StoreHome({ st, set, showToast }: Ctx) {
             whiteSpace: 'nowrap',
           }}
         >
-          واجهة الفني
+          {t('واجهة الفني')}
         </button>
       </div>
 
@@ -1046,12 +1047,12 @@ function StoreHome({ st, set, showToast }: Ctx) {
             { k: 'rest' as StoreKind, l: 'مطعم' },
             { k: 'pharm' as StoreKind, l: 'صيدلية' },
           ]
-        ).map((t) => {
-          const on = st.storeKind === t.k;
+        ).map((tab) => {
+          const on = st.storeKind === tab.k;
           return (
             <button
-              key={t.k}
-              onClick={() => set({ storeKind: t.k })}
+              key={tab.k}
+              onClick={() => set({ storeKind: tab.k })}
               style={{
                 flex: 1,
                 border: 'none',
@@ -1066,7 +1067,7 @@ function StoreHome({ st, set, showToast }: Ctx) {
                 boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
               }}
             >
-              {t.l}
+              {t(tab.l)}
             </button>
           );
         })}
@@ -1075,15 +1076,15 @@ function StoreHome({ st, set, showToast }: Ctx) {
       <div style={{ padding: '8px 20px 0' }}>
         <ToggleCard
           on={st.storeOpen}
-          onLabel="المتجر مفتوح — يستقبل الطلبات"
-          offLabel="المتجر مغلق الآن"
+          onLabel={t('المتجر مفتوح — يستقبل الطلبات')}
+          offLabel={t('المتجر مغلق الآن')}
           onClick={() => set((s) => ({ storeOpen: !s.storeOpen }))}
         />
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '14px 20px 30px' }}>
         <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
-          <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>إدارة المنيو</span>
+          <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t('إدارة المنيو')}</span>
           <span style={{ flex: 1 }} />
           <button
             onClick={() => set({ screen: 'storeOrders' })}
@@ -1101,7 +1102,7 @@ function StoreHome({ st, set, showToast }: Ctx) {
               whiteSpace: 'nowrap',
             }}
           >
-            الطلبات الواردة
+            {t('الطلبات الواردة')}
             {newCount > 0 && (
               <span
                 style={{
@@ -1130,7 +1131,7 @@ function StoreHome({ st, set, showToast }: Ctx) {
           const av = st.menuAvail[i];
           return (
             <Card
-              key={m.name}
+              key={t(m.name)}
               pad="13px 15px"
               style={{
                 borderRadius: radius.inner,
@@ -1156,7 +1157,7 @@ function StoreHome({ st, set, showToast }: Ctx) {
                 <Icon path={identity.icon} size={17} stroke={color.slate} width={1.5} />
               </span>
               <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
-                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{m.name}</span>
+                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(m.name)}</span>
                 <span style={{ ...numeric, fontSize: 11.5, fontWeight: 700, color: color.goldDeep }}>
                   {m.price} ر.س
                 </span>
@@ -1164,7 +1165,7 @@ function StoreHome({ st, set, showToast }: Ctx) {
               <button
                 onClick={() => {
                   set((s) => ({ menuAvail: { ...s.menuAvail, [i]: !s.menuAvail[i] } }));
-                  showToast(av ? `${m.name} — غير متاح الآن` : `${m.name} — متاح للطلب`);
+                  showToast(av ? `${t(m.name)} — غير متاح الآن` : `${t(m.name)} — متاح للطلب`);
                 }}
                 style={{
                   border: 'none',
@@ -1200,7 +1201,7 @@ function StoreHome({ st, set, showToast }: Ctx) {
             fontFamily: font.sans,
           }}
         >
-          + إضافة صنف جديد
+          {t('+ إضافة صنف جديد')}
         </button>
       </div>
     </div>
@@ -1229,18 +1230,18 @@ function StoreOrders({ st, set, showToast }: Ctx) {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <Header title={`طلبات ${identity.name}`} onBack={() => set({ screen: 'storeHome' })} />
+      <Header title={`طلبات ${t(identity.name)}`} onBack={() => set({ screen: 'storeHome' })} />
 
       <div style={{ padding: '6px 20px 4px', display: 'flex', gap: 8 }}>
         {[
           { k: 'active' as const, l: `نشطة (${activeCount})` },
           { k: 'log' as const, l: `سجل اليوم (${logCount})` },
-        ].map((t) => {
-          const on = st.ordTab === t.k;
+        ].map((tab) => {
+          const on = st.ordTab === tab.k;
           return (
             <button
-              key={t.k}
-              onClick={() => set({ ordTab: t.k })}
+              key={tab.k}
+              onClick={() => set({ ordTab: tab.k })}
               style={{
                 flex: 1,
                 border: 'none',
@@ -1254,7 +1255,7 @@ function StoreOrders({ st, set, showToast }: Ctx) {
                 color: on ? '#fff' : color.slate,
               }}
             >
-              {t.l}
+              {t(tab.l)}
             </button>
           );
         })}
@@ -1270,8 +1271,8 @@ function StoreOrders({ st, set, showToast }: Ctx) {
             onAdvance={() => {
               const next = orderFlow[orderFlow.indexOf(o.stage) + 1];
               setStage(o.i, next);
-              const t = advanceToasts[next];
-              if (t) showToast(t);
+              const toastMsg = advanceToasts[next];
+              if (toastMsg) showToast(t(toastMsg));
             }}
             onReject={() => {
               setStage(o.i, 'delivered');
@@ -1285,7 +1286,7 @@ function StoreOrders({ st, set, showToast }: Ctx) {
         ))}
         {list.length === 0 && (
           <div style={{ textAlign: 'center', padding: '40px 20px', fontSize: 12.5, color: color.slateLight }}>
-            لا توجد طلبات في هذا التبويب
+            {t('لا توجد طلبات في هذا التبويب')}
           </div>
         )}
       </div>
@@ -1316,14 +1317,14 @@ function OrderCard({
   return (
     <Card pad="16px 18px" style={{ marginBottom: 12 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-        <span style={{ fontSize: 14, fontWeight: 900, color: color.navy }}>طلب {order.id}</span>
-        <span style={{ fontSize: 10, color: color.slateLight }}>{order.time}</span>
+        <span style={{ fontSize: 14, fontWeight: 900, color: color.navy }}>{t('طلب')} {order.id}</span>
+        <span style={{ fontSize: 10, color: color.slateLight }}>{t(order.time)}</span>
         <span style={{ flex: 1 }} />
         <StatusPill bg={meta.bg} c={meta.c} style={{ fontSize: 10.5, padding: '4px 13px', fontWeight: 800 }}>
-          {meta.label}
+          {t(meta.label)}
         </StatusPill>
       </div>
-      <div style={{ fontSize: 11.5, color: color.slate, marginTop: 4 }}>{order.who}</div>
+      <div style={{ fontSize: 11.5, color: color.slate, marginTop: 4 }}>{t(order.who)}</div>
 
       {/* Pharmacy: the prescription must be reviewed before accepting. */}
       {order.rx && stage === 'new' && (
@@ -1345,7 +1346,7 @@ function OrderCard({
         >
           <Icon path={icons.file} size={14} width={1.6} />
           <span style={{ fontSize: 11, fontWeight: 800, color: color.navy }}>
-            روشتة مرفقة — اضغط للمراجعة قبل القبول
+            {t('روشتة مرفقة — اضغط للمراجعة قبل القبول')}
           </span>
         </button>
       )}
@@ -1353,10 +1354,10 @@ function OrderCard({
       <div style={{ background: color.bg, borderRadius: radius.tile, padding: '11px 14px', marginTop: 10 }}>
         {order.lines.map((ln) => (
           <div
-            key={ln.name}
+            key={t(ln.name)}
             style={{ display: 'flex', fontSize: 12, color: color.slateDark, padding: '3px 0' }}
           >
-            <span>{ln.name}</span>
+            <span>{t(ln.name)}</span>
             <span style={{ flex: 1 }} />
             <span style={{ ...numeric, fontWeight: 700 }}>{ln.price}</span>
           </div>
@@ -1372,9 +1373,9 @@ function OrderCard({
             marginTop: 5,
           }}
         >
-          <span>الإجمالي + التوصيل</span>
+          <span>{t('الإجمالي + التوصيل')}</span>
           <span style={{ flex: 1 }} />
-          <span style={numeric}>{order.total} ر.س</span>
+          <span style={numeric}>{order.total} {t('ر.س')}</span>
         </div>
       </div>
 
@@ -1431,7 +1432,7 @@ function OrderCard({
               fontFamily: font.sans,
             }}
           >
-            رفض
+            {t('رفض')}
           </button>
           <button
             onClick={onAdvance}
@@ -1448,7 +1449,7 @@ function OrderCard({
               fontFamily: font.sans,
             }}
           >
-            {next.label}
+            {t(next.label)}
           </button>
         </div>
       )}
@@ -1470,7 +1471,7 @@ function OrderCard({
             fontFamily: font.sans,
           }}
         >
-          {next.label}
+          {t(next.label)}
         </button>
       )}
 
@@ -1505,7 +1506,7 @@ function OrderCard({
               whiteSpace: 'nowrap',
             }}
           >
-            التفاصيل
+            {t('التفاصيل')}
           </button>
         </div>
       )}
@@ -1549,13 +1550,13 @@ function StorePayout({ set }: { set: Ctx['set'] }) {
         </div>
 
         <Card pad="6px 18px" style={{ marginTop: 18, width: '100%' }}>
-          <PayoutRow label="قيمة الطلب" value="255.00 ر.س" />
+          <PayoutRow label={t('قيمة الطلب')} value={t('255.00 ر.س')} />
           <PayoutRow
             label={`عمولة رفادة (${STORE_COMMISSION_PCT}%)`}
-            value="− 30.60 ر.س"
+            value={t('− 30.60 ر.س')}
             tone={color.coral}
           />
-          <PayoutRow label="صافي أرباحك" value="224.40 ر.س" tone={color.greenDeep} strong last />
+          <PayoutRow label={t('صافي أرباحك')} value={t('224.40 ر.س')} tone={color.greenDeep} strong last />
         </Card>
 
         <div
@@ -1567,12 +1568,12 @@ function StorePayout({ set }: { set: Ctx['set'] }) {
             lineHeight: 1.8,
           }}
         >
-          يُضاف الصافي لمحفظتك ويُحوّل مع دورة الصرف — التوصيل (15 ر.س) لمندوبك مباشرة.
+          {t('يُضاف الصافي لمحفظتك ويُحوّل مع دورة الصرف — التوصيل (15 ر.س) لمندوبك مباشرة.')}
         </div>
       </div>
       <div style={{ flex: 1 }} />
       <PillButton size="lg" full onClick={() => set({ screen: 'storeHome' })}>
-        العودة للمتجر
+        {t('العودة للمتجر')}
       </PillButton>
     </div>
   );
@@ -1607,11 +1608,11 @@ function PayoutRow({
           color: strong ? color.navy : color.slate,
         }}
       >
-        {label}
+        {t(label)}
       </span>
       <span style={{ flex: 1 }} />
       <span style={{ ...numeric, fontSize: strong ? 16 : 13, fontWeight: 700, color: tone }}>
-        {value}
+        {t(value)}
       </span>
     </div>
   );
@@ -1635,7 +1636,7 @@ function Header({ title, onBack }: { title: string; onBack: () => void }) {
           textOverflow: 'ellipsis',
         }}
       >
-        {title}
+        {t(title)}
       </div>
     </div>
   );
@@ -1710,9 +1711,9 @@ function ToggleCard({
 function MetricCard({ label, value, unit }: { label: string; value: string; unit?: string }) {
   return (
     <Card pad={14} style={{ borderRadius: radius.inner }}>
-      <div style={{ fontSize: 11, color: color.slate }}>{label}</div>
+      <div style={{ fontSize: 11, color: color.slate }}>{t(label)}</div>
       <div style={{ ...numeric, fontSize: 22, fontWeight: 700, color: color.navy, marginTop: 4 }}>
-        {value} {unit && <span style={{ fontSize: 11, color: color.slate }}>{unit}</span>}
+        {value} {unit && <span style={{ fontSize: 11, color: color.slate }}>{t(unit)}</span>}
       </div>
     </Card>
   );
