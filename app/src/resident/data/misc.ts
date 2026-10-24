@@ -1,3 +1,4 @@
+import type { Vehicle, VisitEntry } from '../types';
 import { icons } from './icons';
 
 /** R22 — notification inbox. The right-edge bar marks unread priority. */
@@ -123,3 +124,45 @@ export const moveTabDefs = [
   { key: 'receive' as const, label: 'الاستلام' },
   { key: 'handover' as const, label: 'التسليم' },
 ];
+
+/**
+ * R17 — gate. The visitor pass went from a name box to a scheduled permit
+ * (date, start, optional end, validity), and the two parked cars became an
+ * editable list. A visit log sits under both.
+ */
+export const initialVehicles: Vehicle[] = [
+  { name: 'تويوتا كورولا — أبيض', plate: 'س ن ر 2146' },
+  { name: 'هيونداي توسان — رمادي', plate: 'م ص ع 731' },
+];
+
+export const initialVisitLog: VisitEntry[] = [
+  { name: 'محمد الشناوي', when: 'أمس — 5 م حتى 8 م', st: 'out', exit: '7:42 م', period: 'week' },
+  { name: 'مندوب شحنة أثاث', when: 'الثلاثاء — 11 ص', st: 'out', exit: '11:35 ص', period: 'week' },
+  { name: 'خالد العتيبي', when: 'الأحد — 8 م', st: 'out', exit: '11:20 م', period: 'week' },
+  { name: 'فني ستائر', when: 'الأسبوع الماضي — 4 م', st: 'out', exit: '6:05 م', period: 'month' },
+  { name: 'أم فهد (الجارة)', when: 'الأسبوع الماضي — 1 ظ', st: 'out', exit: '3:30 م', period: 'month' },
+  { name: 'شركة تنظيف الخزانات', when: '14 أغسطس — 9 ص', st: 'out', exit: '12:40 م', period: 'older' },
+  { name: 'عمّ عبدالله وعائلته', when: '2 أغسطس — 6 م', st: 'out', exit: '11:55 م', period: 'older' },
+];
+
+export const passDayDefs = [
+  { key: 'today' as const, label: 'اليوم' },
+  { key: 'tomorrow' as const, label: 'غدًا' },
+  { key: 'custom' as const, label: '📅 تاريخ آخر' },
+];
+
+export const passValidityDefs = ['مرة واحدة', '24 ساعة', 'طوال اليوم'];
+
+export const visitFilterDefs = [
+  { key: 'all' as const, label: 'الكل' },
+  { key: 'week' as const, label: 'هذا الأسبوع' },
+  { key: 'month' as const, label: 'هذا الشهر' },
+  { key: 'older' as const, label: 'أقدم' },
+];
+
+/** Chrome for one visit-log row, by state. */
+export const visitStateMeta = {
+  out: { label: 'خرج', bg: 'rgba(63,166,107,0.13)', c: '#2E7D51' },
+  in: { label: 'بالداخل الآن', bg: 'rgba(199,154,60,0.16)', c: '#A87F2C' },
+  upcoming: { label: 'قادمة', bg: 'rgba(107,114,128,0.12)', c: '#6B7280' },
+} as const;

@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { color, font, radius, shadow } from '@/theme/tokens';
+import { color, font, numeric, radius, shadow } from '@/theme/tokens';
 import { t } from '@/i18n/lang';
 
 /**
@@ -13,7 +13,12 @@ export function Timeline({
   currentIndex,
   minLine = 22,
 }: {
-  steps: { label: string; sub?: string }[];
+  steps: {
+    label: string;
+    sub?: string;
+    /** A timestamp set to the end of the label row. */
+    meta?: string;
+  }[];
   doneCount: number;
   /** Index rendered gold. Pass -1 for none. */
   currentIndex?: number;
@@ -49,16 +54,24 @@ export function Timeline({
                 />
               )}
             </div>
-            <div style={{ paddingBottom: 16 }}>
-              <div
-                style={{
-                  fontSize: 13.5,
-                  fontWeight: 800,
-                  color: done ? color.navy : color.slateLight,
-                  lineHeight: 1.4,
-                }}
-              >
-                {t(s.label)}
+            <div style={{ flex: 1, paddingBottom: 16, minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                <div
+                  style={{
+                    fontSize: 13.5,
+                    fontWeight: 800,
+                    color: done ? color.navy : color.slateLight,
+                    lineHeight: 1.4,
+                  }}
+                >
+                  {t(s.label)}
+                </div>
+                <div style={{ flex: 1 }} />
+                {s.meta && (
+                  <div style={{ ...numeric, fontSize: 10.5, color: color.slateLight, flex: 'none' }}>
+                    {s.meta}
+                  </div>
+                )}
               </div>
               {s.sub && done && (
                 <div style={{ fontSize: 11, color: color.slateLight, lineHeight: 1.6 }}>{t(s.sub)}</div>

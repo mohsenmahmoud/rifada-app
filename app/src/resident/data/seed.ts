@@ -87,11 +87,35 @@ export const initialChat: ChatMsg[] = [
   },
 ];
 
+/**
+ * Lost & found. Each item now carries a photo and the neighbour who filed it,
+ * which is what the detail screen (R18b) is built around.
+ *
+ * The thumbnails are the prototype's own Unsplash URLs. They are the only
+ * remote images in the app — every other asset is local under `public/img` —
+ * so the list degrades to its no-photo layout when the network is unavailable.
+ */
 export const initialLost: LostItem[] = [
-  { title: 'مفتاح سيارة', loc: 'وُجد بجوار البوابة الرئيسية', date: 'أمس', kind: 'found' },
-  { title: 'نظارة شمسية رياضية', loc: 'وُجدت في الجيم', date: 'منذ 3 أيام', kind: 'found' },
-  { title: 'قطة رمادية صغيرة', loc: 'فُقدت قرب الحديقة المركزية', date: 'اليوم', kind: 'lost' },
-  { title: 'ساعة أطفال زرقاء', loc: 'وُجدت في منطقة الأطفال', date: 'منذ أسبوع', kind: 'found' },
+  {
+    photo: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?w=400&q=60&auto=format&fit=crop',
+    title: 'شنطة ظهر جلدية', owner: 'أمن البوابة',
+    loc: 'وُجدت بجوار البوابة الرئيسية', date: 'أمس', kind: 'found',
+  },
+  {
+    photo: 'https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400&q=60&auto=format&fit=crop',
+    title: 'نظارة شمسية رياضية', owner: 'سلطان — فيلا 96',
+    loc: 'وُجدت في الجيم', date: 'منذ 3 أيام', kind: 'found',
+  },
+  {
+    photo: 'https://images.unsplash.com/photo-1548247416-ec66f4900b2e?w=400&q=60&auto=format&fit=crop',
+    title: 'قطة رمادية صغيرة', owner: 'منى — فيلا 88',
+    loc: 'فُقدت قرب الحديقة المركزية', date: 'اليوم', kind: 'lost',
+  },
+  {
+    photo: 'https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=400&q=60&auto=format&fit=crop',
+    title: 'ساعة يد', owner: 'كريم — فيلا 152',
+    loc: 'وُجدت في منطقة الأطفال', date: 'منذ أسبوع', kind: 'found',
+  },
 ];
 
 /** Avatar gradients, reused across community, family and chat. */
@@ -107,3 +131,5 @@ export const avatarBg = {
 export const UNIT = 'فيلا 214 — حي الياسمين';
 export const UNIT_SHORT = 'فيلا 214';
 export const UNIT_NO = 'وحدة 214';
+/** How the resident appears in any list that also holds their neighbours. */
+export const ME_UNIT = 'أنت — فيلا 214';

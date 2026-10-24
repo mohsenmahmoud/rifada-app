@@ -2,17 +2,24 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
   type ReactNode,
 } from 'react';
 import type {
-  BillKey, BillStatus, ChatMsg, ChecklistRoom, Comment, CommunityPost, EventTab,
-  Group, GroupKind, LostItem, LostKind, MoveTab, PaymentModel, PermKey, Perms,
-  PostAttachment, PostTag, ScreenKey, ShareKind, ShareListing, Ticket,
+  BillKey, BillStatus, ChatMsg, ChecklistRoom, Comment, CommunityPost, DmMsg,
+  EventTab, Group, GroupKind, LostItem, LostKind, MoveTab, PaymentModel,
+  PermKey, Perms, PostAttachment, PostTag, ScreenKey, ShareKind, ShareListing,
+  ShareReqState, Ticket, Vehicle, VisitEntry, VisitPeriod,
 } from './types';
 import { initialChat, initialLost, initialTickets, initialMoveRooms } from './data/seed';
+import { initialVehicles, initialVisitLog } from './data/misc';
+import { HERO_INTERVAL } from './data/hero';
+// `scenarios` imports ResidentState back from here, but only as a type, so
+// the emitted modules don't form a cycle.
+import { scenarios, type ScenarioKey } from './data/scenarios';
 import { t } from '@/i18n/lang';
 
 /**
@@ -72,16 +79,38 @@ export type ResidentState = {
   chatInput: string;
   chatMsgs: ChatMsg[];
 
+  // home hero carousel + the live-alert strip under it
+  heroIdx: number;
+  alertOn: boolean;
+
   // lost & found
   lostKind: LostKind;
   lostTitle: string;
   lostLoc: string;
   lostItems: LostItem[];
+  selLostIdx: number;
 
-  // gate
+  // gate — visitor passes, the vehicle list and the visit log
   visitorName: string;
+  visitorPhone: string;
+  visitorFormOpen: boolean;
   passIssued: boolean;
   passName: string;
+  passWhen: string;
+  passDay: 'today' | 'tomorrow' | 'custom';
+  passDate: string;
+  passStart: string;
+  passEndOn: boolean;
+  passEnd: string;
+  passEndDate: string;
+  passValidity: number;
+  vehiclesList: Vehicle[];
+  /** -1 adds a vehicle, an index edits one, null closes the form. */
+  vehForm: number | null;
+  vehName: string;
+  vehPlate: string;
+  visitLog: VisitEntry[];
+  vlFilter: VisitPeriod | 'all';
 
   // misc
   mdIdx: number;
@@ -96,8 +125,18 @@ export type ResidentState = {
   reqKind: string;
   reqNotes: string;
   selProvIdx: number;
+  matchFound: boolean;
+  jobAccepted: boolean;
   liveStage: number;
   provRating: number;
+  /**
+   * What you tell the app you actually paid the technician, on R36.
+   * The prototype reuses its payments `paidAmount` here — it declares the key
+   * twice in one state object — which would pre-fill this box with the rent
+   * and wipe the receipt amount on submit. Kept separate.
+   */
+  provPaidAmount: string;
+  rateNotes: string;
   disputeReason: string | null;
   disputeNotes: string;
 
@@ -138,7 +177,6 @@ export type ResidentState = {
   gcName: string;
   gcAbout: string;
   gcFreq: string;
-  gcPrivacy: string;
   myGroups: Group[];
   gdIdx: number;
   gdDraft: string;
@@ -146,6 +184,16 @@ export type ResidentState = {
   gdMeetJoined: Record<number, boolean>;
   gdMeetWhen: string;
   gdMeetPlace: string;
+  /** Join requests awaiting the organiser, keyed by group index. */
+  clubPending: Record<number, boolean>;
+  /** Which of the two «مجموعاتي» logs the mine tab is showing. */
+  evMineKind: 'events' | 'clubs';
+
+  // private neighbour-to-neighbour messages
+  dmWith: string | null;
+  dmAv: string | null;
+  dmThreads: Record<string, DmMsg[]>;
+  dmDraft: string;
 
   // اسأل جيرانك
   cmUserPosts: CommunityPost[];
@@ -168,7 +216,7 @@ export type ResidentState = {
   cmMenuOpen: number | null;
   cmEditIdx: number | null;
 
-  // رفادتنا sharing
+  // استعارة sharing
   shareCat: string;
   shareTab: 'browse' | 'mine';
   shareSelIdx: number;
@@ -180,6 +228,13 @@ export type ResidentState = {
   shPrice: string;
   shUnit: string;
   sharePublished: ShareListing | null;
+  /** The slot you booked, and where you are in the three-stage lifecycle. */
+  shBookedSlot: string;
+  shbStage: number;
+  /** Requests on your own listing, keyed by index into `shareReqDefs`. */
+  shReqs: Record<number, ShareReqState>;
+  shReqSelIdx: number;
+  shHistSelIdx: number;
 
   // فواتيرك
   billsSt: Partial<Record<BillKey, BillStatus>>;
@@ -249,14 +304,34 @@ export const initialState: ResidentState = {
   chatInput: '',
   chatMsgs: initialChat,
 
+  heroIdx: 0,
+  alertOn: true,
+
   lostKind: 'found',
   lostTitle: '',
   lostLoc: '',
   lostItems: initialLost,
+  selLostIdx: 0,
 
   visitorName: '',
+  visitorPhone: '',
+  visitorFormOpen: false,
   passIssued: false,
   passName: '',
+  passWhen: '',
+  passDay: 'custom',
+  passDate: '2026-09-05',
+  passStart: '17:00',
+  passEndOn: true,
+  passEnd: '20:00',
+  passEndDate: '2026-09-05',
+  passValidity: 0,
+  vehiclesList: initialVehicles,
+  vehForm: null,
+  vehName: '',
+  vehPlate: '',
+  visitLog: initialVisitLog,
+  vlFilter: 'all',
 
   mdIdx: 0,
   surveySel: 0,
@@ -269,8 +344,12 @@ export const initialState: ResidentState = {
   reqKind: t('صيانة'),
   reqNotes: '',
   selProvIdx: 0,
+  matchFound: false,
+  jobAccepted: false,
   liveStage: 0,
   provRating: 0,
+  provPaidAmount: '',
+  rateNotes: '',
   disputeReason: null,
   disputeNotes: '',
 
@@ -308,7 +387,6 @@ export const initialState: ResidentState = {
   gcName: '',
   gcAbout: '',
   gcFreq: 'أسبوعي',
-  gcPrivacy: 'كل السكان',
   myGroups: [],
   gdIdx: 0,
   gdDraft: '',
@@ -316,6 +394,13 @@ export const initialState: ResidentState = {
   gdMeetJoined: {},
   gdMeetWhen: '',
   gdMeetPlace: '',
+  clubPending: {},
+  evMineKind: 'events',
+
+  dmWith: null,
+  dmAv: null,
+  dmThreads: {},
+  dmDraft: '',
 
   cmUserPosts: [],
   cmLiked: {},
@@ -348,6 +433,11 @@ export const initialState: ResidentState = {
   shPrice: '',
   shUnit: 'للساعة',
   sharePublished: null,
+  shBookedSlot: '',
+  shbStage: 0,
+  shReqs: {},
+  shReqSelIdx: 0,
+  shHistSelIdx: 0,
 
   billsSt: { elec: 'due', water: 'paid', inet: 'overdue' },
   linkCat: null,
@@ -377,6 +467,11 @@ export type ResidentConfig = {
   paymentModel: PaymentModel;
   /** Pins the app to one screen — used by the gallery previews. */
   fixedScreen?: ScreenKey | null;
+  /**
+   * A named starting state, so one screen can appear in the gallery several
+   * times over. See `scenarios` — the design's own `SCEN` table.
+   */
+  scenario?: ScenarioKey | null;
 };
 
 type Patch = Partial<ResidentState>;
@@ -429,8 +524,22 @@ export function ResidentProvider({
     ...initialState,
     screen: initialScreen ?? initialState.screen,
     hist: initialScreen && initialScreen !== 'home' ? ['home'] : [],
+    ...(config.scenario ? scenarios[config.scenario] : null),
   }));
   const toastTimer = useRef<number | undefined>(undefined);
+
+  // The home hero rotates on its own. Gallery tiles are pinned to one screen
+  // and sit a hundred to a page, so they hold the first slide instead of
+  // re-rendering the whole grid every four seconds.
+  const rotating = !config.fixedScreen;
+  useEffect(() => {
+    if (!rotating) return;
+    const id = window.setInterval(
+      () => setSt((s) => ({ ...s, heroIdx: s.heroIdx + 1 })),
+      HERO_INTERVAL,
+    );
+    return () => window.clearInterval(id);
+  }, [rotating]);
 
   const set = useCallback((patch: Patch | ((s: ResidentState) => Patch)) => {
     setSt((s) => ({ ...s, ...(typeof patch === 'function' ? patch(s) : patch) }));

@@ -3,40 +3,31 @@ import { Icon } from '@/ui/Icon';
 import { Wordmark } from '../Brand';
 import { icons } from '../data/icons';
 import { serviceDefs } from '../data/services';
+import { HERO_DUES_IMG, heroEvFaces, heroPromoSlides, type HeroSlide } from '../data/hero';
 import { UNIT_NO, UNIT_SHORT } from '../data/seed';
 import { fmt, statementTotal } from '../data/payments';
 import { useResident } from '../store';
 import { t } from '@/i18n/lang';
 
-const HERO_IMG = `${import.meta.env.BASE_URL}img/hero-compound.webp`;
-
 /** R4 — Home dashboard. The first-impression screen; kept pixel-tight. */
 export function Home() {
-  const { st, cfg, go, isRent, paid, firstName, initials, can, lockToast } = useResident();
+  const { st, cfg, set, go, isRent, paid, firstName, initials, can, lockToast, showToast } =
+    useResident();
 
-  const heroLabel = paid
-    ? t('كل المستحقات مسددة')
-    : isRent
-      ? t('المستحق حتى 25 يوليو')
-      : t('القسط القادم — 1 سبتمبر');
+  // The dues slide leads the rotation, and drops out once the balance clears.
   const total = statementTotal(isRent);
-  const heroAmount = paid ? t('0 ريال') : `${fmt(total)} ${t('ريال')}`;
-  const heroSub = paid
-    ? t('شكرًا لالتزامك بالسداد')
-    : isRent
-      ? `${t('إيجار شهري ·')} ${t(UNIT_SHORT)}`
-      : t('تقسيط تمليك · سنة 3 من 8');
-
-  // move-in completion, computed off the receive checklist only
-  let done = 0;
-  let tot = 0;
-  st.moveRooms.receive.forEach((r) =>
-    r.items.forEach((it) => {
-      tot++;
-      if (it.done) done++;
-    }),
-  );
-  const movePct = Math.round((done / tot) * 100);
+  const duesSlide: HeroSlide = {
+    label: isRent ? 'المستحق حتى 25 يوليو — باقي 5 أيام' : 'القسط القادم — 1 سبتمبر',
+    title: `${fmt(total)} ${t('ريال')}`,
+    sub: isRent ? `${t('إيجار شهري ·')} ${t(UNIT_SHORT)}` : 'تقسيط تمليك · سنة 3 من 8',
+    cta: 'ادفع الآن',
+    dest: 'pay',
+    img: HERO_DUES_IMG,
+  };
+  const slides = paid ? heroPromoSlides : [duesSlide, ...heroPromoSlides];
+  const idx = st.heroIdx % slides.length;
+  const slide = slides[idx];
+  const isDues = !paid && idx === 0;
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
@@ -120,7 +111,7 @@ export function Home() {
               position: 'absolute',
               inset: 0,
               background: `linear-gradient(160deg,${color.navyLift},${color.navy})`,
-              backgroundImage: `url(${HERO_IMG})`,
+              backgroundImage: `url(${slide.img})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
@@ -151,6 +142,21 @@ export function Home() {
           >
             {t(UNIT_NO)}
           </div>
+          {/* carousel position */}
+          <div style={{ position: 'absolute', top: 22, right: 16, display: 'flex', gap: 5 }}>
+            {slides.map((s, i) => (
+              <span
+                key={s.title}
+                style={{
+                  width: i === idx ? 18 : 6,
+                  height: 6,
+                  borderRadius: 99,
+                  background: i === idx ? color.gold : 'rgba(255,255,255,0.5)',
+                  transition: 'all .3s',
+                }}
+              />
+            ))}
+          </div>
           <div
             style={{
               position: 'absolute',
@@ -164,27 +170,47 @@ export function Home() {
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span
-                style={{
-                  fontSize: 12,
-                  fontWeight: 700,
-                  color: '#fff',
-                  textShadow: '0 1px 4px rgba(0,0,0,0.5)',
-                }}
-              >
-                {t(heroLabel)}
+              <span style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                {slide.ev && (
+                  <span
+                    style={{
+                      background: color.gold,
+                      color: '#fff',
+                      borderRadius: radius.pill,
+                      padding: '3px 12px',
+                      fontSize: 9.5,
+                      fontWeight: 800,
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {t(slide.ev.count)}
+                  </span>
+                )}
+                <span
+                  style={{
+                    fontSize: 12,
+                    fontWeight: 700,
+                    color: '#fff',
+                    whiteSpace: 'nowrap',
+                    textShadow: '0 1px 4px rgba(0,0,0,0.5)',
+                  }}
+                >
+                  {t(slide.label)}
+                </span>
               </span>
               <span
                 style={{
-                  ...numeric,
-                  fontSize: 26,
-                  fontWeight: 700,
+                  // The dues figure is a number and sets in the Latin face;
+                  // every other slide is a headline and stays in Cairo.
+                  ...(isDues ? numeric : { fontFamily: font.sans }),
+                  fontSize: isDues ? 26 : 21,
+                  fontWeight: isDues ? 700 : 900,
                   color: '#fff',
-                  lineHeight: 1.25,
+                  lineHeight: 1.35,
                   textShadow: '0 1px 5px rgba(0,0,0,0.4)',
                 }}
               >
-                {t(heroAmount)}
+                {t(slide.title)}
               </span>
               <span
                 style={{
@@ -194,17 +220,60 @@ export function Home() {
                   textShadow: '0 1px 4px rgba(0,0,0,0.5)',
                 }}
               >
-                {t(heroSub)}
+                {t(slide.sub)}
               </span>
+              {slide.ev && (
+                <span
+                  style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}
+                >
+                  <span style={{ display: 'flex' }}>
+                    {heroEvFaces.map((f) => (
+                      <span
+                        key={f.i}
+                        style={{
+                          width: 24,
+                          height: 24,
+                          borderRadius: 99,
+                          background: f.bg,
+                          border: '2px solid rgba(255,255,255,0.85)',
+                          color: '#fff',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          fontSize: 9,
+                          fontWeight: 800,
+                          marginInlineStart: -7,
+                        }}
+                      >
+                        {f.i}
+                      </span>
+                    ))}
+                  </span>
+                  <span
+                    style={{
+                      fontSize: 10,
+                      fontWeight: 700,
+                      color: 'rgba(255,255,255,0.85)',
+                      textShadow: '0 1px 4px rgba(0,0,0,0.5)',
+                      whiteSpace: 'nowrap',
+                      marginInlineEnd: 9,
+                    }}
+                  >
+                    {t(slide.ev.going)}
+                  </span>
+                </span>
+              )}
             </div>
             <div style={{ flex: 1 }} />
             <button
-              onClick={() => (can('pay') ? go('pay') : lockToast())}
+              onClick={() =>
+                slide.dest === 'pay' && !can('pay') ? lockToast() : go(slide.dest)
+              }
               style={{
                 pointerEvents: 'auto',
                 border: 'none',
                 cursor: 'pointer',
-                background: paid ? color.green : color.gold,
+                background: color.gold,
                 color: '#fff',
                 borderRadius: radius.pill,
                 padding: '10px 22px',
@@ -215,10 +284,86 @@ export function Home() {
                 whiteSpace: 'nowrap',
               }}
             >
-              {paid ? t('تم السداد ✓') : t('ادفع الآن')}
+              {t(slide.cta)}
             </button>
           </div>
         </div>
+
+        {/* Live alert strip — a running incident, dismissed when it clears. */}
+        {st.alertOn && (
+          <div
+            style={{
+              background: '#fff',
+              borderRadius: 18,
+              padding: '12px 14px',
+              boxShadow: shadow.card,
+              marginTop: 14,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 11,
+            }}
+          >
+            <span
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: 12,
+                background: 'rgba(228,103,90,0.1)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flex: 'none',
+              }}
+            >
+              <Icon
+                path="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"
+                size={18}
+                stroke={color.coral}
+                width={1.5}
+              />
+            </span>
+            <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                <span
+                  style={{
+                    width: 7,
+                    height: 7,
+                    borderRadius: 99,
+                    background: color.coral,
+                    animation: 'pulse 1.4s ease infinite',
+                  }}
+                />
+                <span style={{ fontSize: 10, fontWeight: 800, color: '#B24439' }}>
+                  {t('جارٍ الآن')}
+                </span>
+              </span>
+              <span style={{ fontSize: 12, fontWeight: 700, color: color.navy, lineHeight: 1.6 }}>
+                {t('انقطاع مياه مؤقت الآن حتى 2 ظهرًا — أعمال صيانة بشبكة المياه الرئيسية')}
+              </span>
+            </span>
+            <button
+              onClick={() => {
+                set({ alertOn: false });
+                showToast(t('انتهى الانقطاع — اختفى التنبيه من الرئيسية'));
+              }}
+              title={t('انتهى الانقطاع (محاكاة)')}
+              style={{
+                border: 'none',
+                background: color.bg,
+                cursor: 'pointer',
+                color: color.slate,
+                fontSize: 12,
+                fontWeight: 800,
+                padding: '6px 10px',
+                borderRadius: radius.pill,
+                flex: 'none',
+                fontFamily: font.sans,
+              }}
+            >
+              ✕
+            </button>
+          </div>
+        )}
 
         {/* services grid */}
         <div style={{ display: 'flex', alignItems: 'baseline', margin: '22px 2px 10px' }}>
@@ -274,86 +419,9 @@ export function Home() {
           })}
         </div>
 
-        {/* move-in teaser */}
-        <button
-          onClick={() => go('movein')}
-          style={{
-            width: '100%',
-            marginTop: 14,
-            border: 'none',
-            cursor: 'pointer',
-            background: `linear-gradient(160deg,${color.navyLight},${color.navy})`,
-            borderRadius: 18,
-            padding: '14px 16px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 12,
-            textAlign: 'start',
-          }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-            <span style={{ fontSize: 13.5, fontWeight: 800, color: '#fff' }}>
-              {t('قائمة الاستلام —')} {t(UNIT_SHORT)}
-            </span>
-            <span style={{ fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>
-              {t('متبقي 3 أيام على الاستلام ·')} {movePct}{t('% مكتمل')}
-            </span>
-          </div>
-          <div style={{ flex: 1 }} />
-          <span
-            style={{
-              background: color.gold,
-              color: '#fff',
-              borderRadius: radius.pill,
-              padding: '6px 16px',
-              fontSize: 12,
-              fontWeight: 800,
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {t('متابعة')}
-          </span>
-        </button>
-
-        {/* announcement teaser */}
-        <button
-          onClick={() => go('notifs')}
-          style={{
-            width: '100%',
-            marginTop: 10,
-            border: 'none',
-            cursor: 'pointer',
-            background: '#fff',
-            borderRadius: 18,
-            padding: '13px 16px',
-            boxShadow: shadow.card,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 10,
-            textAlign: 'start',
-          }}
-        >
-          <span
-            style={{
-              width: 34,
-              height: 34,
-              borderRadius: 99,
-              background: 'rgba(228,103,90,0.13)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flex: 'none',
-            }}
-          >
-            <Icon path={icons.bell} size={17} stroke={color.coral} width={1.6} />
-          </span>
-          <span style={{ flex: 1, fontSize: 12.5, fontWeight: 700, color: color.navy, lineHeight: 1.5 }}>
-            {t('انقطاع مياه مؤقت يوم الخميس من 10 صباحًا حتى 2 ظهرًا')}
-          </span>
-          <span style={{ fontSize: 11.5, fontWeight: 800, color: color.gold, whiteSpace: 'nowrap' }}>
-            {t('عرض الكل')}
-          </span>
-        </button>
+        {/* The move-in and announcement teasers that used to sit here are gone
+            in the latest design: the alert strip above carries live notices,
+            and the move-in checklist is reached from the profile. */}
       </div>
 
       {/* chat FAB */}

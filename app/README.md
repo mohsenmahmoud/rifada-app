@@ -21,12 +21,18 @@ frame, and a gallery where every screen renders in full (tap a tile to open it).
 
 | | source prototype | screens |
 | --- | --- | --- |
-| تطبيق الساكن | `Jiwar Phone Pub.dc.html` / `Rifada Phone EN.dc.html` | 70 registered, 68 in the gallery |
+| تطبيق الساكن | `Jiwar Phone Pub.dc.html` / `Rifada Phone EN.dc.html` | 81 registered, 106 tiles in the gallery |
 | مقدم الخدمة | `Jiwar Provider.dc.html` | P1–P11, 8 in the gallery |
 | لوحة الإدارة | `Jiwar Admin.dc.html` | A1–A39, 29 sections, 30 in the gallery |
 
 The resident and provider apps run in an iOS frame at 402×874. The admin console
 is a desktop app at 1360×940, so its gallery uses laptop-shaped tiles.
+
+The resident gallery holds more tiles than there are screens, because a tile can
+pin the app to a named starting state — `data/scenarios.ts`, the design's own
+`SCEN` table. That is how the ticket appears at each of its three statuses, the
+cart full and empty, and the group seen as a stranger, a pending applicant, a
+member and its organiser.
 
 ## Bilingual
 
@@ -35,9 +41,9 @@ and the resident app has a second switch inside its settings screen (the design
 turned that chip from a label into a real button). Switching flips the document
 and every app root between `rtl` and `ltr`.
 
-`src/i18n/dict.ts` holds ~1,950 entries in two blocks:
+`src/i18n/dict.ts` holds ~2,490 entries in two blocks:
 
-- **`design`** — 796 entries lifted from the product's own English prototype.
+- **`design`** — 1,471 entries lifted from the product's own English prototype.
   `Rifada Phone EN.dc.html` and `Jiwar Phone Pub.dc.html` are the same file with
   the strings swapped, so aligning them line-by-line recovers the product's
   wording rather than a translation of it.
@@ -51,9 +57,17 @@ ids, so a screen still reads `{t('الرئيسية')}` and the data modules neve
 change — a label from `data/services.ts` resolves through the same table as one
 written inline. An unknown string falls through to Arabic rather than vanishing.
 
-`t` is a plain function over a module-level language, not a hook; `LangProvider`
-keys its subtree on the language, so switching remounts the tree and every call
-re-evaluates. That avoids threading a `useT()` line through ~90 components.
+`t` is a plain function over a module-level language, not a hook — that avoids
+threading a `useT()` line through ~90 components. `App` consumes the language
+context directly and nothing below it is memoised, so a switch re-renders the
+whole tree and every `t()` call re-evaluates.
+
+`LangProvider` deliberately does **not** key its subtree on the language. Doing
+so would also re-run every `t()`, but by remounting — which threw away all the
+state below it, so switching language bounced you out of the screen gallery and
+back to the phone. The flip side is that nothing may cache a translation across
+renders: no module constant and no state initialiser calls `t()`, they hold the
+raw Arabic and translate at the render site.
 
 Three strings deliberately stay Arabic because they carry logic, not display
 text: the `PostTag` union in Community, the availability comparisons in Sharing,
@@ -93,8 +107,23 @@ hide subpath breakage until after a deploy.
 Each is commented at the site of the change:
 
 - **The gallery list in `Jiwar App standalone-src.dc.html` is stale** — it lists
-  three deleted screens and omits events/groups/community/رفادتنا.
-  `src/resident/gallery.ts` follows `Jiwar App.dc.html` instead.
+  three deleted screens and omits events/groups/community/استعارة.
+  `src/resident/gallery.ts` is generated from `Jiwar App.dc.html` instead.
+- **`rewardsModal` is not a real screen.** The prototype gives it a screen key
+  and then rewrites it back to `rewards` with the redeem sheet forced open.
+  Here it is a scenario, which is the same thing without the phantom key.
+- **`paidAmount` is declared twice** in the resident state — once for payments,
+  once for the service rating — so paying rent would pre-fill the "what did you
+  pay the technician" box, and submitting the rating would wipe the receipt
+  amount. Split into `paidAmount` and `provPaidAmount`.
+- **`startMatching` contradicts its own screen.** Its timeout jumps straight to
+  the live job, skipping the accept card the template defines (`matchSearching`
+  / `matchFound` / `matchAccept`). The port shows the card, since that is the
+  screen the design actually drew.
+- **The design transliterates three names two ways** (Alsharif/Al-Sharif,
+  Alharbi/Al-Harbi, Alotaibi/Al-Otaibi) depending on whether the string sits in
+  its code or in an embedded JSON blob. The port follows the majority spelling
+  for each.
 - **`Jiwar Admin.dc.html` declares `rules` twice** in its state (automation
   toggles, then the scoring array), so the second silently overwrites the first
   and the automation switches never toggle. Split into `autoRules` and
@@ -108,25 +137,29 @@ Each is commented at the site of the change:
 
 ## Known gaps
 
-- ~12 Arabic fragments still render inside resident **gallery thumbnails** at
-  0.49 scale. Each already has a dictionary entry; what is missing is the
-  wrapper at its render site.
-- No backend. Payments, escrow, matching and notifications are all simulated.
+- The resident gallery mounts 106 full app instances, so it takes a few seconds
+  to paint and is the slowest thing in the project.
+- Lost & found thumbnails are the only remote images (the design's own Unsplash
+  URLs). They fall back to a camera placeholder when unreachable.
+- No backend. Payments, matching and notifications are all simulated.
 
 ## Assets
 
-`public/img/rephoto{0..3}.jpg` are the real-estate photos, extracted from the
-base64 blobs embedded in `Jiwar App (offline).html`. `hero-compound.webp` is the
-compound hero — 212px tall, matching the design's only image slot.
+Every image is extracted from the base64 blobs inside the design's own bundle —
+`Rifada Resident App - Figma 2 2.html`, unpacked by reading its
+`__bundler/manifest` and `__bundler/ext_resources` script tags. The loose files
+beside the HTML are stale; diffing only those is what made an earlier pass
+report "no image changed" when the design had in fact replaced all of them.
 
-All of them come from that one bundle, and that matters: the standalone
-`project/hero-compound.webp` and `Jiwar Resident App (offline).html` carry an
-older hero (a classical villa, 650×400). The current one is the modern villa at
-600×375, embedded in `Jiwar App (offline).html` — the same bundle the `rephoto`
-files hash-match, which is what identifies it as the live side. Comparing only
-the loose files misses this, since the design's newer assets live base64-encoded
-inside the HTML.
+| file | design id | used by |
+| --- | --- | --- |
+| `rephoto{0..3}.jpg` | `rephoto0`–`3`, and `heroHome` = `rephoto0` | real-estate listings, and the contract-renewal hero slide |
+| `hero-user.webp` | `heroUser` | the dues slide — the resident's own unit |
+| `hero-fest.jpg` | `heroFest` | the festival slide |
+| `hero-food.jpg` | `heroFood` | the store-offer slide |
+| `hero-run.jpg` | `heroRun` | the running-club slide |
+| `hero-compound.webp` | `heroCompound` | the events header and the drone photo in `data/community.ts` |
 
-The hero is shared by three call sites — the home screen, the events header, and
-the drone-photo attachment in `data/community.ts` — mirroring the prototype,
-where all three read `window.__resources.heroCompound`.
+The home hero is no longer one image: it is a five-slide carousel that advances
+every four seconds (`data/hero.ts`). It holds still in gallery tiles, which
+would otherwise re-render the whole grid on a timer.

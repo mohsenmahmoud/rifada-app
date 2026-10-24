@@ -249,7 +249,11 @@ export function Setup() {
 
         <FieldLabel>{t('الاسم الكامل')}</FieldLabel>
         <input
-          defaultValue={cfg.residentName}
+          // Pre-filled but editable, so it stays uncontrolled. Keying it on the
+          // translated name re-initialises the field when the language changes,
+          // which an uncontrolled input would otherwise ignore.
+          key={t(cfg.residentName)}
+          defaultValue={t(cfg.residentName)}
           style={{
             width: '100%',
             background: '#fff',

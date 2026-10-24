@@ -1,19 +1,27 @@
 import { color, font, numeric, radius, shadow } from '@/theme/tokens';
 import { Icon } from '@/ui/Icon';
-import { BackButton, Card, PillButton, ScreenHeader, StatusPill } from '@/ui/primitives';
+import {
+  BackButton, Card, EmptyState, PillButton, ScreenHeader, StatusPill,
+} from '@/ui/primitives';
 import { icons, shareIcons } from '../data/icons';
 import { UNIT_SHORT } from '../data/seed';
 import {
+  bookingStageChrome,
+  bookingVoiceOf,
+  bookingWording,
   shareCatDefs,
   shareDayDefs,
   shareDefs,
+  shareHistDefs,
+  shareHistIcon,
   shareHourDefs,
   shareIcon,
   shareKindDefs,
+  shareReqDefs,
   shareUnitDefs,
 } from '../data/sharing';
 import { useResident } from '../store';
-import type { ShareKind } from '../types';
+import type { ShareKind, ShareReqState } from '../types';
 import { ChipRow, Note } from './parts';
 import { Radio } from './Marketplace';
 import { t } from '@/i18n/lang';
@@ -32,10 +40,14 @@ function Browse() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      {/* The two tabs became header icons: a person toggles «مشاركاتي»,
+          a clock opens the finished-shares log. */}
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <BackButton onClick={() => go('home')} />
+        <BackButton
+          onClick={() => (st.shareTab === 'mine' ? set({ shareTab: 'browse' }) : go('home'))}
+        />
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-          <span style={{ fontSize: 18, fontWeight: 900, color: color.navy }}>{t('رفادتنا')}</span>
+          <span style={{ fontSize: 18, fontWeight: 900, color: color.navy }}>{t('استعارة')}</span>
           <span
             style={{
               fontSize: 10.5,
@@ -48,44 +60,17 @@ function Browse() {
             {t('جيران يتشاركون ما لديهم — بالساعة أو مجانًا، وكل حجز موثّق بالوحدة')}
           </span>
         </div>
-      </div>
-
-      <div
-        style={{
-          display: 'flex',
-          background: '#fff',
-          borderRadius: radius.pill,
-          margin: '2px 18px 0',
-          padding: 4,
-          boxShadow: shadow.card,
-        }}
-      >
-        {[
-          { k: 'browse' as const, l: t('معروض للمشاركة') },
-          { k: 'mine' as const, l: t('مشاركاتي') },
-        ].map((tab) => {
-          const on = st.shareTab === tab.k;
-          return (
-            <button
-              key={tab.k}
-              onClick={() => set({ shareTab: tab.k })}
-              style={{
-                flex: 1,
-                border: 'none',
-                cursor: 'pointer',
-                borderRadius: radius.pill,
-                padding: 9,
-                fontSize: 12.5,
-                fontWeight: 800,
-                fontFamily: font.sans,
-                background: on ? color.navy : 'transparent',
-                color: on ? '#fff' : color.slate,
-              }}
-            >
-              {t(tab.l)}
-            </button>
-          );
-        })}
+        <HeaderIconButton
+          title={t('مشاركاتي')}
+          path={icons.neighbors}
+          on={st.shareTab === 'mine'}
+          onClick={() => set((s) => ({ shareTab: s.shareTab === 'mine' ? 'browse' : 'mine' }))}
+        />
+        <HeaderIconButton
+          title={t('سجل مشاركاتي')}
+          path="M12 7v5l3 2M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18z"
+          onClick={() => go('shareHist')}
+        />
       </div>
 
       {st.shareTab === 'browse' && (
@@ -97,48 +82,27 @@ function Browse() {
       <div style={{ flex: 1, overflowY: 'auto', padding: '10px 18px 130px' }}>
         {st.shareTab === 'mine' ? (
           <>
-            <div
-              style={{
-                background: `linear-gradient(160deg,${color.navyLight},${color.navy})`,
-                borderRadius: radius.card,
-                padding: 18,
-                marginBottom: 12,
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                <span
-                  style={{
-                    width: 34,
-                    height: 34,
-                    borderRadius: 11,
-                    background: 'rgba(199,154,60,0.22)',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flex: 'none',
-                  }}
-                >
-                  <Icon path={icons.plus} size={17} stroke={color.gold} width={2} />
-                </span>
-                <span style={{ flex: 1, fontSize: 13.5, fontWeight: 800, color: '#fff' }}>
-                  {mine.length > 0 ? t('مشاركتك منشورة لجيرانك') : t('اعرض ما لديك على جيرانك')}
-                </span>
-              </div>
-              <div style={{ fontSize: 11, color: 'rgba(255,255,255,0.6)', marginTop: 9, lineHeight: 1.8 }}>
-                {t('تعرض ما لديك بالوقت الذي يناسبك، والدفع يصلك بضمان رفادة بعد انتهاء الموعد.')}
-              </div>
-              <div style={{ display: 'flex', gap: 8, marginTop: 14 }}>
-                <Stat value={String(mine.length)} label={t('مشاركة منشورة')} />
-                <Stat value={mine.length ? '38' : '0'} label={t('مشاهدة من الجيران')} tone={color.greenBright} />
-                <Stat value={mine.length ? '450' : '0'} label={t('ر.س هذا الشهر')} tone={color.goldSoft} />
-              </div>
+            <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '2px 2px 10px' }}>
+              {t('معروضاتك المنشورة')}
             </div>
 
             {mine.map((ms) => (
-              <Card
+              // A plain div, not a Card button: the row opens the listing but
+              // carries its own edit/pause buttons, and a button can't nest.
+              <div
                 key={t(ms.title)}
-                pad="14px 16px"
-                style={{ borderRadius: 18, marginBottom: 9, display: 'flex', alignItems: 'center', gap: 12 }}
+                onClick={() => go('myListing')}
+                style={{
+                  background: color.card,
+                  boxShadow: shadow.card,
+                  padding: '14px 16px',
+                  borderRadius: 18,
+                  marginBottom: 9,
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 12,
+                }}
               >
                 <span style={tileStyle}>
                   <Icon path={shareIcon(ms.kind)} size={20} width={1.6} />
@@ -172,7 +136,10 @@ function Browse() {
                 </span>
                 <span style={{ display: 'flex', flexDirection: 'column', gap: 6, flex: 'none' }}>
                   <button
-                    onClick={() => go('shareCreate')}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      go('shareCreate');
+                    }}
                     style={{
                       border: '1.5px solid rgba(31,59,87,0.2)',
                       background: 'transparent',
@@ -188,7 +155,8 @@ function Browse() {
                     {t('تعديل')}
                   </button>
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       set({ sharePublished: null });
                       showToast(t('أُوقفت المشاركة — لم تعد تظهر لجيرانك'));
                     }}
@@ -206,8 +174,22 @@ function Browse() {
                     {t('إيقاف')}
                   </button>
                 </span>
-              </Card>
+              </div>
             ))}
+
+            {/* The stats moved out of the navy banner and under the listings. */}
+            {mine.length > 0 && (
+              <Card
+                pad="14px 16px"
+                style={{ borderRadius: 18, marginBottom: 9, display: 'flex', alignItems: 'center' }}
+              >
+                <MineStat value={String(mine.length)} label={t('مشاركة')} />
+                <StatDivider />
+                <MineStat value="38" label={t('مشاهدة')} />
+                <StatDivider />
+                <MineStat value="450" label={t('ر.س هذا الشهر')} tone={color.goldDeep} />
+              </Card>
+            )}
 
             {mine.length === 0 && (
               <Card
@@ -239,7 +221,7 @@ function Browse() {
                     textAlign: 'center',
                   }}
                 >
-                  {t('عندك قاعة، ملعب، شنطة عدد، نطاطية أطفال، أو مكان انتظار زائد؟ اعرضه بالساعة أو مجانًا لجيرانك.')}
+                  {t('عندك قاعة، ملعب، شنطة عدد، أو مكان انتظار زائد؟ اعرضه بالساعة أو مجانًا لجيرانك.')}
                 </div>
                 <div
                   style={{
@@ -280,6 +262,14 @@ function Browse() {
                 </div>
               </Card>
             )}
+            <PillButton
+              tone="ghost"
+              full
+              onClick={() => go('shareCreate')}
+              style={{ marginTop: 12, padding: 13, fontSize: 13 }}
+            >
+              {t('+ شارك شيئًا جديدًا مع جيرانك')}
+            </PillButton>
           </>
         ) : (
           browseItems.map((si) => (
@@ -349,17 +339,8 @@ function Browse() {
         )}
       </div>
 
-      <div style={{ position: 'absolute', bottom: 96, left: 0, right: 0, padding: '0 18px' }}>
-        <PillButton
-          tone="gold"
-          size="lg"
-          full
-          onClick={() => go('shareCreate')}
-          style={{ boxShadow: '0 8px 24px rgba(199,154,60,0.38)', fontSize: 14 }}
-        >
-          {t('+ شارك شيئًا لديك مع جيرانك')}
-        </PillButton>
-      </div>
+      {/* The floating «شارك شيئًا لديك» button is gone — publishing now lives
+          at the foot of the «مشاركاتي» tab, where the listings are. */}
     </div>
   );
 }
@@ -382,8 +363,11 @@ function Create() {
         desc: `${t('مشاركة جديدة من وحدتك الموثّقة — متاحة يوم')} ${st.shDay} ${t('من')} ${st.shHour}.`,
         slots: [[st.shDay, st.shHour, t('متاح')]],
       },
-      screen: 'share',
+      // Publishing now lands on the listing itself rather than the browse
+      // list, so the first thing you see is where requests will arrive.
+      screen: 'myListing',
       shareTab: 'mine',
+      hist: [],
       shTitle: '',
       shPrice: '',
     });
@@ -553,8 +537,15 @@ function Detail() {
       return;
     }
     const sl = sel.slots[st.shareSlotIdx];
-    set({ screen: 'share', shareSlotIdx: null });
-    showToast(`${t('تم الحجز:')} ${t(sel.title)} — ${t(sl[0])} ${t(sl[1])}`);
+    // Booking now opens the three-stage lifecycle rather than dropping you
+    // back on the list with a toast.
+    set((s) => ({
+      screen: 'shareBooking',
+      hist: [...s.hist, 'shareDetail'],
+      shBookedSlot: `${sl[0]} ${sl[1]}`,
+      shbStage: 0,
+    }));
+    showToast(t('تم حجز الموعد — رتّب الاستلام مع المالك'));
   };
 
   return (
@@ -654,22 +645,8 @@ function Detail() {
           );
         })}
 
-        <div
-          style={{
-            background: 'rgba(63,166,107,0.1)',
-            borderRadius: radius.tile,
-            padding: '12px 14px',
-            marginTop: 6,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 9,
-          }}
-        >
-          <Icon path={icons.shield} size={15} stroke={color.greenDeep} width={1.6} style={{ flex: 'none' }} />
-          <span style={{ fontSize: 10.5, fontWeight: 800, color: color.greenDeep, lineHeight: 1.7 }}>
-            {t('المبلغ محجوز بضمان رفادة ولا يُحوَّل لجارك إلا بعد انتهاء الموعد')}
-          </span>
-        </div>
+        {/* The رفادة escrow strip is gone: استعارة settles in cash between
+            neighbours, so there is no held amount to guarantee. */}
       </div>
 
       <div style={{ padding: '0 20px 34px' }}>
@@ -681,24 +658,616 @@ function Detail() {
   );
 }
 
-function Stat({ value, label, tone = '#fff' }: { value: string; label: string; tone?: string }) {
+/* ==================== The owner's side of a listing ==================== */
+
+/**
+ * The booking requests on your listing, with their derived state. Accepting
+ * one declines every other request on the same slot.
+ */
+function useShareRequests() {
+  const { st, set, go, showToast } = useResident();
+  const firstName = (full: string) => full.split(' — ')[0];
+
+  return shareReqDefs.map((rq, i) => ({
+    ...rq,
+    state: st.shReqs[i] ?? 'new',
+    accept: () => {
+      const clashes = shareReqDefs
+        .map((o, k) => ({ o, k }))
+        .filter(({ o, k }) => k !== i && o.slot === rq.slot && !st.shReqs[k])
+        .map(({ k }) => k);
+      set((s) => {
+        const next = { ...s.shReqs, [i]: 'accepted' as const };
+        clashes.forEach((k) => {
+          next[k] = 'conflict';
+        });
+        return { shReqs: next };
+      });
+      showToast(
+        clashes.length
+          ? `${t('قُبل الحجز — واعتُذر تلقائيًا لـ')}${clashes.length} ${t('طلب على نفس الموعد')}`
+          : `${t('قُبل الحجز — رتّب التسليم مع')} ${t(firstName(rq.name))}`,
+      );
+    },
+    reject: () => {
+      set((s) => ({ shReqs: { ...s.shReqs, [i]: 'rejected' } }));
+      showToast(`${t('رفضت طلب')} ${t(firstName(rq.name))}`);
+    },
+    chat: () => {
+      go('chat');
+      showToast(`${t('فُتحت محادثة مع')} ${t(firstName(rq.name))}`);
+    },
+    call: () => showToast(`${t('جاري الاتصال بـ')}${t(firstName(rq.name))}…`),
+  }));
+}
+
+type ShareReqRow = ReturnType<typeof useShareRequests>[number];
+
+const reqStateChrome: Record<ShareReqState, { label: string; bg: string; c: string } | null> = {
+  new: null,
+  accepted: { label: 'مقبول — رتّب التسليم', bg: 'rgba(63,166,107,0.13)', c: '#2E7D51' },
+  rejected: { label: 'مرفوض', bg: 'rgba(107,114,128,0.12)', c: '#6B7280' },
+  conflict: { label: 'اعتُذر — تعارض موعد', bg: 'rgba(199,154,60,0.16)', c: '#A87F2C' },
+};
+
+/** One request row — shared by the listing screen and the full list. */
+function RequestRow({ rq }: { rq: ShareReqRow }) {
+  const chrome = reqStateChrome[rq.state];
   return (
-    <span
+    <Card pad="13px 15px" style={{ borderRadius: 18, marginBottom: 9 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
+        <span
+          style={{
+            width: 38,
+            height: 38,
+            borderRadius: 99,
+            background: rq.av,
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 13.5,
+            fontWeight: 800,
+            flex: 'none',
+          }}
+        >
+          {t(rq.name)[0]}
+        </span>
+        <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+          <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(rq.name)}</span>
+          <span style={{ fontSize: 10.5, color: color.slate }}>{t(rq.slot)}</span>
+        </span>
+        {chrome && (
+          <span
+            style={{
+              background: chrome.bg,
+              color: chrome.c,
+              borderRadius: radius.pill,
+              padding: '3px 11px',
+              fontSize: 9.5,
+              fontWeight: 800,
+              whiteSpace: 'nowrap',
+              flex: 'none',
+            }}
+          >
+            {t(chrome.label)}
+          </span>
+        )}
+      </div>
+
+      {rq.state === 'new' && (
+        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+          <PillButton full tone="green" onClick={rq.accept} style={{ padding: 10, fontSize: 12 }}>
+            {t('اقبل الحجز')}
+          </PillButton>
+          <PillButton tone="ghost" onClick={rq.reject} style={{ padding: '10px 20px', fontSize: 12 }}>
+            {t('ارفض')}
+          </PillButton>
+        </div>
+      )}
+
+      {rq.state === 'accepted' && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
+          <PillButton
+            onClick={rq.chat}
+            style={{ padding: '9px 16px', fontSize: 11.5, display: 'flex', alignItems: 'center', gap: 6 }}
+          >
+            <Icon path={icons.chat} size={14} stroke="#fff" width={1.6} />
+            {t('افتح محادثة')}
+          </PillButton>
+          <PillButton tone="ghost" onClick={rq.call} style={{ padding: '9px 16px', fontSize: 11.5 }}>
+            {t('اتصال')}
+          </PillButton>
+          <span style={{ fontSize: 10, fontWeight: 700, color: color.slateLight }}>
+            {t('كاش يدًا بيد عند التسليم')}
+          </span>
+        </div>
+      )}
+    </Card>
+  );
+}
+
+/** R68b — your own published listing, and the requests arriving on it. */
+function MyListing() {
+  const { st, set, showToast } = useResident();
+  const reqs = useShareRequests();
+  const ms = st.sharePublished;
+
+  if (!ms) {
+    return (
+      <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+        <ScreenHeader
+          title={t('تفاصيل مشاركتك')}
+          onBack={() => set({ screen: 'share', shareTab: 'mine' })}
+        />
+        <EmptyState
+          icon={icons.neighbors}
+          title={t('لم تشارك شيئًا بعد')}
+          sub={t('انشر ما لديك ليبدأ جيرانك بإرسال طلبات الحجز.')}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      <ScreenHeader
+        title={t('تفاصيل مشاركتك')}
+        onBack={() => set({ screen: 'share', shareTab: 'mine' })}
+      />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
+        <Card pad={16} style={{ borderRadius: radius.card }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={tileStyle}>
+              <Icon path={shareIcon(ms.kind)} size={20} width={1.6} />
+            </span>
+            <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0 }}>
+              <span style={{ fontSize: 14, fontWeight: 900, color: color.navy }}>{t(ms.title)}</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span
+                  style={{ width: 6, height: 6, borderRadius: 99, background: color.green, flex: 'none' }}
+                />
+                <span style={{ fontSize: 10.5, fontWeight: 700, color: color.greenDeep }}>
+                  {t('منشورة — يراها جيرانك الآن')}
+                </span>
+              </span>
+            </span>
+            <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flex: 'none' }}>
+              <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: color.goldDeep }}>
+                {priceLabel(ms.price)}
+              </span>
+              <span style={{ fontSize: 10, color: color.slate }}>{t(ms.unit)}</span>
+            </span>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              marginTop: 14,
+              paddingTop: 13,
+              borderTop: `1px solid ${color.line}`,
+            }}
+          >
+            <span style={chipStyle(color.navy)}>{ms.slots[0]?.[0] ?? '—'}</span>
+            <span style={chipStyle(color.slate)}>{ms.slots[0]?.[1] ?? '—'}</span>
+            <span style={{ flex: 1 }} />
+            <button
+              onClick={() => set((s) => ({ screen: 'shareCreate', hist: [...s.hist, 'myListing'] }))}
+              style={{
+                border: '1.5px solid rgba(31,59,87,0.2)',
+                background: 'transparent',
+                borderRadius: radius.pill,
+                padding: '6px 14px',
+                fontSize: 10.5,
+                fontWeight: 800,
+                color: color.navy,
+                cursor: 'pointer',
+                fontFamily: font.sans,
+              }}
+            >
+              {t('تعديل')}
+            </button>
+            <button
+              onClick={() => {
+                set({ sharePublished: null, screen: 'share', shareTab: 'mine' });
+                showToast(t('أُوقفت المشاركة — لم تعد تظهر لجيرانك'));
+              }}
+              style={{
+                border: 'none',
+                background: 'transparent',
+                cursor: 'pointer',
+                color: color.coral,
+                fontSize: 10.5,
+                fontWeight: 800,
+                fontFamily: font.sans,
+              }}
+            >
+              {t('إيقاف المشاركة')}
+            </button>
+          </div>
+        </Card>
+
+        <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '18px 2px 10px' }}>
+          {t('طلبات الحجز الواردة')}
+        </div>
+        {reqs.length === 0 ? (
+          <Note>{t('لا طلبات بعد — يصلك إشعار فور أول طلب')}</Note>
+        ) : (
+          reqs.map((rq) => <RequestRow key={rq.name} rq={rq} />)
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** R69d — every request on your listing, with the unanswered count. */
+function ShareRequests() {
+  const { st, back } = useResident();
+  const reqs = useShareRequests();
+  const pending = shareReqDefs.filter((_, i) => (st.shReqs[i] ?? 'new') === 'new').length;
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
+        <BackButton onClick={back} />
+        <div style={{ flex: 1, fontSize: 19, fontWeight: 800, color: color.navy }}>
+          {t('كل طلبات الحجز')}
+        </div>
+        <StatusPill tone="gold" style={{ fontSize: 11, padding: '4px 13px', fontWeight: 800 }}>
+          {pending}
+        </StatusPill>
+      </div>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
+        {reqs.map((rq) => (
+          <RequestRow key={rq.name} rq={rq} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ==================== The borrower's side of a booking ==================== */
+
+/**
+ * R69b — the three stages of a borrow: booked, in use, returned. The wording
+ * shifts with what was borrowed (see `bookingWording`), and the last stage
+ * shows the rating the owner left you.
+ */
+function Booking() {
+  const { st, set, go, showToast } = useResident();
+  const all = st.sharePublished ? [st.sharePublished, ...shareDefs] : shareDefs;
+  const sel = all[st.shareSelIdx] ?? all[0];
+  const w = bookingWording[bookingVoiceOf(sel.kind)];
+  const stage = Math.min(st.shbStage, 2);
+  const chrome = bookingStageChrome[stage];
+
+  const advance = () => {
+    const next = stage + 1;
+    set({ shbStage: next });
+    showToast(t(next === 1 ? w.t1 : w.t2));
+  };
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      <ScreenHeader title={t('تفاصيل الحجز')} onBack={() => go('share')} />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
+        <Card pad={16} style={{ borderRadius: radius.card }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={tileStyle}>
+              <Icon path={shareIcon(sel.kind)} size={20} width={1.6} />
+            </span>
+            <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0 }}>
+              <span style={{ fontSize: 14, fontWeight: 900, color: color.navy }}>{t(sel.title)}</span>
+              <span style={{ fontSize: 10.5, color: color.slate }}>
+                {t('الموعد المحجوز:')} {t(st.shBookedSlot)}
+              </span>
+            </span>
+          </div>
+          <div
+            style={{
+              background: chrome.bg,
+              color: chrome.c,
+              borderRadius: radius.pill,
+              padding: '6px 14px',
+              fontSize: 11,
+              fontWeight: 800,
+              marginTop: 13,
+              display: 'inline-block',
+            }}
+          >
+            {t(w.st[stage])}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginTop: 14,
+              paddingTop: 13,
+              borderTop: `1px solid ${color.line}`,
+            }}
+          >
+            <span style={{ fontSize: 12, color: color.slate }}>{t('التكلفة')}</span>
+            <span style={{ flex: 1 }} />
+            <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: color.goldDeep }}>
+              {priceLabel(sel.price)}
+            </span>
+            <span style={{ fontSize: 11, color: color.slate, marginInlineStart: 5 }}>{t(sel.unit)}</span>
+          </div>
+          <div style={{ fontSize: 10.5, color: color.slateLight, marginTop: 8 }}>
+            {t('الدفع كاش يدًا بيد عند الاستلام')}
+          </div>
+        </Card>
+
+        <Card pad={16} style={{ borderRadius: 18, marginTop: 12 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 99,
+                background: `linear-gradient(160deg,${color.navyLight},${color.navy})`,
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 14,
+                fontWeight: 800,
+                flex: 'none',
+              }}
+            >
+              {t(sel.owner)[0]}
+            </span>
+            <span style={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+              <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>{t(sel.owner)}</span>
+              <span style={{ fontSize: 10.5, color: color.slate }}>
+                {t('المالك')} · {t(w.arrange)}
+              </span>
+            </span>
+          </div>
+          <div style={{ display: 'flex', gap: 8, marginTop: 13 }}>
+            <PillButton
+              full
+              onClick={() => {
+                go('chat');
+                showToast(`${t('فُتحت محادثة مع')} ${t(sel.owner)}`);
+              }}
+              style={{ padding: 11, fontSize: 12.5, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}
+            >
+              <Icon path={icons.chat} size={15} stroke="#fff" width={1.6} />
+              {t('افتح محادثة')}
+            </PillButton>
+            <PillButton
+              tone="ghost"
+              onClick={() => showToast(`${t('جاري الاتصال بـ')}${t(sel.owner)}…`)}
+              style={{ padding: '11px 20px', fontSize: 12.5 }}
+            >
+              {t('اتصال')}
+            </PillButton>
+          </div>
+        </Card>
+
+        {stage === 0 && (
+          <PillButton size="lg" full onClick={advance} style={{ marginTop: 14 }}>
+            {t(w.b0)}
+          </PillButton>
+        )}
+
+        {stage === 1 && (
+          <>
+            <div style={{ marginTop: 14 }}>
+              <Note>{t(w.open)}</Note>
+            </div>
+            <PillButton size="lg" full tone="green" onClick={advance} style={{ marginTop: 10 }}>
+              {t(w.b1)}
+            </PillButton>
+          </>
+        )}
+
+        {stage === 2 && (
+          <>
+            <Card pad={16} style={{ borderRadius: 18, marginTop: 14 }}>
+              <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>
+                {t('تقييم المالك لتجربته معك')}
+              </div>
+              <div style={{ display: 'flex', gap: 4, marginTop: 10 }}>
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <Icon key={n} path={icons.star} size={20} stroke={color.gold} fill={color.gold} />
+                ))}
+              </div>
+              <div style={{ fontSize: 11.5, color: color.slate, marginTop: 10, lineHeight: 1.8 }}>
+                {t(w.rate)}
+              </div>
+            </Card>
+            <PillButton size="lg" full onClick={() => go('share')} style={{ marginTop: 12 }}>
+              {t('العودة للاستعارة')}
+            </PillButton>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ====================== The log of finished shares ====================== */
+
+/** R69c — everything you have lent out, and what it earned. */
+function SharesLog() {
+  const { back, go } = useResident();
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      <ScreenHeader title={t('سجل مشاركاتك')} onBack={back} />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
+        {shareHistDefs.map((h, i) => (
+          <Card
+            key={t(h.title)}
+            pad="14px 16px"
+            onClick={() => go('shareHistDetail', { shHistSelIdx: i })}
+            style={{ borderRadius: 18, marginBottom: 9 }}
+          >
+            <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <span style={tileStyle}>
+                <Icon path={shareHistIcon[h.icon]} size={20} width={1.6} />
+              </span>
+              <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+                <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(h.title)}</span>
+                <span style={{ fontSize: 10.5, color: color.slate }}>
+                  {t('انتهت —')} {h.uses} {t('استخدامات')}
+                </span>
+              </span>
+              <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flex: 'none' }}>
+                <span style={{ ...numeric, fontSize: 16, fontWeight: 700, color: color.goldDeep }}>
+                  {h.total}
+                </span>
+                <span style={{ fontSize: 10, color: color.slate }}>{t('ر.س')}</span>
+              </span>
+            </span>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/** R69f — one finished listing: who borrowed it, when, and how it went. */
+function SharesLogDetail() {
+  const { st, back } = useResident();
+  const h = shareHistDefs[st.shHistSelIdx] ?? shareHistDefs[0];
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      <ScreenHeader title={t('تقرير المشاركة')} onBack={back} />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
+        <Card pad={16} style={{ borderRadius: radius.card }}>
+          <div style={{ fontSize: 16, fontWeight: 900, color: color.navy }}>{t(h.title)}</div>
+          <div style={{ fontSize: 11.5, color: color.slate, marginTop: 4 }}>
+            {t('انتهت —')} {h.uses} {t('استخدامات')}
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              marginTop: 14,
+              paddingTop: 13,
+              borderTop: `1px solid ${color.line}`,
+            }}
+          >
+            <span style={{ fontSize: 12, color: color.slate }}>{t('الإجمالي المحصّل كاش')}</span>
+            <span style={{ flex: 1 }} />
+            <span style={{ ...numeric, fontSize: 18, fontWeight: 700, color: color.goldDeep }}>
+              {h.total} <span style={{ fontSize: 11, color: color.slate }}>{t('ر.س')}</span>
+            </span>
+          </div>
+        </Card>
+
+        <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '18px 2px 10px' }}>
+          {t('من استخدمها')}
+        </div>
+        {h.borrowers.map((b) => (
+          <Card key={t(b.name)} pad="13px 15px" style={{ borderRadius: 18, marginBottom: 9 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
+              <span
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 99,
+                  background: `linear-gradient(160deg,${color.navyLight},${color.navy})`,
+                  color: '#fff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 13,
+                  fontWeight: 800,
+                  flex: 'none',
+                }}
+              >
+                {t(b.name)[0]}
+              </span>
+              <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(b.name)}</span>
+                <span style={{ fontSize: 10.5, color: color.slate }}>{t(b.when)}</span>
+              </span>
+              <span
+                style={{ ...numeric, fontSize: 12, fontWeight: 800, color: color.goldDeep, flex: 'none' }}
+              >
+                {t(b.paid)}
+              </span>
+            </div>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 8,
+                marginTop: 10,
+                paddingTop: 10,
+                borderTop: `1px solid ${color.line}`,
+              }}
+            >
+              <span style={{ fontSize: 12, color: color.gold, letterSpacing: 1, flex: 'none' }}>
+                {'★'.repeat(b.stars)}
+                {'☆'.repeat(5 - b.stars)}
+              </span>
+              <span style={{ fontSize: 10.5, color: color.slate, lineHeight: 1.7 }}>{t(b.note)}</span>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---------------------------------------------------------------- *
+ * Small shared pieces
+ * ---------------------------------------------------------------- */
+
+/** A round icon button in a screen header. */
+function HeaderIconButton({
+  title,
+  path,
+  on = false,
+  onClick,
+}: {
+  title: string;
+  path: string;
+  on?: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      title={title}
+      aria-label={title}
+      onClick={onClick}
       style={{
-        flex: 1,
-        background: 'rgba(255,255,255,0.08)',
-        borderRadius: radius.tile,
-        padding: '10px 12px',
+        width: 38,
+        height: 38,
+        borderRadius: 99,
+        border: 'none',
+        cursor: 'pointer',
+        background: on ? color.navy : '#fff',
+        boxShadow: shadow.card,
         display: 'flex',
-        flexDirection: 'column',
-        gap: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 'none',
       }}
     >
-      <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: tone }}>{t(value)}</span>
-      <span style={{ fontSize: 9.5, color: 'rgba(255,255,255,0.55)' }}>{t(label)}</span>
+      <Icon path={path} size={18} stroke={on ? '#fff' : color.navy} width={1.6} />
+    </button>
+  );
+}
+
+function MineStat({ value, label, tone = color.navy }: { value: string; label: string; tone?: string }) {
+  return (
+    <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, alignItems: 'center' }}>
+      <span style={{ ...numeric, fontSize: 17, fontWeight: 700, color: tone }}>{value}</span>
+      <span style={{ fontSize: 9.5, color: color.slate }}>{label}</span>
     </span>
   );
 }
+
+function StatDivider() {
+  return <span style={{ width: 1, alignSelf: 'stretch', background: color.line }} />;
+}
+
 
 const tileStyle: React.CSSProperties = {
   width: 44,
@@ -756,4 +1325,7 @@ function Label({ children, style }: { children: React.ReactNode; style?: React.C
   );
 }
 
-export const Sharing = { Browse, Create, Detail };
+export const Sharing = {
+  Browse, Create, Detail,
+  MyListing, ShareRequests, Booking, SharesLog, SharesLogDetail,
+};

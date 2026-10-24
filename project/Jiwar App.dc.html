@@ -74,7 +74,7 @@ button{font-family:'Cairo',sans-serif;}
                 </div>
                 <div style="position:relative;width:236px;height:497px;border-radius:22px;overflow:hidden;background:#EDE9DF;box-shadow:0 2px 12px rgba(0,0,0,0.09)">
                   <div style="width:480px;height:1014px;transform:scale(0.49);transform-origin:top right;pointer-events:none">
-                    <dc-import name="Jiwar Phone" fixed-screen="{{ s.key }}" payment-model="{{ pModel }}" compound-name="{{ cName }}" resident-name="{{ rName }}" hint-size="480px,1014px"></dc-import>
+                    <dc-import name="Jiwar Phone" fixed-screen="{{ s.key }}" scenario="{{ s.scen }}" payment-model="{{ pModel }}" compound-name="{{ cName }}" resident-name="{{ rName }}" hint-size="480px,1014px"></dc-import>
                   </div>
                   <button onClick="{{ s.go }}" title="فتح في الجوال التفاعلي" style="position:absolute;inset:0;background:transparent;border:none;cursor:pointer;padding:0"></button>
                 </div>
@@ -108,11 +108,18 @@ class Component extends DCLogic {
       ]],
       ['الرئيسية والتنقّل', [
         ['R4', 'home', 'الشاشة الرئيسية'],
+        ['R4s1', 'home', 'الرئيسية — بلا شريط تنبيه', 'home-noalert'],
+        ['R4s2', 'home', 'الرئيسية — وضع فرد العائلة (أقسام مقفلة)', 'fam-view'],
         ['R4b', 'services', 'خدماتك'],
         ['R13', 'feed', 'الفعاليات والمجتمع'],
         ['R71', 'eventDetail', 'تفاصيل الفعالية والحجز'],
+        ['R71s1', 'eventDetail', 'الفعالية — أنت مسجّل + تصريح الدخول', 'ev-going'],
         ['R72', 'eventCreate', 'اقترح فعالية'],
         ['R73', 'groupDetail', 'مجموعة اهتمام — اللوحة واللقاء'],
+        ['R73s1', 'groupDetail', 'مجموعة — غير عضو', 'grp-nonmember'],
+        ['R73s2', 'groupDetail', 'طلب انضمام قيد الموافقة', 'grp-pending'],
+        ['R73s3', 'groupMembers', 'أعضاء المجموعة'],
+        ['R73s4', 'groupDetail', 'مجموعة أنشأتها — أدوات المنظّم', 'grp-organizer'],
         ['R74', 'groupCreate', 'أنشئ مجموعة'],
         ['R75', 'community', 'اسأل جيرانك — المنشورات'],
         ['R76', 'communityPost', 'المنشور والتعليقات والردود'],
@@ -125,6 +132,8 @@ class Component extends DCLogic {
         ['R5', 'maintNew', 'بلاغ جديد'],
         ['R6', 'maintList', 'بلاغاتي'],
         ['R7', 'maintDetail', 'تفاصيل البلاغ والتقييم'],
+        ['R7s1', 'maintDetail', 'البلاغ — تم الاستلام', 'md-received'],
+        ['R7s2', 'maintDetail', 'البلاغ — تم الحل + التقييم', 'md-resolved'],
         ['R28', 'survey', 'استبيان الرضا'],
       ]],
       ['المرافق', [
@@ -134,10 +143,12 @@ class Component extends DCLogic {
       ]],
       ['السداد — إيجار وتقسيط', [
         ['R10', 'pay', 'كشف الحساب'],
+        ['R10s1', 'pay', 'كشف الحساب — نموذج التقسيط', 'pay-inst'],
         ['R11', 'payNow', 'إتمام الدفع'],
         ['R11b', 'paySuccess', 'نجاح الدفع والإيصال'],
         ['R16', 'payHistory', 'سجل السداد'],
         ['R39', 'autopay', 'الدفع التلقائي — دورة الخصم'],
+        ['R39s1', 'autopay', 'الدفع التلقائي — أثناء الدورة', 'ap-run'],
         ['R27', 'fin', 'الخدمات المالية'],
       ]],
       ['الانتقال والاستلام', [
@@ -145,15 +156,28 @@ class Component extends DCLogic {
       ]],
       ['المجتمع والخدمات', [
         ['R17', 'gate', 'سياراتك وتصاريح الزوار'],
+        ['R17s1', 'gate', 'إصدار تصريح — النموذج', 'gate-form'],
+        ['R17s2', 'gate', 'التصريح صادر', 'gate-issued'],
+        ['R17s3', 'visitLog', 'سجل الزيارات الكامل'],
         ['R18', 'lost', 'المفقودات — تصفح'],
+        ['R18s1', 'lostDetail', 'تفاصيل مفقود والتواصل'],
         ['R19', 'lostReport', 'المفقودات — إبلاغ'],
+        ['R19s1', 'lostReport', 'إبلاغ — فقدتُ شيئًا', 'lost-mine'],
         ['R21', 'marketDetail', 'تفاصيل الخدمة والحجز'],
         ['R23', 'chat', 'الرسائل مع الإدارة'],
+        ['R23s1', 'dmChat', 'محادثة خاصة بين جارين', 'dm-open'],
       ]],
-      ['رفادتنا — مشاركة بين الجيران', [
-        ['R67', 'share', 'رفادتنا — معروض للمشاركة'],
+      ['استعارة — مشاركة بين الجيران', [
+        ['R67', 'share', 'استعارة — معروض للمشاركة'],
         ['R68', 'shareCreate', 'اعرض شيئًا لديك'],
         ['R69', 'shareDetail', 'تفاصيل المشاركة والحجز'],
+        ['R69s1', 'shareBooking', 'حجزي — بانتظار الاستلام'],
+        ['R69s2', 'shareBooking', 'حجزي — أثناء الاستخدام', 'shb-mid'],
+        ['R69s3', 'shareBooking', 'حجزي — انتهى + التقييم', 'shb-done'],
+        ['R70a', 'myListing', 'مشاركتي المنشورة', 'pub-listing'],
+        ['R70b', 'shareReqs', 'طلبات الحجز على معروضي', 'pub-listing'],
+        ['R70d', 'shareHist', 'سجل مشاركاتي المنتهية'],
+        ['R70e', 'shareHistDetail', 'تقرير مشاركة منتهية'],
       ]],
       ['المكافآت والثقة', [
         ['R24', 'rewards', 'المكافآت'],
@@ -162,6 +186,7 @@ class Component extends DCLogic {
       ]],
       ['سوق العقارات — بين الجيران', [
         ['R39', 'reBrowse', 'تصفح الإعلانات'],
+        ['R39b', 'reBrowse', 'تصفح — قسم الإيجار', 're-rent'],
         ['R40', 'reCreate', 'أعلن عن وحدتك'],
         ['R41', 'reDetail', 'تفاصيل الإعلان'],
         ['R42', 'reMine', 'إعلاناتي'],
@@ -169,26 +194,37 @@ class Component extends DCLogic {
       ['حسابات العائلة', [
         ['R43', 'family', 'أفراد العائلة'],
         ['R44', 'famPerms', 'صلاحيات الفرد'],
+        ['R44s1', 'famPerms', 'صلاحيات فرد آخر', 'fam-sel2'],
       ]],
       ['فواتيرك — فواتير خارجية', [
         ['R51', 'bills', 'فواتيرك — الرئيسية'],
         ['R52', 'billLink', 'ربط فاتورة جديدة'],
         ['R53', 'billDetail', 'تفاصيل الفاتورة والدفع'],
+        ['R53s1', 'billDetail', 'فاتورة مسددة', 'bill-paid'],
+        ['R53s2', 'billDetail', 'فاتورة متأخرة', 'bill-overdue'],
         ['R54', 'billHistory', 'سجل سداد الفواتير'],
         ['R55', 'billAutopay', 'الدفع التلقائي للفواتير'],
       ]],
       ['المتجر — قسم موحد لكل مقدمي المنتجات', [
         ['R46', 'food', 'المتجر — التصفح'],
         ['R47', 'foodMenu', 'المنيو والسلة'],
+        ['R47s1', 'foodMenu', 'منيو صيدلية', 'store-pharm'],
         ['R48', 'foodCart', 'السلة والدفع'],
+        ['R48s1', 'foodCart', 'السلة ممتلئة', 'cart-full'],
         ['R49', 'foodTrack', 'تتبع الطلب'],
+        ['R49s1', 'foodTrack', 'الطلب خرج مع المندوب', 'order-out'],
+        ['R49s2', 'foodTrack', 'تم التسليم', 'order-done'],
         ['R50', 'foodHistory', 'طلباتي السابقة'],
       ]],
       ['سوق مقدمي الخدمة — مطابقة فورية', [
         ['R33', 'reqService', 'اطلب خدمة فورية'],
         ['R34', 'matching', 'مقدمو الخدمة المتاحون'],
+        ['R34s1', 'matching', 'تم العثور على مقدم خدمة', 'match-found'],
+        ['R34s2', 'provProfile', 'ملف مقدم الخدمة والتقييمات'],
         ['R37', 'escrow', 'حجز المبلغ (Escrow)'],
         ['R35', 'liveJob', 'حالة الطلب المباشرة'],
+        ['R35s1', 'liveJob', 'في الطريق إليك', 'live-otw'],
+        ['R35s2', 'liveJob', 'اكتمل — السعر والتقييم', 'live-done'],
         ['R36', 'rateProvider', 'تقييم مقدم الخدمة'],
         ['R38', 'dispute', 'الإبلاغ عن مشكلة'],
       ]],
@@ -207,7 +243,7 @@ class Component extends DCLogic {
     });
     const mapGroups = mapDefs.map(def => ({
       name: def[0],
-      screens: def[1].map(s => ({ id: s[0], key: s[1], t: s[2], go: jump(s[1]) })),
+      screens: def[1].map(s => ({ id: s[0], key: s[1], scen: s[3] || '', t: s[2], go: jump(s[1]) })),
     }));
 
     return {

@@ -12,15 +12,19 @@ import {
   eventDefs,
   gcFreqDefs,
   gcKindDefs,
-  gcPrivacyDefs,
   groupAbouts,
   groupIcon,
+  groupMemberDefs,
   groupNextDefs,
+  groupOrganizers,
   groupPostDefs,
+  memberAvatars,
   pastEventDefs,
+  DM_AUTO_REPLY,
+  DM_REPLY_DELAY,
 } from '../data/events';
 import { icons } from '../data/icons';
-import { avatarBg } from '../data/seed';
+import { avatarBg, ME_UNIT, UNIT } from '../data/seed';
 import { useResident } from '../store';
 import type { Group } from '../types';
 import { ChipRow, Note, Stars } from './parts';
@@ -1015,6 +1019,14 @@ function GroupDetail() {
   const posts = [...(groupPostDefs[i] ?? []), ...(st.gdExtraPosts[i] ?? [])];
   const joinedMeet = !!st.gdMeetJoined[i];
 
+  // A group is now a room you have to be let into: the board, the meeting
+  // and the composer are all behind membership, and joining goes through the
+  // organiser rather than toggling instantly.
+  const isMember = isMine || !!st.clubJoined[i];
+  const isPending = !isMine && !isMember && !!st.clubPending[i];
+  const organizer = isMine ? t('أنت') : groupOrganizers[i] ?? groupOrganizers[0];
+  const roster = groupMembers(isMine, isMember);
+
   const send = () => {
     const body = st.gdDraft.trim();
     if (!body) {
@@ -1073,43 +1085,236 @@ function GroupDetail() {
           {t(about)}
         </Card>
 
-        <Card pad={16} style={{ borderRadius: 18, marginTop: 10 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t('اللقاء القادم')}</span>
-            <span style={{ flex: 1 }} />
-            <StatusPill tone="gold" style={{ fontSize: 9.5, padding: '3px 11px', fontWeight: 800 }}>
-              {t(next.when)}
-            </StatusPill>
-          </div>
-          <div
+        {/* The organiser, and — for a stranger — the way in. */}
+        <Card
+          pad="14px 16px"
+          style={{ borderRadius: 18, marginTop: 10, display: 'flex', alignItems: 'center', gap: 11 }}
+        >
+          <span
             style={{
-              fontSize: 12.5,
-              color: color.slateDark,
-              marginTop: 9,
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
+              width: 36,
+              height: 36,
+              borderRadius: 99,
+              background: avatarBg.tarek,
+              color: '#fff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 13,
+              fontWeight: 800,
+              flex: 'none',
             }}
           >
-            {t(next.place)}
-          </div>
-          <PillButton
-            tone={joinedMeet ? 'green' : 'navy'}
-            full
-            onClick={() => {
-              set((s) => ({ gdMeetJoined: { ...s.gdMeetJoined, [i]: !joinedMeet } }));
-              showToast(joinedMeet ? t('ألغيت حضورك') : t('سجّلنا حضورك — يصلك تذكير قبل اللقاء'));
-            }}
-            style={{ marginTop: 12, padding: 12, fontSize: 13 }}
-          >
-            {joinedMeet ? t('سأحضر ✓') : t('سأحضر اللقاء القادم')}
-          </PillButton>
+            {t(organizer)[0]}
+          </span>
+          <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+            <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(organizer)}</span>
+            <span style={{ fontSize: 10.5, color: color.slate }}>{t('منظّم المجموعة')}</span>
+          </span>
+          {!isMember &&
+            (isPending ? (
+              <StatusPill tone="gold" style={{ fontSize: 9.5, padding: '4px 12px', fontWeight: 800 }}>
+                {t('طلبك قيد موافقة المنظّم')}
+              </StatusPill>
+            ) : (
+              <PillButton
+                onClick={() => {
+                  set((s) => ({ clubPending: { ...s.clubPending, [i]: true } }));
+                  showToast(t('أُرسل طلب الانضمام للمنظّم مع نبذة من ملفك'));
+                }}
+                style={{ padding: '8px 16px', fontSize: 11.5, flex: 'none' }}
+              >
+                {t('اطلب الانضمام')}
+              </PillButton>
+            ))}
         </Card>
 
-        <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy, margin: '16px 2px 8px' }}>
-          {t('لوحة المجموعة')}
-        </div>
-        {posts.map((gp, k) => (
+        {/* Not a member and not waiting: the board stays shut. */}
+        {!isMember && !isPending && (
+          <Card
+            pad="30px 22px"
+            style={{
+              borderRadius: 18,
+              marginTop: 10,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}
+          >
+            <Icon path="M7 11V8a5 5 0 0 1 10 0v3M6 11h12v9H6z" size={30} stroke={color.slateLight} width={1.6} />
+            <div style={{ fontSize: 13.5, fontWeight: 800, color: color.navy, marginTop: 14 }}>
+              {t('انضم لترى لوحة المجموعة')}
+            </div>
+            <div style={{ fontSize: 11.5, color: color.slate, marginTop: 8, lineHeight: 1.9 }}>
+              {t('محادثات الأعضاء واللقاءات تظهر لأعضاء المجموعة فقط — مثل واتساب، سترى الرسائل الجديدة بعد انضمامك.')}
+            </div>
+          </Card>
+        )}
+
+        {/* Waiting: show what the organiser was sent about you. */}
+        {isPending && (
+          <Card
+            pad="24px 20px"
+            style={{ borderRadius: 18, marginTop: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}
+          >
+            <Icon path={icons.clock} size={30} stroke={color.gold} width={1.6} />
+            <div style={{ fontSize: 13.5, fontWeight: 800, color: color.navy, marginTop: 14 }}>
+              {t('أُرسل طلبك للمنظّم')}
+            </div>
+            <div style={{ fontSize: 11.5, color: color.slate, marginTop: 8, lineHeight: 1.9 }}>
+              {t('وصل طلبك مع نبذة من ملفك — يفتح لك كل شيء فور موافقته.')}
+            </div>
+            <div
+              style={{
+                width: '100%',
+                background: color.bg,
+                borderRadius: radius.tile,
+                padding: 14,
+                marginTop: 16,
+                textAlign: 'start',
+              }}
+            >
+              <div style={{ fontSize: 10, fontWeight: 800, color: color.slateLight }}>
+                {t('النبذة التي وصلت للمنظّم')}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 10 }}>
+                <span
+                  style={{
+                    width: 34,
+                    height: 34,
+                    borderRadius: 99,
+                    background: avatarBg.me,
+                    color: '#fff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 12.5,
+                    fontWeight: 800,
+                    flex: 'none',
+                  }}
+                >
+                  {t('عبدالله المطيري')[0]}
+                </span>
+                <span style={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+                  <span style={{ fontSize: 12, fontWeight: 800, color: color.navy }}>
+                    {t('عبدالله المطيري')}
+                  </span>
+                  <span style={{ fontSize: 10.5, color: color.slate }}>{t(UNIT)}</span>
+                </span>
+              </div>
+              <div style={{ fontSize: 10.5, color: color.goldDeep, fontWeight: 800, marginTop: 10 }}>
+                {t('نقاط الثقة: 850 · مستوى ذهبي')}
+              </div>
+              <div style={{ fontSize: 10.5, color: color.slate, marginTop: 3 }}>
+                {t('ساكن منذ 2024 · سداد منتظم')}
+              </div>
+            </div>
+            <PillButton
+              tone="gold"
+              full
+              onClick={() => {
+                set((s) => ({
+                  clubJoined: { ...s.clubJoined, [i]: true },
+                  clubPending: { ...s.clubPending, [i]: false },
+                }));
+                showToast(t('وافق المنظّم على انضمامك — أهلًا بك في المجموعة 🎉'));
+              }}
+              style={{ marginTop: 14, padding: 12, fontSize: 12.5 }}
+            >
+              {t('وافق المنظّم (محاكاة)')}
+            </PillButton>
+          </Card>
+        )}
+
+        {isMember && (
+          <>
+            {!isMine && (
+              <Card pad={16} style={{ borderRadius: 18, marginTop: 10 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>
+                    {t('اللقاء القادم')}
+                  </span>
+                  <span style={{ flex: 1 }} />
+                  <StatusPill tone="gold" style={{ fontSize: 9.5, padding: '3px 11px', fontWeight: 800 }}>
+                    {t(next.when)}
+                  </StatusPill>
+                </div>
+                <div
+                  style={{
+                    fontSize: 12.5,
+                    color: color.slateDark,
+                    marginTop: 9,
+                    whiteSpace: 'nowrap',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                  }}
+                >
+                  {t(next.place)}
+                </div>
+                <PillButton
+                  tone={joinedMeet ? 'green' : 'navy'}
+                  full
+                  onClick={() => {
+                    set((s) => ({ gdMeetJoined: { ...s.gdMeetJoined, [i]: !joinedMeet } }));
+                    showToast(joinedMeet ? t('ألغيت حضورك') : t('سجّلنا حضورك — يصلك تذكير قبل اللقاء'));
+                  }}
+                  style={{ marginTop: 12, padding: 12, fontSize: 13 }}
+                >
+                  {joinedMeet ? t('سأحضر ✓') : t('سأحضر اللقاء القادم')}
+                </PillButton>
+              </Card>
+            )}
+
+            <Card
+              pad="13px 16px"
+              onClick={() => go('groupMembers')}
+              style={{ borderRadius: 18, marginTop: 10 }}
+            >
+              <span style={{ display: 'flex', alignItems: 'center', gap: 11 }}>
+                <span style={{ display: 'flex', flex: 'none' }}>
+                  {roster.slice(0, 3).map((m, k) => (
+                    <span
+                      key={m.name}
+                      style={{
+                        width: 28,
+                        height: 28,
+                        borderRadius: 99,
+                        background: memberAvatars[k % memberAvatars.length],
+                        border: '2px solid #fff',
+                        color: '#fff',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: 10,
+                        fontWeight: 800,
+                        marginInlineStart: k === 0 ? 0 : -9,
+                      }}
+                    >
+                      {t(m.name)[0]}
+                    </span>
+                  ))}
+                </span>
+                <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+                  <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>
+                    {t('أعضاء المجموعة')}
+                  </span>
+                  <span style={{ fontSize: 10.5, color: color.slate }}>
+                    {g.members} {t('عضوًا')}
+                  </span>
+                </span>
+                <span style={{ fontSize: 11, fontWeight: 800, color: color.gold, flex: 'none' }}>
+                  {t('عرض الكل')} ←
+                </span>
+              </span>
+            </Card>
+
+            <div style={{ fontSize: 12.5, fontWeight: 800, color: color.navy, margin: '16px 2px 8px' }}>
+              {t('لوحة المجموعة')}
+            </div>
+          </>
+        )}
+        {isMember && posts.map((gp, k) => (
           <Card key={`${t(gp.who)}-${k}`} pad="14px 16px" style={{ borderRadius: 18, marginBottom: 9 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
               <span
@@ -1153,28 +1358,34 @@ function GroupDetail() {
               marginBottom: 10,
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
               <span
                 style={{
-                  background: color.gold,
-                  color: '#fff',
-                  borderRadius: radius.pill,
-                  padding: '3px 11px',
-                  fontSize: 9.5,
-                  fontWeight: 800,
-                  whiteSpace: 'nowrap',
+                  width: 32,
+                  height: 32,
+                  borderRadius: 10,
+                  background: 'rgba(199,154,60,0.22)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flex: 'none',
                 }}
               >
-                {t('أنت المنظّم')}
+                <Icon path={icons.megaphone} size={16} stroke={color.goldDeep} width={1.6} />
               </span>
-              <span style={{ fontSize: 10.5, color: color.goldDeep, fontWeight: 800 }}>
-                {t('تُرسل إعلاناتك لكل الأعضاء')}
+              <span style={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+                <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>
+                  {t('أدوات المنظّم')}
+                </span>
+                <span style={{ fontSize: 10, color: color.goldDeep, fontWeight: 700 }}>
+                  {t('أعلن لقاءً جديدًا — يصل إشعار لكل الأعضاء')}
+                </span>
               </span>
             </div>
             <input
               value={st.gdMeetWhen}
               onChange={(e) => set({ gdMeetWhen: e.target.value })}
-              placeholder={t('موعد اللقاء القادم — مثال: السبت 6 ص')}
+              placeholder={t('الموعد — مثال: السبت 6 ص')}
               style={{ ...plainInput, marginTop: 10 }}
             />
             <input
@@ -1183,40 +1394,34 @@ function GroupDetail() {
               placeholder={t('المكان')}
               style={{ ...plainInput, marginTop: 7 }}
             />
-            <div style={{ display: 'flex', gap: 8, marginTop: 9 }}>
-              <PillButton
-                tone="gold"
-                onClick={() => {
-                  set((s) => ({
-                    gdExtraPosts: {
-                      ...s.gdExtraPosts,
-                      [i]: [
-                        ...(s.gdExtraPosts[i] ?? []),
-                        {
-                          who: t('عبدالله العتيبي'),
-                          text: `${t('اللقاء القادم:')} ${s.gdMeetWhen || t('قريبًا')} — ${s.gdMeetPlace || t('يُحدد لاحقًا')}`,
-                          time: t('الآن'),
-                        },
-                      ],
-                    },
-                  }));
-                  showToast(t('أُعلن اللقاء ووصل إشعار لكل الأعضاء'));
-                }}
-                style={{ flex: 1, padding: 11, fontSize: 12 }}
-              >
-                {t('أعلن اللقاء وأشعر الأعضاء')}
-              </PillButton>
-              <PillButton
-                tone="outline"
-                onClick={() => go('eventCreate')}
-                style={{ flex: 1, padding: 11, fontSize: 12 }}
-              >
-                {t('حوّلها لفعالية رسمية')}
-              </PillButton>
-            </div>
+            <PillButton
+              tone="gold"
+              full
+              onClick={() => {
+                set((s) => ({
+                  gdExtraPosts: {
+                    ...s.gdExtraPosts,
+                    [i]: [
+                      ...(s.gdExtraPosts[i] ?? []),
+                      {
+                        who: t('عبدالله العتيبي'),
+                        text: `${t('اللقاء القادم:')} ${s.gdMeetWhen || t('قريبًا')} — ${s.gdMeetPlace || t('يُحدد لاحقًا')}`,
+                        time: t('الآن'),
+                      },
+                    ],
+                  },
+                }));
+                showToast(t('أُعلن اللقاء ووصل إشعار لكل الأعضاء'));
+              }}
+              style={{ marginTop: 9, padding: 11, fontSize: 12 }}
+            >
+              {t('أعلن اللقاء')}
+            </PillButton>
           </div>
         )}
 
+        {/* The composer, like the board, is members-only. */}
+        {isMember && (
         <div
           style={{
             background: '#fff',
@@ -1248,6 +1453,271 @@ function GroupDetail() {
           <button
             onClick={send}
             aria-label="إرسال"
+            style={{
+              width: 34,
+              height: 34,
+              borderRadius: 99,
+              border: 'none',
+              background: color.navy,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 'none',
+            }}
+          >
+            <Icon path="M21 3L3 10l7 3 3 7z" size={15} stroke="#fff" width={1.7} />
+          </button>
+        </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * The roster for a group. You sit first when you organise it, second once
+ * you join, and are absent while you are only looking in.
+ */
+function groupMembers(isMine: boolean, isMember: boolean) {
+  const others = groupMemberDefs;
+  const me = { name: ME_UNIT, org: isMine, me: true };
+  if (isMine) return [me, ...others.slice(1)];
+  if (isMember) return [others[0], me, ...others.slice(1, 4)];
+  return others.map((o) => ({ ...o, me: false }));
+}
+
+/** R73b — the full member list, each row a way into a private chat. */
+function GroupMembers() {
+  const { st, back, go } = useResident();
+  const allGroups: Group[] = [
+    ...clubDefs.map((c) => ({ ...c, about: '', organizer: 'ساكن' })),
+    ...st.myGroups,
+  ];
+  const g = allGroups[st.gdIdx] ?? allGroups[0];
+  const isMine = !!g.mine;
+  const roster = groupMembers(isMine, isMine || !!st.clubJoined[st.gdIdx]);
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
+        <BackButton onClick={back} />
+        <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+          <span style={{ fontSize: 17, fontWeight: 900, color: color.navy }}>
+            {t('أعضاء المجموعة')}
+          </span>
+          <span
+            style={{
+              fontSize: 10.5,
+              color: color.slate,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {t(g.name)} · {g.members} {t('عضوًا')}
+          </span>
+        </div>
+      </div>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
+        {roster.map((m, k) => (
+          <Card
+            key={m.name}
+            pad="13px 15px"
+            style={{ borderRadius: 18, marginBottom: 9, display: 'flex', alignItems: 'center', gap: 11 }}
+          >
+            <span
+              style={{
+                width: 38,
+                height: 38,
+                borderRadius: 99,
+                background: memberAvatars[k % memberAvatars.length],
+                color: '#fff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                fontSize: 13.5,
+                fontWeight: 800,
+                flex: 'none',
+              }}
+            >
+              {t(m.name)[0]}
+            </span>
+            <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+              <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(m.name)}</span>
+              <span style={{ fontSize: 10.5, color: color.slate }}>
+                {m.org ? t('المنظّم') : 'me' in m && m.me ? t('أنت') : t('عضو')}
+              </span>
+            </span>
+            {!('me' in m && m.me) && (
+              <PillButton
+                tone="ghost"
+                onClick={() =>
+                  go('dmChat', { dmWith: m.name, dmAv: memberAvatars[k % memberAvatars.length] })
+                }
+                style={{ padding: '7px 15px', fontSize: 11, flex: 'none' }}
+              >
+                {t('رسالة')}
+              </PillButton>
+            )}
+          </Card>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/**
+ * R73c — a private thread between two neighbours. Unlike the group board,
+ * nothing here is visible to anyone else; the other side replies after a beat.
+ */
+function DmChat() {
+  const { st, set, back, showToast } = useResident();
+  const who = st.dmWith ?? '';
+  const thread = st.dmThreads[who] ?? [];
+  const allGroups: Group[] = [
+    ...clubDefs.map((c) => ({ ...c, about: '', organizer: 'ساكن' })),
+    ...st.myGroups,
+  ];
+  const g = allGroups[st.gdIdx] ?? allGroups[0];
+
+  const send = () => {
+    const body = st.dmDraft.trim();
+    if (!body) {
+      showToast(t('اكتب رسالتك أولًا'));
+      return;
+    }
+    set((s) => ({
+      dmThreads: {
+        ...s.dmThreads,
+        [who]: [...(s.dmThreads[who] ?? []), { me: true, text: body, time: t('الآن') }],
+      },
+      dmDraft: '',
+    }));
+    window.setTimeout(
+      () =>
+        set((s) => ({
+          dmThreads: {
+            ...s.dmThreads,
+            [who]: [...(s.dmThreads[who] ?? []), { me: false, text: t(DM_AUTO_REPLY), time: t('الآن') }],
+          },
+        })),
+      DM_REPLY_DELAY,
+    );
+  };
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      <div style={{ padding: '66px 18px 8px', display: 'flex', alignItems: 'center', gap: 11 }}>
+        <BackButton onClick={back} />
+        <span
+          style={{
+            width: 38,
+            height: 38,
+            borderRadius: 99,
+            background: st.dmAv ?? avatarBg.tarek,
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 13.5,
+            fontWeight: 800,
+            flex: 'none',
+          }}
+        >
+          {t(who)[0] ?? '؟'}
+        </span>
+        <div style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+          <span style={{ fontSize: 14.5, fontWeight: 900, color: color.navy }}>{t(who)}</span>
+          <span
+            style={{
+              fontSize: 10,
+              color: color.slate,
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+            }}
+          >
+            {t('محادثة خاصة · عضو في')} {t(g.name)}
+          </span>
+        </div>
+      </div>
+
+      <div style={{ flex: 1, overflowY: 'auto', padding: '10px 18px 16px' }}>
+        {thread.length === 0 && (
+          <div
+            style={{
+              fontSize: 11.5,
+              color: color.slateLight,
+              textAlign: 'center',
+              lineHeight: 1.9,
+              padding: '40px 20px',
+            }}
+          >
+            {t('ابدأ محادثة خاصة مع')} {t(who.split(' — ')[0])} {t('— الرسائل بينكما فقط ولا يراها أحد.')}
+          </div>
+        )}
+        {thread.map((m, k) => (
+          <div
+            key={k}
+            style={{ display: 'flex', justifyContent: m.me ? 'flex-start' : 'flex-end', marginBottom: 9 }}
+          >
+            <div
+              style={{
+                maxWidth: '78%',
+                background: m.me ? color.navy : '#fff',
+                color: m.me ? '#fff' : color.navy,
+                borderRadius: m.me ? '16px 16px 16px 5px' : '16px 16px 5px 16px',
+                padding: '10px 14px',
+                boxShadow: m.me ? 'none' : shadow.card,
+              }}
+            >
+              <div style={{ fontSize: 12.5, lineHeight: 1.8 }}>{m.text}</div>
+              <div
+                style={{
+                  fontSize: 9,
+                  marginTop: 4,
+                  color: m.me ? 'rgba(255,255,255,0.55)' : color.slateLight,
+                }}
+              >
+                {m.time}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div style={{ padding: '0 18px 30px' }}>
+        <div
+          style={{
+            background: '#fff',
+            borderRadius: radius.pill,
+            padding: '11px 16px',
+            boxShadow: shadow.card,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 9,
+          }}
+        >
+          <input
+            value={st.dmDraft}
+            onChange={(e) => set({ dmDraft: e.target.value })}
+            onKeyDown={(e) => e.key === 'Enter' && send()}
+            placeholder={t('اكتب رسالتك…')}
+            style={{
+              flex: 1,
+              border: 'none',
+              background: 'transparent',
+              fontSize: 12.5,
+              color: color.navy,
+              outline: 'none',
+              fontFamily: font.sans,
+              minWidth: 0,
+            }}
+          />
+          <button
+            onClick={send}
+            aria-label={t('إرسال')}
             style={{
               width: 34,
               height: 34,
@@ -1316,18 +1786,8 @@ function GroupCreate() {
           ))}
         </div>
 
-        <Label style={{ marginTop: 16 }}>{t('من يمكنه الانضمام')}</Label>
-        <div style={{ display: 'flex', gap: 8 }}>
-          {gcPrivacyDefs.map((p) => (
-            <Chip
-              key={p}
-              label={p}
-              on={st.gcPrivacy === p}
-              onClick={() => set({ gcPrivacy: p })}
-              style={{ flex: 1, borderRadius: radius.tile, padding: '11px 4px' }}
-            />
-          ))}
-        </div>
+        {/* The «من يمكنه الانضمام» chips are gone: every group is open now,
+            and the organiser approves each request from the group screen. */}
 
         <div style={{ marginTop: 14 }}>
           <Note tone="navy">
@@ -1518,4 +1978,6 @@ const plainInput: React.CSSProperties = {
   fontFamily: font.sans,
 };
 
-export const Events = { Feed, Detail, Create, GroupDetail, GroupCreate };
+export const Events = {
+  Feed, Detail, Create, GroupDetail, GroupCreate, GroupMembers, DmChat,
+};

@@ -17,6 +17,7 @@ export const evIcons = {
   charity: 'M12 21s-7-4.6-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.4-7 10-7 10z',
   market:
     'M6 6h15l-1.5 9h-12zM6 6L5 3H2M9 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM17 20a1 1 0 1 0 0-2 1 1 0 0 0 0 2z',
+  other: 'M5 12h.01M12 12h.01M19 12h.01M12 21a9 9 0 1 1 0-18 9 9 0 0 1 0 18z',
 } as const;
 
 export type EventKind = keyof typeof evIcons;
@@ -28,6 +29,7 @@ export const evTagMeta: Record<EventKind, { label: string; bg: string; c: string
   learn: { label: 'تعليمية', bg: 'rgba(31,59,87,0.08)', c: '#1F3B57' },
   charity: { label: 'خيرية', bg: 'rgba(61,42,92,0.12)', c: '#3D2A5C' },
   market: { label: 'بازار', bg: 'rgba(199,154,60,0.16)', c: '#A87F2C' },
+  other: { label: 'أخرى', bg: 'rgba(107,114,128,0.12)', c: '#6B7280' },
 };
 
 export type EventDef = {
@@ -135,7 +137,9 @@ export const groupIcon: Record<GroupKind, string> = {
   sport: evIcons.sport,
   book: evIcons.learn,
   kids: evIcons.kids,
+  social: evIcons.social,
   volunteer: evIcons.charity,
+  other: evIcons.other,
 };
 
 export const groupAbouts = [
@@ -214,13 +218,56 @@ export const evKindDefs: { key: EventKind; label: string }[] = [
   { key: 'market', label: 'بازار' },
 ];
 
+/**
+ * «أنشئ مجموعة» kind chips. The latest design swapped «تبادل وبيع» for
+ * «أخرى» and dropped the privacy chips entirely — every group is now open,
+ * and the organiser approves joins per request instead.
+ */
 export const gcKindDefs: { key: GroupKind; label: string }[] = [
   { key: 'sport', label: 'رياضة' },
   { key: 'book', label: 'تعليم وثقافة' },
   { key: 'kids', label: 'أطفال وأمهات' },
+  { key: 'social', label: 'اجتماعية' },
   { key: 'volunteer', label: 'تطوّع' },
+  { key: 'other', label: 'أخرى' },
 ];
 
 export const evPlaceDefs = ['النادي الاجتماعي', 'الساحة المركزية', 'قاعة الأنشطة', 'مسار الجري'];
 export const gcFreqDefs = ['أسبوعي', 'كل أسبوعين', 'شهري'];
-export const gcPrivacyDefs = ['كل السكان', 'بموافقة المنظّم'];
+
+/* ================== R73b / R73c — members and private DMs ================== */
+
+/**
+ * The member roster behind a group. «أنت» is spliced in at the position that
+ * matches your standing: first when you organise it, second once you join,
+ * absent while you are only looking.
+ */
+export const groupMemberDefs = [
+  { name: 'سلطان الحربي — فيلا 96', org: true },
+  { name: 'منى الشريف — فيلا 88' },
+  { name: 'فهد العتيبي — فيلا 152' },
+  { name: 'هالة القحطاني — فيلا 96' },
+  { name: 'خالد الدوسري — فيلا 45' },
+];
+
+
+/** Avatar gradients cycled down the roster. */
+export const memberAvatars = [
+  avatarBg.tarek,
+  avatarBg.mona,
+  avatarBg.karim,
+  avatarBg.hala,
+  'linear-gradient(160deg,#5C6E8A,#3A465C)',
+];
+
+/** Who organises each of the four seeded groups. */
+export const groupOrganizers = [
+  'سلطان الحربي — فيلا 96',
+  'منى الشريف — فيلا 88',
+  'هالة القحطاني — فيلا 96',
+  'فهد العتيبي — فيلا 152',
+];
+
+/** The canned reply a neighbour sends back after you message them. */
+export const DM_AUTO_REPLY = 'أهلًا بك! وصلتني رسالتك 👍';
+export const DM_REPLY_DELAY = 1600;

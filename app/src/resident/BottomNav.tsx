@@ -29,7 +29,16 @@ const items: {
     screens: ['community', 'communityPost', 'communityNew'],
     go: 'community',
   },
-  { key: 'share', label: 'رفادتنا', icon: icons.neighbors, screens: ['share', 'shareCreate', 'shareDetail'], go: 'share' },
+  {
+    key: 'share',
+    label: 'استعارة',
+    icon: icons.neighbors,
+    screens: [
+      'share', 'shareCreate', 'shareDetail', 'myListing', 'shareBooking',
+      'shareReqs', 'shareReqDetail', 'shareHist', 'shareHistDetail',
+    ],
+    go: 'share',
+  },
   { key: 'chat', label: 'الرسائل', icon: icons.chat, screens: ['chat'], go: 'chat' },
 ];
 

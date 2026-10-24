@@ -60,16 +60,25 @@ const registry: Record<ScreenKey, ComponentType> = {
 
   // community services
   gate: Misc.GatePass,
+  visitLog: Misc.VisitLog,
   lost: Misc.LostBrowse,
+  lostDetail: Misc.LostDetail,
   lostReport: Misc.LostReport,
   market: Misc.MarketBrowse,
   marketDetail: Misc.MarketDetail,
   chat: Misc.Chat,
+  dmChat: Events.DmChat,
 
-  // رفادتنا neighbor sharing
+  // استعارة neighbor sharing
   share: Sharing.Browse,
   shareCreate: Sharing.Create,
   shareDetail: Sharing.Detail,
+  myListing: Sharing.MyListing,
+  shareBooking: Sharing.Booking,
+  shareReqs: Sharing.ShareRequests,
+  shareReqDetail: Sharing.ShareRequests,
+  shareHist: Sharing.SharesLog,
+  shareHistDetail: Sharing.SharesLogDetail,
 
   // rewards & trust
   rewards: Misc.Rewards,
@@ -106,6 +115,7 @@ const registry: Record<ScreenKey, ComponentType> = {
   liveJob: Marketplace.LiveJob,
   rateProvider: Marketplace.Rate,
   dispute: Marketplace.Dispute,
+  provProfile: Marketplace.ProviderProfile,
 
   // events & groups
   feed: Events.Feed,
@@ -113,6 +123,7 @@ const registry: Record<ScreenKey, ComponentType> = {
   eventCreate: Events.Create,
   groupDetail: Events.GroupDetail,
   groupCreate: Events.GroupCreate,
+  groupMembers: Events.GroupMembers,
 
   // اسأل جيرانك
   community: Community.Feed,

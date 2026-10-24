@@ -80,7 +80,17 @@ export function LangProvider({
 
   return (
     <LangCtx.Provider value={value}>
-      <div key={lang} dir={value.dir} style={{ display: 'contents' }}>
+      {/*
+        No `key={lang}` here. Keying this wrapper would remount the subtree on
+        every switch, which did make every `t()` re-run — but it also threw away
+        all the state below, so switching language bounced you out of the screen
+        gallery and back to the phone. `App` consumes this context directly and
+        nothing under it is memoised, so a plain re-render reaches every `t()`
+        call anyway. Anything that caches a translation across a render would
+        break that, which is why no module constant or state initialiser calls
+        `t()` — they hold the raw Arabic and translate at the render site.
+      */}
+      <div dir={value.dir} style={{ display: 'contents' }}>
         {children}
       </div>
     </LangCtx.Provider>

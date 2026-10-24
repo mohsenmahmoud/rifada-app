@@ -3,6 +3,7 @@ import { color, font, radius, shadow } from '@/theme/tokens';
 import { Wordmark } from '@/resident/Brand';
 import { ResidentApp } from '@/resident/ResidentApp';
 import { galleryGroups, galleryScreenCount } from '@/resident/gallery';
+import type { ScenarioKey } from '@/resident/data/scenarios';
 import type { ScreenKey } from '@/resident/types';
 import { ProviderApp } from '@/provider/ProviderApp';
 import { providerGallery, providerScreenCount } from '@/provider/gallery';
@@ -272,6 +273,14 @@ const APP_TONE: Record<AppId, string> = {
  * Live gallery: every screen rendered in full at 0.49 scale, grouped by
  * feature. Tapping a tile opens it in the interactive phone.
  */
+/** One gallery tile. `scenario` is resident-only; the other apps omit it. */
+type GalleryTile<K extends string> = {
+  id: string;
+  key: K;
+  title: string;
+  scenario?: ScenarioKey;
+};
+
 function Gallery<K extends string>({
   intro,
   groups,
@@ -282,9 +291,11 @@ function Gallery<K extends string>({
   tile = { w: 236, h: 497, scale: 0.49, frameW: 480, frameH: 1014 },
 }: {
   intro: string;
-  groups: { name: string; screens: { id: string; key: K; title: string }[] }[];
+  groups: { name: string; screens: GalleryTile<K>[] }[];
   onOpen: (k: K) => void;
-  renderScreen: (k: K) => ReactNode;
+  /** Gets the whole tile, not just the key — a screen may appear several
+   *  times over under different scenarios. */
+  renderScreen: (s: GalleryTile<K>) => ReactNode;
   footer?: ReactNode;
   tile?: { w: number; h: number; scale: number; frameW: number; frameH: number };
 }) {
@@ -313,7 +324,7 @@ function Gallery<K extends string>({
           </div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, marginTop: 12 }}>
             {g.screens.map((s) => (
-              <div key={s.key} style={{ width: tile.w, display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <div key={s.id} style={{ width: tile.w, display: 'flex', flexDirection: 'column', gap: 8 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '0 2px' }}>
                   <span
                     style={{
@@ -356,11 +367,14 @@ function Gallery<K extends string>({
                       width: tile.frameW,
                       height: tile.frameH,
                       transform: `scale(${tile.scale})`,
-                      transformOrigin: 'top right',
+                      // The frame is wider than the tile, so it must shrink
+                      // towards whichever edge the tile is anchored to —
+                      // otherwise the content scales clean out of view in LTR.
+                      transformOrigin: dir === 'rtl' ? 'top right' : 'top left',
                       pointerEvents: 'none',
                     }}
                   >
-                    {renderScreen(s.key)}
+                    {renderScreen(s)}
                   </div>
                   <button
                     onClick={() => onOpen(s.key)}
@@ -394,7 +408,9 @@ function ResidentGallery({ onOpen }: { onOpen: (k: ScreenKey) => void }) {
       onOpen={onOpen}
       // `bare` keeps the status bar (screens reserve 66px for it) but drops the
       // bezel, so the tile is all app.
-      renderScreen={(k) => <ResidentApp bare fixedScreen={k} width={480} height={1014} />}
+      renderScreen={(s) => (
+        <ResidentApp bare fixedScreen={s.key} scenario={s.scenario} width={480} height={1014} />
+      )}
       footer={
         <div
           style={{
@@ -421,7 +437,7 @@ function ProviderGallery({ onOpen }: { onOpen: (k: ProviderScreen) => void }) {
       intro={`${t('واجهتان في تطبيق واحد — الفني والمتجر (')}${providerScreenCount} ${t('شاشات). اضغط على أي شاشة لفتحها في الجوال التفاعلي.')}`}
       groups={providerGallery}
       onOpen={onOpen}
-      renderScreen={(k) => <ProviderApp bare fixedScreen={k} width={480} height={1014} />}
+      renderScreen={(s) => <ProviderApp bare fixedScreen={s.key} width={480} height={1014} />}
     />
   );
 }
@@ -434,12 +450,12 @@ function AdminGallery({ onOpen }: { onOpen: (k: AdminGalleryKey) => void }) {
       onOpen={onOpen}
       // Three laptop tiles per row inside the 1340px shell.
       tile={{ w: 412, h: 285, scale: 412 / 1360, frameW: 1360, frameH: 940 }}
-      renderScreen={(k) =>
-        k === 'login' ? (
+      renderScreen={(s) =>
+        s.key === 'login' ? (
           <AdminConsole width={1360} height={940} scrollable={false} />
         ) : (
           <AdminConsole
-            initialSection={k}
+            initialSection={s.key}
             width={1360}
             height={940}
             scrollable={false}

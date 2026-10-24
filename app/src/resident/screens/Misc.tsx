@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import { color, font, numeric, radius, shadow } from '@/theme/tokens';
 import { Icon } from '@/ui/Icon';
-import { BackButton, Card, PillButton, ScreenHeader, StatusPill } from '@/ui/primitives';
+import {
+  BackButton, Card, EmptyState, PillButton, ScreenHeader, StatusPill,
+} from '@/ui/primitives';
 import { Wordmark } from '../Brand';
 import { icons } from '../data/icons';
 import { marketDefs } from '../data/marketplace';
@@ -18,12 +21,15 @@ import {
   surveyChipDefs,
   TRUST_MAX,
   TRUST_SCORE,
-  vehicleDefs,
+  visitFilterDefs,
+  visitStateMeta,
 } from '../data/misc';
 import { fmt, statementTotal } from '../data/payments';
 import { useLang } from '@/i18n/lang';
-import { UNIT, UNIT_SHORT } from '../data/seed';
+import { ME_UNIT, UNIT, UNIT_SHORT } from '../data/seed';
 import { useResident } from '../store';
+import type { VisitEntry, VisitPeriod } from '../types';
+import { ChipRow } from './parts';
 import { Radio } from './Marketplace';
 import { t } from '@/i18n/lang';
 
@@ -1148,8 +1154,132 @@ function MoveIn() {
  * R17 — Vehicles and visitor gate passes
  * ------------------------------------------------------------------ */
 
+/** Ⅰ:MM ص/م from a 24-hour `<input type="time">` value. */
+function fmtTime(v: string): string {
+  if (!v) return '';
+  const [h, m] = v.split(':').map(Number);
+  const suffix = h >= 12 ? t('م') : t('ص');
+  const hh = h % 12 || 12;
+  return `${hh}${m ? `:${String(m).padStart(2, '0')}` : ''} ${suffix}`;
+}
+
+/** D/M from an ISO `<input type="date">` value. */
+function fmtDate(v: string): string {
+  if (!v) return t('غدًا');
+  const [, m, d] = v.split('-');
+  return `${parseInt(d, 10)}/${parseInt(m, 10)}`;
+}
+
+/** Shared input chrome for the gate forms. */
+const gateInput: React.CSSProperties = {
+  width: '100%',
+  background: color.bg,
+  border: 'none',
+  borderRadius: radius.tile,
+  padding: '12px 14px',
+  fontSize: 13.5,
+  fontWeight: 600,
+  color: color.navy,
+  boxSizing: 'border-box',
+  fontFamily: font.sans,
+};
+
+/** One row of the visit log, shared by R17 and R17b. */
+function VisitRow({ v }: { v: VisitEntry }) {
+  const meta = visitStateMeta[v.st];
+  const label = v.st === 'out' ? `${t('خرج')} ${t(v.exit ?? '')}` : t(meta.label);
+  return (
+    <Card
+      pad="11px 14px"
+      style={{ borderRadius: 16, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 11 }}
+    >
+      <span
+        style={{
+          width: 32,
+          height: 32,
+          borderRadius: 10,
+          background: color.tile,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flex: 'none',
+        }}
+      >
+        <Icon
+          path="M16 19v-1a4 4 0 0 0-8 0v1M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+          size={15}
+          width={1.5}
+        />
+      </span>
+      <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+        <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>{t(v.name)}</span>
+        <span style={{ fontSize: 10.5, color: color.slate }}>{t(v.when)}</span>
+      </span>
+      <span
+        style={{
+          background: meta.bg,
+          color: meta.c,
+          borderRadius: radius.pill,
+          padding: '3px 11px',
+          fontSize: 10,
+          fontWeight: 800,
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {label}
+      </span>
+    </Card>
+  );
+}
+
+/**
+ * R17 — «سياراتك والزوار». The visitor pass became a scheduled permit: a
+ * start, an optional end, and an SMS to the visitor. Vehicles are editable,
+ * and every issued pass drops into the visit log underneath.
+ */
 function GatePass() {
-  const { st, set, back, showToast } = useResident();
+  const { st, set, back, go, showToast } = useResident();
+
+  const passDayLabel = fmtDate(st.passDate);
+  const issuePass = () => {
+    const when = `${passDayLabel} — ${fmtTime(st.passStart)}${
+      st.passEndOn && st.passEnd ? ` ${t('حتى')} ${fmtTime(st.passEnd)}` : ''
+    }`;
+    const name = st.visitorName.trim() || t('زائر');
+    const phone = st.visitorPhone.trim();
+    set((s) => ({
+      passIssued: true,
+      passName: name,
+      passWhen: when,
+      visitorFormOpen: false,
+      visitLog: [{ name, when, st: 'upcoming', exit: null }, ...s.visitLog],
+    }));
+    showToast(
+      phone
+        ? `${t('صدر التصريح — وصل للأمن وبرسالة إلى')} ${phone}`
+        : t('صدر التصريح — وصل للأمن، أضف رقم الزائر ليصله الكود برسالة'),
+    );
+  };
+
+  const saveVehicle = () => {
+    const name = st.vehName.trim();
+    const plate = st.vehPlate.trim();
+    if (!name || !plate) {
+      showToast(t('اكتب نوع العربية ورقم اللوحة'));
+      return;
+    }
+    if (st.vehForm === -1) {
+      set((s) => ({ vehiclesList: [...s.vehiclesList, { name, plate }], vehForm: null }));
+      showToast(t('سُجّلت عربيتك — الدخول الآلي يتفعّل بعد اعتماد الأمن'));
+    } else {
+      set((s) => ({
+        vehiclesList: s.vehiclesList.map((v, i) => (i === s.vehForm ? { name, plate } : v)),
+        vehForm: null,
+      }));
+      showToast(t('حُفظت تعديلات العربية'));
+    }
+  };
+
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <ScreenHeader title={t('سياراتك والزوار')} onBack={back} />
@@ -1157,9 +1287,9 @@ function GatePass() {
         <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '6px 2px 8px' }}>
           {t('مركباتك المسجلة')}
         </div>
-        {vehicleDefs.map((v) => (
+        {st.vehiclesList.map((v, i) => (
           <Card
-            key={t(v.plate)}
+            key={v.plate}
             pad="13px 16px"
             style={{ borderRadius: 18, marginBottom: 8, display: 'flex', alignItems: 'center', gap: 12 }}
           >
@@ -1177,106 +1307,278 @@ function GatePass() {
             >
               <Icon path={icons.cars} size={20} width={1.6} />
             </span>
-            <span style={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+            <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
               <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(v.name)}</span>
-              <span style={{ fontSize: 11, color: color.slate }}>{t('لوحة:')} {t(v.plate)}</span>
+              {/* Plates are Arabic letters + Latin digits; forcing LTR keeps
+                  the grouping stable in both interface directions. */}
+              <span dir="ltr" style={{ fontSize: 11, color: color.slate, textAlign: 'start' }}>
+                {v.plate}
+              </span>
             </span>
-            <span style={{ flex: 1 }} />
-            <StatusPill tone="green" style={{ fontSize: 10.5, padding: '3px 12px', fontWeight: 800 }}>
-              {t('دخول آلي مفعّل')}
-            </StatusPill>
-          </Card>
-        ))}
-
-        <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '16px 2px 8px' }}>
-          {t('تصريح زائر جديد')}
-        </div>
-        <Card pad={16} style={{ borderRadius: 18 }}>
-          <input
-            value={st.visitorName}
-            onChange={(e) => set({ visitorName: e.target.value })}
-            placeholder={t('اسم الزائر')}
-            style={{
-              width: '100%',
-              background: color.bg,
-              border: 'none',
-              borderRadius: radius.tile,
-              padding: '12px 14px',
-              fontSize: 13.5,
-              fontWeight: 600,
-              color: color.navy,
-              boxSizing: 'border-box',
-              fontFamily: font.sans,
-            }}
-          />
-          <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-            {[t('غدًا'), t('5 مساءً')].map((v) => (
-              <div
-                key={v}
-                style={{
-                  flex: 1,
-                  background: color.bg,
-                  borderRadius: radius.tile,
-                  padding: '12px 14px',
-                  fontSize: 12.5,
-                  fontWeight: 700,
-                  color: color.navy,
-                }}
-              >
-                {t(v)}
-              </div>
-            ))}
-          </div>
-          <PillButton
-            full
-            onClick={() => {
-              set({ passIssued: true, passName: st.visitorName.trim() || t('زائر') });
-              showToast(t('صدر تصريح الزائر — شُورك مع الأمن'));
-            }}
-            style={{ marginTop: 10, padding: 12, fontSize: 13.5 }}
-          >
-            {t('إصدار تصريح QR')}
-          </PillButton>
-        </Card>
-
-        {st.passIssued && (
-          <div
-            style={{
-              background: `linear-gradient(160deg,${color.navyLight},${color.navy})`,
-              borderRadius: radius.card,
-              padding: 18,
-              marginTop: 12,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 14,
-            }}
-          >
-            <span
+            <button
+              onClick={() => set({ vehForm: i, vehName: v.name, vehPlate: v.plate })}
               style={{
-                width: 86,
-                height: 86,
-                borderRadius: 14,
-                background: '#fff',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                border: 'none',
+                background: color.bg,
+                cursor: 'pointer',
+                borderRadius: radius.pill,
+                padding: '6px 14px',
+                fontSize: 11,
+                fontWeight: 800,
+                color: color.navy,
+                fontFamily: font.sans,
                 flex: 'none',
               }}
             >
-              <Icon path={icons.qr} size={62} width={1.4} />
-            </span>
-            <span style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0 }}>
-              <span style={{ fontSize: 14, fontWeight: 900, color: '#fff' }}>
-                {t('زيارة متوقعة:')} {st.passName}
+              {t('تعديل')}
+            </button>
+          </Card>
+        ))}
+
+        {st.vehForm !== null ? (
+          <Card pad={16} style={{ borderRadius: 18, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <div style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>
+              {st.vehForm === -1 ? t('أضف عربيتك') : t('تعديل بيانات العربية')}
+            </div>
+            <input
+              value={st.vehName}
+              onChange={(e) => set({ vehName: e.target.value })}
+              placeholder={t('نوع العربية ولونها — مثال: تويوتا كامري بيضاء')}
+              style={gateInput}
+            />
+            <input
+              dir="ltr"
+              value={st.vehPlate}
+              onChange={(e) => set({ vehPlate: e.target.value })}
+              placeholder={t('رقم اللوحة')}
+              style={{ ...gateInput, textAlign: 'start' }}
+            />
+            <div style={{ display: 'flex', gap: 8 }}>
+              <PillButton full onClick={saveVehicle} style={{ padding: 11, fontSize: 12.5 }}>
+                {st.vehForm === -1 ? t('إضافة العربية') : t('حفظ التعديلات')}
+              </PillButton>
+              <PillButton
+                tone="ghost"
+                onClick={() => set({ vehForm: null })}
+                style={{ padding: '11px 20px', fontSize: 12.5 }}
+              >
+                {t('إلغاء')}
+              </PillButton>
+            </div>
+          </Card>
+        ) : (
+          <button
+            onClick={() => set({ vehForm: -1, vehName: '', vehPlate: '' })}
+            style={{
+              width: '100%',
+              border: `1.5px dashed ${color.line}`,
+              background: 'transparent',
+              cursor: 'pointer',
+              borderRadius: 18,
+              padding: 13,
+              fontSize: 12.5,
+              fontWeight: 800,
+              color: color.slate,
+              fontFamily: font.sans,
+            }}
+          >
+            {t('+ أضف عربيتك')}
+          </button>
+        )}
+
+        <PillButton
+          full
+          tone={st.visitorFormOpen ? 'ghost' : 'navy'}
+          onClick={() => set((s) => ({ visitorFormOpen: !s.visitorFormOpen }))}
+          style={{ marginTop: 14, padding: 13, fontSize: 13.5 }}
+        >
+          {st.visitorFormOpen ? t('إغلاق النموذج') : t('إصدار تصريح زائر')}
+        </PillButton>
+
+        {st.visitorFormOpen && (
+          <Card
+            pad={16}
+            style={{ borderRadius: 18, marginTop: 10, display: 'flex', flexDirection: 'column', gap: 8 }}
+          >
+            <FieldLabel>{t('اسم الزائر')}</FieldLabel>
+            <input
+              value={st.visitorName}
+              onChange={(e) => set({ visitorName: e.target.value })}
+              placeholder={t('مثال: محمد الشناوي')}
+              style={gateInput}
+            />
+            <FieldLabel>{t('رقم جوال الزائر')}</FieldLabel>
+            <input
+              dir="ltr"
+              value={st.visitorPhone}
+              onChange={(e) => set({ visitorPhone: e.target.value })}
+              placeholder="05x xxx xxxx"
+              inputMode="tel"
+              style={{ ...gateInput, textAlign: 'start' }}
+            />
+
+            <div style={{ display: 'flex', gap: 8 }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <FieldLabel>{t('بداية الزيارة')}</FieldLabel>
+                <input
+                  type="date"
+                  value={st.passDate}
+                  onChange={(e) => set({ passDate: e.target.value })}
+                  style={gateInput}
+                />
+                <input
+                  type="time"
+                  value={st.passStart}
+                  onChange={(e) => set({ passStart: e.target.value })}
+                  style={gateInput}
+                />
+              </div>
+              {st.passEndOn && (
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <FieldLabel style={{ flex: 1 }}>{t('نهاية الزيارة')}</FieldLabel>
+                    <button
+                      onClick={() => set({ passEndOn: false })}
+                      style={{
+                        border: 'none',
+                        background: 'transparent',
+                        cursor: 'pointer',
+                        color: color.slateLight,
+                        fontSize: 11,
+                        fontWeight: 800,
+                        fontFamily: font.sans,
+                      }}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                  <input
+                    type="date"
+                    value={st.passEndDate}
+                    onChange={(e) => set({ passEndDate: e.target.value })}
+                    style={gateInput}
+                  />
+                  <input
+                    type="time"
+                    value={st.passEnd}
+                    onChange={(e) => set({ passEnd: e.target.value })}
+                    style={gateInput}
+                  />
+                </div>
+              )}
+            </div>
+            {!st.passEndOn && (
+              <button
+                onClick={() => set({ passEndOn: true })}
+                style={{
+                  border: `1.5px dashed ${color.line}`,
+                  background: 'transparent',
+                  cursor: 'pointer',
+                  borderRadius: radius.tile,
+                  padding: 11,
+                  fontSize: 12,
+                  fontWeight: 800,
+                  color: color.slate,
+                  fontFamily: font.sans,
+                }}
+              >
+                {t('+ أضف وقت انتهاء (اختياري)')}
+              </button>
+            )}
+            <PillButton full onClick={issuePass} style={{ padding: 12, fontSize: 13.5 }}>
+              {t('أصدر التصريح')}
+            </PillButton>
+          </Card>
+        )}
+
+        {st.passIssued && (
+          <Card pad={16} style={{ borderRadius: 18, marginTop: 10 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span
+                style={{
+                  width: 22,
+                  height: 22,
+                  borderRadius: 99,
+                  background: 'rgba(63,166,107,0.14)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  flex: 'none',
+                }}
+              >
+                <Icon path="M4 12.5l5 5L20 6.5" size={13} stroke={color.green} width={2.4} />
               </span>
-              <span style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.75)' }}>
-                {t('غدًا — 5 مساءً · بوابة رئيسية')}
+              <span style={{ fontSize: 12, fontWeight: 800, color: color.greenDeep }}>
+                {t('صدر التصريح — وصل للأمن ولرقم الزائر برسالة')}
               </span>
-              <span style={{ fontSize: 11, fontWeight: 800, color: color.gold }}>
-                {t('تمت مشاركة التصريح مع الأمن')}
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 13, marginTop: 12 }}>
+              <Icon path={icons.qr} size={34} width={1.5} style={{ flex: 'none' }} />
+              <span style={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+                <span style={{ fontSize: 13, fontWeight: 900, color: color.navy }}>
+                  {t(st.passName)} · <span dir="ltr">GT-8214</span>
+                </span>
+                <span style={{ fontSize: 11, color: color.slate }}>{st.passWhen}</span>
               </span>
-            </span>
-          </div>
+            </div>
+            <div style={{ fontSize: 10.5, color: color.slateLight, marginTop: 10 }}>
+              {t('يظهر الكود للحظات ثم يُحفظ في سجل الزيارات')}
+            </div>
+          </Card>
+        )}
+
+        <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '18px 2px 8px' }}>
+          {t('سجل الزيارات')}
+        </div>
+        {st.visitLog.slice(0, 3).map((v, i) => (
+          <VisitRow key={`${v.name}-${i}`} v={v} />
+        ))}
+        {st.visitLog.length > 3 && (
+          <button
+            onClick={() => go('visitLog')}
+            style={{
+              width: '100%',
+              border: 'none',
+              background: 'transparent',
+              cursor: 'pointer',
+              padding: 10,
+              fontSize: 12,
+              fontWeight: 800,
+              color: color.gold,
+              fontFamily: font.sans,
+            }}
+          >
+            {t('عرض كل الزيارات')} ({st.visitLog.length}) ←
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/** R17b — the full visit log, filtered by period. */
+function VisitLog() {
+  const { st, set, back } = useResident();
+  const rows = st.visitLog.filter(
+    (v) => st.vlFilter === 'all' || (v.period ?? 'week') === st.vlFilter,
+  );
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      <ScreenHeader title={t('سجل الزيارات')} onBack={back} />
+      <ChipRow
+        chips={visitFilterDefs}
+        value={st.vlFilter}
+        onPick={(k: VisitPeriod | 'all') => set({ vlFilter: k })}
+        style={{ padding: '4px 18px 10px' }}
+      />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '4px 18px 40px' }}>
+        {rows.length === 0 ? (
+          <EmptyState
+            icon="M16 19v-1a4 4 0 0 0-8 0v1M12 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"
+            title={t('لا زيارات في هذه الفترة')}
+          />
+        ) : (
+          rows.map((v, i) => <VisitRow key={`${v.name}-${i}`} v={v} />)
         )}
       </div>
     </div>
@@ -1284,8 +1586,32 @@ function GatePass() {
 }
 
 /* ------------------------------------------------------------------ *
- * R18 / R19 — Lost & found
+ * R18 / R18b / R19 — Lost & found
  * ------------------------------------------------------------------ */
+
+/**
+ * A lost-item thumbnail. These are the app's only remote images, so a failed
+ * load falls back to the camera placeholder rather than a broken-image glyph.
+ */
+function LostPhoto({ src, size, height }: { src?: string; size: number; height?: number }) {
+  const [failed, setFailed] = useState(false);
+  if (!src || failed) {
+    return <Icon path={icons.camera} size={size} stroke={color.slateLight} width={1.5} />;
+  }
+  return (
+    <img
+      src={src}
+      alt=""
+      onError={() => setFailed(true)}
+      style={{
+        width: '100%',
+        height: height ?? '100%',
+        objectFit: 'cover',
+        display: 'block',
+      }}
+    />
+  );
+}
 
 function LostBrowse() {
   const { st, back, go } = useResident();
@@ -1302,10 +1628,15 @@ function LostBrowse() {
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
           {st.lostItems.map((li, i) => (
-            <div
+            <button
               key={`${t(li.title)}-${i}`}
+              onClick={() => go('lostDetail', { selLostIdx: i })}
               style={{
                 background: '#fff',
+                border: 'none',
+                cursor: 'pointer',
+                padding: 0,
+                textAlign: 'start',
                 borderRadius: 18,
                 overflow: 'hidden',
                 boxShadow: shadow.card,
@@ -1320,7 +1651,7 @@ function LostBrowse() {
                   justifyContent: 'center',
                 }}
               >
-                <Icon path={icons.camera} size={30} stroke={color.slateLight} width={1.5} />
+                <LostPhoto src={li.photo} size={30} />
               </div>
               <div
                 style={{
@@ -1340,9 +1671,117 @@ function LostBrowse() {
                 <span style={{ fontSize: 10.5, color: color.slate, lineHeight: 1.6 }}>
                   {t(li.loc)} · {t(li.date)}
                 </span>
+                <span style={{ fontSize: 10, fontWeight: 700, color: color.slateLight }}>
+                  {t('أبلغ عنها')} {t(li.owner ?? ME_UNIT)}
+                </span>
               </div>
-            </div>
+            </button>
           ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * R18b — one lost-and-found report, with a way to reach whoever filed it.
+ * Contact stays inside the app: neither side sees the other's number.
+ */
+function LostDetail() {
+  const { st, back, go, showToast } = useResident();
+  const li = st.lostItems[st.selLostIdx] ?? st.lostItems[0];
+  const owner = li.owner ?? ME_UNIT;
+
+  return (
+    <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      <ScreenHeader title={t('تفاصيل البلاغ')} onBack={back} />
+      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
+        <Card pad={0} style={{ borderRadius: radius.card, overflow: 'hidden' }}>
+          {li.photo && (
+            <div
+              style={{
+                height: 190,
+                background: color.tile,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <LostPhoto src={li.photo} size={44} height={190} />
+            </div>
+          )}
+          <div style={{ padding: 16, display: 'flex', flexDirection: 'column', gap: 6 }}>
+            <StatusPill
+              tone={li.kind === 'found' ? 'green' : 'coral'}
+              style={{ alignSelf: 'flex-start', fontSize: 10, padding: '3px 12px', fontWeight: 800 }}
+            >
+              {li.kind === 'found' ? t('وُجد') : t('مفقود')}
+            </StatusPill>
+            <span style={{ fontSize: 17, fontWeight: 900, color: color.navy }}>{t(li.title)}</span>
+            <span style={{ fontSize: 12, color: color.slate, lineHeight: 1.7 }}>
+              {t(li.loc)} · {t(li.date)}
+            </span>
+          </div>
+        </Card>
+
+        <Card
+          pad="14px 16px"
+          style={{ borderRadius: 18, marginTop: 12, display: 'flex', alignItems: 'center', gap: 12 }}
+        >
+          <span
+            style={{
+              width: 40,
+              height: 40,
+              borderRadius: 99,
+              background: `linear-gradient(160deg,${color.navyLight},${color.navy})`,
+              color: '#fff',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: 14,
+              fontWeight: 800,
+              flex: 'none',
+            }}
+          >
+            {t(owner)[0]}
+          </span>
+          <span style={{ display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+            <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>{t(owner)}</span>
+            <span style={{ fontSize: 11, color: color.slate }}>{t('أبلغ عنها')}</span>
+          </span>
+        </Card>
+
+        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
+          <PillButton
+            full
+            onClick={() => {
+              go('chat');
+              showToast(`${t('فُتحت محادثة مع')} ${t(owner)}`);
+            }}
+            style={{ padding: 12, fontSize: 13, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7 }}
+          >
+            <Icon path={icons.chat} size={15} stroke="#fff" width={1.6} />
+            {t('افتح محادثة')}
+          </PillButton>
+          <PillButton
+            tone="ghost"
+            onClick={() => showToast(`${t('جاري الاتصال بـ')}${t(owner)}…`)}
+            style={{ padding: '12px 20px', fontSize: 13, display: 'flex', alignItems: 'center', gap: 7 }}
+          >
+            <Icon path={icons.call} size={15} width={1.6} />
+            {t('اتصال')}
+          </PillButton>
+        </div>
+        <div
+          style={{
+            fontSize: 10.5,
+            color: color.slateLight,
+            textAlign: 'center',
+            marginTop: 12,
+            lineHeight: 1.7,
+          }}
+        >
+          {t('التواصل داخل التطبيق — بلاغ موثّق بوحدة صاحبه')}
         </div>
       </div>
     </div>
@@ -2193,7 +2632,9 @@ export const Misc = {
   Score,
   MoveIn,
   GatePass,
+  VisitLog,
   LostBrowse,
+  LostDetail,
   LostReport,
   MarketBrowse,
   MarketDetail,

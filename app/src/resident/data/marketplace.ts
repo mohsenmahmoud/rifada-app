@@ -17,12 +17,38 @@ export const providerDefs = [
   { name: 'شركة النور للصيانة', rating: '4.4', eta: '25 دقيقة', price: 110 },
 ];
 
-export const liveStepDefs = [
-  'تم التأكيد',
-  'في الطريق إليك',
-  'وصل مقدم الخدمة',
-  'جاري التنفيذ',
-  'تم الانتهاء',
+/**
+ * The live-job timeline. Each step now carries its own line of explanation
+ * and a timestamp — the last one has no time because it hasn't happened yet.
+ */
+export const liveStepDefs: { label: string; sub: string; time: string }[] = [
+  { label: 'تم التأكيد', sub: 'قبلت العرض وتم إشعار', time: '9:41 ص' },
+  { label: 'في الطريق إليك', sub: 'انطلق نحوك — يمكنك الاتصال به مباشرة', time: '9:44 ص' },
+  { label: 'وصل مقدم الخدمة', sub: 'عند بوابة وحدتك — تأكد من هويته عبر التطبيق', time: '9:52 ص' },
+  { label: 'جاري التنفيذ', sub: 'بدأ العمل — يصلك إشعار عند الانتهاء', time: '9:55 ص' },
+  { label: 'تم الانتهاء', sub: 'راجع العمل ثم قيّم تجربتك', time: '' },
+];
+
+/** How long the matching screen searches before a provider accepts. */
+export const MATCH_DELAY = 3200;
+
+/** R35b — the reviews on a provider's profile. */
+export const provReviewDefs = [
+  {
+    who: 'نورة القحطاني — فيلا 88',
+    stars: '5.0',
+    text: 'شغل نظيف وسريع، وصل قبل الموعد وحل مشكلة التسريب من أول زيارة.',
+  },
+  {
+    who: 'فهد الشمري — فيلا 152',
+    stars: '4.5',
+    text: 'محترم وأسعاره واضحة — بس تأخر ١٠ دقائق عن الموعد.',
+  },
+  {
+    who: 'منيرة الدوسري — فيلا 96',
+    stars: '5.0',
+    text: 'ممتاز جدًا، نظّف المكان بعد ما خلص وشرح لي سبب المشكلة.',
+  },
 ];
 
 export const disputeReasonDefs = [

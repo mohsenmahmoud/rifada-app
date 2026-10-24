@@ -4,6 +4,7 @@ import { BottomNav } from './BottomNav';
 import { ResidentProvider, useResident, type ResidentConfig } from './store';
 import { ScreenRouter } from './screens';
 import type { ScreenKey } from './types';
+import type { ScenarioKey } from './data/scenarios';
 import { t, useLang } from '@/i18n/lang';
 
 /** Floating toast — the app's single feedback channel. */
@@ -99,6 +100,9 @@ export type ResidentAppProps = {
   initialScreen?: ScreenKey;
   /** Pin to a single screen — used by the screen gallery. */
   fixedScreen?: ScreenKey | null;
+  /** Start from a named state — also the gallery's, so one screen can be
+   *  shown several times over. */
+  scenario?: ScenarioKey | null;
   /** Drop the device bezel, keeping only the status bar. */
   bare?: boolean;
   width?: number;
@@ -118,12 +122,13 @@ export function ResidentApp({
   config,
   initialScreen,
   fixedScreen = null,
+  scenario = null,
   bare = false,
   width,
   height,
   frameless = false,
 }: ResidentAppProps) {
-  const cfg: ResidentConfig = { ...defaultResidentConfig, ...config, fixedScreen };
+  const cfg: ResidentConfig = { ...defaultResidentConfig, ...config, fixedScreen, scenario };
   const body = (
     <ResidentProvider config={cfg} initialScreen={initialScreen}>
       {frameless ? (

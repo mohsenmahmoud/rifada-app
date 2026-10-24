@@ -41,6 +41,29 @@ textarea:focus {
   -ms-overflow-style: none;
 }
 
+/* The expanding rings while the app looks for a service provider. */
+@keyframes radar {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.25);
+    opacity: 0;
+  }
+}
+
+/* The live-incident dot on the home alert strip. */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
 @keyframes pop {
   0% {
     transform: scale(0.4);
