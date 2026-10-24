@@ -95,7 +95,7 @@ export function Home() {
         </button>
       </div>
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 18px 130px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 18px 40px' }}>
         {/* hero card */}
         <div
           style={{
@@ -430,7 +430,7 @@ export function Home() {
         aria-label="محادثة الإدارة"
         style={{
           position: 'absolute',
-          bottom: 104,
+          bottom: 22,
           left: 18,
           width: 52,
           height: 52,
@@ -493,7 +493,7 @@ export function ServicesList() {
         style={{
           flex: 1,
           overflowY: 'auto',
-          padding: '8px 18px 130px',
+          padding: '8px 18px 40px',
           display: 'flex',
           flexDirection: 'column',
           gap: 8,

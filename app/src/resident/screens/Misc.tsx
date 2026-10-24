@@ -136,7 +136,7 @@ function Profile() {
         </button>
       </div>
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 130px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {/* What you owe, as a way straight into payment. */}
         <button
           onClick={() => (can('pay') ? go('pay') : lockToast())}
@@ -606,7 +606,7 @@ function Rewards() {
         <div style={{ fontSize: 21, fontWeight: 900, color: color.navy }}>{t('المكافآت')}</div>
       </div>
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 130px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         {/* the navy → purple points card */}
         <div
           style={{

@@ -79,7 +79,7 @@ function Browse() {
         </div>
       )}
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '10px 18px 130px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '10px 18px 40px' }}>
         {st.shareTab === 'mine' ? (
           <>
             <div style={{ fontSize: 13, fontWeight: 800, color: color.navy, margin: '2px 2px 10px' }}>

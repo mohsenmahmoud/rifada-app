@@ -120,6 +120,11 @@ Each is commented at the site of the change:
   the live job, skipping the accept card the template defines (`matchSearching`
   / `matchFound` / `matchAccept`). The port shows the card, since that is the
   screen the design actually drew.
+- **The bottom bar floats over the content** in the prototype, which pads each
+  scroll area by hand — 30 or 40px against an 83px bar — so the submit button
+  on the rating, dispute and «شارك شيئًا لديك» screens ends up half-hidden
+  behind it. The app shell reserves the bar's height instead (`NAV_H`), so a
+  screen cannot put anything underneath it.
 - **The design transliterates three names two ways** (Alsharif/Al-Sharif,
   Alharbi/Al-Harbi, Alotaibi/Al-Otaibi) depending on whether the string sits in
   its code or in an embedded JSON blob. The port follows the majority spelling

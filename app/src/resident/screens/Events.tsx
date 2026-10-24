@@ -171,7 +171,7 @@ function Feed() {
         </div>
       )}
 
-      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 18px 130px' }}>
+      <div style={{ flex: 1, overflowY: 'auto', padding: '12px 18px 40px' }}>
         {st.evTab === 'up' && (
           <>
             {/* hero — the next event, over the compound photo */}

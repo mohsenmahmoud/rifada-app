@@ -5,8 +5,17 @@ import { useResident } from './store';
 import type { ScreenKey } from './types';
 import { t } from '@/i18n/lang';
 
-/** Screens that keep the bottom bar visible. */
+/** Screens that hide the bottom bar. */
 const NAV_HIDDEN: ScreenKey[] = ['splash', 'otp', 'setup'];
+
+/**
+ * The bar's rendered height (10 + 22 icon + 3 + ~12 label + 26 home-indicator
+ * inset). The app shell reserves this much so no screen can put content — a
+ * submit button, most often — underneath it.
+ */
+export const NAV_H = 83;
+
+export const navVisible = (screen: ScreenKey) => !NAV_HIDDEN.includes(screen);
 
 /**
  * Persistent 5-item bar. «اسأل جيرانك» sits in slot 3 — the user swapped

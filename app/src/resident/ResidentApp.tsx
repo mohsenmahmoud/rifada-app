@@ -1,6 +1,6 @@
 import { color, font, radius } from '@/theme/tokens';
 import { PhoneFrame } from '@/ui/PhoneFrame';
-import { BottomNav } from './BottomNav';
+import { BottomNav, NAV_H, navVisible } from './BottomNav';
 import { ResidentProvider, useResident, type ResidentConfig } from './store';
 import { ScreenRouter } from './screens';
 import type { ScreenKey } from './types';
@@ -76,6 +76,7 @@ function FamilyPreviewBanner() {
 
 function AppBody() {
   const { dir } = useLang();
+  const { screen } = useResident();
   return (
     <div
       dir={dir}
@@ -89,7 +90,16 @@ function AppBody() {
     >
       <FamilyPreviewBanner />
       <Toast />
-      <ScreenRouter />
+      {/*
+        Screens are `inset: 0` inside this box, so stopping it above the bar
+        is what keeps a screen's last button reachable. The prototype lets the
+        bar float over the content instead and pads each scroll area by hand —
+        30 or 40px against an 83px bar — which leaves the submit button on the
+        rating, dispute and «شارك شيئًا» screens half-hidden behind it.
+      */}
+      <div style={{ position: 'absolute', inset: 0, bottom: navVisible(screen) ? NAV_H : 0 }}>
+        <ScreenRouter />
+      </div>
       <BottomNav />
     </div>
   );
