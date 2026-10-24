@@ -618,7 +618,7 @@ function LiveJob() {
  * job so the compound can take its cut from the provider — رفادة never holds
  * the money, which is why this is a declaration rather than a payment.
  */
-function PaymentAndRating() {
+function PaymentAndRating({ submitLabel }: { submitLabel?: string } = {}) {
   const { st, set, showToast } = useResident();
   return (
     <>
@@ -703,7 +703,7 @@ function PaymentAndRating() {
         }}
         style={{ marginTop: 14, padding: 13, fontSize: 13.5 }}
       >
-        {t('تسجيل وإنهاء')}
+        {submitLabel ?? t('تسجيل وإنهاء')}
       </PillButton>
     </>
   );
@@ -793,7 +793,7 @@ function Rate() {
           {t('قيّم تجربتك مع')} {t(prov.name)}
         </div>
         <Card pad={16} style={{ width: '100%', marginTop: 18, textAlign: 'start' }}>
-          <PaymentAndRating />
+          <PaymentAndRating submitLabel={t('إرسال والعودة للرئيسية')} />
         </Card>
       </div>
       <div style={{ flex: 1 }} />

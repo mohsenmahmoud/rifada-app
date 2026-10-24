@@ -129,6 +129,14 @@ export const storeIcon = (kind: Store['kind']) => shopIcons[kind] ?? shopIcons.a
 export const FREE_DELIVERY_OVER = 200;
 
 export const orderStepDefs = ['تم استلام الطلب', 'قيد التحضير', 'في الطريق إليك', 'تم التوصيل'];
+
+/** The simulate button names the step it starts, not the one just reached. */
+export const orderAdvanceLabels = [
+  'ابدأ: قيد التحضير',
+  'الخطوة التالية: في الطريق',
+  'الخطوة التالية: تم التوصيل',
+  '',
+];
 export const trackEtas = ['45 - 55 دقيقة', '35 - 45 دقيقة', '15 - 20 دقيقة', 'وصل طلبك ✓'];
 
 /** R50 — reorderable past orders. */

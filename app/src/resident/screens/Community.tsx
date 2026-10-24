@@ -603,7 +603,7 @@ function Post() {
               </span>
             </button>
             <span style={{ fontSize: 11, color: color.slate, whiteSpace: 'nowrap' }}>
-              · {comments.length} {t('تعليق')}
+              · {comments.length} {t('تعليقًا')}
             </span>
           </div>
         </Card>
@@ -798,7 +798,7 @@ function Post() {
 
 /** R77 — Compose or edit a post. */
 function New() {
-  const { st, set, back, showToast } = useResident();
+  const { st, cfg, set, back, showToast } = useResident();
   const isEdit = st.cmEditIdx !== null;
 
   const publish = () => {
@@ -876,7 +876,7 @@ function New() {
                 {t(ME)} <span style={{ color: color.goldDeep }}>— {t(UNIT_SHORT)}</span>
               </span>
               <span style={{ fontSize: 10, color: color.greenDeep, fontWeight: 800 }}>
-                {t('حساب موثّق ✓')}
+                {t('ينشر لكل جيران')} {t(cfg.compoundName)} · {t('حساب موثّق ✓')}
               </span>
             </span>
           </div>
@@ -989,7 +989,7 @@ function New() {
         </Card>
 
         <div style={{ fontSize: 12.5, fontWeight: 700, color: color.navy, margin: '16px 0 8px' }}>
-          {t('تصنيف المنشور')}
+          {t('التصنيف')}
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           {/* The tag values are the state's own type (PostTag), so they stay
@@ -1017,6 +1017,18 @@ function New() {
               </button>
             );
           })}
+        </div>
+
+        <div
+          style={{
+            fontSize: 10.5,
+            color: color.slateLight,
+            marginTop: 14,
+            lineHeight: 1.8,
+            textAlign: 'center',
+          }}
+        >
+          {t('كل الأعضاء جيران موثّقون بوحداتهم — لا حسابات مجهولة.')}
         </div>
       </div>
 

@@ -167,7 +167,7 @@ export function MaintList() {
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={() => go('svcHub')} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('بلاغاتي')}</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('الصيانة')}</div>
         <div style={{ flex: 1 }} />
         <PillButton tone="gold" size="sm" onClick={() => go('maintNew')}>
           {t('+ بلاغ جديد')}

@@ -94,6 +94,14 @@ export function Amenities() {
   );
 }
 
+/**
+ * The confirmation screens read from the booking the picker set. Opened cold —
+ * which is how the gallery opens them — there is none, so they fall back to a
+ * sample the way the design's own `bookName` binding does.
+ */
+const BOOK_NAME = 'الجيم';
+const BOOK_SLOT = '6 مساءً';
+
 /** R9 — Booking confirmation. */
 export function AmenConfirm() {
   const { st, back, go, showToast } = useResident();
@@ -117,11 +125,11 @@ export function AmenConfirm() {
             <Icon path={st.bookIconPath ?? icons.amen} size={30} width={1.6} />
           </span>
           <div style={{ fontSize: 18, fontWeight: 900, color: color.navy, marginTop: 12 }}>
-            {st.bookAmen}
+            {t(st.bookAmen ?? BOOK_NAME)}
           </div>
           <div style={{ width: '100%', marginTop: 16 }}>
             <Row label={t('التاريخ')} value={t('اليوم — الجمعة 10 يوليو')} />
-            <Row label={t('الوقت')} value={st.bookSlot ?? ''} />
+            <Row label={t('الوقت')} value={t(st.bookSlot ?? BOOK_SLOT)} />
             <Row label={t('المدة')} value={t('ساعة واحدة')} last />
           </div>
         </Card>
@@ -136,7 +144,7 @@ export function AmenConfirm() {
           full
           onClick={() => {
             go('amenDone');
-            showToast(`${t('تم تأكيد حجز')} ${st.bookAmen}`);
+            showToast(`${t('تم تأكيد حجز')} ${t(st.bookAmen ?? BOOK_NAME)}`);
           }}
         >
           {t('تأكيد الحجز')}
@@ -182,7 +190,7 @@ export function AmenDone() {
         {t('تم تأكيد حجزك')}
       </div>
       <div style={{ fontSize: 13.5, color: color.slate, marginTop: 6 }}>
-        {st.bookAmen} {t('— اليوم،')} {st.bookSlot}
+        {t(st.bookAmen ?? BOOK_NAME)} {t('— اليوم،')} {t(st.bookSlot ?? BOOK_SLOT)}
       </div>
       <div
         style={{

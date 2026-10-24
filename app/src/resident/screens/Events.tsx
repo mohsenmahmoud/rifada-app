@@ -868,7 +868,7 @@ function Detail() {
               </span>
             ))}
             <span style={{ fontSize: 11, color: color.slate, marginRight: 14 }}>
-              و{seats.taken - 4} {t('آخرون سيحضرون')}
+              و{seats.taken} {t('من جيرانك مسجّلون')}
             </span>
           </div>
         </Card>

@@ -599,17 +599,19 @@ function Financial() {
     {
       dot: color.orange,
       title: t('حماية من السرقة'),
-      sub: t('تغطية حتى 50,000 ر.س على محتويات الوحدة — بوليصة سارية.'),
+      sub: t('تغطية محتويات الوحدة حتى 250,000 ر.س — ضمن باقة الساكن الذهبي'),
     },
     {
       dot: color.green,
       title: t('تقييم السداد'),
-      sub: t('سجل سداد إيجابي 12 شهرًا متتالية — يفيدك عند التقدم لعقود إيجار أو تقسيط مستقبلية.'),
+      sub: t('سجل سداد إيجابي 12 شهرًا متتالية — يفيدك عند التقدم لعقود إيجار أو تقسيط مستقبلية'),
     },
     {
       dot: color.navy,
       title: t('تأمين الوحدة'),
-      sub: t('بوليصة JW-214-2026 — سارية حتى 31 ديسمبر 2026.'),
+      // The policy number keeps the design's JW prefix: it is an issued
+      // document, not a brand surface, so it predates the rename.
+      sub: t('وثيقة JW-214-2026 سارية حتى نهاية العام — تشمل الحريق وتسريبات المياه'),
     },
   ];
 
@@ -674,7 +676,7 @@ function Financial() {
                 letterSpacing: 1,
               }}
             >
-              POLICY RFD-214-2026
+              POLICY JW-214-2026
             </div>
             <div style={{ fontSize: 10.5, color: color.gold, fontWeight: 800, marginTop: 4 }}>
               {t('سارية حتى 31 ديسمبر 2026')}

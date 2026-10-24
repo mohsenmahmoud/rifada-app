@@ -6,6 +6,7 @@ import { UNIT, UNIT_NO } from '../data/seed';
 import {
   FREE_DELIVERY_OVER,
   menuByStore,
+  orderAdvanceLabels,
   orderStepDefs,
   pastOrderDefs,
   shopCatDefs,
@@ -760,7 +761,7 @@ function Track() {
 
         {notDone ? (
           <PillButton full onClick={advance} style={{ marginTop: 12, padding: 13, fontSize: 13.5 }}>
-            {t(orderStepDefs[stage + 1])} {t('(محاكاة)')}
+            {t(orderAdvanceLabels[Math.min(stage + 1, 3)])} {t('(محاكاة)')}
           </PillButton>
         ) : (
           <div
