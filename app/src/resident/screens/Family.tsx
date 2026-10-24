@@ -8,7 +8,6 @@ import {
   permDefs,
   relationDefs,
 } from '../data/family';
-import { icons } from '../data/icons';
 import { UNIT_SHORT } from '../data/seed';
 import { useResident } from '../store';
 import { Note } from './parts';
@@ -51,7 +50,7 @@ function Members() {
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
         <div style={{ fontSize: 11.5, color: color.slate, margin: '4px 2px 10px' }}>
-          {t('أنت مالك الوحدة — تتحكم في صلاحيات كل فرد مرتبط بـ')}{t(UNIT_SHORT)}
+          {t('أنت مالك الوحدة — تتحكم في صلاحيات كل فرد مرتبط ب')}{t(UNIT_SHORT)}
         </div>
 
         {famDefs.map((f, i) => {
@@ -253,13 +252,15 @@ function Members() {
 function Permissions() {
   const { st, set, back, showToast } = useResident();
   const member = famDefs[st.selFamIdx] ?? famDefs[0];
+  // The design addresses the member by first name throughout this screen.
+  const firstName = t(member.name).split(' ')[0];
   const editable = st.selFamIdx === EDITABLE_MEMBER_IDX;
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <BackButton onClick={back} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('صلاحيات')} {t(member.name)}</div>
+        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('صلاحيات')} {firstName}</div>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 40px' }}>
@@ -325,26 +326,26 @@ function Permissions() {
 
         <div style={{ marginTop: 12 }}>
           <Note tone="navy">
-            {t('المزايا الممنوعة تظهر لـ')}{t(member.name)} {t('رمادية مع أيقونة قفل — لا تختفي، حتى يعرف أنها')}
-            {t('تحتاج إذنك.')}
+            {t('المزايا الممنوعة تظهر لـ')}{firstName} {t('رمادية مع أيقونة قفل 🔒 — لا تختفي، حتى يعرف أنها تحتاج إذنك.')}
           </Note>
         </div>
 
-        {editable && (
-          <PillButton
-            full
-            onClick={() => {
-              set({ actingAs: 'yousef', screen: 'home', hist: [] });
-              showToast(t('👁 أنت الآن ترى التطبيق بعين يوسف — المزايا الممنوعة مقفلة'));
-            }}
-            style={{ marginTop: 12, padding: 13, fontSize: 13 }}
-          >
-            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7 }}>
-              {t('عاين التطبيق بعين')} {t(member.name)}
-              <Icon path={icons.lock} size={14} stroke="#fff" width={1.8} />
-            </span>
-          </PillButton>
-        )}
+        {/* Offered for every member, as the design does. Only Yousef's
+            permissions are wired, so the others explain themselves. */}
+        <PillButton
+          full
+          onClick={() => {
+            if (!editable) {
+              showToast(t('هذه نسخة تجريبية — عدّل صلاحيات يوسف لتجربة القفل الحي'));
+              return;
+            }
+            set({ actingAs: 'yousef', screen: 'home', hist: [] });
+            showToast(t('👁 أنت الآن ترى التطبيق بعين يوسف — المزايا الممنوعة مقفلة'));
+          }}
+          style={{ marginTop: 12, padding: 13, fontSize: 13 }}
+        >
+          {t('عاين التطبيق بعين')} {firstName} 👁
+        </PillButton>
       </div>
     </div>
   );

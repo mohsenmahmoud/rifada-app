@@ -11,6 +11,7 @@ export function Timeline({
   steps,
   doneCount,
   currentIndex,
+  allSubs = false,
   minLine = 22,
 }: {
   steps: {
@@ -20,6 +21,8 @@ export function Timeline({
     meta?: string;
   }[];
   doneCount: number;
+  /** Show each step's `sub` even before it is reached. */
+  allSubs?: boolean;
   /** Index rendered gold. Pass -1 for none. */
   currentIndex?: number;
   minLine?: number;
@@ -73,7 +76,7 @@ export function Timeline({
                   </div>
                 )}
               </div>
-              {s.sub && done && (
+              {s.sub && (done || allSubs) && (
                 <div style={{ fontSize: 11, color: color.slateLight, lineHeight: 1.6 }}>{t(s.sub)}</div>
               )}
             </div>

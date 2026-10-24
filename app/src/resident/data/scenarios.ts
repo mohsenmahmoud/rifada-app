@@ -43,7 +43,9 @@ export const scenarios = {
   'order-done': { orderStage: 3 },
   'match-found': { matchFound: true },
   'live-otw': { liveStage: 1 },
-  'live-done': { liveStage: 4 },
+  // Past the last step on purpose, as the design has it: every step reads
+  // as done and none as current, so no step explains itself.
+  'live-done': { liveStage: 9 },
   'shb-mid': { shbStage: 1 },
   'shb-done': { shbStage: 2 },
   'grp-nonmember': { gdIdx: 1 },

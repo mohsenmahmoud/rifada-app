@@ -633,7 +633,7 @@ function Post() {
                     onClick={() => set((s) => ({ cmComLiked: { ...s.cmComLiked, [key]: !cLiked } }))}
                     style={inlineAction(cLiked ? color.goldDeep : color.slate)}
                   >
-                    {t('إعجاب (')}{(c.likes ?? 0) + (cLiked ? 1 : 0)})
+                    {t('إعجاب')} · {(c.likes ?? 0) + (cLiked ? 1 : 0)}
                   </button>
                   <button onClick={() => set({ cmReplyTo: ci })} style={inlineAction(color.slate)}>
                     {t('رد')}

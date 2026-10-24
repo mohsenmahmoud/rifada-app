@@ -37,7 +37,7 @@ function Browse() {
             textOverflow: 'ellipsis',
           }}
         >
-          {t('سوق العقارات')}
+          {t('سوق العقارات — بين الجيران')}
         </div>
         <PillButton tone="gold" size="sm" onClick={() => go('reCreate')} style={{ padding: '8px 16px', fontSize: 11.5 }}>
           {t('+ أعلن عن وحدتك')}

@@ -538,13 +538,14 @@ function Autopay() {
             }))}
             doneCount={st.apStage + 1}
             currentIndex={st.apStage}
+            allSubs
             minLine={24}
           />
         </Card>
 
         {notDone && (
           <PillButton full onClick={advance} style={{ marginTop: 12, padding: 13, fontSize: 13.5 }}>
-            {t(autopaySteps[st.apStage + 1].label)} {t('(محاكاة)')}
+            {t('الخطوة التالية:')} {t(autopaySteps[st.apStage + 1].label)} {t('(محاكاة)')}
           </PillButton>
         )}
 

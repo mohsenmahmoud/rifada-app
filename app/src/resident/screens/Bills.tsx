@@ -200,16 +200,20 @@ function Home() {
 /** R52 — Link a new bill: category first, then that category's providers. */
 function Link() {
   const { st, set, back, showToast } = useResident();
-  const cat = st.linkCat ?? 'elec';
-  const providers = linkProviderLists[cat] ?? [];
+  const cat = st.linkCat;
+  const providers = cat ? linkProviderLists[cat] ?? [] : [];
 
   const confirm = () => {
     set((s) => ({
-      linkedExtra: { ...s.linkedExtra, [cat]: 'due' },
+      linkedExtra: { ...s.linkedExtra, ...(cat ? { [cat]: 'due' } : null) },
       screen: 'bills',
       hist: s.hist.slice(0, -1),
     }));
-    showToast(`${t('تم ربط فاتورة')} ${t(billCatDefs[cat].cat)} ${t('— سيظهر المستحق فور صدوره')}`);
+    showToast(
+      cat
+        ? `${t('تم ربط فاتورة')} ${t(billCatDefs[cat].cat)} ${t('— سيظهر المستحق فور صدوره')}`
+        : t('اختر نوع الفاتورة أولًا'),
+    );
   };
 
   return (
@@ -242,7 +246,7 @@ function Link() {
           })}
         </div>
 
-        <Label>{t('اختر مقدم الخدمة —')} {t(billCatDefs[cat].cat)}</Label>
+        <Label>{t('اختر مقدم الخدمة —')} {cat ? t(billCatDefs[cat].cat) : ''}</Label>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {providers.map((label, i) => {
             const on = st.linkProviderIdx === i;
@@ -536,7 +540,7 @@ function Autopay() {
           </span>
           <span style={{ flex: 1, textAlign: 'start', display: 'flex', flexDirection: 'column', gap: 1 }}>
             <span style={{ fontSize: 13, fontWeight: 800, color: color.navy }}>
-              {on ? t('الخصم التلقائي مفعّل') : t('الخصم التلقائي متوقف')}
+              {on ? t('الدفع التلقائي مفعّل') : t('الدفع التلقائي متوقف')}
             </span>
             <span style={{ fontSize: 10.5, color: color.slate }}>
               {t('تُسدد تلقائيًا في تاريخ الاستحقاق من بطاقتك المحفوظة')}

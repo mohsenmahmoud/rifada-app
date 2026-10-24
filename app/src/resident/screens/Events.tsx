@@ -254,7 +254,7 @@ function Feed() {
                     textOverflow: 'ellipsis',
                   }}
                 >
-                  {t(hero.place)}
+                  {t(hero.place)} · {t(hero.host)}
                 </span>
                 <span style={{ display: 'flex', alignItems: 'center', gap: 9, marginTop: 14 }}>
                   <span style={{ display: 'flex' }}>
@@ -288,7 +288,7 @@ function Feed() {
                       whiteSpace: 'nowrap',
                     }}
                   >
-                    {heroSeats.taken} {t('من جيرانك سيحضرون')}
+                    {heroSeats.taken} {t('من جيرانك ذاهبون')}
                   </span>
                   <span
                     style={{
@@ -912,7 +912,7 @@ function Detail() {
                 dir="ltr"
                 style={{ ...numeric, fontSize: 11, fontWeight: 700, color: color.goldSoft, textAlign: 'start' }}
               >
-                EVT-2026-{String(i + 1).padStart(2, '0')}-214
+                EVT-2026-0{st.evSelIdx + 4}-214
               </span>
               <button
                 onClick={() => showToast(t('أُضيفت الفعالية لتقويم جوالك'))}
@@ -1358,7 +1358,7 @@ function GroupDetail() {
                     {t('أعضاء المجموعة')}
                   </span>
                   <span style={{ fontSize: 10.5, color: color.slate }}>
-                    {g.members} {t('عضوًا')}
+                    {g.members + (isMine || st.clubJoined[i] ? 1 : 0)} {t('عضوًا')}
                   </span>
                 </span>
                 <span style={{ fontSize: 11, fontWeight: 800, color: color.gold, flex: 'none' }}>
@@ -1573,7 +1573,7 @@ function GroupMembers() {
               textOverflow: 'ellipsis',
             }}
           >
-            {t(g.name)} · {g.members} {t('عضوًا')}
+            {t(g.name)} · {g.members + (isMine || st.clubJoined[st.gdIdx] ? 1 : 0)} {t('عضوًا')}
           </span>
         </div>
       </div>
