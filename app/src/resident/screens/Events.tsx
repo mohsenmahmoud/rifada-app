@@ -868,7 +868,10 @@ function Detail() {
               </span>
             ))}
             <span style={{ fontSize: 11, color: color.slate, marginRight: 14 }}>
-              و{seats.taken} {t('من جيرانك مسجّلون')}
+              {/* The design prints the event's own figure here, so the line
+                  stays put when you register; the seat counter above it is
+                  what moves. */}
+              و{e.taken} {t('من جيرانك مسجّلون')}
             </span>
           </div>
         </Card>
@@ -973,7 +976,13 @@ function Detail() {
           }}
           style={{ flex: 1, fontSize: 14.5 }}
         >
-          {going ? t('أنت مسجّل ✓ — إلغاء التسجيل') : seats.full ? t('قائمة الانتظار') : t('احجز مكانك')}
+          {going
+            ? t('أنت مسجّل ✓ — إلغاء التسجيل')
+            : seats.full
+              ? t('قائمة الانتظار')
+              : e.price === 0
+                ? t('احجز مكانك — مجانًا')
+                : `${t('احجز وادفع')} ${e.price} ${t('ر.س')}`}
         </PillButton>
       </div>
     </div>
@@ -1133,7 +1142,7 @@ function GroupDetail() {
             {t(g.name)}
           </span>
           <span style={{ fontSize: 10.5, color: color.slate, whiteSpace: 'nowrap' }}>
-            {g.members} {t('عضوًا ·')} {t(g.meets)}
+            {g.members + (st.clubJoined[st.gdIdx] ? 1 : 0)} {t('عضوًا ·')} {t(g.meets)}
           </span>
         </div>
       </div>
@@ -1358,7 +1367,7 @@ function GroupDetail() {
                     {t('أعضاء المجموعة')}
                   </span>
                   <span style={{ fontSize: 10.5, color: color.slate }}>
-                    {g.members + (isMine || st.clubJoined[i] ? 1 : 0)} {t('عضوًا')}
+                    {g.members + (st.clubJoined[i] ? 1 : 0)} {t('عضوًا')}
                   </span>
                 </span>
                 <span style={{ fontSize: 11, fontWeight: 800, color: color.gold, flex: 'none' }}>
@@ -1573,7 +1582,7 @@ function GroupMembers() {
               textOverflow: 'ellipsis',
             }}
           >
-            {t(g.name)} · {g.members + (isMine || st.clubJoined[st.gdIdx] ? 1 : 0)} {t('عضوًا')}
+            {t(g.name)} · {g.members + (st.clubJoined[st.gdIdx] ? 1 : 0)} {t('عضوًا')}
           </span>
         </div>
       </div>

@@ -102,6 +102,33 @@ builds, and publishes to GitHub Pages. Pages serves from `/rifada-app/`, so
 reports itself as `serve`, so a command-conditional base would skip preview and
 hide subpath breakage until after a deploy.
 
+## Checking against the design
+
+The design bundle is a working prototype, so it can be rendered next to the
+port and compared screen by screen. `npm run compare` does exactly that: it
+opens both screen galleries in Chromium, harvests the text of every tile, and
+prints the ones that disagree.
+
+```
+npm run build
+npx vite preview --port 4173 &
+npm run compare
+```
+
+Use this rather than diffing one export against the next. A source diff only
+ever shows what the designer changed, so anything the port got wrong on a
+screen the design left alone stays invisible to it — which is how an earlier
+pass reported itself finished with nine screens still unported. The comparison
+runs the other way round and found, among other things, blank amenity booking
+values, an insurance figure off by 200,000, a missing notification row and a
+missing audience line.
+
+It currently reports **94 of 103** screens matching. The other nine are
+deliberate and listed in the tool's `EXPECTED` set: three home tiles whose
+carousel is simply on whichever slide came up, five of the departures below,
+and `R11b`, where the design's duplicate `paidAmount` blanks out its own
+receipt. Anything outside that set exits non-zero.
+
 ## Departures from the prototypes
 
 Each is commented at the site of the change:

@@ -188,7 +188,7 @@ function Statement() {
           onClick={() => (paid ? go('payHistory') : go('payNow'))}
           style={{ marginTop: 16, boxShadow: '0 6px 18px rgba(199,154,60,0.35)' }}
         >
-          {paid ? t('تم السداد ✓ — عرض الإيصال') : `${t('ادفع')} ${fmt(total)} ${t('ر.س')}`}
+          {paid ? t('تم السداد ✓') : `${t('ادفع الآن —')} ${fmt(total)} ${t('ر.س')}`}
         </PillButton>
       </div>
     </div>
@@ -492,7 +492,7 @@ function Autopay() {
                 color: st.autoPayOn ? color.greenDeep : color.navy,
               }}
             >
-              {st.autoPayOn ? t('الدفع التلقائي مفعّل') : t('الدفع التلقائي متوقف')}
+              {st.autoPayOn ? t('الخصم التلقائي مفعّل') : t('الخصم التلقائي متوقف')}
             </span>
             <span style={{ fontSize: 11, color: color.slate }}>
               {t('يُخصم المستحق تلقائيًا يوم 25 من كل شهر')}
