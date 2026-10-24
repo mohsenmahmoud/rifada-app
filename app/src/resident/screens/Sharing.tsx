@@ -376,9 +376,15 @@ function Create() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <ScreenHeader title={t('شارك شيئًا لديك')} onBack={back} />
+      <ScreenHeader
+        title={t('شارك شيئًا لديك')}
+        sub={t('أعلن لجيرانك عن شيء تشاركه معهم')}
+        onBack={back}
+      />
+      {/* Three numbered steps rather than one long form: what, when, and for
+          how much. */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 20px 30px' }}>
-        <Label>{t('النوع')}</Label>
+        <StepCard n="1" title={t('ما الذي تشاركه؟')}>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
           {shareKindDefs.map((k) => {
             const on = st.shKind === k.key;
@@ -422,7 +428,29 @@ function Create() {
           style={{ ...inputStyle, marginTop: 16, fontSize: 13 }}
         />
 
-        <Label style={{ marginTop: 16 }}>{t('أيام الإتاحة')}</Label>
+        <button
+          style={{
+            width: '100%',
+            marginTop: 12,
+            border: '1.5px dashed rgba(31,59,87,0.3)',
+            background: 'transparent',
+            borderRadius: radius.inner,
+            padding: 13,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 6,
+          }}
+        >
+          <Icon path={icons.camera} size={18} stroke={color.slate} width={1.5} />
+          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.slate }}>{t('أضف صورًا')}</span>
+          <span style={{ fontSize: 11, color: color.slateLight }}>· {t('الصور تزيد الحجوزات')}</span>
+        </button>
+        </StepCard>
+
+        <StepCard n="2" title={t('متى يكون متاحًا؟')}>
+        <Label>{t('أيام الإتاحة')}</Label>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
           {shareDayDefs.map((d) => {
             const on = st.shDay === d;
@@ -434,7 +462,7 @@ function Create() {
           })}
         </div>
 
-        <Label style={{ marginTop: 16 }}>{t('من الساعة — إلى الساعة')}</Label>
+        <Label style={{ marginTop: 16 }}>{t('الفترة')}</Label>
         <div style={{ display: 'flex', gap: 8 }}>
           {shareHourDefs.map((h) => {
             const on = st.shHour === h;
@@ -455,15 +483,43 @@ function Create() {
           })}
         </div>
 
-        <Label style={{ marginTop: 16 }}>{t('التكلفة')}</Label>
+        </StepCard>
+
+        <StepCard n="3" title={t('التكلفة')}>
         <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
-          <input
-            value={st.shPrice}
-            onChange={(e) => set({ shPrice: e.target.value })}
-            dir="ltr"
-            placeholder="150"
-            style={{ ...inputStyle, marginTop: 0, flex: 1, ...numeric, fontSize: 14, fontWeight: 700 }}
-          />
+          <span
+            style={{
+              flex: 1,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 6,
+              background: '#fff',
+              borderRadius: radius.inner,
+              boxShadow: shadow.card,
+              padding: '0 14px',
+            }}
+          >
+            <input
+              value={st.shPrice}
+              onChange={(e) => set({ shPrice: e.target.value })}
+              dir="ltr"
+              placeholder="150"
+              style={{
+                flex: 1,
+                minWidth: 0,
+                border: 'none',
+                background: 'transparent',
+                outline: 'none',
+                padding: '13px 0',
+                ...numeric,
+                fontSize: 14,
+                fontWeight: 700,
+                color: color.navy,
+                textAlign: 'start',
+              }}
+            />
+            <span style={{ fontSize: 11.5, fontWeight: 700, color: color.slate }}>{t('ر.س')}</span>
+          </span>
           {shareUnitDefs.map((u) => {
             const on = st.shUnit === u;
             return (
@@ -489,29 +545,11 @@ function Create() {
           })}
         </div>
 
-        <button
-          style={{
-            width: '100%',
-            marginTop: 14,
-            border: '1.5px dashed rgba(31,59,87,0.3)',
-            background: 'transparent',
-            borderRadius: radius.inner,
-            padding: 13,
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 8,
-          }}
-        >
-          <Icon path={icons.camera} size={18} stroke={color.slate} width={1.5} />
-          <span style={{ fontSize: 12.5, fontWeight: 700, color: color.slate }}>{t('أضف صورًا')}</span>
-        </button>
+        </StepCard>
 
-        <div style={{ marginTop: 12 }}>
+        <div style={{ marginTop: 4 }}>
           <Note tone="navy">
-            {t('وحدتك موثّقة تلقائيًا مع الإعلان (')}{t(UNIT_SHORT)}{t(') — والحجز والدفع يمران بضمان رفادة حتى')}
-            {t('انتهاء الموعد.')}
+            {t('وحدتك موثّقة تلقائيًا (')}{t(UNIT_SHORT)}{t(') — الحجز عبر التطبيق والدفع كاش يدًا بيد بينك وبين جارك.')}
           </Note>
         </div>
       </div>
@@ -1316,6 +1354,36 @@ const inputStyle: React.CSSProperties = {
   boxSizing: 'border-box',
   fontFamily: font.sans,
 };
+
+/** One numbered step on «شارك شيئًا لديك», each a card of its own. */
+function StepCard({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
+  return (
+    <Card pad={16} style={{ borderRadius: 18, marginBottom: 12 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 13 }}>
+        <span
+          style={{
+            width: 22,
+            height: 22,
+            borderRadius: 99,
+            background: color.navy,
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            ...numeric,
+            fontSize: 11,
+            fontWeight: 700,
+            flex: 'none',
+          }}
+        >
+          {n}
+        </span>
+        <span style={{ fontSize: 14, fontWeight: 800, color: color.navy }}>{title}</span>
+      </div>
+      {children}
+    </Card>
+  );
+}
 
 function Label({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (

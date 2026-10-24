@@ -75,13 +75,31 @@ function Feed() {
   const heroSeats = seatState(0, heroGoing);
 
   const isGroupsTab = st.evTab === 'groups';
+  const isMineTab = st.evTab === 'mine';
+  /** The groups you organise or have joined — the clubs half of «سجل». */
+  const myClubs = allGroups
+    .map((c, i) => ({ ...c, i }))
+    .filter((c) => c.mine || st.clubJoined[c.i]);
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
+      {/* «فعالياتي» is no longer a tab — it is a history icon in the header,
+          and opening it turns the screen into a log of whichever of the two
+          you were looking at. The back arrow returns you to that tab. */}
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <BackButton onClick={() => go('home')} />
+        <BackButton
+          onClick={() =>
+            isMineTab ? set({ evTab: st.evMineKind === 'clubs' ? 'groups' : 'up' }) : go('home')
+          }
+        />
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0 }}>
-          <span style={{ fontSize: 18, fontWeight: 900, color: color.navy }}>{t('الفعاليات والمجتمع')}</span>
+          <span style={{ fontSize: 18, fontWeight: 900, color: color.navy }}>
+            {isMineTab
+              ? st.evMineKind === 'clubs'
+                ? t('سجل مجموعاتك')
+                : t('سجل فعالياتك')
+              : t('الفعاليات والمجتمع')}
+          </span>
           <span
             style={{
               fontSize: 10.5,
@@ -94,70 +112,64 @@ function Feed() {
             {t('ما يحدث في')} {t(cfg.compoundName)}
           </span>
         </div>
-        {/* One smart header action — becomes «أنشئ مجموعة» on the groups tab. */}
-        <button
-          onClick={() => go(isGroupsTab ? 'groupCreate' : 'eventCreate')}
-          style={{
-            border: 'none',
-            cursor: 'pointer',
-            background: color.gold,
-            color: '#fff',
-            borderRadius: radius.pill,
-            padding: '9px 16px',
-            fontSize: 11.5,
-            fontWeight: 800,
-            fontFamily: font.sans,
-            boxShadow: '0 4px 14px rgba(199,154,60,0.35)',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-            whiteSpace: 'nowrap',
-            flex: 'none',
-          }}
-        >
-          <Icon path={icons.plus} size={13} stroke="#fff" width={2.4} />
-          {isGroupsTab ? t('أنشئ مجموعة') : t('نظّم فعالية')}
-        </button>
+        {!isMineTab && (
+          <>
+            <HeaderIcon
+              label={st.evTab === 'groups' ? t('سجل مجموعاتك') : t('سجل فعالياتك')}
+              path={icons.clock}
+              onClick={() =>
+                set({ evTab: 'mine', evMineKind: isGroupsTab ? 'clubs' : 'events' })
+              }
+            />
+            <HeaderIcon
+              label={isGroupsTab ? t('أنشئ مجموعة') : t('نظّم فعالية')}
+              path={icons.plus}
+              tone="gold"
+              onClick={() => go(isGroupsTab ? 'groupCreate' : 'eventCreate')}
+            />
+          </>
+        )}
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          background: '#fff',
-          borderRadius: radius.pill,
-          margin: '6px 18px 0',
-          padding: 4,
-          boxShadow: shadow.card,
-        }}
-      >
-        {[
-          { k: 'up' as const, l: t('قادمة') },
-          { k: 'mine' as const, l: t('فعالياتي') },
-          { k: 'groups' as const, l: t('مجموعات') },
-        ].map((item) => {
-          const on = st.evTab === item.k;
-          return (
-            <button
-              key={item.k}
-              onClick={() => set({ evTab: item.k })}
-              style={{
-                flex: 1,
-                border: 'none',
-                cursor: 'pointer',
-                borderRadius: radius.pill,
-                padding: 9,
-                fontSize: 12,
-                fontWeight: 800,
-                fontFamily: font.sans,
-                background: on ? color.navy : 'transparent',
-                color: on ? '#fff' : color.slate,
-              }}
-            >
-              {t(item.l)}
-            </button>
-          );
-        })}
-      </div>
+      {!isMineTab && (
+        <div
+          style={{
+            display: 'flex',
+            background: '#fff',
+            borderRadius: radius.pill,
+            margin: '6px 18px 0',
+            padding: 4,
+            boxShadow: shadow.card,
+          }}
+        >
+          {[
+            { k: 'up' as const, l: 'الفعاليات' },
+            { k: 'groups' as const, l: 'المجموعات' },
+          ].map((item) => {
+            const on = st.evTab === item.k;
+            return (
+              <button
+                key={item.k}
+                onClick={() => set({ evTab: item.k })}
+                style={{
+                  flex: 1,
+                  border: 'none',
+                  cursor: 'pointer',
+                  borderRadius: radius.pill,
+                  padding: 9,
+                  fontSize: 12,
+                  fontWeight: 800,
+                  fontFamily: font.sans,
+                  background: on ? color.navy : 'transparent',
+                  color: on ? '#fff' : color.slate,
+                }}
+              >
+                {t(item.l)}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '12px 18px 130px' }}>
         {st.evTab === 'up' && (
@@ -449,7 +461,56 @@ function Feed() {
           </>
         )}
 
-        {st.evTab === 'mine' && (
+        {/* The log splits by what you opened it from: your events, or
+            the groups you belong to. */}
+        {isMineTab && st.evMineKind === 'clubs' && (
+          <>
+            {myClubs.map((c) => (
+              <Card
+                key={t(c.name)}
+                pad="14px 16px"
+                onClick={() => go('groupDetail', { gdIdx: c.i })}
+                style={{ borderRadius: 18, marginBottom: 9 }}
+              >
+                <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                  <span
+                    style={{
+                      width: 42,
+                      height: 42,
+                      borderRadius: 13,
+                      background: color.tile,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flex: 'none',
+                    }}
+                  >
+                    <Icon path={t(groupIcon[c.kind])} size={20} width={1.6} />
+                  </span>
+                  <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+                    <span style={{ fontSize: 13.5, fontWeight: 800, color: color.navy }}>
+                      {t(c.name)}
+                    </span>
+                    <span style={{ fontSize: 10.5, color: color.slate }}>
+                      {c.members} {t('عضو ·')} {t(c.meets)}
+                    </span>
+                  </span>
+                  <StatusPill
+                    tone={c.mine ? 'gold' : 'green'}
+                    style={{ fontSize: 9.5, padding: '3px 11px', fontWeight: 800, flex: 'none' }}
+                  >
+                    {c.mine ? t('منظّم المجموعة') : t('عضو ✓')}
+                  </StatusPill>
+                </span>
+              </Card>
+            ))}
+            {myClubs.length === 0 && (
+              <Note>{t('لم تنضم لأي مجموعة بعد — تصفّح المجموعات وانضم لما يناسبك.')}</Note>
+            )}
+          </>
+        )}
+
+        {isMineTab && st.evMineKind !== 'clubs' && (
           <>
             <div
               style={{
@@ -647,10 +708,22 @@ function Feed() {
               const joined = !!st.clubJoined[i];
               const mine = !!c.mine;
               return (
-                <Card
+                // A div, not a Card button: the row opens the group but holds
+                // its own join button, and a button cannot nest.
+                <div
                   key={t(c.name)}
-                  pad="14px 16px"
-                  style={{ borderRadius: 18, marginBottom: 9, display: 'flex', alignItems: 'center', gap: 12 }}
+                  onClick={() => go('groupDetail', { gdIdx: i })}
+                  style={{
+                    background: color.card,
+                    boxShadow: shadow.card,
+                    padding: '14px 16px',
+                    borderRadius: 18,
+                    marginBottom: 9,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 12,
+                  }}
                 >
                   <span
                     style={{
@@ -687,7 +760,8 @@ function Feed() {
                     style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 5, flex: 'none' }}
                   >
                     <button
-                      onClick={() => {
+                      onClick={(e) => {
+                        e.stopPropagation();
                         if (mine) return;
                         set((s) => ({ clubJoined: { ...s.clubJoined, [i]: !joined } }));
                         showToast(
@@ -715,24 +789,8 @@ function Feed() {
                     >
                       {mine ? t('منظّم') : joined ? t('عضو ✓') : t('انضم')}
                     </button>
-                    <button
-                      onClick={() => go('groupDetail', { gdIdx: i })}
-                      style={{
-                        border: 'none',
-                        background: 'transparent',
-                        cursor: 'pointer',
-                        color: color.goldDeep,
-                        fontSize: 9.5,
-                        fontWeight: 800,
-                        padding: 0,
-                        fontFamily: font.sans,
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      التفاصيل ←
-                    </button>
                   </span>
-                </Card>
+                </div>
               );
             })}
           </>
@@ -1828,6 +1886,43 @@ function GroupCreate() {
         </PillButton>
       </div>
     </div>
+  );
+}
+
+/** A round icon button in the feed header. */
+function HeaderIcon({
+  label,
+  path,
+  tone = 'plain',
+  onClick,
+}: {
+  label: string;
+  path: string;
+  tone?: 'plain' | 'gold';
+  onClick: () => void;
+}) {
+  const gold = tone === 'gold';
+  return (
+    <button
+      onClick={onClick}
+      title={label}
+      aria-label={label}
+      style={{
+        width: 38,
+        height: 38,
+        borderRadius: 99,
+        border: 'none',
+        cursor: 'pointer',
+        background: gold ? color.gold : '#fff',
+        boxShadow: gold ? '0 4px 14px rgba(199,154,60,0.35)' : shadow.card,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 'none',
+      }}
+    >
+      <Icon path={path} size={gold ? 15 : 17} stroke={gold ? '#fff' : color.navy} width={gold ? 2.4 : 1.6} />
+    </button>
   );
 }
 

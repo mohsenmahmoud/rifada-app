@@ -551,18 +551,122 @@ export function ServicesList() {
 }
 
 /**
- * Services hub — the merge the user asked for: one door for «اطلب مقدم خدمة»
- * (instant matching) and one for «ارفع بلاغ للإدارة» (ticket queue).
+ * One route card on the services hub. Both roads out of here look the same
+ * now: a kicker saying who handles it, the icon, the pitch, and a footer
+ * pairing the time it usually takes with the way in.
+ */
+function RouteCard({
+  kicker,
+  kickerBg,
+  kickerC,
+  iconPath,
+  iconBg,
+  iconStroke,
+  title,
+  sub,
+  meta,
+  ctaC,
+  onClick,
+}: {
+  kicker: string;
+  kickerBg: string;
+  kickerC: string;
+  iconPath: string;
+  iconBg: string;
+  iconStroke: string;
+  title: string;
+  sub: string;
+  meta: string;
+  ctaC: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        width: '100%',
+        border: 'none',
+        cursor: 'pointer',
+        background: '#fff',
+        borderRadius: 20,
+        padding: 20,
+        display: 'flex',
+        flexDirection: 'column',
+        textAlign: 'start',
+        boxShadow: shadow.card,
+        marginBottom: 12,
+      }}
+    >
+      <span style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
+        <span
+          style={{
+            background: kickerBg,
+            color: kickerC,
+            borderRadius: radius.pill,
+            padding: '3px 12px',
+            fontSize: 9.5,
+            fontWeight: 800,
+          }}
+        >
+          {kicker}
+        </span>
+        <span style={{ flex: 1 }} />
+        <span
+          style={{
+            width: 44,
+            height: 44,
+            borderRadius: 14,
+            background: iconBg,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 'none',
+          }}
+        >
+          <Icon path={iconPath} size={22} stroke={iconStroke} width={1.5} />
+        </span>
+      </span>
+      <span style={{ fontSize: 17.5, fontWeight: 900, color: color.navy, marginTop: 14 }}>
+        {title}
+      </span>
+      <span style={{ fontSize: 11.5, color: color.slate, lineHeight: 1.85, marginTop: 5 }}>
+        {sub}
+      </span>
+      <span
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          width: '100%',
+          marginTop: 15,
+          paddingTop: 13,
+          borderTop: '1px solid rgba(31,59,87,0.07)',
+        }}
+      >
+        <span style={{ fontSize: 10.5, fontWeight: 700, color: color.slateLight, whiteSpace: 'nowrap' }}>
+          {meta}
+        </span>
+        <span style={{ flex: 1 }} />
+        <span style={{ fontSize: 12, fontWeight: 800, color: ctaC }}>{t('ابدأ')} ←</span>
+      </span>
+    </button>
+  );
+}
+
+/**
+ * HUB — one door for «اطلب مقدم خدمة» (instant matching) and one for
+ * «بلّغ الإدارة» (the ticket queue). The latest design levels the two: the
+ * navy/white hierarchy is gone, and each card now leads with who handles it
+ * and how long it usually takes, so the choice is about the route, not the
+ * emphasis.
  */
 export function ServiceHub() {
-  const { st, go } = useResident();
-  const open = st.tickets.filter((t) => t.status !== 'resolved').length;
+  const { go } = useResident();
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
         <button
           onClick={() => go('home')}
-          aria-label="رجوع"
+          aria-label={t('رجوع')}
           style={{
             width: 38,
             height: 38,
@@ -581,111 +685,46 @@ export function ServiceHub() {
         <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('الخدمات')}</div>
       </div>
 
-      <div
-        style={{
-          flex: 1,
-          overflowY: 'auto',
-          padding: '10px 20px 40px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: 14,
-        }}
-      >
-        <button
-          onClick={() => go('reqService')}
+      <div style={{ flex: 1, overflowY: 'auto', padding: '10px 20px 40px' }}>
+        <div
           style={{
-            border: 'none',
-            cursor: 'pointer',
-            background: `linear-gradient(160deg,${color.navyLight},${color.navy})`,
-            borderRadius: 22,
-            padding: '22px 20px',
-            textAlign: 'start',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 8,
-            boxShadow: '0 8px 24px rgba(31,59,87,0.25)',
+            fontSize: 21,
+            fontWeight: 900,
+            color: color.navy,
+            lineHeight: 1.5,
+            margin: '4px 2px 16px',
           }}
         >
-          <span
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: 15,
-              background: 'rgba(199,154,60,0.25)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Icon path="M13 2L4 14h6l-1 8 9-12h-6z" size={24} stroke={color.gold} />
-          </span>
-          <span style={{ fontSize: 16.5, fontWeight: 900, color: '#fff' }}>{t('اطلب مقدم خدمة')}</span>
-          <span style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)', lineHeight: 1.8 }}>
-            {t('مطابقة فورية مع أقرب فني متاح — سباكة، كهرباء، تنظيف وغيرها. تدفع بضمان رفادة ولا يُحوَّل المبلغ إلا بعد رضاك.')}
-          </span>
-          <span
-            style={{
-              background: 'rgba(199,154,60,0.2)',
-              color: color.goldSoft,
-              borderRadius: radius.pill,
-              padding: '4px 14px',
-              fontSize: 10.5,
-              fontWeight: 800,
-              alignSelf: 'flex-start',
-            }}
-          >
-            {t('يصلك خلال دقائق ⚡')}
-          </span>
-        </button>
+          {t('وش تحتاج اليوم؟')}
+        </div>
 
-        <button
+        <RouteCard
+          kicker={t('فوري')}
+          kickerBg="rgba(199,154,60,0.15)"
+          kickerC={color.goldDeep}
+          iconPath={icons.wrench}
+          iconBg="rgba(199,154,60,0.14)"
+          iconStroke={color.goldDeep}
+          title={t('اطلب مقدم خدمة')}
+          sub={t('سباكة، كهرباء، تكييف، تنظيف — أقرب فني متاح يوصلك خلال دقائق')}
+          meta={t('متوسط الوصول 12 دقيقة')}
+          ctaC={color.goldDeep}
+          onClick={() => go('reqService')}
+        />
+
+        <RouteCard
+          kicker={t('عبر الإدارة')}
+          kickerBg="rgba(31,59,87,0.08)"
+          kickerC={color.navy}
+          iconPath={icons.clipboardCheck}
+          iconBg="rgba(31,59,87,0.08)"
+          iconStroke={color.navy}
+          title={t('بلّغ الإدارة عن مشكلة')}
+          sub={t('عطل في وحدتك أو المناطق المشتركة؟ وصّله لمكتب الإدارة وتابع حالته أولًا بأول')}
+          meta={t('متوسط الحل 18 ساعة')}
+          ctaC={color.navy}
           onClick={() => go('maintList')}
-          style={{
-            border: 'none',
-            cursor: 'pointer',
-            background: '#fff',
-            borderRadius: 22,
-            padding: '22px 20px',
-            textAlign: 'start',
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 8,
-            boxShadow: shadow.card,
-          }}
-        >
-          <span
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: 15,
-              background: 'rgba(31,59,87,0.08)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            <Icon path={icons.file} size={24} />
-          </span>
-          <span style={{ fontSize: 16.5, fontWeight: 900, color: color.navy }}>
-            {t('ارفع بلاغ للإدارة وتابعه')}
-          </span>
-          <span style={{ fontSize: 12, color: color.slate, lineHeight: 1.8 }}>
-            {t('بلاغات الصيانة والمناطق المشتركة تذهب لمكتب إدارة الكمبوند — تابع حالتها خطوة بخطوة وقيّم الحل.')}
-          </span>
-          <span
-            style={{
-              background: 'rgba(63,166,107,0.12)',
-              color: color.greenDeep,
-              borderRadius: radius.pill,
-              padding: '4px 14px',
-              fontSize: 10.5,
-              fontWeight: 800,
-              alignSelf: 'flex-start',
-            }}
-          >
-            {open > 0 ? `${open} ${t('بلاغات مفتوحة')}` : t('لا توجد بلاغات مفتوحة')}
-          </span>
-        </button>
+        />
       </div>
     </div>
   );

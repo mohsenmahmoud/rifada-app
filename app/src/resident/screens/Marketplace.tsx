@@ -821,7 +821,6 @@ function Rate() {
 /** R38 — Dispute. Freezes the escrow pending admin review. */
 function Dispute() {
   const { st, set, back, showToast } = useResident();
-  const prov = providerDefs[st.selProvIdx] ?? providerDefs[0];
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
       <ScreenHeader title={t('الإبلاغ عن مشكلة')} onBack={back} />
@@ -893,19 +892,8 @@ function Dispute() {
           <span style={{ fontSize: 12.5, fontWeight: 700, color: color.slate }}>{t('إضافة صورة')}</span>
         </button>
 
-        <div
-          style={{
-            background: 'rgba(228,103,90,0.08)',
-            borderRadius: radius.tile,
-            padding: '12px 14px',
-            marginTop: 12,
-            fontSize: 11.5,
-            color: color.coralDeep,
-            lineHeight: 1.9,
-          }}
-        >
-          {t('سيبقى المبلغ')} {prov.price} {t('ر.س محجوزًا حتى تراجع إدارة الكمبوند البلاغ وتقرر الإجراء المناسب.')}
-        </div>
+        {/* The escrow-hold note is gone — رفادة no longer holds the money,
+            so there is nothing to freeze while the report is reviewed. */}
       </div>
       <div style={{ padding: '0 20px 34px' }}>
         <PillButton

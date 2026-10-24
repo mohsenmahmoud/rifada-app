@@ -9,19 +9,11 @@ import { t } from '@/i18n/lang';
 
 /** R5 — Create a ticket. */
 export function MaintNew() {
-  const { st, set, back, go, showToast } = useResident();
+  const { st, set, back, showToast } = useResident();
 
   const submit = () => {
     const cat = st.cat ?? t('أخرى');
     const title = st.desc.trim() ? st.desc.trim() : `${t('بلاغ')} ${cat} ${t('جديد')}`;
-
-    // The auto-assign switch reroutes to instant matching instead of the
-    // management queue — that's the whole point of the toggle.
-    if (st.autoMatch) {
-      set({ reqKind: cat, reqNotes: st.desc, cat: null, desc: '', priority: 'normal' });
-      go('matching');
-      return;
-    }
 
     const id = st.nextId;
     set((s) => ({
@@ -158,38 +150,10 @@ export function MaintNew() {
           })}
         </div>
 
-        {/* Auto-assign to the marketplace instead of the admin queue. */}
-        <button
-          onClick={() => set({ autoMatch: !st.autoMatch })}
-          style={{
-            width: '100%',
-            marginTop: 14,
-            cursor: 'pointer',
-            background: st.autoMatch ? 'rgba(199,154,60,0.1)' : '#fff',
-            border: `1.5px solid ${st.autoMatch ? color.gold : 'rgba(0,0,0,0.05)'}`,
-            borderRadius: radius.inner,
-            padding: '13px 14px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: 11,
-            textAlign: 'start',
-          }}
-        >
-          <Switch on={st.autoMatch} />
-          <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1 }}>
-            <span style={{ fontSize: 12.5, fontWeight: 800, color: color.navy }}>
-              {t('إسناد تلقائي لأقرب مقدم خدمة متاح')}
-            </span>
-            <span style={{ fontSize: 10.5, color: color.slate }}>
-              {t('بدل الانتظار في طابور مكتب الإدارة')}
-            </span>
-          </span>
-        </button>
-      </div>
-
-      <div style={{ padding: '0 20px 34px' }}>
-        <PillButton tone="gold" size="lg" full onClick={submit}>
-          {st.autoMatch ? t('ابحث عن مقدم خدمة الآن') : t('إرسال البلاغ')}
+        {/* The auto-assign toggle is gone: the two routes are separate doors
+            on the services hub now, so a ticket is always a ticket. */}
+        <PillButton tone="gold" size="lg" full onClick={submit} style={{ marginTop: 18 }}>
+          {t('إرسال البلاغ')}
         </PillButton>
       </div>
     </div>

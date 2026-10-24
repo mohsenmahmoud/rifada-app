@@ -7,7 +7,11 @@ import { UNIT } from '../data/seed';
 import { useResident } from '../store';
 import { t } from '@/i18n/lang';
 
-/** R1 — Splash / invite-code entry. */
+/**
+ * R1 — Splash and sign-up. The invite code is gone: you register with the
+ * phone number the compound office already has on file, which is the point of
+ * the note at the foot — there are no anonymous accounts.
+ */
 export function Splash() {
   const { st, set, go } = useResident();
   return (
@@ -15,107 +19,218 @@ export function Splash() {
       style={{
         position: 'absolute',
         inset: 0,
-        background: `linear-gradient(170deg,${color.navyLight} 0%,${color.navy} 45%,${color.navyDeep} 100%)`,
+        background: color.navy,
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center',
-        padding: '130px 26px 46px',
         boxSizing: 'border-box',
+        overflow: 'hidden',
       }}
     >
-      <Wordmark size={66} onDark />
-      <div style={{ fontSize: 46, fontWeight: 900, color: '#fff', marginTop: 10, lineHeight: 1.2 }}>
-        {t('رفادة')}
-      </div>
       <div
         style={{
-          fontFamily: font.mono,
-          fontSize: 13,
-          fontWeight: 600,
-          color: color.gold,
-          letterSpacing: 6,
-          marginTop: 2,
+          flex: 1.15,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          padding: '80px 26px 0',
         }}
       >
-        RIFADA
-      </div>
-      <div style={{ fontSize: 14.5, color: 'rgba(255,255,255,0.75)', marginTop: 14 }}>
-        {t('سندك في حيّك.. وكل ما تحتاجه أقرب')}
-      </div>
-
-      <div style={{ flex: 1 }} />
-
-      <div
-        style={{
-          width: '100%',
-          background: 'rgba(255,255,255,0.08)',
-          border: '1px solid rgba(255,255,255,0.16)',
-          borderRadius: radius.card,
-          padding: 18,
-          boxSizing: 'border-box',
-        }}
-      >
-        <div style={{ fontSize: 13, fontWeight: 700, color: '#fff', marginBottom: 10 }}>
-          {t('أدخل كود الدعوة الخاص بوحدتك')}
+        <span
+          style={{
+            width: 96,
+            height: 96,
+            borderRadius: 99,
+            background: 'rgba(255,255,255,0.06)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <Wordmark size={46} onDark />
+        </span>
+        <div
+          style={{
+            fontSize: 46,
+            fontWeight: 900,
+            color: '#fff',
+            lineHeight: 1.15,
+            marginTop: 20,
+            textShadow: '0 2px 24px rgba(0,0,0,0.25)',
+          }}
+        >
+          {t('رفادة')}
         </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <input
-            value={st.invite}
-            onChange={(e) => set({ invite: e.target.value })}
-            placeholder="RFD-2146-A"
+        <div
+          style={{
+            fontFamily: font.mono,
+            fontSize: 11,
+            fontWeight: 600,
+            color: 'rgba(199,154,60,0.95)',
+            letterSpacing: 9,
+            marginTop: 8,
+            paddingInlineStart: 9,
+          }}
+        >
+          RIFADA
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 9, margin: '22px 0 15px' }}>
+          <span
             style={{
-              flex: 1,
-              minWidth: 0,
-              background: '#fff',
-              border: 'none',
-              borderRadius: radius.tile,
-              padding: '12px 14px',
-              fontFamily: font.mono,
-              fontSize: 15,
-              fontWeight: 600,
-              direction: 'ltr',
-              textAlign: 'center',
-              letterSpacing: 2,
-              color: color.navy,
+              width: 26,
+              height: 1,
+              background: 'linear-gradient(to left, rgba(199,154,60,0.7), transparent)',
             }}
           />
-          <button
-            title={t('مسح QR')}
+          <span style={{ width: 5, height: 5, borderRadius: 99, background: color.gold }} />
+          <span
             style={{
-              width: 48,
-              border: '1px solid rgba(255,255,255,0.25)',
-              background: 'rgba(255,255,255,0.1)',
-              borderRadius: radius.tile,
+              width: 26,
+              height: 1,
+              background: 'linear-gradient(to right, rgba(199,154,60,0.7), transparent)',
+            }}
+          />
+        </div>
+        <div
+          style={{
+            fontSize: 14.5,
+            fontWeight: 600,
+            color: 'rgba(255,255,255,0.82)',
+            lineHeight: 1.9,
+            textAlign: 'center',
+            maxWidth: 290,
+          }}
+        >
+          {t('سندك في حيّك.. وكل ما تحتاجه أقرب')}
+        </div>
+      </div>
+
+      <div style={{ padding: '0 20px 40px' }}>
+        <div
+          style={{
+            background: '#fff',
+            borderRadius: 20,
+            padding: '24px 22px 20px',
+            boxShadow: shadow.card,
+          }}
+        >
+          <div style={{ fontSize: 11, fontWeight: 800, color: color.goldDeep }}>
+            {t('أهلًا بك في حيّك')}
+          </div>
+          <div style={{ fontSize: 19, fontWeight: 900, color: color.navy, marginTop: 5 }}>
+            {t('سجل برقم جوالك')}
+          </div>
+          <div style={{ fontSize: 11.5, color: color.slate, marginTop: 5, lineHeight: 1.8 }}>
+            {t('يوصلك كود تحقق برسالة SMS، وتظهر وحدتك وبياناتك تلقائيًا')}
+          </div>
+          <div
+            dir="ltr"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              background: '#fff',
+              border: '1.5px solid rgba(31,59,87,0.14)',
+              borderRadius: 14,
+              marginTop: 16,
+              padding: '3px 16px',
+            }}
+          >
+            <Icon
+              path={icons.call}
+              size={16}
+              stroke={color.slate}
+              width={1.5}
+              style={{ flex: 'none', marginRight: 10 }}
+            />
+            <input
+              value={st.invite}
+              onChange={(e) => set({ invite: e.target.value })}
+              placeholder="01001110001"
+              inputMode="tel"
+              style={{
+                flex: 1,
+                minWidth: 0,
+                border: 'none',
+                background: 'transparent',
+                padding: '13px 0',
+                ...numeric,
+                fontSize: 16.5,
+                fontWeight: 600,
+                direction: 'ltr',
+                textAlign: 'left',
+                letterSpacing: 1.5,
+                color: color.navy,
+                outline: 'none',
+              }}
+            />
+          </div>
+          <button
+            onClick={() => go('otp')}
+            style={{
+              width: '100%',
+              marginTop: 14,
+              border: 'none',
               cursor: 'pointer',
+              background: color.navy,
+              color: '#fff',
+              borderRadius: radius.pill,
+              padding: 15,
+              fontSize: 15,
+              fontWeight: 800,
+              fontFamily: font.sans,
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              gap: 9,
             }}
           >
-            <Icon path={icons.qr} size={20} stroke="#fff" width={1.6} />
+            {t('أرسل كود التحقق')}
+            <Icon
+              path="M5 12h14M13 6l6 6-6 6"
+              size={15}
+              stroke="#fff"
+              width={2}
+              style={{ transform: 'scaleX(-1)' }}
+            />
           </button>
         </div>
-        <button
-          onClick={() => go('otp')}
+        <div
           style={{
-            width: '100%',
-            marginTop: 12,
-            border: 'none',
-            cursor: 'pointer',
-            background: color.gold,
-            color: '#fff',
-            borderRadius: radius.pill,
-            padding: 13,
-            fontSize: 15,
-            fontWeight: 800,
-            fontFamily: font.sans,
+            display: 'flex',
+            alignItems: 'center',
+            gap: 7,
+            marginTop: 16,
+            justifyContent: 'center',
+            padding: '0 10px',
           }}
         >
-          {t('متابعة')}
-        </button>
-      </div>
-      <div style={{ fontSize: 11.5, color: 'rgba(255,255,255,0.55)', marginTop: 12 }}>
-        {t('الكود موجود في رسالة الترحيب من إدارة الكمبوند')}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style={{ flex: 'none' }}>
+            <path
+              d="M12 2l7 4v5c0 5-3 8.5-7 11-4-2.5-7-6-7-11V6z"
+              stroke="rgba(255,255,255,0.5)"
+              strokeWidth="1.6"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M9 12l2 2 4-4"
+              stroke={color.gold}
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <span
+            style={{
+              fontSize: 10.5,
+              color: 'rgba(255,255,255,0.5)',
+              lineHeight: 1.7,
+              textAlign: 'center',
+            }}
+          >
+            {t('رقمك مسجّل مسبقًا لدى إدارة الكمبوند — لا حسابات مجهولة')}
+          </span>
+        </div>
       </div>
     </div>
   );
@@ -123,7 +238,7 @@ export function Splash() {
 
 /** R2 — OTP verification. */
 export function Otp() {
-  const { back, go } = useResident();
+  const { cfg, back, go, showToast } = useResident();
   const digits = ['7', '2', '4', '9'];
   return (
     <div
@@ -195,8 +310,14 @@ export function Otp() {
         </div>
       </div>
       <div style={{ flex: 1 }} />
+      {/* Verification now lands straight on the home screen. The account is
+          already on file against the phone number, so there is nothing left to
+          set up — which is why the design dropped R3 from its own map. */}
       <button
-        onClick={() => go('setup')}
+        onClick={() => {
+          go('home');
+          showToast(`${t('حياك الله في')} ${t(cfg.compoundName)}`);
+        }}
         style={{
           width: '100%',
           border: 'none',
@@ -293,7 +414,7 @@ export function Setup() {
               whiteSpace: 'nowrap',
             }}
           >
-            {t('من كود الدعوة')}
+            {t('مرتبطة برقم جوالك')}
           </span>
         </div>
 

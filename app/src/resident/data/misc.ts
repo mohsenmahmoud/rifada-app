@@ -1,4 +1,4 @@
-import type { Vehicle, VisitEntry } from '../types';
+import type { ScreenKey, Vehicle, VisitEntry } from '../types';
 import { icons } from './icons';
 
 /** R22 — notification inbox. The right-edge bar marks unread priority. */
@@ -166,3 +166,27 @@ export const visitStateMeta = {
   in: { label: 'بالداخل الآن', bg: 'rgba(199,154,60,0.16)', c: '#A87F2C' },
   upcoming: { label: 'قادمة', bg: 'rgba(107,114,128,0.12)', c: '#6B7280' },
 } as const;
+
+/**
+ * R14 — the four quick tiles on the profile. These replace the «نشاطي»
+ * section that used to sit in the settings list below them.
+ */
+export const profileTileDefs: {
+  label: string;
+  icon: string;
+  open: (go: (s: ScreenKey) => void, set: (p: { screen: ScreenKey; shareTab: 'mine'; hist: ScreenKey[] }) => void) => void;
+}[] = [
+  { label: 'طلباتك', icon: icons.cart, open: (go) => go('foodHistory') },
+  { label: 'مدفوعاتك', icon: icons.file, open: (go) => go('payHistory') },
+  {
+    label: 'سياراتك',
+    icon: 'M3 13l2-5h14l2 5M3 13v5h2M21 13v5h-2M6 18a1.5 1.5 0 1 0 0-3M18 18a1.5 1.5 0 1 0 0-3',
+    open: (go) => go('gate'),
+  },
+  {
+    // Lands on استعارة already switched to the «مشاركاتي» tab.
+    label: 'مشاركاتك',
+    icon: icons.neighbors,
+    open: (_go, set) => set({ screen: 'share', shareTab: 'mine', hist: [] }),
+  },
+];

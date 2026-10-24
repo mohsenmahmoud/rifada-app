@@ -19,6 +19,7 @@ import {
   renewDefs,
   scoreItems,
   surveyChipDefs,
+  profileTileDefs,
   TRUST_MAX,
   TRUST_SCORE,
   visitFilterDefs,
@@ -26,7 +27,7 @@ import {
 } from '../data/misc';
 import { fmt, statementTotal } from '../data/payments';
 import { useLang } from '@/i18n/lang';
-import { ME_UNIT, UNIT, UNIT_SHORT } from '../data/seed';
+import { ME_UNIT, UNIT_SHORT } from '../data/seed';
 import { useResident } from '../store';
 import type { VisitEntry, VisitPeriod } from '../types';
 import { ChipRow } from './parts';
@@ -38,7 +39,7 @@ import { t } from '@/i18n/lang';
  * ------------------------------------------------------------------ */
 
 function Profile() {
-  const { cfg, go, initials, isFam, can, lockToast, showToast } = useResident();
+  const { cfg, set, go, initials, isFam, isRent, can, lockToast, showToast } = useResident();
   const { lang, setLang } = useLang();
 
   const groups = [
@@ -58,26 +59,8 @@ function Profile() {
         { label: t('الحيوانات الأليفة'), icon: icons.pets, act: () => go('pets') },
       ],
     },
-    {
-      title: t('نشاطي'),
-      items: [
-        {
-          label: t('سجل السداد'),
-          icon: icons.pay,
-          act: () => (can('pay') ? go('payHistory') : lockToast()),
-        },
-        {
-          label: t('طلباتي — المتجر'),
-          icon: icons.cart,
-          act: () => (can('food') ? go('foodHistory') : lockToast()),
-        },
-        {
-          label: t('إعلاناتي — سوق العقارات'),
-          icon: icons.realestate,
-          act: () => (isFam ? lockToast() : go('reMine')),
-        },
-      ],
-    },
+    // The «نشاطي» group is gone — its three histories are the quick tiles
+    // at the top of the screen now.
     {
       title: t('الخصوصية والدعم'),
       items: [
@@ -89,128 +72,155 @@ function Profile() {
 
   return (
     <div style={{ position: 'absolute', inset: 0, background: color.bg, display: 'flex', flexDirection: 'column' }}>
-      <div style={{ padding: '66px 22px 8px', display: 'flex', alignItems: 'center', gap: 12 }}>
-        <BackButton onClick={() => go('home')} />
-        <div style={{ fontSize: 19, fontWeight: 800, color: color.navy }}>{t('الملف الشخصي')}</div>
+      {/* The identity card moved into the header: avatar, greeting, unit chip
+          and settings, with no back button — the profile is a bottom-bar
+          destination, not somewhere you arrive from a particular screen. */}
+      <div style={{ padding: '66px 22px 10px', display: 'flex', alignItems: 'center', gap: 12 }}>
+        <span
+          style={{
+            width: 52,
+            height: 52,
+            borderRadius: 99,
+            background: `linear-gradient(160deg,${color.navyLight},${color.navy})`,
+            border: `2px solid ${color.gold}`,
+            color: color.goldSoft,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 18,
+            fontWeight: 900,
+            flex: 'none',
+          }}
+        >
+          {t(initials)}
+        </span>
+        <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 1, minWidth: 0 }}>
+          <span style={{ fontSize: 11, color: color.slateLight }}>{t('أهلًا')}</span>
+          <span style={{ fontSize: 17, fontWeight: 900, color: color.navy, whiteSpace: 'nowrap' }}>
+            {t(cfg.residentName)}
+          </span>
+        </span>
+        <span
+          style={{
+            background: '#fff',
+            color: color.navy,
+            borderRadius: radius.pill,
+            padding: '6px 14px',
+            fontSize: 10.5,
+            fontWeight: 800,
+            boxShadow: shadow.card,
+            whiteSpace: 'nowrap',
+            flex: 'none',
+          }}
+        >
+          {t(UNIT_SHORT)}
+        </span>
+        <button
+          onClick={() => showToast(t('الإعدادات المتقدمة — قريبًا'))}
+          aria-label={t('الإعدادات')}
+          style={{
+            width: 38,
+            height: 38,
+            borderRadius: 99,
+            border: 'none',
+            background: '#fff',
+            boxShadow: shadow.card,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 'none',
+          }}
+        >
+          <Icon path={icons.gear} size={17} width={1.5} />
+        </button>
       </div>
 
       <div style={{ flex: 1, overflowY: 'auto', padding: '8px 18px 130px' }}>
-        {/* identity hero */}
-        <div
+        {/* What you owe, as a way straight into payment. */}
+        <button
+          onClick={() => (can('pay') ? go('pay') : lockToast())}
           style={{
-            position: 'relative',
-            borderRadius: 24,
-            overflow: 'hidden',
-            background: `linear-gradient(155deg,${color.navyLift},${color.navy} 60%,${color.navyDeep})`,
-            padding: '24px 20px 20px',
-            boxShadow: '0 8px 24px rgba(31,59,87,0.25)',
+            width: '100%',
+            border: 'none',
+            cursor: 'pointer',
+            background: `linear-gradient(155deg,${color.navyLift},${color.navy})`,
+            borderRadius: 20,
+            padding: '16px 18px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 13,
+            boxShadow: '0 8px 24px rgba(31,59,87,0.22)',
+            textAlign: 'start',
           }}
         >
-          <div
+          <span
             style={{
-              position: 'absolute',
-              top: -30,
-              left: -20,
-              width: 140,
-              height: 140,
-              borderRadius: 99,
-              background: 'rgba(199,154,60,0.14)',
+              width: 42,
+              height: 42,
+              borderRadius: 13,
+              background: 'rgba(199,154,60,0.2)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 'none',
             }}
-          />
-          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: 14 }}>
-            <div
-              style={{
-                width: 60,
-                height: 60,
-                borderRadius: 99,
-                background: 'rgba(199,154,60,0.16)',
-                border: `2px solid ${color.gold}`,
-                color: color.goldSoft,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 21,
-                fontWeight: 900,
-                flex: 'none',
-              }}
-            >
-              {t(initials)}
-            </div>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontSize: 18, fontWeight: 900, color: '#fff' }}>{t(cfg.residentName)}</div>
-              <div
-                style={{
-                  fontSize: 11.5,
-                  color: 'rgba(255,255,255,0.72)',
-                  marginTop: 3,
-                  lineHeight: 1.6,
-                }}
-              >
-                {t(UNIT)}
-                <br />
-                {t(cfg.compoundName)}
-              </div>
-              <span
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: 5,
-                  background: 'rgba(63,166,107,0.22)',
-                  color: color.greenSoft,
-                  borderRadius: radius.pill,
-                  padding: '3px 12px',
-                  fontSize: 10.5,
-                  fontWeight: 800,
-                  marginTop: 8,
-                }}
-              >
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"
-                    stroke={color.greenSoft}
-                    strokeWidth="2"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M9 12l2 2 4-4"
-                    stroke={color.greenSoft}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                {t('ساكن موثّق')}
-              </span>
-            </div>
-            <button
-              onClick={() => showToast(t('تعديل الملف الشخصي'))}
-              aria-label="تعديل"
-              style={{
-                width: 34,
-                height: 34,
-                borderRadius: 99,
-                border: 'none',
-                background: 'rgba(255,255,255,0.12)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flex: 'none',
-              }}
-            >
-              <Icon
-                path="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"
-                size={15}
-                stroke="#fff"
-                width={1.7}
-              />
-            </button>
-          </div>
+          >
+            <Icon path="M3 7h18v12H3zM3 11h18M16 15h2" size={20} stroke={color.goldSoft} width={1.6} />
+          </span>
+          <span style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 2, minWidth: 0 }}>
+            <span style={{ fontSize: 10.5, color: 'rgba(255,255,255,0.65)' }}>
+              {t('المستحق حتى 25 يوليو')}
+            </span>
+            <span style={{ ...numeric, fontSize: 19, fontWeight: 700, color: '#fff' }}>
+              {fmt(statementTotal(isRent))} {t('ر.س')}
+            </span>
+          </span>
+          <span
+            style={{
+              background: color.gold,
+              color: '#fff',
+              borderRadius: radius.pill,
+              padding: '8px 18px',
+              fontSize: 11.5,
+              fontWeight: 800,
+              flex: 'none',
+              fontFamily: font.sans,
+            }}
+          >
+            {t('ادفع')}
+          </span>
+        </button>
 
-          <div style={{ position: 'relative', display: 'flex', gap: 10, marginTop: 18 }}>
-            <HeroStat value={String(TRUST_SCORE)} label={t('نقاط الثقة · ذهبي')} />
-            <HeroStat value="5,724" label={t('نقاط المكافآت')} />
-          </div>
+        {/* The four histories that used to sit in a «نشاطي» list. */}
+        <div
+          style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 9, marginTop: 14 }}
+        >
+          {profileTileDefs.map((tile) => (
+            <button
+              key={tile.label}
+              onClick={() => tile.open(go, set)}
+              style={{
+                border: 'none',
+                cursor: 'pointer',
+                background: '#fff',
+                borderRadius: 16,
+                padding: '13px 4px',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 8,
+                boxShadow: shadow.card,
+              }}
+            >
+              <Icon path={tile.icon} size={20} width={1.5} />
+              <span
+                style={{ fontSize: 10, fontWeight: 800, color: color.navy, fontFamily: font.sans }}
+              >
+                {t(tile.label)}
+              </span>
+            </button>
+          ))}
         </div>
 
         {/* preferences */}
@@ -343,15 +353,6 @@ function Profile() {
           <span style={{ fontSize: 13.5, fontWeight: 800, color: color.coral }}>{t('تسجيل الخروج')}</span>
         </button>
       </div>
-    </div>
-  );
-}
-
-function HeroStat({ value, label }: { value: string; label: string }) {
-  return (
-    <div style={{ flex: 1, background: 'rgba(255,255,255,0.1)', borderRadius: 14, padding: '11px 13px' }}>
-      <div style={{ ...numeric, fontSize: 19, fontWeight: 700, color: '#fff' }}>{t(value)}</div>
-      <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.65)', marginTop: 1 }}>{t(label)}</div>
     </div>
   );
 }
