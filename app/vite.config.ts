@@ -12,7 +12,11 @@ export default defineConfig({
   //
   // Every asset path in the app is built from `import.meta.env.BASE_URL`, so
   // this one setting carries the images too.
-  base: '/rifada-app/',
+  //
+  // `BASE_PATH` overrides it for a host that serves the site from its own
+  // root — `BASE_PATH=./ npm run build` produces a folder that runs anywhere,
+  // including straight off the filesystem.
+  base: process.env.BASE_PATH ?? '/rifada-app/',
   plugins: [react()],
   resolve: {
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
